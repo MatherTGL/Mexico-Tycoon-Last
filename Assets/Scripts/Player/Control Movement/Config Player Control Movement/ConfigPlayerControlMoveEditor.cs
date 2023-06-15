@@ -7,31 +7,41 @@ namespace Config.Player
     [CreateAssetMenu(fileName = "PlayerControlDefaultConfig", menuName = "Config/Player/Control/Move/Create New", order = 50)]
     public sealed class ConfigPlayerControlMoveEditor : ScriptableObject
     {
-        [SerializeField, BoxGroup("Parameters")]
+        [BoxGroup("Parameters")]
+        [SerializeField, FoldoutGroup("Parameters/Speed/Move"), Title("Default", HorizontalLine = false), HideLabel]
+        [HorizontalGroup("Parameters/Speed/Move/HorizontalMove")]
         private float _speedMove;
         public float speedMove => _speedMove;
 
-        [SerializeField, BoxGroup("Parameters")]
+        [SerializeField, FoldoutGroup("Parameters/Speed/Move"), Title("Fast", HorizontalLine = false), HideLabel]
+        [HorizontalGroup("Parameters/Speed/Move/HorizontalMove")]
         private float _speedMoveFast;
         public float speedMoveFast => _speedMoveFast;
 
-        [SerializeField, BoxGroup("Parameters")]
+        [SerializeField, BoxGroup("Parameters/Speed"), Title("Zoom", HorizontalLine = false), HideLabel]
         private float _speedZoom;
         public float speedZoom => _speedZoom;
 
-        [SerializeField, BoxGroup("Parameters")]
+        [BoxGroup("Parameters/Clamp Distance")]
+        [SerializeField, FoldoutGroup("Parameters/Clamp Distance/Zoom"), Tooltip("Минимальное расстояние от 0 координат по Z")]
+        [Title("Min", HorizontalLine = false), HideLabel, HorizontalGroup("Parameters/Clamp Distance/Zoom/HorizontalZoom")]
         private float _minZoomCameraDistance;
         public float minZoomCameraDistance => _minZoomCameraDistance;
 
-        [SerializeField, BoxGroup("Parameters")]
+        [SerializeField, FoldoutGroup("Parameters/Clamp Distance/Zoom"), Tooltip("Максимальное расстояние от 0 координат по Z")]
+        [Title("Max", HorizontalLine = false), HideLabel, HorizontalGroup("Parameters/Clamp Distance/Zoom/HorizontalZoom")]
         private float _maxZoomCameraDistance;
         public float maxZoomCameraDistance => _maxZoomCameraDistance;
 
-        [SerializeField, BoxGroup("Parameters")]
+        [SerializeField, FoldoutGroup("Parameters/Clamp Distance/Transform")]
+        [Title("Max Horizontal", HorizontalLine = false), HideLabel]
+        [HorizontalGroup("Parameters/Clamp Distance/Transform/HorizontalTransform")]
         private float _maxHorizontalDistanceCamera;
         public float maxHorizontalDistanceCamera => _maxHorizontalDistanceCamera;
 
-        [SerializeField, BoxGroup("Parameters")]
+        [SerializeField, FoldoutGroup("Parameters/Clamp Distance/Transform")]
+        [Title("Max Vertical", HorizontalLine = false), HideLabel]
+        [HorizontalGroup("Parameters/Clamp Distance/Transform/HorizontalTransform")]
         private float _maxVerticalDistanceCamera;
         public float maxVerticalDistanceCamera => _maxVerticalDistanceCamera; 
     }

@@ -9,13 +9,22 @@ namespace Player.Movement
     [RequireComponent(typeof(InputControl))]
     public sealed class PlayerControlMovement : MonoBehaviour
     {
-        [SerializeField, Required, BoxGroup("Parameters")]
+#if UNITY_EDITOR
+        [SerializeField, ToggleLeft, BoxGroup("Parameters")]
+        private bool _isEditParametersEditor;
+#endif
+
+
+        [SerializeField, Required, BoxGroup("Parameters/Configs"), EnableIf("_isEditParametersEditor")]
+        [HideLabel, Title("Player Control Move")]
         private ConfigPlayerControlMoveEditor _configPlayerControlMove;
 
-        [SerializeField, Required, BoxGroup("Parameters")]
+        [SerializeField, Required, BoxGroup("Parameters/Components"), EnableIf("_isEditParametersEditor")]
+        [HideLabel, Title("Input Control")]
         private InputControl _inputControl;
 
-        [SerializeField, Required, BoxGroup("Parameters")]
+        [SerializeField, Required, BoxGroup("Parameters/Components"), EnableIf("_isEditParametersEditor")]
+        [HideLabel, Title("Rigidbody")]
         private Rigidbody _rigidbody;
 
 
