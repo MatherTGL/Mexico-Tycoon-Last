@@ -1,3 +1,4 @@
+using Config.Data.Player;
 using UnityEngine;
 
 
@@ -7,15 +8,22 @@ namespace Data.Player
     {
         //TODO закинуть в ридонли конфиг для удобства 
         //? через конструктор
-        private static double _money = 50000; 
+        private static double _money; 
         private static ushort _researchPoints;
 
 
-        void IDataPlayer.AddPlayerMoney(double amount) => _money += amount;
+        public void SetDataConfig(in ConfigDataPlayer configDataPlayer)
+        {
+            _money = configDataPlayer.startPlayerMoney;
+            _researchPoints = configDataPlayer.startPlayerResearchPoints;
+            Debug.Log($"{_money} / {_researchPoints}");
+        }
 
-        void IDataPlayer.AddPlayerResearchPoints(ushort amount) => _researchPoints += amount;
+        void IDataPlayer.AddPlayerMoney(in double amount) => _money += amount;
 
-        bool IDataPlayer.CheckAndSpendingPlayerMoney(double amount, bool isSpending)
+        void IDataPlayer.AddPlayerResearchPoints(in ushort amount) => _researchPoints += amount;
+
+        bool IDataPlayer.CheckAndSpendingPlayerMoney(in double amount, in bool isSpending)
         {
             if (amount < _money)
             {
@@ -32,7 +40,7 @@ namespace Data.Player
             }
         }
 
-        bool IDataPlayer.CheckAndSpendingPlayerResearchPoints(ushort amount, bool isSpending)
+        bool IDataPlayer.CheckAndSpendingPlayerResearchPoints(in ushort amount, in bool isSpending)
         {
             throw new System.NotImplementedException();
         }

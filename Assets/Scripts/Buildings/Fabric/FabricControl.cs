@@ -117,10 +117,7 @@ namespace Fabric
 
         private void SetParametersFabricProduction()
         {
-            _IFabricProduction = new FabricProduction(_productQuality,
-                                                      _productivityKgPerDay,
-                                                      _productInStock,
-                                                      _maxCapacityStock);
+            _IFabricProduction = new FabricProduction(ref _productInStock);
         }
 
         private void GetFabricProductionParameters()
@@ -136,7 +133,7 @@ namespace Fabric
                 {
                     if (_isWork)
                     {
-                        _IFabricProduction.ProductionProduct();
+                        _IFabricProduction.ProductionProduct(_productivityKgPerDay, _maxCapacityStock);
                         GetFabricProductionParameters();
                     }
                 }
