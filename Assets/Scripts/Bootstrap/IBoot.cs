@@ -1,6 +1,7 @@
-using UnityEngine;
-
-public interface IBoot 
+namespace Boot
 {
-    void Init();
+    public interface IBoot 
+    {
+        void InitAwake();
+    }
 }

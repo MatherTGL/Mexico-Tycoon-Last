@@ -1,30 +1,31 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
 using Config.Player;
+using TimeControl;
 
 
 namespace Player.Movement
 {
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(InputControl))]
+    [RequireComponent(typeof(TimeDateControl))]
     public sealed class PlayerControlMovement : MonoBehaviour
     {
 #if UNITY_EDITOR
-        [SerializeField, ToggleLeft, BoxGroup("Parameters")]
+        [SerializeField, ToggleLeft, BoxGroup("Parameters"), Title("Edit Parameters")]
         private bool _isEditParametersEditor;
 #endif
 
-
         [SerializeField, Required, BoxGroup("Parameters/Configs"), EnableIf("_isEditParametersEditor")]
-        [HideLabel, Title("Player Control Move")]
+        [HideLabel, Title("Player Control Move", HorizontalLine = false)]
         private ConfigPlayerControlMoveEditor _configPlayerControlMove;
 
         [SerializeField, Required, BoxGroup("Parameters/Components"), EnableIf("_isEditParametersEditor")]
-        [HideLabel, Title("Input Control")]
+        [HideLabel, Title("Input Control", HorizontalLine = false)]
         private InputControl _inputControl;
 
         [SerializeField, Required, BoxGroup("Parameters/Components"), EnableIf("_isEditParametersEditor")]
-        [HideLabel, Title("Rigidbody")]
+        [HideLabel, Title("Rigidbody", HorizontalLine = false)]
         private Rigidbody _rigidbody;
 
 

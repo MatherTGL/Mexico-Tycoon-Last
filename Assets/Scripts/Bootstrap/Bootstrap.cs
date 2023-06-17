@@ -2,12 +2,15 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using Fabric;
 using System.Collections.Generic;
+using Data;
 
 
 namespace Boot
 {
     public class Bootstrap : MonoBehaviour
     {
+        private static DataControl _dataControl;
+
         private List<IBoot> _bootObjectList = new List<IBoot>();
 
         [SerializeField]
@@ -16,17 +19,23 @@ namespace Boot
 
         private void Awake()
         {
-            AddBootObjects();
+            _dataControl = new DataControl();
 
-            for (int i = 0; i < _bootObjectList.Count; i++)
-            {
-                _bootObjectList[i].Init();
-            }
+            AddBootObjects();
         }
 
         private void AddBootObjects()
         {
             _bootObjectList.AddRange(_bootFabricControl);
+            InitList();
+        }
+
+        private void InitList()
+        {
+            for (int i = 0; i < _bootObjectList.Count; i++)
+            {
+                _bootObjectList[i].InitAwake();
+            }
         }
     }
 }
