@@ -8,7 +8,7 @@ namespace Data.Player
     {
         //TODO закинуть в ридонли конфиг для удобства 
         //? через конструктор
-        private static double _money; 
+        private static double _money;
         private static ushort _researchPoints;
 
 
@@ -19,7 +19,11 @@ namespace Data.Player
             Debug.Log($"{_money} / {_researchPoints}");
         }
 
-        void IDataPlayer.AddPlayerMoney(in double amount) => _money += amount;
+        void IDataPlayer.AddPlayerMoney(in double amount)
+        {
+            _money += amount;
+            Debug.Log(_money);
+        }
 
         void IDataPlayer.AddPlayerResearchPoints(in ushort amount) => _researchPoints += amount;
 

@@ -52,6 +52,7 @@ namespace Player.Movement
 
         private void ControlPlayer()
         {
+            //todo докинуть управление правой кнопкой мыши
             float direcionMoveX = _configPlayerControlMove.speedMove * _inputControl.axisHorizontalMove;
             float directionMoveY = _configPlayerControlMove.speedMove * _inputControl.axisVerticalMove;
             float directionMoveZ = _configPlayerControlMove.speedZoom * _inputControl.axisMouseScrollWheel;

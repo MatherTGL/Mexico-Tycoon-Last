@@ -4,6 +4,8 @@ using System.Collections;
 using Boot;
 using TimeControl;
 using Data;
+using City;
+using System.Collections.Generic;
 
 
 namespace Fabric
@@ -15,7 +17,7 @@ namespace Fabric
         private IFabricProduction _IFabricProduction;
 
         [BoxGroup("Parameters")]
-        [SerializeField, Required, BoxGroup("Parameters/Links"), Title("Time Date Control", horizontalLine:false), HideLabel]
+        [SerializeField, Required, BoxGroup("Parameters/Links"), Title("Time Date Control", horizontalLine: false), HideLabel]
         private TimeDateControl _timeDateControl;
 
         [SerializeField, ReadOnly, BoxGroup("Parameters/Toggles"), LabelText("Buyed")]
@@ -24,46 +26,66 @@ namespace Fabric
         [SerializeField, ReadOnly, BoxGroup("Parameters/Toggles"), LabelText("Work")]
         private bool _isWork;
 
-        [SerializeField, BoxGroup("Parameters/Main", false), Title("Product Quality in %", horizontalLine:false)]
+        [SerializeField, BoxGroup("Parameters/Main", false), Title("Product Quality in %", horizontalLine: false)]
         [MinValue(10.0f), MaxValue(100.0f), HideLabel]
-        private float _productQuality;
+        private float _productQualityCocaine;
 
-        [SerializeField, BoxGroup("Parameters/Main", false), Title("Productivity Production in kg/day"), HideLabel]
+        [SerializeField, BoxGroup("Parameters/Main", false), Title("Productivity Production Cocaine in kg/day", horizontalLine: false), HideLabel]
         [MinValue(0.0f)]
-        private float _productivityKgPerDay;
+        private float _productivityKgPerDayCocaine;
 
-        [SerializeField, BoxGroup("Parameters/Main", false), Title("Product in Stock in kg"), HideLabel]
+        [SerializeField, BoxGroup("Parameters/Main", false), Title("Current Free Production Cocaine in kg/day", horizontalLine: false), HideLabel]
+        [MinValue(0.0f), ReadOnly]
+        private float _currentFreeProductionKgPerDayCocaine;
+
+        [SerializeField, BoxGroup("Parameters/Main", false), Title("Product in Stock Cocaine in kg", horizontalLine: false), HideLabel]
         [MinValue(0.0f)]
-        private float _productInStock;
+        private float _productInStockCocaine;
 
-        [SerializeField, BoxGroup("Parameters/Main", false), Title("Security Level in Star (0-10)"), HideLabel]
+        [SerializeField, BoxGroup("Parameters/Main", false), Title("Security Level in Star (0-10)", horizontalLine: false), HideLabel]
         [MinValue(0), MaxValue(10)]
         private byte _securityLevel;
 
-        [SerializeField, BoxGroup("Parameters/Main", false), Title("Level Suspicion in %"), HideLabel]
+        [SerializeField, BoxGroup("Parameters/Main", false), Title("Level Suspicion in %", horizontalLine: false), HideLabel]
         [MinValue(0.0f), MaxValue(100.0f)]
         private float _levelSuspicion;
 
-        [SerializeField, FoldoutGroup("Parameters/Main/Additional"), Title("Max Capacity Stock in kg"), HideLabel]
+        [SerializeField, FoldoutGroup("Parameters/Main/Additional"), Title("Max Capacity Stock in kg", horizontalLine: false), HideLabel]
         [MinValue(10.0f)]
         private float _maxCapacityStock;
 
-        [SerializeField, FoldoutGroup("Parameters/Main/Additional"), Title("Buy Fabric Cost in $"), HideLabel]
+        [SerializeField, FoldoutGroup("Parameters/Main/Additional"), Title("Buy Fabric Cost in $", horizontalLine: false), HideLabel]
         [MinValue(10000)]
         private double _fabricBuyCost = 10000;
 
-        [SerializeField, FoldoutGroup("Parameters/Main/Additional"), Title("Sell Fabric Cost in $"), HideLabel]
+        [SerializeField, FoldoutGroup("Parameters/Main/Additional"), Title("Sell Fabric Cost in $", horizontalLine: false), HideLabel]
         [MinValue(5000)]
         private double _fabricSellCost = 5000;
 
-        // [SerializeField, BoxGroup("Parameters"), PropertySpace(10, 10)]
-        // [Tooltip("Города, в которые фабрика будет поставлять ресурс")]
-        //private CityControl[] _citiesClients;
+        [SerializeField, BoxGroup("Parameters"), PropertySpace(10, 10)]
+        [Tooltip("Города, в которые фабрика будет поставлять ресурс"), ReadOnly]
+        private List<CityControl> _citiesClients = new List<CityControl>();
+
+        [SerializeField, FoldoutGroup("Parameters/Control/Transporting"), Required]
+        [EnableIf("_isBuyed")]
+        private CityControl _cityNewTransportWay;
+
+        private enum TypeUploadResource
+        {
+            Cocaine
+        }
+        [SerializeField, EnumPaging, FoldoutGroup("Parameters/Control/Transporting")]
+        [Title("Type Upload Resource", horizontalLine: false), HideLabel, EnableIf("_isBuyed")]
+        private TypeUploadResource _typeUploadResource;
+
+        [SerializeField, FoldoutGroup("Parameters/Control/Transporting/Cocaine"), EnableIf("_typeUploadResource", TypeUploadResource.Cocaine)]
+        [MinValue(0.0f), EnableIf("_isBuyed"), Title("Upload Resource", horizontalLine: false), HideLabel]
+        private float _uploadResourceCocaine;
 
         #endregion
 
 
-//#if UNITY_EDITOR //!Аналоги реализовать в скрипте, ответственном за UI для фабрик
+        //#if UNITY_EDITOR //!Аналоги реализовать в скрипте, ответственном за UI для фабрик
         #region Editor Extension
 
         [Button("Buy Fabric", 30), HideIf("_isBuyed"), FoldoutGroup("Parameters/Control")]
@@ -74,11 +96,6 @@ namespace Fabric
                 _isBuyed = true;
                 Debug.Log("Фабрика куплена");
             }
-            // if (_playerData.CheckAndSpendingPlayerMoney(_fabricBuyCost, true))
-            // {
-            //     _isBuyed = true;
-            //     gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
-            // }
         }
 
         [Button("Sell Fabric", 30), ShowIf("_isBuyed"), FoldoutGroup("Parameters/Control")]
@@ -86,8 +103,6 @@ namespace Fabric
         {
             _isBuyed = false;
             _isWork = false;
-
-            // gameObject.GetComponent<SpriteRenderer>().color = Color.red;
         }
 
         [Button("Work Fabric", 30), ShowIf("_isBuyed"), FoldoutGroup("Parameters/Control")]
@@ -95,7 +110,28 @@ namespace Fabric
         {
             _isWork = !_isWork;
         }
-//#endif
+
+        [Button("Add Transport Way"), EnableIf("_isBuyed"), FoldoutGroup("Parameters/Control/Transporting")]
+        private void AddNewTransportWay()
+        {
+            _citiesClients.Add(_cityNewTransportWay);
+            _cityNewTransportWay = null;
+
+            if (_uploadResourceCocaine < _currentFreeProductionKgPerDayCocaine)
+                _currentFreeProductionKgPerDayCocaine -= _uploadResourceCocaine;
+            else
+            {
+                _uploadResourceCocaine = _currentFreeProductionKgPerDayCocaine;
+                _currentFreeProductionKgPerDayCocaine -= _uploadResourceCocaine;
+            }
+        }
+
+        [Button("Clear Cities Clients"), EnableIf("_isBuyed"), FoldoutGroup("Parameters/Control/Transporting")]
+        private void RemoveAllCitiesClients()
+        {
+            _citiesClients.Clear();
+        }
+        //#endif
         #endregion
 
 
@@ -117,28 +153,39 @@ namespace Fabric
 
         private void SetParametersFabricProduction()
         {
-            _IFabricProduction = new FabricProduction(ref _productInStock);
+            _IFabricProduction = new FabricProduction();
+            _currentFreeProductionKgPerDayCocaine = _productivityKgPerDayCocaine;
         }
 
-        private void GetFabricProductionParameters()
+        private void TransportingResourcesProduction()
         {
-            _productInStock = _IFabricProduction.GetProductInStock();
+            if (_citiesClients.Count != 0)
+            {
+                for (int i = 0; i < _citiesClients.Count; i++)
+                {
+                    if (_citiesClients[i].CheckCurrentCapacityStock())
+                    {
+                        _citiesClients[i].IngestResources(_uploadResourceCocaine);
+                    }
+                    else { Debug.Log("Хранилище города полное"); }
+                }
+            }
         }
 
         private IEnumerator DrugProduction()
         {
-            while(true)
+            while (true)
             {
                 if (_IFabricProduction is not null)
                 {
                     if (_isWork)
                     {
-                        _IFabricProduction.ProductionProduct(_productivityKgPerDay, _maxCapacityStock);
-                        GetFabricProductionParameters();
+                        _IFabricProduction.ProductionProduct(_productivityKgPerDayCocaine, _maxCapacityStock, ref _productInStockCocaine);
+                        TransportingResourcesProduction();
                     }
                 }
                 else { SetParametersFabricProduction(); }
-                yield return new WaitForSecondsRealtime(_timeDateControl.GetCurrentTimeOneDay()); //TODO докинуть время игры
+                yield return new WaitForSecondsRealtime(_timeDateControl.GetCurrentTimeOneDay());
             }
         }
     }

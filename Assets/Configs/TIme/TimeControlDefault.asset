@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76e58bbeaadb5efc9be4d5360283893f, type: 3}
   m_Name: TimeControlDefault
   m_EditorClassIdentifier: 
-  _currentTimeOneDay: 1
-  _defaultTimeOneDay: 1
+  _currentTimeOneDay: 10
+  _defaultTimeOneDay: 10
