@@ -132,6 +132,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a97161a1202f724b5a110f98c0c61cd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxForceMouseClampHorizontal: 4
+  _maxForceMouseClampVertical: 4
 --- !u!114 &4375912937434680046
 MonoBehaviour:
   m_ObjectHideFlags: 0

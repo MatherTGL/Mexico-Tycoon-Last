@@ -8,10 +8,15 @@ namespace Config.Player
     public sealed class ConfigPlayerControlMoveEditor : ScriptableObject
     {
         [BoxGroup("Parameters")]
-        [SerializeField, FoldoutGroup("Parameters/Speed/Move"), Title("Default", HorizontalLine = false), HideLabel]
+        [SerializeField, FoldoutGroup("Parameters/Speed/Move"), Title("Keyboard", HorizontalLine = false), HideLabel]
         [HorizontalGroup("Parameters/Speed/Move/HorizontalMove")]
         private float _speedMove;
         public float speedMove => _speedMove;
+
+        [SerializeField, FoldoutGroup("Parameters/Speed/Move"), Title("Mouse", horizontalLine: false), HideLabel]
+        [HorizontalGroup("Parameters/Speed/Move/HorizontalMove")]
+        private float _speedMoveMouse;
+        public float speedMoveMouse => _speedMoveMouse;
 
         [SerializeField, FoldoutGroup("Parameters/Speed/Move"), Title("Fast", HorizontalLine = false), HideLabel]
         [HorizontalGroup("Parameters/Speed/Move/HorizontalMove")]
@@ -43,6 +48,6 @@ namespace Config.Player
         [Title("Max Vertical", HorizontalLine = false), HideLabel]
         [HorizontalGroup("Parameters/Clamp Distance/Transform/HorizontalTransform")]
         private float _maxVerticalDistanceCamera;
-        public float maxVerticalDistanceCamera => _maxVerticalDistanceCamera; 
+        public float maxVerticalDistanceCamera => _maxVerticalDistanceCamera;
     }
 }

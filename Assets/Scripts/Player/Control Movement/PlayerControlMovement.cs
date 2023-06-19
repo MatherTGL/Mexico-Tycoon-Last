@@ -2,6 +2,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using Config.Player;
 using TimeControl;
+using Boot;
 
 
 namespace Player.Movement
@@ -9,7 +10,7 @@ namespace Player.Movement
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(InputControl))]
     [RequireComponent(typeof(TimeDateControl))]
-    public sealed class PlayerControlMovement : MonoBehaviour
+    public sealed class PlayerControlMovement : MonoBehaviour, IBoot
     {
 #if UNITY_EDITOR
         [SerializeField, ToggleLeft, BoxGroup("Parameters"), Title("Edit Parameters")]
@@ -28,6 +29,8 @@ namespace Player.Movement
         [HideLabel, Title("Rigidbody", HorizontalLine = false)]
         private Rigidbody _rigidbody;
 
+
+        public void InitAwake() => DontDestroyOnLoad(gameObject);
 
         private void Update() => PlayerTransformClamp();
 
@@ -52,10 +55,22 @@ namespace Player.Movement
 
         private void ControlPlayer()
         {
-            //todo докинуть управление правой кнопкой мыши
-            float direcionMoveX = _configPlayerControlMove.speedMove * _inputControl.axisHorizontalMove;
-            float directionMoveY = _configPlayerControlMove.speedMove * _inputControl.axisVerticalMove;
-            float directionMoveZ = _configPlayerControlMove.speedZoom * _inputControl.axisMouseScrollWheel;
+            float direcionMoveX;
+            float directionMoveY;
+            float directionMoveZ;
+
+            if (Input.GetMouseButton(1))
+            {
+                direcionMoveX = _configPlayerControlMove.speedMoveMouse * _inputControl.axisMouseX;
+                directionMoveY = _configPlayerControlMove.speedMoveMouse * _inputControl.axisMouseY;
+                //todo сделать отдельные переменные отвечающие за скорость при нажатии на пкм
+            }
+            else
+            {
+                direcionMoveX = _configPlayerControlMove.speedMove * _inputControl.axisHorizontalMove;
+                directionMoveY = _configPlayerControlMove.speedMove * _inputControl.axisVerticalMove;
+            }
+            directionMoveZ = _configPlayerControlMove.speedZoom * _inputControl.axisMouseScrollWheel;
 
             Vector3 directionMoveCamera = new Vector3(direcionMoveX, directionMoveY, directionMoveZ);
             _rigidbody.AddForce(directionMoveCamera, ForceMode.Impulse);

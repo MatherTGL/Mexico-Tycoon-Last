@@ -117,11 +117,11 @@ MonoBehaviour:
   _timeDateControl: {fileID: 0}
   _isBuyed: 0
   _isWork: 0
-  _productQualityCocaine: 10
-  _productivityKgPerDayCocaine: 0
-  _currentFreeProductionKgPerDayCocaine: 0
-  _productInStockCocaine: 0
-  _securityLevel: 0
+  _productQuality: 10
+  _productivityKgPerDay: 1
+  _currentFreeProductionKgPerDay: 0
+  _productInStock: 0
+  _securityLevel: 2
   _levelSuspicion: 0
   _maxCapacityStock: 10
   _fabricBuyCost: 10000
