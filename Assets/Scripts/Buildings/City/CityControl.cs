@@ -3,6 +3,8 @@ using Sirenix.OdinInspector;
 using Boot;
 using Data;
 using Config.CityControl.View;
+using System.Collections;
+using TimeControl;
 
 
 namespace City
@@ -13,15 +15,22 @@ namespace City
 
         private SpriteRenderer _spriteRendererObject;
 
-        [SerializeField, BoxGroup("Parameters"), Title("Config City Control View"), HideLabel, Required]
+        [SerializeField, BoxGroup("Parameters"), Required, Title("Time Date Control"), HideLabel]
+        private TimeDateControl _timeDateControl;
+
+        [SerializeField, BoxGroup("Parameters"), Title("Config City Control View"), HideLabel, Required, PropertySpace(0, 15)]
         private ConfigCityControlView _configCityControlView;
 
-        [SerializeField, BoxGroup("Parameters"), Title("Population in City"), HideLabel]
-        [MinValue(0), MaxValue(double.MaxValue / 2)]
-        private double _populationCity;
+        [FoldoutGroup("Parameters/Population City"), Title("Population in City", horizontalLine: false)]
+        [MinValue(0), MaxValue(double.MaxValue / 2), HideLabel, SerializeField]
+        private uint _populationCity;
+
+        [FoldoutGroup("Parameters/Population City"), Title("Population Percent Change in day", horizontalLine: false)]
+        [MinValue(-0.3f), MaxValue(0.3f), SerializeField, HideLabel]
+        private float _populationChangeStepPercent;
 
         [SerializeField, BoxGroup("Parameters"), Title("Police Level in star (0-10)"), HideLabel]
-        [MinValue(0), MaxValue(10), Tooltip("Уровень полиции в данном городе")]
+        [MinValue(0), MaxValue(10), Tooltip("Уровень полиции в данном городе"), PropertySpace(15)]
         private byte _policeLevel;
 
         [SerializeField, BoxGroup("Parameters"), Title("Max Capacity Stock in kg)"), HideLabel]
@@ -40,9 +49,9 @@ namespace City
         [SerializeField, FoldoutGroup("Parameters/Drugs/Cocaine"), Title("Average Cost Cocaine in $/kg"), HideLabel]
         private uint _averageCostCocaine;
 
-        [SerializeField, FoldoutGroup("Parameters/Drugs/Cocaine"), Title("Average Cost Cocaine in $/kg"), HideLabel]
+        [SerializeField, FoldoutGroup("Parameters/Drugs/Cocaine"), Title("Weight to Sell Cocaine in kg"), HideLabel]
         [MinValue(1)]
-        private ushort _weightToSellCocaine; //? сменить на float для игрока
+        private float _weightToSellCocaine; //? сменить на float для игрока
 
         [SerializeField, FoldoutGroup("Parameters/Drugs/Cocaine"), Title("Current Drug Demand Cocaine in kg/day"), HideLabel]
         [MinValue(0.0f)]
@@ -52,7 +61,7 @@ namespace City
         [MinValue(0.01f)]
         private float _increasedDemandCocaine;
 
-        private byte _connectFabricCount;
+        private byte _connectFabricsCount;
 
 
         public void InitAwake()
@@ -62,29 +71,31 @@ namespace City
 
             if (_spriteRendererObject is null) { _spriteRendererObject = GetComponent<SpriteRenderer>(); }
 
+            if (_timeDateControl is null) { _timeDateControl = FindObjectOfType<TimeDateControl>(); }
+
+            StartCoroutine(Reproduction());
 
             Debug.Log("Город успешно инициализирован");
         }
 
         public void ConnectFabricToCity()
         {
-            _connectFabricCount++;
+            _connectFabricsCount++;
 
-            if (_connectFabricCount! > 0) { _IcityView.ConnectFabric(ref _spriteRendererObject); }
+            if (_connectFabricsCount! > 0) { _IcityView.ConnectFabric(ref _spriteRendererObject); }
             Debug.Log("Connect Fabric | City");
         }
 
         public void DisconnectFabricToCity()
         {
-            if (_connectFabricCount >= 1)
+            if (_connectFabricsCount >= 1)
             {
-                _connectFabricCount--;
+                _connectFabricsCount--;
 
-                if (_connectFabricCount == 0) { _IcityView.DisconnectFabric(ref _spriteRendererObject); }
+                if (_connectFabricsCount == 0) { _IcityView.DisconnectFabric(ref _spriteRendererObject); }
 
                 Debug.Log("Disconnect Fabric | City");
             }
-
         }
 
         public bool CheckCurrentCapacityStock()
@@ -95,6 +106,8 @@ namespace City
 
         public void IngestResources(float decliningDemand) //todo докинуть тип наркотика
         {
+            //_currentDrugDemandCocaine
+
             if (_currentDrugDemandCocaine > decliningDemand)
             {
                 _currentDrugDemandCocaine += _increasedDemandCocaine - decliningDemand;
@@ -113,6 +126,22 @@ namespace City
                 _currentCapacityStock -= _weightToSellCocaine;
                 DataControl.IdataPlayer.AddPlayerMoney(_averageCostCocaine);
                 Debug.Log("Продано 1kg");
+            }
+        }
+
+        private void ReproductionPopulation()
+        {
+            uint addCountPeople = (uint)(_populationCity * _populationChangeStepPercent / 100);
+            _populationCity += addCountPeople;
+            Debug.Log($"{_populationCity} {addCountPeople}");
+        }
+
+        private IEnumerator Reproduction()
+        {
+            while (true)
+            {
+                ReproductionPopulation();
+                yield return new WaitForSecondsRealtime(_timeDateControl.GetCurrentTimeOneDay());
             }
         }
     }
