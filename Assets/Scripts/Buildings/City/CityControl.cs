@@ -25,15 +25,15 @@ namespace City
         [MinValue(0), MaxValue(double.MaxValue / 2), HideLabel, SerializeField]
         private uint _populationCity;
 
-        [FoldoutGroup("Parameters/Population City"), Title("Population Percent Change in day", horizontalLine: false)]
+        [FoldoutGroup("Parameters/Population City"), Title("Population Percent Change in %/day", horizontalLine: false)]
         [MinValue(-0.3f), MaxValue(0.3f), SerializeField, HideLabel]
         private float _populationChangeStepPercent;
 
         [SerializeField, BoxGroup("Parameters"), Title("Police Level in star (0-10)"), HideLabel]
-        [MinValue(0), MaxValue(10), Tooltip("Уровень полиции в данном городе"), PropertySpace(15)]
+        [MinValue(0), MaxValue(10), Tooltip("Уровень полиции в данном городе"), PropertySpace(5)]
         private byte _policeLevel;
 
-        [SerializeField, BoxGroup("Parameters"), Title("Max Capacity Stock in kg)"), HideLabel]
+        [SerializeField, BoxGroup("Parameters"), Title("Max Capacity Stock in kg"), HideLabel]
         [MinValue(0.0f), Tooltip("Максимальная вместимость хранилища города в кг")]
         private float _maxCapacityStock;
 
@@ -61,6 +61,8 @@ namespace City
         [MinValue(0.01f)]
         private float _increasedDemandCocaine;
 
+        private float _decliningDemand;
+
         private byte _connectFabricsCount;
 
 
@@ -78,12 +80,13 @@ namespace City
             Debug.Log("Город успешно инициализирован");
         }
 
-        public void ConnectFabricToCity()
+        public void ConnectFabricToCity(float decliningDemand)
         {
             _connectFabricsCount++;
+            _decliningDemand = decliningDemand;
 
             if (_connectFabricsCount! > 0) { _IcityView.ConnectFabric(ref _spriteRendererObject); }
-            Debug.Log("Connect Fabric | City");
+            Debug.Log($"Connect Fabric | City DD {decliningDemand}");
         }
 
         public void DisconnectFabricToCity()
@@ -93,10 +96,10 @@ namespace City
                 _connectFabricsCount--;
 
                 if (_connectFabricsCount == 0) { _IcityView.DisconnectFabric(ref _spriteRendererObject); }
-
-                Debug.Log("Disconnect Fabric | City");
             }
         }
+
+        public float GetDecliningDemand() => _decliningDemand;
 
         public bool CheckCurrentCapacityStock()
         {
@@ -104,19 +107,19 @@ namespace City
             else return false;
         }
 
-        public void IngestResources(float decliningDemand) //todo докинуть тип наркотика
+        public void IngestResources() //todo докинуть тип наркотика
         {
             //_currentDrugDemandCocaine
 
-            if (_currentDrugDemandCocaine > decliningDemand)
+            if (_currentDrugDemandCocaine > _decliningDemand)
             {
-                _currentDrugDemandCocaine += _increasedDemandCocaine - decliningDemand;
-                _currentCapacityStock += decliningDemand;
+                _currentDrugDemandCocaine += _increasedDemandCocaine - _decliningDemand;
+                _currentCapacityStock += _decliningDemand;
                 SellDrugs();
             }
             else
                 _currentDrugDemandCocaine += _increasedDemandCocaine;
-            Debug.Log(decliningDemand);
+            Debug.Log($"Ingest Resources {_decliningDemand}");
         }
 
         private void SellDrugs()
@@ -125,7 +128,7 @@ namespace City
             {
                 _currentCapacityStock -= _weightToSellCocaine;
                 DataControl.IdataPlayer.AddPlayerMoney(_averageCostCocaine);
-                Debug.Log("Продано 1kg");
+                Debug.Log("Sell Drugs");
             }
         }
 
@@ -133,7 +136,7 @@ namespace City
         {
             uint addCountPeople = (uint)(_populationCity * _populationChangeStepPercent / 100);
             _populationCity += addCountPeople;
-            Debug.Log($"{_populationCity} {addCountPeople}");
+            //Debug.Log($"{_populationCity} {addCountPeople}");
         }
 
         private IEnumerator Reproduction()

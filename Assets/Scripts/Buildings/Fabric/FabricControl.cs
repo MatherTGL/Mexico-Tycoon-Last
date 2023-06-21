@@ -92,7 +92,7 @@ namespace Fabric
 
         [SerializeField, FoldoutGroup("Parameters/Control/Transporting")]
         [MinValue(0.0f), EnableIf("_isBuyed"), Title("Upload Resource", horizontalLine: false), HideLabel]
-        private float _uploadResource;
+        private float _uploadResourceAddWay;
 
         #endregion
 
@@ -133,17 +133,17 @@ namespace Fabric
         private void AddNewTransportWay()
         {
             _citiesClients.Add(_cityNewTransportWay);
-            _cityNewTransportWay.ConnectFabricToCity();
+            _cityNewTransportWay.ConnectFabricToCity(_uploadResourceAddWay);
 
-            if (_uploadResource < _currentFreeProductionKgPerDay)
-                _currentFreeProductionKgPerDay -= _uploadResource;
+            if (_uploadResourceAddWay < _currentFreeProductionKgPerDay)
+                _currentFreeProductionKgPerDay -= _uploadResourceAddWay;
             else
             {
-                _uploadResource = _currentFreeProductionKgPerDay;
-                _currentFreeProductionKgPerDay -= _uploadResource;
+                _uploadResourceAddWay = _currentFreeProductionKgPerDay;
+                _currentFreeProductionKgPerDay -= _uploadResourceAddWay;
             }
 
-            _uploadResource = 0;
+            _uploadResourceAddWay = 0;
             _cityNewTransportWay = null;
         }
 
@@ -192,7 +192,7 @@ namespace Fabric
                 {
                     if (_citiesClients[i].CheckCurrentCapacityStock())
                     {
-                        _citiesClients[i].IngestResources(_uploadResource);
+                        _citiesClients[i].IngestResources();
                     }
                     else { Debug.Log("Хранилище города полное"); }
                 }
