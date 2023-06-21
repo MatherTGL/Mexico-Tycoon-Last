@@ -68,6 +68,13 @@ namespace City
 
         public void InitAwake()
         {
+            SearchAndCreateComponents();
+
+            Debug.Log("Город успешно инициализирован");
+        }
+
+        private void SearchAndCreateComponents()
+        {
             if (_configCityControlView is not null) { _IcityView = new CityControlView(_configCityControlView); }
             else { Debug.LogError("Config City Control View missing in CityControl.cs"); }
 
@@ -76,8 +83,6 @@ namespace City
             if (_timeDateControl is null) { _timeDateControl = FindObjectOfType<TimeDateControl>(); }
 
             StartCoroutine(Reproduction());
-
-            Debug.Log("Город успешно инициализирован");
         }
 
         public void ConnectFabricToCity(float decliningDemand)
@@ -136,7 +141,6 @@ namespace City
         {
             uint addCountPeople = (uint)(_populationCity * _populationChangeStepPercent / 100);
             _populationCity += addCountPeople;
-            //Debug.Log($"{_populationCity} {addCountPeople}");
         }
 
         private IEnumerator Reproduction()
