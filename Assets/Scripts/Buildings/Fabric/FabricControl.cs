@@ -97,7 +97,6 @@ namespace Fabric
         #endregion
 
 
-        //#if UNITY_EDITOR //!Аналоги реализовать в скрипте, ответственном за UI для фабрик
         #region Editor Extension
 
         [Button("Buy Fabric", 30), HideIf("_isBuyed"), FoldoutGroup("Parameters/Control"), GUIColor("#15e90f")]
@@ -133,7 +132,6 @@ namespace Fabric
         private void AddNewTransportWay()
         {
             _citiesClients.Add(_cityNewTransportWay);
-            _cityNewTransportWay.ConnectFabricToCity(_uploadResourceAddWay);
 
             if (_uploadResourceAddWay < _currentFreeProductionKgPerDay)
                 _currentFreeProductionKgPerDay -= _uploadResourceAddWay;
@@ -142,6 +140,7 @@ namespace Fabric
                 _uploadResourceAddWay = _currentFreeProductionKgPerDay;
                 _currentFreeProductionKgPerDay -= _uploadResourceAddWay;
             }
+            _cityNewTransportWay.ConnectFabricToCity(_uploadResourceAddWay);
 
             _uploadResourceAddWay = 0;
             _cityNewTransportWay = null;
@@ -156,7 +155,7 @@ namespace Fabric
             }
             _citiesClients.Clear();
         }
-        //#endif
+
         #endregion
 
 
