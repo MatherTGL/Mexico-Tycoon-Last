@@ -249,7 +249,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: _maxCapacityStock
-      value: 10
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: _drugDemandCocaine
@@ -264,6 +264,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _configCityControlView
+      value: 
+      objectReference: {fileID: 11400000, guid: 4ed476ddf62c342b98ebdb9620677b41, type: 2}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: _increasedDemandCocaine
       value: 0.05
       objectReference: {fileID: 0}
@@ -274,6 +278,18 @@ PrefabInstance:
     - target: {fileID: 3276379949940217400, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: m_Name
       value: City (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217402, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_Color.b
+      value: 0.20784314
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217402, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_Color.g
+      value: 0.20784314
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217402, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_Color.r
+      value: 0.20784314
       objectReference: {fileID: 0}
     - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: m_RootOrder
@@ -725,7 +741,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: _maxCapacityStock
-      value: 10
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: _drugDemandCocaine
@@ -735,6 +751,10 @@ PrefabInstance:
       propertyPath: _weightToSellCocaine
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _configCityControlView
+      value: 
+      objectReference: {fileID: 11400000, guid: 4ed476ddf62c342b98ebdb9620677b41, type: 2}
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: _increasedDemandCocaine
       value: 0.1
@@ -746,6 +766,18 @@ PrefabInstance:
     - target: {fileID: 3276379949940217400, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: m_Name
       value: City
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217402, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_Color.b
+      value: 0.20784314
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217402, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_Color.g
+      value: 0.20784314
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217402, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_Color.r
+      value: 0.20784314
       objectReference: {fileID: 0}
     - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: m_RootOrder

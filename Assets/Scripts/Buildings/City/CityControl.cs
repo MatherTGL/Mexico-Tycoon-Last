@@ -2,12 +2,20 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using Boot;
 using Data;
+using Config.CityControl.View;
 
 
 namespace City
 {
     public sealed class CityControl : MonoBehaviour, IBoot
     {
+        private ICityView _IcityView;
+
+        private SpriteRenderer _spriteRendererObject;
+
+        [SerializeField, BoxGroup("Parameters"), Title("Config City Control View"), HideLabel, Required]
+        private ConfigCityControlView _configCityControlView;
+
         [SerializeField, BoxGroup("Parameters"), Title("Population in City"), HideLabel]
         [MinValue(0), MaxValue(double.MaxValue / 2)]
         private double _populationCity;
@@ -44,10 +52,39 @@ namespace City
         [MinValue(0.01f)]
         private float _increasedDemandCocaine;
 
+        private byte _connectFabricCount;
+
 
         public void InitAwake()
         {
+            if (_configCityControlView is not null) { _IcityView = new CityControlView(_configCityControlView); }
+            else { Debug.LogError("Config City Control View missing in CityControl.cs"); }
+
+            if (_spriteRendererObject is null) { _spriteRendererObject = GetComponent<SpriteRenderer>(); }
+
+
             Debug.Log("Город успешно инициализирован");
+        }
+
+        public void ConnectFabricToCity()
+        {
+            _connectFabricCount++;
+
+            if (_connectFabricCount! > 0) { _IcityView.ConnectFabric(ref _spriteRendererObject); }
+            Debug.Log("Connect Fabric | City");
+        }
+
+        public void DisconnectFabricToCity()
+        {
+            if (_connectFabricCount >= 1)
+            {
+                _connectFabricCount--;
+
+                if (_connectFabricCount == 0) { _IcityView.DisconnectFabric(ref _spriteRendererObject); }
+
+                Debug.Log("Disconnect Fabric | City");
+            }
+
         }
 
         public bool CheckCurrentCapacityStock()

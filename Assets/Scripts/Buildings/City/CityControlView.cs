@@ -1,18 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
+using Config.CityControl.View;
 using UnityEngine;
 
-public class CityControlView : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+namespace City
+{
+    public sealed class CityControlView : ICityView
     {
-        
+        private ConfigCityControlView _configCityControlView;
+
+
+        public CityControlView(in ConfigCityControlView configCityControlView)
+        {
+            _configCityControlView = configCityControlView;
+        }
+
+        void ICityView.ConnectFabric(ref SpriteRenderer spriteRenderer)
+        {
+            spriteRenderer.color = _configCityControlView.colorConnectFabric;
+        }
+
+        void ICityView.DisconnectFabric(ref SpriteRenderer spriteRenderer)
+        {
+            spriteRenderer.color = _configCityControlView.colorDisconnectFabric;
+        }
     }
 }

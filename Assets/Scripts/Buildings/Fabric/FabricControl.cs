@@ -133,7 +133,7 @@ namespace Fabric
         private void AddNewTransportWay()
         {
             _citiesClients.Add(_cityNewTransportWay);
-            _cityNewTransportWay = null;
+            _cityNewTransportWay.ConnectFabricToCity();
 
             if (_uploadResource < _currentFreeProductionKgPerDay)
                 _currentFreeProductionKgPerDay -= _uploadResource;
@@ -144,11 +144,16 @@ namespace Fabric
             }
 
             _uploadResource = 0;
+            _cityNewTransportWay = null;
         }
 
         [Button("Clear Cities Clients"), EnableIf("_isBuyed"), FoldoutGroup("Parameters/Control/Transporting")]
         private void RemoveAllCitiesClients()
         {
+            for (int i = 0; i < _citiesClients.Count; i++)
+            {
+                _citiesClients[i].DisconnectFabricToCity();
+            }
             _citiesClients.Clear();
         }
         //#endif

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerControlDefaultConfig
   m_EditorClassIdentifier: 
   _speedMove: 1
-  _speedMoveMouse: 1
+  _speedMoveMouse: 0.7
   _speedMoveFast: 2
   _speedZoom: 10
   _minZoomCameraDistance: 30
