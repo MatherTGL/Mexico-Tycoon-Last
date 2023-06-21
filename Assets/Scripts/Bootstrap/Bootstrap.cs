@@ -13,9 +13,11 @@ namespace Boot
     {
         [BoxGroup("Parameters"), FoldoutGroup("Parameters/Super Important")]
         [SerializeField, Required, FoldoutGroup("Parameters/Super Important/Single")]
+        [Title("Data Control", horizontalLine: false), HideLabel]
         private DataControl _dataControl;
 
         [SerializeField, Required, FoldoutGroup("Parameters/Super Important/Single")]
+        [Title("Player Control Movement", horizontalLine: false), HideLabel]
         private PlayerControlMovement _playerControlMovement;
 
         private List<IBoot> _bootObjectList = new List<IBoot>();
@@ -58,5 +60,20 @@ namespace Boot
                 _bootObjectList[i].InitAwake();
             }
         }
+
+#if UNITY_EDITOR
+        [SerializeField, FoldoutGroup("Parameters/AutoSearch"), ToggleLeft, LabelText("Use Add Auto Singles")]
+        private bool _isUseAddAutoSingles;
+
+
+        [Button("Auto Search"), FoldoutGroup("Parameters/AutoSearch")]
+        private void AutoSearch()
+        {
+            if (_isUseAddAutoSingles)
+            {
+                _playerControlMovement = FindObjectOfType<PlayerControlMovement>();
+            }
+        }
+#endif
     }
 }

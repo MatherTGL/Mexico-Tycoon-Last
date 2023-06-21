@@ -6,6 +6,7 @@ using TimeControl;
 using Data;
 using City;
 using System.Collections.Generic;
+using Config.FabricControl.View;
 
 
 namespace Fabric
@@ -14,12 +15,20 @@ namespace Fabric
     {
         #region Variables
 
-        private IFabricProduction _IFabricProduction;
+        private IFabricProduction _IfabricProduction;
+        private IFabricView _IfabricView;
 
         [BoxGroup("Parameters", centerLabel: true), TabGroup("Parameters/Tabs", "Links")]
         [SerializeField, Required, Title("Time Date Control", horizontalLine: false), HideLabel]
         [EnableIf("@_timeDateControl == null")]
         private TimeDateControl _timeDateControl;
+
+        [BoxGroup("Parameters", centerLabel: true), TabGroup("Parameters/Tabs", "Links")]
+        [SerializeField, Required, Title("Config Fabric Control View", horizontalLine: false), HideLabel]
+        [EnableIf("@_configFabricControlView == null")]
+        private ConfigFabricControlView _configFabricControlView;
+
+        private SpriteRenderer _spriteRendererObject;
 
         [TabGroup("Parameters/Tabs", "Toggles")]
         [SerializeField, ReadOnly, LabelText("Buyed"), ToggleLeft]
@@ -98,6 +107,7 @@ namespace Fabric
             if (DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(_fabricBuyCost, true))
             {
                 _isBuyed = true;
+                _IfabricView.BuyFabricView(ref _spriteRendererObject);
                 Debug.Log("Фабрика куплена");
             }
         }
@@ -108,6 +118,7 @@ namespace Fabric
             _isBuyed = false;
             _isWork = false;
             DataControl.IdataPlayer.AddPlayerMoney(_fabricSellCost);
+            _IfabricView.SellFabricView(ref _spriteRendererObject);
             Debug.Log("Фабрика продана");
         }
 
@@ -115,6 +126,7 @@ namespace Fabric
         private void WorkFabricEditor()
         {
             _isWork = !_isWork;
+            _IfabricView.ChangeWorkStateFabricView(ref _spriteRendererObject, _isWork);
         }
 
         [Button("Add Transport Way"), EnableIf("_isBuyed"), FoldoutGroup("Parameters/Control/Transporting"), PropertySpace(15)]
@@ -150,14 +162,21 @@ namespace Fabric
                 Debug.LogWarning("TimeDateControl is null in FabricControl.cs");
                 _timeDateControl = FindObjectOfType<TimeDateControl>();
             }
+            SetFabricControlViewParameters();
 
             StartCoroutine(DrugProduction());
         }
 
-        private void SetParametersFabricProduction()
+        private void SetFabricProduction()
         {
-            _IFabricProduction = new FabricProduction();
+            _IfabricProduction = new FabricProduction();
             _currentFreeProductionKgPerDay = _productivityKgPerDay;
+        }
+
+        private void SetFabricControlViewParameters()
+        {
+            if (_spriteRendererObject is null) { _spriteRendererObject = GetComponent<SpriteRenderer>(); }
+            _IfabricView = new FabricControlView(_configFabricControlView);
         }
 
         private void TransportingResourcesProduction()
@@ -179,15 +198,15 @@ namespace Fabric
         {
             while (true)
             {
-                if (_IFabricProduction is not null)
+                if (_IfabricProduction is not null)
                 {
                     if (_isWork)
                     {
-                        _IFabricProduction.ProductionProduct(_currentFreeProductionKgPerDay, _maxCapacityStock, ref _productInStock);
+                        _IfabricProduction.ProductionProduct(_currentFreeProductionKgPerDay, _maxCapacityStock, ref _productInStock);
                         TransportingResourcesProduction();
                     }
                 }
-                else { SetParametersFabricProduction(); }
+                else { SetFabricProduction(); }
                 yield return new WaitForSecondsRealtime(_timeDateControl.GetCurrentTimeOneDay());
             }
         }

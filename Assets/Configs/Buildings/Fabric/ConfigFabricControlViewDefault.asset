@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41f41168577e972a482f0cb661fc2697, type: 3}
+  m_Name: ConfigFabricControlViewDefault
+  m_EditorClassIdentifier: 
+  _colorBuyed: {r: 0.94509804, g: 0.7411765, b: 0.23529412, a: 1}
+  _colorSelled: {r: 0.8679245, g: 0.24973297, b: 0.24973297, a: 1}
+  _colorActiveWork: {r: 0.21960784, g: 0.8784314, b: 0.3162481, a: 1}
+  _colorDeactiveWork: {r: 0.20754719, g: 0.20754719, b: 0.20754719, a: 1}
