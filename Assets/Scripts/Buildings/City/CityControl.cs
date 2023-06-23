@@ -18,47 +18,61 @@ namespace City
         [SerializeField, BoxGroup("Parameters"), Required, Title("Time Date Control"), HideLabel]
         private TimeDateControl _timeDateControl;
 
-        [SerializeField, BoxGroup("Parameters"), Title("Config City Control View"), HideLabel, Required, PropertySpace(0, 15)]
+        [SerializeField, BoxGroup("Parameters")]
+        [Title("Config City Control View"), HideLabel, Required, PropertySpace(0, 15)]
         private ConfigCityControlView _configCityControlView;
+
+        private const byte c_mathematicalDivisor = 100;
 
         [FoldoutGroup("Parameters/Population City"), Title("Population in City", horizontalLine: false)]
         [MinValue(0), MaxValue(double.MaxValue / 2), HideLabel, SerializeField]
         private uint _populationCity;
 
-        [FoldoutGroup("Parameters/Population City"), Title("Population Percent Change in %/day", horizontalLine: false)]
-        [MinValue(-0.3f), MaxValue(0.3f), SerializeField, HideLabel]
+        [SerializeField, Title("Population Percent Change in %/day", horizontalLine: false)]
+        [HideLabel, ReadOnly, FoldoutGroup("Parameters/Population City/Population Change Step")]
         private float _populationChangeStepPercent;
 
-        [SerializeField, BoxGroup("Parameters"), Title("Police Level in star (0-10)"), HideLabel]
-        [MinValue(0), MaxValue(10), Tooltip("Уровень полиции в данном городе"), PropertySpace(5)]
+        [FoldoutGroup("Parameters/Population City/Population Change Step"), Title("Max %/day", horizontalLine: false)]
+        [MinValue(0.1f), MaxValue(1.0f), SerializeField, HideLabel]
+        [HorizontalGroup("Parameters/Population City/Population Change Step/Horizontal")]
+        private float _populationChangeStepPercentMax;
+
+        [FoldoutGroup("Parameters/Population City/Population Change Step"), Title("Min %/day", horizontalLine: false)]
+        [MinValue(-1.0f), MaxValue(-0.01f), SerializeField, HideLabel]
+        [HorizontalGroup("Parameters/Population City/Population Change Step/Horizontal")]
+        private float _populationChangeStepPercentMin;
+
+        [SerializeField, BoxGroup("Parameters"), Title("Police Level in star (0-10)", horizontalLine: false)]
+        [MinValue(0), MaxValue(10), Tooltip("Уровень полиции в данном городе"), PropertySpace(5), HideLabel]
         private byte _policeLevel;
 
-        [SerializeField, BoxGroup("Parameters"), Title("Max Capacity Stock in kg"), HideLabel]
-        [MinValue(0.0f), Tooltip("Максимальная вместимость хранилища города в кг")]
+        [SerializeField, BoxGroup("Parameters"), Title("Max Capacity Stock in kg", horizontalLine: false)]
+        [MinValue(0.0f), Tooltip("Максимальная вместимость хранилища города в кг"), HideLabel]
         private float _maxCapacityStock;
 
-        [SerializeField, BoxGroup("Parameters"), Title("Current Capacity Stock in kg)"), HideLabel]
+        [SerializeField, BoxGroup("Parameters"), Title("Current Capacity Stock in kg", horizontalLine: false), HideLabel]
         [MinValue(0.0f), Tooltip("Текущая вместимость хранилища города в кг"), ReadOnly]
         private float _currentCapacityStock;
 
-        [FoldoutGroup("Parameters/Drugs")]
-        [SerializeField, FoldoutGroup("Parameters/Drugs/Cocaine"), Title("Percentage of Users Cocaine in %"), HideLabel]
+        [FoldoutGroup("Parameters/Drugs"), SerializeField, HideLabel]
+        [FoldoutGroup("Parameters/Drugs/Cocaine"), Title("Percentage of Users Cocaine in %", horizontalLine: false)]
         [MinValue(1.0f), MaxValue(80.0f), Tooltip("Процент наркоманов употребляющих кокаин в данном городе")]
         private float _percentageUsersCocaine;
 
-        [SerializeField, FoldoutGroup("Parameters/Drugs/Cocaine"), Title("Average Cost Cocaine in $/kg"), HideLabel]
+        [Title("Average Cost Cocaine in $/kg", horizontalLine: false)]
+        [SerializeField, FoldoutGroup("Parameters/Drugs/Cocaine"), HideLabel]
         private uint _averageCostCocaine;
 
-        [SerializeField, FoldoutGroup("Parameters/Drugs/Cocaine"), Title("Weight to Sell Cocaine in kg"), HideLabel]
-        [MinValue(1)]
+        [FoldoutGroup("Parameters/Drugs/Cocaine"), Title("Weight to Sell Cocaine in kg", horizontalLine: false)]
+        [MinValue(1), SerializeField, HideLabel]
         private float _weightToSellCocaine; //? сменить на float для игрока
 
-        [SerializeField, FoldoutGroup("Parameters/Drugs/Cocaine"), Title("Current Drug Demand Cocaine in kg/day"), HideLabel]
-        [MinValue(0.0f)]
+        [FoldoutGroup("Parameters/Drugs/Cocaine"), Title("Current Drug Demand Cocaine in kg/day")]
+        [MinValue(0.0f), HideLabel, SerializeField]
         private float _currentDrugDemandCocaine;
 
-        [SerializeField, FoldoutGroup("Parameters/Drugs/Cocaine"), Title("Increased Demand Cocaine in kg/day"), HideLabel]
-        [MinValue(0.01f)]
+        [FoldoutGroup("Parameters/Drugs/Cocaine"), Title("Increased Demand Cocaine in kg/day")]
+        [MinValue(0.01f), HideLabel, SerializeField]
         private float _increasedDemandCocaine;
 
         private float _decliningDemand;
@@ -139,8 +153,10 @@ namespace City
 
         private void ReproductionPopulation()
         {
-            uint addCountPeople = (uint)(_populationCity * _populationChangeStepPercent / 100);
+            _populationChangeStepPercent = Random.Range(_populationChangeStepPercentMin, _populationChangeStepPercentMax);
+            uint addCountPeople = (uint)(_populationCity * _populationChangeStepPercent / c_mathematicalDivisor);
             _populationCity += addCountPeople;
+            Debug.Log(_populationChangeStepPercent);
         }
 
         private IEnumerator Reproduction()

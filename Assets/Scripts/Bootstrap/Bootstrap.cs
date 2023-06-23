@@ -65,10 +65,22 @@ namespace Boot
         [SerializeField, FoldoutGroup("Parameters/AutoSearch"), ToggleLeft, LabelText("Use Add Auto Singles")]
         private bool _isUseAddAutoSingles;
 
+        [SerializeField, FoldoutGroup("Parameters/AutoSearch"), LabelText("Count Auto Search Iterations")]
+        private ushort _countAutoSearchIterations = 40;
+
 
         [Button("Auto Search"), FoldoutGroup("Parameters/AutoSearch")]
         private void AutoSearch()
         {
+            for (int i = 0; i < _countAutoSearchIterations; i++)
+            {
+                var _findedObjectFabricControl = FindObjectsOfType<FabricControl>();
+                _bootFabricControl.Add(_findedObjectFabricControl[i]);
+
+                var _findedObjectCityControl = FindObjectsOfType<CityControl>();
+                _bootCityControl.Add(_findedObjectCityControl[i]);
+            }
+
             if (_isUseAddAutoSingles)
             {
                 _playerControlMovement = FindObjectOfType<PlayerControlMovement>();
@@ -77,3 +89,5 @@ namespace Boot
 #endif
     }
 }
+//? если находим новый объект по типу, то добавоям в лист и продолжаем поиск.
+//? Если нет, то не добавляем
