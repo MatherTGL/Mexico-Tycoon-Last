@@ -61,14 +61,22 @@ namespace Player.Movement
 
             if (Input.GetMouseButton(1))
             {
-                direcionMoveX = _configPlayerControlMove.speedMoveMouse * _inputControl.axisMouseX;
-                directionMoveY = _configPlayerControlMove.speedMoveMouse * _inputControl.axisMouseY;
+                var distanceZoomSpeedMoveMouse = transform.position.z / _configPlayerControlMove.speedMoveMouse;
+
+                Debug.Log(distanceZoomSpeedMoveMouse);
+
+                direcionMoveX = distanceZoomSpeedMoveMouse * _inputControl.axisMouseX;
+                directionMoveY = distanceZoomSpeedMoveMouse * _inputControl.axisMouseY;
                 //todo сделать отдельные переменные отвечающие за скорость при нажатии на пкм
             }
             else
             {
-                direcionMoveX = _configPlayerControlMove.speedMove * _inputControl.axisHorizontalMove;
-                directionMoveY = _configPlayerControlMove.speedMove * _inputControl.axisVerticalMove;
+                var distanceZoomSpeedMove = transform.position.z / _configPlayerControlMove.speedMove;
+
+                Debug.Log(distanceZoomSpeedMove);
+
+                direcionMoveX = distanceZoomSpeedMove * _inputControl.axisHorizontalMove;
+                directionMoveY = distanceZoomSpeedMove * _inputControl.axisVerticalMove;
             }
             directionMoveZ = _configPlayerControlMove.speedZoom * _inputControl.axisMouseScrollWheel;
 

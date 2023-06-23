@@ -9,7 +9,7 @@ namespace Config.Player
     {
         [BoxGroup("Parameters")]
         [SerializeField, FoldoutGroup("Parameters/Speed/Move"), Title("Keyboard", HorizontalLine = false), HideLabel]
-        [HorizontalGroup("Parameters/Speed/Move/HorizontalMove")]
+        [HorizontalGroup("Parameters/Speed/Move/HorizontalMove"), Tooltip("Чем выше значение, тем ниже скорость игрока")]
         private float _speedMove;
         public float speedMove => _speedMove;
 
