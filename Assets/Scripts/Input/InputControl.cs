@@ -37,6 +37,16 @@ public sealed class InputControl : MonoBehaviour
     private KeyCode _keycodeSpace = KeyCode.Space;
     public KeyCode keycodeSpace => _keycodeSpace;
 
+    [SerializeField, BoxGroup("Parameters/Keycodes"), LabelText("Left Shift")]
+    [FoldoutGroup("Parameters/Keycodes/Special")]
+    private KeyCode _keycodeLeftShift = KeyCode.LeftShift;
+    public KeyCode keycodeLeftShift => _keycodeLeftShift;
+
+    [SerializeField, BoxGroup("Parameters/Keycodes"), LabelText("Left Control")]
+    [FoldoutGroup("Parameters/Keycodes/Special")]
+    private KeyCode _keycodeLeftCtrl = KeyCode.LeftControl;
+    public KeyCode keycodeLeftCtrl => _keycodeLeftCtrl;
+
     private float _axisHorizontalMove;
     public float axisHorizontalMove => _axisHorizontalMove;
 

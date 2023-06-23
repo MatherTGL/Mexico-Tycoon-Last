@@ -29,6 +29,8 @@ namespace Player.Movement
         [HideLabel, Title("Rigidbody", HorizontalLine = false)]
         private Rigidbody _rigidbody;
 
+        private float _currentSpeed;
+
 
         public void InitAwake() => DontDestroyOnLoad(gameObject);
 
@@ -71,13 +73,18 @@ namespace Player.Movement
             }
             else
             {
-                var distanceZoomSpeedMove = transform.position.z / _configPlayerControlMove.speedMove;
+                if (Input.GetKey(_inputControl.keycodeLeftCtrl))
+                    _currentSpeed = _configPlayerControlMove.speedMoveFast;
+                else
+                    _currentSpeed = _configPlayerControlMove.speedMove;
 
+                var distanceZoomSpeedMove = transform.position.z / _currentSpeed;
                 Debug.Log(distanceZoomSpeedMove);
 
                 direcionMoveX = distanceZoomSpeedMove * _inputControl.axisHorizontalMove;
                 directionMoveY = distanceZoomSpeedMove * _inputControl.axisVerticalMove;
             }
+
             directionMoveZ = _configPlayerControlMove.speedZoom * _inputControl.axisMouseScrollWheel;
 
             Vector3 directionMoveCamera = new Vector3(direcionMoveX, directionMoveY, directionMoveZ);

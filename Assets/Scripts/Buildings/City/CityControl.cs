@@ -138,7 +138,6 @@ namespace City
             }
             else
                 _currentDrugDemandCocaine += _increasedDemandCocaine;
-            Debug.Log($"Ingest Resources {_decliningDemand}");
         }
 
         private void SellDrugs()
@@ -147,7 +146,6 @@ namespace City
             {
                 _currentCapacityStock -= _weightToSellCocaine;
                 DataControl.IdataPlayer.AddPlayerMoney(_averageCostCocaine);
-                Debug.Log("Sell Drugs");
             }
         }
 
@@ -156,7 +154,6 @@ namespace City
             _populationChangeStepPercent = Random.Range(_populationChangeStepPercentMin, _populationChangeStepPercentMax);
             uint addCountPeople = (uint)(_populationCity * _populationChangeStepPercent / c_mathematicalDivisor);
             _populationCity += addCountPeople;
-            Debug.Log(_populationChangeStepPercent);
         }
 
         private IEnumerator Reproduction()

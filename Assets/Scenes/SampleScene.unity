@@ -752,6 +752,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4375912937590698603}
     - target: {fileID: 8688798508615415645, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
+      propertyPath: _isUseAddAutoArrayObjects
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8688798508615415645, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
+      propertyPath: _bootCityControl.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8688798508615415645, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
       propertyPath: _bootCityControl.Array.data[0]
       value: 
       objectReference: {fileID: 1172566792}

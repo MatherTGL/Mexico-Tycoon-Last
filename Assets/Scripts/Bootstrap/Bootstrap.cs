@@ -84,6 +84,9 @@ namespace Boot
         {
             if (_isUseAddAutoArrayObjects)
             {
+                _bootCityControl.Clear();
+                _bootFabricControl.Clear();
+
                 for (int i = 0; i < _countAutoSearchIterations; i++)
                 {
                     var _findedObjectFabricControl = FindObjectsOfType<FabricControl>();
