@@ -673,18 +673,6 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4375912937434679829, guid: c00373ece0d50ffd1aec08aa9999744d, type: 3}
-      propertyPath: m_BackGroundColor.b
-      value: 0.9339623
-      objectReference: {fileID: 0}
-    - target: {fileID: 4375912937434679829, guid: c00373ece0d50ffd1aec08aa9999744d, type: 3}
-      propertyPath: m_BackGroundColor.g
-      value: 0.9339623
-      objectReference: {fileID: 0}
-    - target: {fileID: 4375912937434679829, guid: c00373ece0d50ffd1aec08aa9999744d, type: 3}
-      propertyPath: m_BackGroundColor.r
-      value: 0.9339623
-      objectReference: {fileID: 0}
     - target: {fileID: 4375912937434679830, guid: c00373ece0d50ffd1aec08aa9999744d, type: 3}
       propertyPath: m_Name
       value: Player Camera
@@ -756,17 +744,13 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 8688798508615415645, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
+      propertyPath: _timeDateControl
+      value: 
+      objectReference: {fileID: 519420036}
+    - target: {fileID: 8688798508615415645, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
       propertyPath: _playerControlMovement
       value: 
       objectReference: {fileID: 4375912937590698603}
-    - target: {fileID: 8688798508615415645, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
-      propertyPath: _bootCityControl.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8688798508615415645, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
-      propertyPath: _bootFabricControl.Array.size
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 8688798508615415645, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
       propertyPath: _bootCityControl.Array.data[0]
       value: 
@@ -778,11 +762,11 @@ PrefabInstance:
     - target: {fileID: 8688798508615415645, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
       propertyPath: _bootFabricControl.Array.data[0]
       value: 
-      objectReference: {fileID: 2115739772}
+      objectReference: {fileID: 1931697886}
     - target: {fileID: 8688798508615415645, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
       propertyPath: _bootFabricControl.Array.data[1]
       value: 
-      objectReference: {fileID: 1931697886}
+      objectReference: {fileID: 2115739772}
     - target: {fileID: 8688798508615415646, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
       propertyPath: m_RootOrder
       value: 0

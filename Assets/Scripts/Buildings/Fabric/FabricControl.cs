@@ -190,9 +190,7 @@ namespace Fabric
                 for (int i = 0; i < _citiesClients.Count; i++)
                 {
                     if (_citiesClients[i].CheckCurrentCapacityStock())
-                    {
                         _citiesClients[i].IngestResources();
-                    }
                     else { Debug.Log("Хранилище города полное"); }
                 }
             }
@@ -206,12 +204,18 @@ namespace Fabric
                 {
                     if (_isWork)
                     {
-                        _IfabricProduction.ProductionProduct(_currentFreeProductionKgPerDay, _maxCapacityStock, ref _productInStock);
-                        TransportingResourcesProduction();
+                        if (!_timeDateControl.GetStatePaused())
+                        {
+                            _IfabricProduction.ProductionProduct(_currentFreeProductionKgPerDay, _maxCapacityStock, ref _productInStock);
+                            TransportingResourcesProduction();
+                            Debug.Log("нихуя себе");
+                            Debug.Log(_timeDateControl.GetCurrentTimeOneDay(true));
+                        }
+                        else { Debug.Log("Пауза фабрик контрол"); }
                     }
                 }
                 else { SetFabricProduction(); }
-                yield return new WaitForSecondsRealtime(_timeDateControl.GetCurrentTimeOneDay());
+                yield return new WaitForSecondsRealtime(_timeDateControl.GetCurrentTimeOneDay(true));
             }
         }
     }

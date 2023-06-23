@@ -47,11 +47,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dataControl: {fileID: 8688798507687682191}
   _playerControlMovement: {fileID: 0}
+  _timeDateControl: {fileID: 0}
   _bootFabricControl:
+  - {fileID: 0}
   - {fileID: 0}
   _bootCityControl:
   - {fileID: 0}
   - {fileID: 0}
+  _isUseAddAutoSingles: 0
+  _isUseAddAutoArrayObjects: 0
+  _countAutoSearchIterations: 10
 --- !u!1001 &642964230530247661
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -163,8 +163,8 @@ namespace City
         {
             while (true)
             {
-                ReproductionPopulation();
-                yield return new WaitForSecondsRealtime(_timeDateControl.GetCurrentTimeOneDay());
+                if (!_timeDateControl.GetStatePaused()) { ReproductionPopulation(); }
+                yield return new WaitForSeconds(_timeDateControl.GetCurrentTimeOneDay(true));
             }
         }
     }

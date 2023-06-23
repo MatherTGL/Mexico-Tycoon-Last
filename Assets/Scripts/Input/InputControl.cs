@@ -12,6 +12,30 @@ public sealed class InputControl : MonoBehaviour
     [HorizontalGroup("Parameters/Clamp")]
     private float _maxForceMouseClampVertical;
 
+    [SerializeField, BoxGroup("Parameters/Keycodes")]
+    [FoldoutGroup("Parameters/Keycodes/Alpha")]
+    private KeyCode _keycodeNumberOne = KeyCode.Alpha1;
+    public KeyCode keycodeNumberOne => _keycodeNumberOne;
+
+    [SerializeField, BoxGroup("Parameters/Keycodes")]
+    [FoldoutGroup("Parameters/Keycodes/Alpha")]
+    private KeyCode _keycodeNumberTwo = KeyCode.Alpha2;
+    public KeyCode keycodeNumberTwo => _keycodeNumberTwo;
+
+    [SerializeField, BoxGroup("Parameters/Keycodes")]
+    [FoldoutGroup("Parameters/Keycodes/Alpha")]
+    private KeyCode _keycodeNumberThree = KeyCode.Alpha3;
+    public KeyCode keycodeNumberThree => _keycodeNumberThree;
+
+    [SerializeField, BoxGroup("Parameters/Keycodes")]
+    [FoldoutGroup("Parameters/Keycodes/Alpha")]
+    private KeyCode _keycodeNumberFour = KeyCode.Alpha4;
+    public KeyCode keycodeNumberFour => _keycodeNumberFour;
+
+    [SerializeField, BoxGroup("Parameters/Keycodes")]
+    [FoldoutGroup("Parameters/Keycodes/Special")]
+    private KeyCode _keycodeSpace = KeyCode.Space;
+    public KeyCode keycodeSpace => _keycodeSpace;
 
     private float _axisHorizontalMove;
     public float axisHorizontalMove => _axisHorizontalMove;
