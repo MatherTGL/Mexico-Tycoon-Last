@@ -47,6 +47,16 @@ public sealed class InputControl : MonoBehaviour
     private KeyCode _keycodeLeftCtrl = KeyCode.LeftControl;
     public KeyCode keycodeLeftCtrl => _keycodeLeftCtrl;
 
+    [SerializeField, BoxGroup("Parameters/Keycodes"), LabelText("Left Button")]
+    [FoldoutGroup("Parameters/Keycodes/Mouse")]
+    private KeyCode _keycodeLeftMouseButton = KeyCode.Mouse0;
+    public KeyCode keycodeLeftMouseButton => _keycodeLeftMouseButton;
+
+    [SerializeField, BoxGroup("Parameters/Keycodes"), LabelText("Right Button")]
+    [FoldoutGroup("Parameters/Keycodes/Mouse")]
+    private KeyCode _keycodeRightMouseButton = KeyCode.Mouse1;
+    public KeyCode keycodeRightMouseButton => _keycodeRightMouseButton;
+
     private float _axisHorizontalMove;
     public float axisHorizontalMove => _axisHorizontalMove;
 

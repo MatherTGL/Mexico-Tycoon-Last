@@ -9,15 +9,15 @@ using TimeControl.Acceleration;
 
 namespace TimeControl
 {
-    public sealed class TimeDateControl : MonoBehaviour, IBoot
+    internal sealed class TimeDateControl : MonoBehaviour, IBoot
     {
+        private static TimeAcceleration _timeAcceleration;
+
         [SerializeField, BoxGroup("Parameters"), Required]
         private ConfigTimeControlEditor _configTimeControl;
 
         [SerializeField, BoxGroup("Parameters"), Required]
         private InputControl _inputControl;
-
-        private static TimeAcceleration _timeAcceleration;
 
         private float _currentTimeOneDay = 1;
 
@@ -27,8 +27,6 @@ namespace TimeControl
         public void InitAwake()
         {
             _timeAcceleration = new TimeAcceleration(_configTimeControl, _inputControl);
-            _isPaused = false;
-            Debug.Log("Инициализация TimeDateControl успешна");
         }
 
         private void Update() => _timeAcceleration.AccelerationCheck(ref _currentTimeOneDay, ref _isPaused);
@@ -37,7 +35,8 @@ namespace TimeControl
         {
             if (isUseCoroutine)
                 return _configTimeControl.defaultTimeOneDay / _currentTimeOneDay;
-            else { return _currentTimeOneDay; }
+            else
+                return _currentTimeOneDay;
         }
 
         public bool GetStatePaused() => _isPaused;

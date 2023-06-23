@@ -13,13 +13,13 @@ namespace Config.Player
         private float _speedMove;
         public float speedMove => _speedMove;
 
-        [SerializeField, FoldoutGroup("Parameters/Speed/Move"), Title("Mouse", horizontalLine: false), HideLabel]
-        [HorizontalGroup("Parameters/Speed/Move/HorizontalMove")]
+        [SerializeField, FoldoutGroup("Parameters/Speed/Move"), Title("Mouse", horizontalLine: false)]
+        [HorizontalGroup("Parameters/Speed/Move/HorizontalMove"), HideLabel]
         private float _speedMoveMouse;
         public float speedMoveMouse => _speedMoveMouse;
 
-        [SerializeField, FoldoutGroup("Parameters/Speed/Move"), Title("Fast", HorizontalLine = false), HideLabel]
-        [HorizontalGroup("Parameters/Speed/Move/HorizontalMove")]
+        [SerializeField, FoldoutGroup("Parameters/Speed/Move"), Title("Fast", HorizontalLine = false)]
+        [HorizontalGroup("Parameters/Speed/Move/HorizontalMove"), HideLabel]
         private float _speedMoveFast;
         public float speedMoveFast => _speedMoveFast;
 

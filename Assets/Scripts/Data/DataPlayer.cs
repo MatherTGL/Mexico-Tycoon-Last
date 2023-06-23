@@ -4,10 +4,8 @@ using UnityEngine;
 
 namespace Data.Player
 {
-    public class DataPlayer : IDataPlayer
+    public sealed class DataPlayer : IDataPlayer
     {
-        //TODO закинуть в ридонли конфиг для удобства 
-        //? через конструктор
         private static double _money;
         private static ushort _researchPoints;
 
@@ -16,32 +14,29 @@ namespace Data.Player
         {
             _money = configDataPlayer.startPlayerMoney;
             _researchPoints = configDataPlayer.startPlayerResearchPoints;
-            Debug.Log($"{_money} / {_researchPoints}");
         }
 
-        void IDataPlayer.AddPlayerMoney(in double amount)
-        {
-            _money += amount;
-            Debug.Log(_money);
-        }
+        void IDataPlayer.AddPlayerMoney(in double amountMoney) => _money += amountMoney;
 
-        void IDataPlayer.AddPlayerResearchPoints(in ushort amount) => _researchPoints += amount;
+        void IDataPlayer.AddPlayerResearchPoints(in ushort amountResearchPoints) => _researchPoints += amountResearchPoints;
 
-        bool IDataPlayer.CheckAndSpendingPlayerMoney(in double amount, in bool isSpending)
+        bool IDataPlayer.CheckAndSpendingPlayerMoney(in double neededSum, in bool isSpending)
         {
-            if (amount < _money)
+            if (neededSum < _money)
             {
                 if (isSpending)
                 {
-                    _money -= amount;
+                    SpendingMoney(neededSum);
                     return true;
                 }
                 else return false;
             }
-            else
-            {
-                return false;
-            }
+            else return false;
+        }
+
+        private void SpendingMoney(double neededSum)
+        {
+            _money -= neededSum;
         }
 
         bool IDataPlayer.CheckAndSpendingPlayerResearchPoints(in ushort amount, in bool isSpending)

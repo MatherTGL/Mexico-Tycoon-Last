@@ -10,7 +10,7 @@ using TimeControl;
 
 namespace Boot
 {
-    public sealed class Bootstrap : MonoBehaviour
+    internal sealed class Bootstrap : MonoBehaviour
     {
         [BoxGroup("Parameters"), FoldoutGroup("Parameters/Super Important")]
         [SerializeField, Required, FoldoutGroup("Parameters/Super Important/Single")]
@@ -84,8 +84,7 @@ namespace Boot
         {
             if (_isUseAddAutoArrayObjects)
             {
-                _bootCityControl.Clear();
-                _bootFabricControl.Clear();
+                ClearBootObjectsList();
 
                 for (int i = 0; i < _countAutoSearchIterations; i++)
                 {
@@ -102,6 +101,12 @@ namespace Boot
                 _playerControlMovement = FindObjectOfType<PlayerControlMovement>();
                 _timeDateControl = FindObjectOfType<TimeDateControl>();
             }
+        }
+
+        private void ClearBootObjectsList()
+        {
+            _bootCityControl.Clear();
+            _bootFabricControl.Clear();
         }
 #endif
     }

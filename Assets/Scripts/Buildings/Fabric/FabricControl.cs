@@ -11,7 +11,7 @@ using Config.FabricControl.View;
 
 namespace Fabric
 {
-    public sealed class FabricControl : MonoBehaviour, IBoot
+    internal sealed class FabricControl : MonoBehaviour, IBoot
     {
         #region Variables
 
@@ -107,7 +107,6 @@ namespace Fabric
             {
                 _isBuyed = true;
                 _IfabricView.BuyFabricView(ref _spriteRendererObject);
-                Debug.Log("Фабрика куплена");
             }
         }
 
@@ -118,7 +117,6 @@ namespace Fabric
             _isWork = false;
             DataControl.IdataPlayer.AddPlayerMoney(_fabricSellCost);
             _IfabricView.SellFabricView(ref _spriteRendererObject);
-            Debug.Log("Фабрика продана");
         }
 
         [Button("Work Fabric", 30), ShowIf("_isBuyed"), FoldoutGroup("Parameters/Control"), PropertySpace(15)]
@@ -166,15 +164,17 @@ namespace Fabric
                 Debug.LogWarning("TimeDateControl is null in FabricControl.cs");
                 _timeDateControl = FindObjectOfType<TimeDateControl>();
             }
-            SetFabricControlViewParameters();
 
-            StartCoroutine(DrugProduction());
+            SetFabricProduction();
         }
 
         private void SetFabricProduction()
         {
             _IfabricProduction = new FabricProduction();
             _currentFreeProductionKgPerDay = _productivityKgPerDay;
+
+            SetFabricControlViewParameters();
+            StartCoroutine(DrugProduction());
         }
 
         private void SetFabricControlViewParameters()
@@ -200,21 +200,14 @@ namespace Fabric
         {
             while (true)
             {
-                if (_IfabricProduction is not null)
+                if (_isWork)
                 {
-                    if (_isWork)
+                    if (_timeDateControl.GetStatePaused() is false)
                     {
-                        if (!_timeDateControl.GetStatePaused())
-                        {
-                            _IfabricProduction.ProductionProduct(_currentFreeProductionKgPerDay, _maxCapacityStock, ref _productInStock);
-                            TransportingResourcesProduction();
-                            Debug.Log("нихуя себе");
-                            Debug.Log(_timeDateControl.GetCurrentTimeOneDay(true));
-                        }
-                        else { Debug.Log("Пауза фабрик контрол"); }
+                        _IfabricProduction.ProductionProduct(_currentFreeProductionKgPerDay, _maxCapacityStock, ref _productInStock);
+                        TransportingResourcesProduction();
                     }
                 }
-                else { SetFabricProduction(); }
                 yield return new WaitForSecondsRealtime(_timeDateControl.GetCurrentTimeOneDay(true));
             }
         }

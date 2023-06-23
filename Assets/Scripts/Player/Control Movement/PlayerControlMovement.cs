@@ -10,11 +10,12 @@ namespace Player.Movement
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(InputControl))]
     [RequireComponent(typeof(TimeDateControl))]
-    public sealed class PlayerControlMovement : MonoBehaviour, IBoot
+    internal sealed class PlayerControlMovement : MonoBehaviour, IBoot
     {
 #if UNITY_EDITOR
-        [SerializeField, ToggleLeft, BoxGroup("Parameters"), Title("Edit Parameters")]
-        private bool _isEditParametersEditor;
+        [ShowInInspector, ToggleLeft, BoxGroup("Parameters")]
+        [Title("Edit Parameters", horizontalLine: false), HideLabel]
+        private readonly bool _isEditParametersEditor;
 #endif
 
         [SerializeField, Required, BoxGroup("Parameters/Configs"), EnableIf("_isEditParametersEditor")]
@@ -29,14 +30,22 @@ namespace Player.Movement
         [HideLabel, Title("Rigidbody", HorizontalLine = false)]
         private Rigidbody _rigidbody;
 
+        [SerializeField, BoxGroup("Parameters/Readonly"), ReadOnly]
         private float _currentSpeed;
+
+        [SerializeField, BoxGroup("Parameters/Readonly"), ReadOnly]
+        private float _distanceZoomSpeedMove;
+
+        private float _direcionMoveX;
+        private float _directionMoveY;
+        private float _directionMoveZ;
 
 
         public void InitAwake() => DontDestroyOnLoad(gameObject);
 
         private void Update() => PlayerTransformClamp();
 
-        private void FixedUpdate() => ControlPlayer();
+        private void FixedUpdate() => MovementPlayer();
 
         private void PlayerTransformClamp()
         {
@@ -55,40 +64,37 @@ namespace Player.Movement
             transform.position = new Vector3(clampPositionX, clampPositionY, clampPositionZ);
         }
 
-        private void ControlPlayer()
+        private void MovementPlayer()
         {
-            float direcionMoveX;
-            float directionMoveY;
-            float directionMoveZ;
+            GetDirections();
 
-            if (Input.GetMouseButton(1))
+            Vector3 directionMoveCamera = new Vector3(_direcionMoveX, _directionMoveY, _directionMoveZ);
+            _rigidbody.AddForce(directionMoveCamera, ForceMode.Impulse);
+        }
+
+        private void GetDirections()
+        {
+            if (Input.GetKey(_inputControl.keycodeRightMouseButton))
             {
-                var distanceZoomSpeedMoveMouse = transform.position.z / _configPlayerControlMove.speedMoveMouse;
+                _distanceZoomSpeedMove = transform.position.z / _configPlayerControlMove.speedMoveMouse;
 
-                Debug.Log(distanceZoomSpeedMoveMouse);
-
-                direcionMoveX = distanceZoomSpeedMoveMouse * _inputControl.axisMouseX;
-                directionMoveY = distanceZoomSpeedMoveMouse * _inputControl.axisMouseY;
-                //todo сделать отдельные переменные отвечающие за скорость при нажатии на пкм
+                _direcionMoveX = _distanceZoomSpeedMove * _inputControl.axisMouseX;
+                _directionMoveY = _distanceZoomSpeedMove * _inputControl.axisMouseY;
             }
             else
             {
-                if (Input.GetKey(_inputControl.keycodeLeftCtrl))
+                if (Input.GetKey(_inputControl.keycodeLeftCtrl)) //? переименовать в действие, а не клавишу
                     _currentSpeed = _configPlayerControlMove.speedMoveFast;
                 else
                     _currentSpeed = _configPlayerControlMove.speedMove;
 
-                var distanceZoomSpeedMove = transform.position.z / _currentSpeed;
-                Debug.Log(distanceZoomSpeedMove);
+                _distanceZoomSpeedMove = transform.position.z / _currentSpeed;
 
-                direcionMoveX = distanceZoomSpeedMove * _inputControl.axisHorizontalMove;
-                directionMoveY = distanceZoomSpeedMove * _inputControl.axisVerticalMove;
+                _direcionMoveX = _distanceZoomSpeedMove * _inputControl.axisHorizontalMove;
+                _directionMoveY = _distanceZoomSpeedMove * _inputControl.axisVerticalMove;
             }
 
-            directionMoveZ = _configPlayerControlMove.speedZoom * _inputControl.axisMouseScrollWheel;
-
-            Vector3 directionMoveCamera = new Vector3(direcionMoveX, directionMoveY, directionMoveZ);
-            _rigidbody.AddForce(directionMoveCamera, ForceMode.Impulse);
+            _directionMoveZ = _configPlayerControlMove.speedZoom * _inputControl.axisMouseScrollWheel;
         }
     }
 }

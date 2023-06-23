@@ -14,7 +14,6 @@ namespace TimeControl.Acceleration
         {
             _configTimeControlEditor = configTimeControl;
             _inputControl = inputControl;
-            Debug.Log("Инициализация Time Acceleration успешна");
         }
 
         public void AccelerationCheck(ref float currentAcceleration, ref bool pauseState)
@@ -22,34 +21,26 @@ namespace TimeControl.Acceleration
             if (Input.GetKeyDown(_inputControl.keycodeSpace))
             {
                 currentAcceleration = _configTimeControlEditor.defaultTimeOneDay;
-                pauseState = true;
-                Debug.Log("Set acceleration pause");
+                pauseState = !pauseState;
             }
 
             if (Input.GetKeyDown(_inputControl.keycodeNumberOne))
             {
                 currentAcceleration = _configTimeControlEditor.defaultTimeOneDay;
                 pauseState = false;
-                Debug.Log("Set acceleration default");
             }
 
             if (Input.GetKeyDown(_inputControl.keycodeNumberTwo))
             {
                 currentAcceleration = _configTimeControlEditor.timeOneDayX2;
                 pauseState = false;
-                Debug.Log("Set acceleration x2");
             }
 
             if (Input.GetKeyDown(_inputControl.keycodeNumberThree))
             {
                 currentAcceleration = _configTimeControlEditor.timeOneDayX4;
                 pauseState = false;
-                Debug.Log("Set acceleration x4");
             }
-
-
-            Debug.Log("Time Acceleration Run");
-            Debug.Log(currentAcceleration);
         }
     }
 }

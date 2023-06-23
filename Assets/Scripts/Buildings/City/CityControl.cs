@@ -9,8 +9,10 @@ using TimeControl;
 
 namespace City
 {
-    public sealed class CityControl : MonoBehaviour, IBoot
+    internal sealed class CityControl : MonoBehaviour, IBoot
     {
+        private const byte c_mathematicalDivisor = 100;
+
         private ICityView _IcityView;
 
         private SpriteRenderer _spriteRendererObject;
@@ -21,8 +23,6 @@ namespace City
         [SerializeField, BoxGroup("Parameters")]
         [Title("Config City Control View"), HideLabel, Required, PropertySpace(0, 15)]
         private ConfigCityControlView _configCityControlView;
-
-        private const byte c_mathematicalDivisor = 100;
 
         [FoldoutGroup("Parameters/Population City"), Title("Population in City", horizontalLine: false)]
         [MinValue(0), MaxValue(double.MaxValue / 2), HideLabel, SerializeField]
@@ -65,7 +65,7 @@ namespace City
 
         [FoldoutGroup("Parameters/Drugs/Cocaine"), Title("Weight to Sell Cocaine in kg", horizontalLine: false)]
         [MinValue(1), SerializeField, HideLabel]
-        private float _weightToSellCocaine; //? сменить на float для игрока
+        private float _weightToSellCocaine;
 
         [FoldoutGroup("Parameters/Drugs/Cocaine"), Title("Current Drug Demand Cocaine in kg/day")]
         [MinValue(0.0f), HideLabel, SerializeField]
@@ -80,12 +80,7 @@ namespace City
         private byte _connectFabricsCount;
 
 
-        public void InitAwake()
-        {
-            SearchAndCreateComponents();
-
-            Debug.Log("Город успешно инициализирован");
-        }
+        public void InitAwake() => SearchAndCreateComponents();
 
         private void SearchAndCreateComponents()
         {
@@ -105,7 +100,6 @@ namespace City
             _decliningDemand = decliningDemand;
 
             if (_connectFabricsCount! > 0) { _IcityView.ConnectFabric(ref _spriteRendererObject); }
-            Debug.Log($"Connect Fabric | City DD {decliningDemand}");
         }
 
         public void DisconnectFabricToCity()
@@ -128,8 +122,6 @@ namespace City
 
         public void IngestResources() //todo докинуть тип наркотика
         {
-            //_currentDrugDemandCocaine
-
             if (_currentDrugDemandCocaine > _decliningDemand)
             {
                 _currentDrugDemandCocaine += _increasedDemandCocaine - _decliningDemand;

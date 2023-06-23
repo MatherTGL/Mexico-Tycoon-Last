@@ -12,7 +12,6 @@ namespace Fabric
         public FabricControlView(in ConfigFabricControlView configFabricControlView)
         {
             _configFabricControlView = configFabricControlView;
-            Debug.Log(configFabricControlView);
         }
 
 
