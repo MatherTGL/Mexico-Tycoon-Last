@@ -88,11 +88,11 @@ namespace Boot
 
                 for (int i = 0; i < _countAutoSearchIterations; i++)
                 {
-                    var _findedObjectFabricControl = FindObjectsOfType<FabricControl>();
-                    _bootFabricControl.Add(_findedObjectFabricControl[i]);
-
                     var _findedObjectCityControl = FindObjectsOfType<CityControl>();
                     _bootCityControl.Add(_findedObjectCityControl[i]);
+
+                    var _findedObjectFabricControl = FindObjectsOfType<FabricControl>();
+                    _bootFabricControl.Add(_findedObjectFabricControl[i]);
                 }
             }
 

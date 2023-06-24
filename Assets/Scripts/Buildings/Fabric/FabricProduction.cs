@@ -1,6 +1,3 @@
-using UnityEngine;
-
-
 namespace Fabric
 {
     public sealed class FabricProduction : IFabricProduction
