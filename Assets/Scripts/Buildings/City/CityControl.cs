@@ -15,6 +15,8 @@ namespace City
 
         private ICityView _IcityView;
 
+        private CityReproduction _cityReproduction;
+
         private SpriteRenderer _spriteRendererObject;
 
         [SerializeField, BoxGroup("Parameters"), Required, Title("Time Date Control"), HideLabel]
@@ -27,10 +29,6 @@ namespace City
         [FoldoutGroup("Parameters/Population City"), Title("Population in City", horizontalLine: false)]
         [MinValue(0), MaxValue(double.MaxValue / 2), HideLabel, SerializeField]
         private uint _populationCity;
-
-        [SerializeField, Title("Population Percent Change in %/day", horizontalLine: false)]
-        [HideLabel, ReadOnly, FoldoutGroup("Parameters/Population City/Population Change Step")]
-        private float _populationChangeStepPercent;
 
         [FoldoutGroup("Parameters/Population City/Population Change Step"), Title("Max %/day", horizontalLine: false)]
         [MinValue(0.1f), MaxValue(1.0f), SerializeField, HideLabel]
@@ -91,6 +89,11 @@ namespace City
 
             if (_timeDateControl is null) { _timeDateControl = FindObjectOfType<TimeDateControl>(); }
 
+            if (_cityReproduction is null)
+                _cityReproduction = new CityReproduction(c_mathematicalDivisor,
+                                                         _populationChangeStepPercentMax,
+                                                         _populationChangeStepPercentMin);
+
             StartCoroutine(Reproduction());
         }
 
@@ -141,18 +144,11 @@ namespace City
             }
         }
 
-        private void ReproductionPopulation()
-        {
-            _populationChangeStepPercent = Random.Range(_populationChangeStepPercentMin, _populationChangeStepPercentMax);
-            uint addCountPeople = (uint)(_populationCity * _populationChangeStepPercent / c_mathematicalDivisor);
-            _populationCity += addCountPeople;
-        }
-
         private IEnumerator Reproduction()
         {
             while (true)
             {
-                if (!_timeDateControl.GetStatePaused()) { ReproductionPopulation(); }
+                if (!_timeDateControl.GetStatePaused()) { _cityReproduction.ReproductionPopulation(ref _populationCity); }
                 yield return new WaitForSeconds(_timeDateControl.GetCurrentTimeOneDay(true));
             }
         }

@@ -853,7 +853,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8688798508615415645, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
       propertyPath: _bootCityControl.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8688798508615415645, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
       propertyPath: _bootCityControl.Array.data[0]
