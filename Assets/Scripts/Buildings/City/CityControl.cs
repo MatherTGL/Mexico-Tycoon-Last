@@ -115,10 +115,6 @@ namespace City
                 _decliningDemand = decliningDemand;
                 _roadControl.BuildRoad(transform.position, positionFabric, gameObjectConnectionTo);
                 AddDecliningDemand(decliningDemand);
-
-                //? докидывать какое-то значение к названию для дикшенери
-                //_dictionaryConnectionToObject.Add(gameObjectConnectionTo, _roadControl.GetListAllBuildedRoadLastIndex());
-                //Debug.Log(_dictionaryConnectionToObject[$"{gameObjectConnectionTo}"]);
             }
 
             if (_connectFabricsCount! > 0) { _IcityView.ConnectFabric(ref _spriteRendererObject); }
@@ -129,15 +125,10 @@ namespace City
             Debug.Log(gameObjectDisconnectTo);
             if (_connectFabricsCount >= 1)
             {
-                //var indexDestroy = _dictionaryConnectionToObject[$"{gameObjectDisconnectTo}"];
                 _roadControl.DestroyRoad(gameObjectDisconnectTo);
-                //Debug.Log(indexDestroy);
                 _connectFabricsCount--;
             }
-            else
-            {
-                _IcityView.DisconnectFabric(ref _spriteRendererObject);
-            }
+            else { _IcityView.DisconnectFabric(ref _spriteRendererObject); }
         }
 
         public void AddDecliningDemand(in float decliningDemand)

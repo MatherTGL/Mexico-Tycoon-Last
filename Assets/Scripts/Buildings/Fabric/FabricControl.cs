@@ -99,8 +99,6 @@ namespace Fabric
         [MinValue(0), EnableIf("_isBuyed"), Title("Index Change City Declining Demand", horizontalLine: false), HideLabel]
         private ushort _indexChangeCityDecliningDemand;
 
-        private byte _indexFabric;
-
         #endregion
 
 
@@ -115,7 +113,6 @@ namespace Fabric
             {
                 _isBuyed = true;
                 _IfabricView.BuyFabricView(ref _spriteRendererObject);
-                _indexFabric = (byte)Random.Range(0, 199);
             }
         }
 
@@ -141,7 +138,7 @@ namespace Fabric
             _citiesClients.Add(_cityNewTransportWay);
             CheckFreeProduction();
 
-            _cityNewTransportWay.ConnectFabricToCity(_uploadResourceAddWay, transform.position, gameObject.name + _indexFabric);
+            _cityNewTransportWay.ConnectFabricToCity(_uploadResourceAddWay, transform.position, gameObject.name + _cityNewTransportWay.name);
             _uploadResourceAddWay = 0;
             _cityNewTransportWay = null;
         }
@@ -152,7 +149,7 @@ namespace Fabric
             if (_cityNewTransportWay != null)
             {
                 _citiesClients.Remove(_cityNewTransportWay);
-                _cityNewTransportWay.DisconnectFabricToCity(gameObject.name + _indexFabric);
+                _cityNewTransportWay.DisconnectFabricToCity(gameObject.name + _cityNewTransportWay.name);
             }
         }
 
@@ -161,7 +158,7 @@ namespace Fabric
         {
             for (int i = 0; i < _citiesClients.Count; i++)
             {
-                _citiesClients[i].DisconnectFabricToCity(gameObject.name + _indexFabric);
+                _citiesClients[i].DisconnectFabricToCity(gameObject.name + _cityNewTransportWay.name);
             }
             _citiesClients.Clear();
         }

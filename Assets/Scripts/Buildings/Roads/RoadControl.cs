@@ -10,9 +10,6 @@ namespace Road
         [SerializeField, Required, BoxGroup("Parameters"), AssetsOnly]
         private LineRenderer _linePrefab;
 
-        // [SerializeField, BoxGroup("Parameters"), ReadOnly]
-        // private List<RoadBuilded> _listAllBuildedRoad = new List<RoadBuilded>();
-
         private Dictionary<string, RoadBuilded> _dictionaryBuildedRoad = new Dictionary<string, RoadBuilded>();
 
         private RoadBuilded _objectRoadBuilded;
@@ -24,7 +21,6 @@ namespace Road
             _objectRoadBuilded = CreateObjectRoad(fromPosition, toPosition).GetComponent<RoadBuilded>();
 
             _dictionaryBuildedRoad.Add(indexDestroyRoad, _objectRoadBuilded);
-            // _listAllBuildedRoad.Add(_objectRoadBuilded);
             _objectRoadBuilded.InitRoad();
         }
 
@@ -44,15 +40,7 @@ namespace Road
             Destroy(_dictionaryBuildedRoad[indexDestroyRoad].gameObject);
             _dictionaryBuildedRoad.Remove(indexDestroyRoad);
             Debug.Log(_dictionaryBuildedRoad);
-            // Destroy(_listAllBuildedRoad[indexDestroyRoad].gameObject);
-            // _listAllBuildedRoad.RemoveAt(indexDestroyRoad);
         }
-
-        // public ushort GetListAllBuildedRoadLastIndex()
-        // {
-        //     Debug.Log((ushort)(_dictionaryBuildedRoad.Count - 1));
-        //     return (ushort)(_dictionaryBuildedRoad.Count - 1);
-        // }
 
         public void AddDecliningDemand(in float decliningDemand)
         {
