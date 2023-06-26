@@ -16,6 +16,7 @@ namespace Fabric
         #region Variables
 
         private IFabricProduction _IfabricProduction;
+
         private IFabricView _IfabricView;
 
         [BoxGroup("Parameters", centerLabel: true), TabGroup("Parameters/Tabs", "Links")]
@@ -70,7 +71,7 @@ namespace Fabric
             Cocaine, Marijuana
         }
 
-        [SerializeField, EnumPaging, TabGroup("Parameters/TabsTwo", "Main")]
+        [SerializeField, EnumPaging, TabGroup("Parameters/TabsTwo", "Main"), DisableIf("_isBuyed")]
         [Title("Type Production Resource", horizontalLine: false), HideLabel, PropertySpace(0, 15)]
         private TypeProductionResource _typeProductionResource;
 
@@ -99,6 +100,7 @@ namespace Fabric
 
         #region Editor Extension
 
+#if UNITY_EDITOR
         [Button("Buy Fabric", 30), HideIf("_isBuyed"), FoldoutGroup("Parameters/Control"), GUIColor("#15e90f")]
         [PropertySpace(15)]
         private void BuyFabricEditor()
@@ -130,16 +132,9 @@ namespace Fabric
         private void AddNewTransportWay()
         {
             _citiesClients.Add(_cityNewTransportWay);
+            CheckFreeProduction();
 
-            if (_uploadResourceAddWay < _currentFreeProductionKgPerDay)
-                _currentFreeProductionKgPerDay -= _uploadResourceAddWay;
-            else
-            {
-                _uploadResourceAddWay = _currentFreeProductionKgPerDay;
-                _currentFreeProductionKgPerDay -= _uploadResourceAddWay;
-            }
-            _cityNewTransportWay.ConnectFabricToCity(_uploadResourceAddWay);
-
+            _cityNewTransportWay.ConnectFabricToCity(_uploadResourceAddWay, transform.position);
             _uploadResourceAddWay = 0;
             _cityNewTransportWay = null;
         }
@@ -154,6 +149,20 @@ namespace Fabric
             _citiesClients.Clear();
         }
 
+        [Button("Add Upload Resource Way"), EnableIf("_isBuyed"), FoldoutGroup("Parameters/Control/Transporting")]
+        private void AddUploadResourceWay()
+        {
+            CheckFreeProduction();
+            _citiesClients[0].AddDecliningDemand(_uploadResourceAddWay);
+        }
+
+        [Button("Reduce Upload Resource Way"), EnableIf("_isBuyed"), FoldoutGroup("Parameters/Control/Transporting")]
+        private void ReduceUploadResourcecWay()
+        {
+            CheckFreeProduction();
+            _citiesClients[0].ReduceDecliningDemand(_uploadResourceAddWay);
+        }
+#endif
         #endregion
 
 
@@ -204,11 +213,24 @@ namespace Fabric
                 {
                     if (_timeDateControl.GetStatePaused() is false)
                     {
-                        _IfabricProduction.ProductionProduct(_currentFreeProductionKgPerDay, _maxCapacityStock, ref _productInStock);
+                        _IfabricProduction.ProductionProduct(_currentFreeProductionKgPerDay,
+                                                             _maxCapacityStock,
+                                                             ref _productInStock);
                         TransportingResourcesProduction();
                     }
                 }
                 yield return new WaitForSecondsRealtime(_timeDateControl.GetCurrentTimeOneDay(true));
+            }
+        }
+
+        private void CheckFreeProduction()
+        {
+            if (_uploadResourceAddWay < _currentFreeProductionKgPerDay)
+                _currentFreeProductionKgPerDay -= _uploadResourceAddWay;
+            else
+            {
+                _uploadResourceAddWay = _currentFreeProductionKgPerDay;
+                _currentFreeProductionKgPerDay -= _uploadResourceAddWay;
             }
         }
     }

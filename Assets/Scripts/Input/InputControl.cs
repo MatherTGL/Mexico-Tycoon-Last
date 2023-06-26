@@ -4,8 +4,8 @@ using Sirenix.OdinInspector;
 
 public sealed class InputControl : MonoBehaviour
 {
-    [SerializeField, BoxGroup("Parameters"), Title("Max Force Mouse Clamp", horizontalLine: false, subtitle: "Horizontal"), HideLabel]
-    [HorizontalGroup("Parameters/Clamp")]
+    [Title("Max Force Mouse Clamp", horizontalLine: false, subtitle: "Horizontal"), HideLabel]
+    [HorizontalGroup("Parameters/Clamp"), SerializeField, BoxGroup("Parameters")]
     private float _maxForceMouseClampHorizontal;
 
     [SerializeField, BoxGroup("Parameters"), Title("", horizontalLine: false, subtitle: "Vertical"), HideLabel]
@@ -14,38 +14,33 @@ public sealed class InputControl : MonoBehaviour
 
     [SerializeField, BoxGroup("Parameters/Keycodes"), LabelText("Alpha 1")]
     [FoldoutGroup("Parameters/Keycodes/Alpha")]
-    private KeyCode _keycodeNumberOne = KeyCode.Alpha1;
-    public KeyCode keycodeNumberOne => _keycodeNumberOne;
+    private KeyCode _keycodeAccelerationTimeDefault = KeyCode.Alpha1;
+    public KeyCode keycodeAccelerationTimeDefault => _keycodeAccelerationTimeDefault;
 
     [SerializeField, BoxGroup("Parameters/Keycodes"), LabelText("Alpha 2")]
     [FoldoutGroup("Parameters/Keycodes/Alpha")]
-    private KeyCode _keycodeNumberTwo = KeyCode.Alpha2;
-    public KeyCode keycodeNumberTwo => _keycodeNumberTwo;
+    private KeyCode _keycodeAccelerationTimeTwo = KeyCode.Alpha2;
+    public KeyCode keycodeAccelerationTimeTwo => _keycodeAccelerationTimeTwo;
 
     [SerializeField, BoxGroup("Parameters/Keycodes"), LabelText("Alpha 3")]
     [FoldoutGroup("Parameters/Keycodes/Alpha")]
-    private KeyCode _keycodeNumberThree = KeyCode.Alpha3;
-    public KeyCode keycodeNumberThree => _keycodeNumberThree;
+    private KeyCode _keycodeAccelerationTimeThree = KeyCode.Alpha3;
+    public KeyCode keycodeAccelerationTimeThree => _keycodeAccelerationTimeThree;
 
     [SerializeField, BoxGroup("Parameters/Keycodes"), LabelText("Alpha 4")]
     [FoldoutGroup("Parameters/Keycodes/Alpha")]
-    private KeyCode _keycodeNumberFour = KeyCode.Alpha4;
-    public KeyCode keycodeNumberFour => _keycodeNumberFour;
+    private KeyCode _keycodeAccelerationTimeFour = KeyCode.Alpha4;
+    public KeyCode keycodeAccelerationTimeFour => _keycodeAccelerationTimeFour;
 
     [SerializeField, BoxGroup("Parameters/Keycodes"), LabelText("Space")]
     [FoldoutGroup("Parameters/Keycodes/Special")]
-    private KeyCode _keycodeSpace = KeyCode.Space;
-    public KeyCode keycodeSpace => _keycodeSpace;
-
-    [SerializeField, BoxGroup("Parameters/Keycodes"), LabelText("Left Shift")]
-    [FoldoutGroup("Parameters/Keycodes/Special")]
-    private KeyCode _keycodeLeftShift = KeyCode.LeftShift;
-    public KeyCode keycodeLeftShift => _keycodeLeftShift;
+    private KeyCode _keycodeTimePause = KeyCode.Space;
+    public KeyCode keycodeTimePause => _keycodeTimePause;
 
     [SerializeField, BoxGroup("Parameters/Keycodes"), LabelText("Left Control")]
     [FoldoutGroup("Parameters/Keycodes/Special")]
-    private KeyCode _keycodeLeftCtrl = KeyCode.LeftControl;
-    public KeyCode keycodeLeftCtrl => _keycodeLeftCtrl;
+    private KeyCode _keycodeFastMove = KeyCode.LeftControl;
+    public KeyCode keycodeFastMove => _keycodeFastMove;
 
     [SerializeField, BoxGroup("Parameters/Keycodes"), LabelText("Left Button")]
     [FoldoutGroup("Parameters/Keycodes/Mouse")]

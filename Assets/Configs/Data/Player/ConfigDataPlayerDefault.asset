@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7478c05db4f8951baa1394263100933, type: 3}
   m_Name: ConfigDataPlayerDefault
   m_EditorClassIdentifier: 
-  _startPlayerMoney: 20000
+  _startPlayerMoney: 100000
   _startPlayerResearchPoints: 50

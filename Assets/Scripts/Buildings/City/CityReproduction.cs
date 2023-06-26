@@ -26,8 +26,6 @@ namespace City
             var populationChangeStepPercent = Random.Range(_populationChangeStepPercentMin, _populationChangeStepPercentMax);
             uint addCountPeople = (uint)(populationCity * populationChangeStepPercent / _mathematicalDivisor);
             populationCity += addCountPeople;
-            Debug.Log(populationCity);
-            Debug.Log(addCountPeople);
         }
     }
 }

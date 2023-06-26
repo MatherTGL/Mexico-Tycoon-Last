@@ -83,7 +83,7 @@ namespace Player.Movement
             }
             else
             {
-                if (Input.GetKey(_inputControl.keycodeLeftCtrl)) //? переименовать в действие, а не клавишу
+                if (Input.GetKey(_inputControl.keycodeFastMove)) //? переименовать в действие, а не клавишу
                     _currentSpeed = _configPlayerControlMove.speedMoveFast;
                 else
                     _currentSpeed = _configPlayerControlMove.speedMove;

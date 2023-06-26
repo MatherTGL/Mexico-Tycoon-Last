@@ -5,13 +5,15 @@ using Data;
 using Config.CityControl.View;
 using System.Collections;
 using TimeControl;
-
+using Road;
 
 namespace City
 {
     internal sealed class CityControl : MonoBehaviour, IBoot
     {
         private const byte c_mathematicalDivisor = 100;
+
+        private const byte _maxConnectionFabrics = 4;
 
         private ICityView _IcityView;
 
@@ -21,6 +23,9 @@ namespace City
 
         [SerializeField, BoxGroup("Parameters"), Required, Title("Time Date Control"), HideLabel]
         private TimeDateControl _timeDateControl;
+
+        [SerializeField, BoxGroup("Parameters"), Required, Title("Road Control"), HideLabel]
+        private RoadControl _roadControl;
 
         [SerializeField, BoxGroup("Parameters")]
         [Title("Config City Control View"), HideLabel, Required, PropertySpace(0, 15)]
@@ -97,10 +102,15 @@ namespace City
             StartCoroutine(Reproduction());
         }
 
-        public void ConnectFabricToCity(float decliningDemand)
+        public void ConnectFabricToCity(float decliningDemand, Vector2 positionFabric)
         {
-            _connectFabricsCount++;
-            _decliningDemand = decliningDemand;
+            if (_connectFabricsCount < _maxConnectionFabrics)
+            {
+                _connectFabricsCount++;
+                _decliningDemand = decliningDemand;
+                _roadControl.BuildRoad(transform.position, positionFabric);
+                AddDecliningDemand(decliningDemand);
+            }
 
             if (_connectFabricsCount! > 0) { _IcityView.ConnectFabric(ref _spriteRendererObject); }
         }
@@ -113,6 +123,18 @@ namespace City
 
                 if (_connectFabricsCount == 0) { _IcityView.DisconnectFabric(ref _spriteRendererObject); }
             }
+        }
+
+        public void AddDecliningDemand(in float decliningDemand)
+        {
+            _decliningDemand += decliningDemand;
+            _roadControl.AddDecliningDemand(decliningDemand);
+        }
+
+        public void ReduceDecliningDemand(in float decliningDemand)
+        {
+            _decliningDemand -= decliningDemand;
+            _roadControl.ReduceDecliningDemand(decliningDemand);
         }
 
         public float GetDecliningDemand() => _decliningDemand;
@@ -135,7 +157,7 @@ namespace City
                 _currentDrugDemandCocaine += _increasedDemandCocaine;
         }
 
-        private void SellDrugs()
+        private void SellDrugs() //? вынести в отдельный класс для реализации
         {
             if (_currentCapacityStock > _weightToSellCocaine)
             {

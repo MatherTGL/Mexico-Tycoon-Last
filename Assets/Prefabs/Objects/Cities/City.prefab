@@ -99,9 +99,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timeDateControl: {fileID: 0}
+  _roadControl: {fileID: 0}
   _configCityControlView: {fileID: 11400000, guid: 4ed476ddf62c342b98ebdb9620677b41, type: 2}
   _populationCity: 80000
-  _populationChangeStepPercent: 0.1
   _populationChangeStepPercentMax: 0.3
   _populationChangeStepPercentMin: -0.1
   _policeLevel: 2

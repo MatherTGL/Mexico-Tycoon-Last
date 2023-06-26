@@ -18,25 +18,25 @@ namespace TimeControl.Acceleration
 
         public void AccelerationCheck(ref float currentAcceleration, ref bool pauseState)
         {
-            if (Input.GetKeyDown(_inputControl.keycodeSpace))
+            if (Input.GetKeyDown(_inputControl.keycodeTimePause))
             {
                 currentAcceleration = _configTimeControlEditor.defaultTimeOneDay;
                 pauseState = !pauseState;
             }
 
-            if (Input.GetKeyDown(_inputControl.keycodeNumberOne))
+            if (Input.GetKeyDown(_inputControl.keycodeAccelerationTimeDefault))
             {
                 currentAcceleration = _configTimeControlEditor.defaultTimeOneDay;
                 pauseState = false;
             }
 
-            if (Input.GetKeyDown(_inputControl.keycodeNumberTwo))
+            if (Input.GetKeyDown(_inputControl.keycodeAccelerationTimeTwo))
             {
                 currentAcceleration = _configTimeControlEditor.timeOneDayX2;
                 pauseState = false;
             }
 
-            if (Input.GetKeyDown(_inputControl.keycodeNumberThree))
+            if (Input.GetKeyDown(_inputControl.keycodeAccelerationTimeThree))
             {
                 currentAcceleration = _configTimeControlEditor.timeOneDayX4;
                 pauseState = false;

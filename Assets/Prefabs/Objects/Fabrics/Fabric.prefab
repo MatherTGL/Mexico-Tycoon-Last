@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 0.38851228, g: 0.8392157, b: 0.25882354, a: 1}
+  m_Color: {r: 0.8666667, g: 0.2509804, b: 0.2509804, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -115,6 +115,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timeDateControl: {fileID: 0}
+  _roadControl: {fileID: 0}
+  _configFabricControlView: {fileID: 11400000, guid: 42d51f288392f1dc3bff129765832533, type: 2}
   _isBuyed: 0
   _isWork: 0
   _productQuality: 10
@@ -124,9 +126,9 @@ MonoBehaviour:
   _securityLevel: 2
   _levelSuspicion: 0
   _maxCapacityStock: 10
+  _typeProductionResource: 0
   _fabricBuyCost: 10000
   _fabricSellCost: 5000
   _citiesClients: []
   _cityNewTransportWay: {fileID: 0}
-  _typeUploadResource: 0
-  _uploadResourceCocaine: 0
+  _uploadResourceAddWay: 0
