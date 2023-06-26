@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using Boot;
 using Data;
@@ -6,6 +7,7 @@ using Config.CityControl.View;
 using System.Collections;
 using TimeControl;
 using Road;
+using Fabric;
 
 namespace City
 {
@@ -16,6 +18,8 @@ namespace City
         private const byte _maxConnectionFabrics = 4;
 
         private ICityView _IcityView;
+
+        private Dictionary<string, ushort> _dictionaryConnectionToObject = new Dictionary<string, ushort>();
 
         private CityReproduction _cityReproduction;
 
@@ -102,26 +106,36 @@ namespace City
             StartCoroutine(Reproduction());
         }
 
-        public void ConnectFabricToCity(float decliningDemand, Vector2 positionFabric)
+        public void ConnectFabricToCity(float decliningDemand, Vector2 positionFabric, FabricControl gameObjectConnectionTo)
         {
+            Debug.Log(gameObjectConnectionTo);
             if (_connectFabricsCount < _maxConnectionFabrics)
             {
                 _connectFabricsCount++;
                 _decliningDemand = decliningDemand;
                 _roadControl.BuildRoad(transform.position, positionFabric);
                 AddDecliningDemand(decliningDemand);
+
+                _dictionaryConnectionToObject.Add(gameObjectConnectionTo.name, _roadControl.GetListAllBuildedRoadLastIndex());
+                Debug.Log(_dictionaryConnectionToObject[$"{gameObjectConnectionTo.name}"]);
             }
 
             if (_connectFabricsCount! > 0) { _IcityView.ConnectFabric(ref _spriteRendererObject); }
         }
 
-        public void DisconnectFabricToCity()
+        public void DisconnectFabricToCity(FabricControl gameObjectDisconnectTo)
         {
             if (_connectFabricsCount >= 1)
             {
                 _connectFabricsCount--;
+                var indexDestroy = _dictionaryConnectionToObject[$"{gameObjectDisconnectTo.name}"];
+                _roadControl.DestroyRoad(indexDestroy);
+                Debug.Log(indexDestroy);
 
-                if (_connectFabricsCount == 0) { _IcityView.DisconnectFabric(ref _spriteRendererObject); }
+                if (_connectFabricsCount == 0)
+                {
+                    _IcityView.DisconnectFabric(ref _spriteRendererObject);
+                }
             }
         }
 

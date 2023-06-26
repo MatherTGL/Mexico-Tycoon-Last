@@ -95,6 +95,10 @@ namespace Fabric
         [MinValue(0.0f), EnableIf("_isBuyed"), Title("Upload Resource", horizontalLine: false), HideLabel]
         private float _uploadResourceAddWay;
 
+        [SerializeField, FoldoutGroup("Parameters/Control/Transporting")]
+        [MinValue(0), EnableIf("_isBuyed"), Title("Index Change City Declining Demand", horizontalLine: false), HideLabel]
+        private ushort _indexChangeCityDecliningDemand;
+
         #endregion
 
 
@@ -134,9 +138,19 @@ namespace Fabric
             _citiesClients.Add(_cityNewTransportWay);
             CheckFreeProduction();
 
-            _cityNewTransportWay.ConnectFabricToCity(_uploadResourceAddWay, transform.position);
+            _cityNewTransportWay.ConnectFabricToCity(_uploadResourceAddWay, transform.position, gameObject.GetComponent<FabricControl>());
             _uploadResourceAddWay = 0;
             _cityNewTransportWay = null;
+        }
+
+        [Button("Remove Transport Way"), EnableIf("_isBuyed"), FoldoutGroup("Parameters/Control/Transporting"), PropertySpace(15)]
+        private void RemoveTransportWay()
+        {
+            if (_cityNewTransportWay != null)
+            {
+                _citiesClients.Remove(_cityNewTransportWay);
+                _cityNewTransportWay.DisconnectFabricToCity(gameObject.GetComponent<FabricControl>());
+            }
         }
 
         [Button("Clear Cities Clients"), EnableIf("_isBuyed"), FoldoutGroup("Parameters/Control/Transporting")]
@@ -144,7 +158,7 @@ namespace Fabric
         {
             for (int i = 0; i < _citiesClients.Count; i++)
             {
-                _citiesClients[i].DisconnectFabricToCity();
+                _citiesClients[i].DisconnectFabricToCity(gameObject.GetComponent<FabricControl>());
             }
             _citiesClients.Clear();
         }
@@ -153,14 +167,14 @@ namespace Fabric
         private void AddUploadResourceWay()
         {
             CheckFreeProduction();
-            _citiesClients[0].AddDecliningDemand(_uploadResourceAddWay);
+            _citiesClients[_indexChangeCityDecliningDemand].AddDecliningDemand(_uploadResourceAddWay);
         }
 
         [Button("Reduce Upload Resource Way"), EnableIf("_isBuyed"), FoldoutGroup("Parameters/Control/Transporting")]
         private void ReduceUploadResourcecWay()
         {
             CheckFreeProduction();
-            _citiesClients[0].ReduceDecliningDemand(_uploadResourceAddWay);
+            _citiesClients[_indexChangeCityDecliningDemand].ReduceDecliningDemand(_uploadResourceAddWay);
         }
 #endif
         #endregion
