@@ -19,7 +19,7 @@ namespace City
 
         private ICityView _IcityView;
 
-        private Dictionary<string, ushort> _dictionaryConnectionToObject = new Dictionary<string, ushort>();
+        //private Dictionary<string, ushort> _dictionaryConnectionToObject = new Dictionary<string, ushort>();
 
         private CityReproduction _cityReproduction;
 
@@ -84,7 +84,7 @@ namespace City
 
         private float _decliningDemand;
 
-        private byte _connectFabricsCount;
+        private byte _connectFabricsCount = 0;
 
 
         public void InitAwake() => SearchAndCreateComponents();
@@ -106,36 +106,37 @@ namespace City
             StartCoroutine(Reproduction());
         }
 
-        public void ConnectFabricToCity(float decliningDemand, Vector2 positionFabric, FabricControl gameObjectConnectionTo)
+        public void ConnectFabricToCity(float decliningDemand, Vector2 positionFabric, string gameObjectConnectionTo)
         {
             Debug.Log(gameObjectConnectionTo);
             if (_connectFabricsCount < _maxConnectionFabrics)
             {
                 _connectFabricsCount++;
                 _decliningDemand = decliningDemand;
-                _roadControl.BuildRoad(transform.position, positionFabric);
+                _roadControl.BuildRoad(transform.position, positionFabric, gameObjectConnectionTo);
                 AddDecliningDemand(decliningDemand);
 
-                _dictionaryConnectionToObject.Add(gameObjectConnectionTo.name, _roadControl.GetListAllBuildedRoadLastIndex());
-                Debug.Log(_dictionaryConnectionToObject[$"{gameObjectConnectionTo.name}"]);
+                //? докидывать какое-то значение к названию для дикшенери
+                //_dictionaryConnectionToObject.Add(gameObjectConnectionTo, _roadControl.GetListAllBuildedRoadLastIndex());
+                //Debug.Log(_dictionaryConnectionToObject[$"{gameObjectConnectionTo}"]);
             }
 
             if (_connectFabricsCount! > 0) { _IcityView.ConnectFabric(ref _spriteRendererObject); }
         }
 
-        public void DisconnectFabricToCity(FabricControl gameObjectDisconnectTo)
+        public void DisconnectFabricToCity(string gameObjectDisconnectTo)
         {
+            Debug.Log(gameObjectDisconnectTo);
             if (_connectFabricsCount >= 1)
             {
+                //var indexDestroy = _dictionaryConnectionToObject[$"{gameObjectDisconnectTo}"];
+                _roadControl.DestroyRoad(gameObjectDisconnectTo);
+                //Debug.Log(indexDestroy);
                 _connectFabricsCount--;
-                var indexDestroy = _dictionaryConnectionToObject[$"{gameObjectDisconnectTo.name}"];
-                _roadControl.DestroyRoad(indexDestroy);
-                Debug.Log(indexDestroy);
-
-                if (_connectFabricsCount == 0)
-                {
-                    _IcityView.DisconnectFabric(ref _spriteRendererObject);
-                }
+            }
+            else
+            {
+                _IcityView.DisconnectFabric(ref _spriteRendererObject);
             }
         }
 

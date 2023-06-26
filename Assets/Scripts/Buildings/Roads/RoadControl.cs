@@ -10,18 +10,21 @@ namespace Road
         [SerializeField, Required, BoxGroup("Parameters"), AssetsOnly]
         private LineRenderer _linePrefab;
 
-        [SerializeField, BoxGroup("Parameters"), ReadOnly]
-        private List<RoadBuilded> _listAllBuildedRoad = new List<RoadBuilded>();
+        // [SerializeField, BoxGroup("Parameters"), ReadOnly]
+        // private List<RoadBuilded> _listAllBuildedRoad = new List<RoadBuilded>();
+
+        private Dictionary<string, RoadBuilded> _dictionaryBuildedRoad = new Dictionary<string, RoadBuilded>();
 
         private RoadBuilded _objectRoadBuilded;
 
 
         //? будет управлять вью, билдед
-        public void BuildRoad(in Vector2 fromPosition, in Vector2 toPosition)
+        public void BuildRoad(in Vector2 fromPosition, in Vector2 toPosition, string indexDestroyRoad)
         {
             _objectRoadBuilded = CreateObjectRoad(fromPosition, toPosition).GetComponent<RoadBuilded>();
 
-            _listAllBuildedRoad.Add(_objectRoadBuilded);
+            _dictionaryBuildedRoad.Add(indexDestroyRoad, _objectRoadBuilded);
+            // _listAllBuildedRoad.Add(_objectRoadBuilded);
             _objectRoadBuilded.InitRoad();
         }
 
@@ -35,16 +38,21 @@ namespace Road
             return createdObject.gameObject;
         }
 
-        public void DestroyRoad(ushort indexDestroyRoad)
+        public void DestroyRoad(string indexDestroyRoad)
         {
-            Destroy(_listAllBuildedRoad[indexDestroyRoad].gameObject);
-            _listAllBuildedRoad.RemoveAt(indexDestroyRoad);
+            Debug.Log(_dictionaryBuildedRoad);
+            Destroy(_dictionaryBuildedRoad[indexDestroyRoad].gameObject);
+            _dictionaryBuildedRoad.Remove(indexDestroyRoad);
+            Debug.Log(_dictionaryBuildedRoad);
+            // Destroy(_listAllBuildedRoad[indexDestroyRoad].gameObject);
+            // _listAllBuildedRoad.RemoveAt(indexDestroyRoad);
         }
 
-        public ushort GetListAllBuildedRoadLastIndex()
-        {
-            return (ushort)(_listAllBuildedRoad.Count - 1);
-        }
+        // public ushort GetListAllBuildedRoadLastIndex()
+        // {
+        //     Debug.Log((ushort)(_dictionaryBuildedRoad.Count - 1));
+        //     return (ushort)(_dictionaryBuildedRoad.Count - 1);
+        // }
 
         public void AddDecliningDemand(in float decliningDemand)
         {
