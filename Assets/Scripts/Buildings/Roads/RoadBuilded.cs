@@ -1,5 +1,6 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
+using System.Collections.Generic;
 
 
 namespace Road
@@ -7,6 +8,7 @@ namespace Road
     public sealed class RoadBuilded : MonoBehaviour
     {
         //*лист с транспоротом на маршруте
+        private Dictionary<string, float> _allTransportingDrugs = new Dictionary<string, float>();
 
         [SerializeField, BoxGroup("Parameters"), HideLabel, MinValue(0.0f)]
         [Title("Resource Transportation Traffic Capacity in %", horizontalLine: false)]
@@ -35,19 +37,20 @@ namespace Road
             Debug.Log("Дорога инициализирована");
         }
 
-        public void AddDecliningDemand(float decliningDemand)
+        public void DecliningDemandUpdate(in float decliningDemand, in string typeFabricDrug, in bool isAddDrugs)
         {
-            if (_resTransportationTrafficCapacityMax > _resTransportationTrafficCapacityCurrent)
+            if (_allTransportingDrugs.ContainsKey(typeFabricDrug))
             {
-                _resTransportationTrafficCapacityCurrent += decliningDemand;
-                Debug.Log(_resTransportationTrafficCapacityCurrent);
+                if (isAddDrugs)
+                    _allTransportingDrugs[typeFabricDrug] += decliningDemand;
+                else
+                    _allTransportingDrugs[typeFabricDrug] -= decliningDemand;
+                Debug.Log(_allTransportingDrugs[typeFabricDrug]);
             }
-            Debug.Log(decliningDemand);
-        }
-
-        public void ReduceDecliningDemand(float decliningDemand)
-        {
-            Debug.Log($"Reduce {decliningDemand}");
+            else { _allTransportingDrugs.Add(typeFabricDrug, decliningDemand); }
+            Debug.Log(_allTransportingDrugs[typeFabricDrug]);
+            //_resTransportationTrafficCapacityCurrent = decliningDemand;
+            //Debug.Log(_resTransportationTrafficCapacityCurrent);
         }
     }
 }

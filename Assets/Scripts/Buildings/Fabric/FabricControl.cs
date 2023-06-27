@@ -38,31 +38,31 @@ namespace Fabric
         [SerializeField, ReadOnly, TabGroup("Parameters/Tabs", "Toggles"), LabelText("Work"), ToggleLeft]
         private bool _isWork;
 
-        [SerializeField, TabGroup("Parameters/TabsTwo", "Drugs"), Title("Product Quality 10%-95%", horizontalLine: false)]
+        [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Product Quality 10%-95%", horizontalLine: false)]
         [MinValue(10.0f), MaxValue(95.0f), HideLabel]
         private float _productQuality;
 
-        [SerializeField, TabGroup("Parameters/TabsTwo", "Drugs"), Title("Productivity Production in kg/day", horizontalLine: false), HideLabel]
+        [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Productivity Production in kg/day", horizontalLine: false), HideLabel]
         [MinValue(0.0f)]
         private float _productivityKgPerDay;
 
-        [SerializeField, TabGroup("Parameters/TabsTwo", "Drugs"), Title("Current Free Production in kg/day", horizontalLine: false), HideLabel]
+        [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Current Free Production in kg/day", horizontalLine: false), HideLabel]
         [MinValue(0.0f), ReadOnly]
         private float _currentFreeProductionKgPerDay;
 
-        [SerializeField, TabGroup("Parameters/TabsTwo", "Drugs"), Title("Product in Stock in kg", horizontalLine: false), HideLabel]
-        [MinValue(0.0f), PropertySpace(0, 15)]
+        [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Product in Stock in kg", horizontalLine: false), HideLabel]
+        [MinValue(0.0f)]
         private float _productInStock;
 
-        [SerializeField, TabGroup("Parameters/TabsTwo", "Main"), Title("Security Level in Star (0-10)", horizontalLine: false), HideLabel]
+        [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Security Level in Star (0-10)", horizontalLine: false), HideLabel]
         [MinValue(0), MaxValue(10)]
         private byte _securityLevel;
 
-        [SerializeField, TabGroup("Parameters/TabsTwo", "Main"), Title("Level Suspicion in %", horizontalLine: false), HideLabel]
+        [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Level Suspicion in %", horizontalLine: false), HideLabel]
         [MinValue(0.0f), MaxValue(100.0f)]
         private float _levelSuspicion;
 
-        [SerializeField, TabGroup("Parameters/TabsTwo", "Main"), Title("Max Capacity Stock in kg", horizontalLine: false), HideLabel]
+        [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Max Capacity Stock in kg", horizontalLine: false), HideLabel]
         [MinValue(10.0f)]
         private float _maxCapacityStock;
 
@@ -71,31 +71,31 @@ namespace Fabric
             Cocaine, Marijuana
         }
 
-        [SerializeField, EnumPaging, TabGroup("Parameters/TabsTwo", "Main"), DisableIf("_isBuyed")]
-        [Title("Type Production Resource", horizontalLine: false), HideLabel, PropertySpace(0, 15)]
+        [SerializeField, EnumPaging, BoxGroup("Parameters/Main Settings"), DisableIf("_isBuyed")]
+        [Title("Type Production Resource", horizontalLine: false), HideLabel]
         private TypeProductionResource _typeProductionResource;
 
-        [SerializeField, TabGroup("Parameters/TabsTwo", "Main"), Title("Buy Fabirc Cost $", horizontalLine: false), HideLabel]
-        [MinValue(10000)]
+        [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Buy $", horizontalLine: false), HideLabel]
+        [MinValue(10000), HorizontalGroup("Parameters/Main Settings/Fabric Cost")]
         private double _fabricBuyCost = 10_000;
 
-        [SerializeField, TabGroup("Parameters/TabsTwo", "Main"), Title("Sell Fabric Cost $", horizontalLine: false), HideLabel]
-        [MinValue(5000)]
+        [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Sell $", horizontalLine: false), HideLabel]
+        [MinValue(5000), HorizontalGroup("Parameters/Main Settings/Fabric Cost")]
         private double _fabricSellCost = 5_000;
 
         [SerializeField, FoldoutGroup("Parameters/Control"), PropertySpace(10, 10)]
         [Tooltip("Города, в которые фабрика будет поставлять ресурс"), ReadOnly]
-
         private List<CityControl> _citiesClients = new List<CityControl>();
 
-        [SerializeField, FoldoutGroup("Parameters/Control/Transporting"), Required, EnableIf("_isBuyed")]
+        [SerializeField, FoldoutGroup("Parameters/Control/Transporting"), EnableIf("_isBuyed")]
+        [HideLabel, Title("City New Transport Way Link", horizontalLine: false)]
         private CityControl _cityNewTransportWay;
 
-        [SerializeField, FoldoutGroup("Parameters/Control/Transporting")]
+        [SerializeField, FoldoutGroup("Parameters/Control/Transporting"), ShowIf("@_cityNewTransportWay != null || _citiesClients.Count != 0")]
         [MinValue(0.0f), EnableIf("_isBuyed"), Title("Upload Resource", horizontalLine: false), HideLabel]
         private float _uploadResourceAddWay;
 
-        [SerializeField, FoldoutGroup("Parameters/Control/Transporting")]
+        [SerializeField, FoldoutGroup("Parameters/Control/Transporting"), ShowIf("@_citiesClients.Count != 0")]
         [MinValue(0), EnableIf("_isBuyed"), Title("Index Change City Declining Demand", horizontalLine: false), HideLabel]
         private ushort _indexChangeCityDecliningDemand;
 
@@ -116,6 +116,13 @@ namespace Fabric
             }
         }
 
+        [Button("Work Fabric", 30), ShowIf("_isBuyed"), FoldoutGroup("Parameters/Control"), PropertySpace(15)]
+        private void WorkFabricEditor()
+        {
+            _isWork = !_isWork;
+            _IfabricView.ChangeWorkStateFabricView(ref _spriteRendererObject, _isWork);
+        }
+
         [Button("Sell Fabric", 30), ShowIf("_isBuyed"), FoldoutGroup("Parameters/Control"), GUIColor("#e90f1f")]
         private void SellFabricEditor()
         {
@@ -125,25 +132,25 @@ namespace Fabric
             _IfabricView.SellFabricView(ref _spriteRendererObject);
         }
 
-        [Button("Work Fabric", 30), ShowIf("_isBuyed"), FoldoutGroup("Parameters/Control"), PropertySpace(15)]
-        private void WorkFabricEditor()
-        {
-            _isWork = !_isWork;
-            _IfabricView.ChangeWorkStateFabricView(ref _spriteRendererObject, _isWork);
-        }
-
-        [Button("Add Transport Way"), EnableIf("_isBuyed"), FoldoutGroup("Parameters/Control/Transporting"), PropertySpace(15)]
+        [Button("New Way"), EnableIf("_isBuyed"), FoldoutGroup("Parameters/Control/Transporting")]
+        [ShowIf("@_cityNewTransportWay != null"), HorizontalGroup("Parameters/Control/Transporting/Way")]
+        [PropertySpace(10)]
         private void AddNewTransportWay()
         {
             _citiesClients.Add(_cityNewTransportWay);
-            CheckFreeProduction();
+            SpendFreeProduction();
 
-            _cityNewTransportWay.ConnectFabricToCity(_uploadResourceAddWay, transform.position, gameObject.name + _cityNewTransportWay.name);
+            _cityNewTransportWay.ConnectFabricToCity(_uploadResourceAddWay,
+                                                     _typeProductionResource.ToString(),
+                                                     transform.position,
+                                                     gameObject.name + _cityNewTransportWay.name);
             _uploadResourceAddWay = 0;
             _cityNewTransportWay = null;
         }
 
-        [Button("Remove Transport Way"), EnableIf("_isBuyed"), FoldoutGroup("Parameters/Control/Transporting"), PropertySpace(15)]
+        [Button("Remove Way"), EnableIf("_isBuyed"), FoldoutGroup("Parameters/Control/Transporting")]
+        [ShowIf("@_cityNewTransportWay != null"), HorizontalGroup("Parameters/Control/Transporting/Way")]
+        [PropertySpace(10)]
         private void RemoveTransportWay()
         {
             if (_cityNewTransportWay != null)
@@ -154,6 +161,7 @@ namespace Fabric
         }
 
         [Button("Clear Cities Clients"), EnableIf("_isBuyed"), FoldoutGroup("Parameters/Control/Transporting")]
+        [ShowIf("@_citiesClients.Count != 0"), PropertySpace(5, 5)]
         private void RemoveAllCitiesClients()
         {
             for (int i = 0; i < _citiesClients.Count; i++)
@@ -163,18 +171,22 @@ namespace Fabric
             _citiesClients.Clear();
         }
 
-        [Button("Add Upload Resource Way"), EnableIf("_isBuyed"), FoldoutGroup("Parameters/Control/Transporting")]
+        [Button("Load Res"), EnableIf("_isBuyed"), FoldoutGroup("Parameters/Control/Transporting")]
+        [ShowIf("@_uploadResourceAddWay != 0 && _cityNewTransportWay != null && _citiesClients.Count != 0"), HorizontalGroup("Parameters/Control/Transporting/Upload")]
+        [PropertySpace(5, 10)]
         private void AddUploadResourceWay()
         {
-            CheckFreeProduction();
-            _citiesClients[_indexChangeCityDecliningDemand].AddDecliningDemand(_uploadResourceAddWay);
+            SpendFreeProduction();
+            _citiesClients[_indexChangeCityDecliningDemand].AddDecliningDemand(_uploadResourceAddWay, _typeProductionResource.ToString());
         }
 
-        [Button("Reduce Upload Resource Way"), EnableIf("_isBuyed"), FoldoutGroup("Parameters/Control/Transporting")]
+        [Button("Unload Res"), EnableIf("_isBuyed"), FoldoutGroup("Parameters/Control/Transporting")]
+        [ShowIf("@_uploadResourceAddWay != 0 && _cityNewTransportWay != null && _citiesClients.Count != 0"), HorizontalGroup("Parameters/Control/Transporting/Upload")]
+        [PropertySpace(5, 10)]
         private void ReduceUploadResourcecWay()
         {
-            CheckFreeProduction();
-            _citiesClients[_indexChangeCityDecliningDemand].ReduceDecliningDemand(_uploadResourceAddWay);
+            ReturnFreeProduction();
+            _citiesClients[_indexChangeCityDecliningDemand].ReduceDecliningDemand(_uploadResourceAddWay, _typeProductionResource.ToString());
         }
 #endif
         #endregion
@@ -213,7 +225,7 @@ namespace Fabric
                 for (int i = 0; i < _citiesClients.Count; i++)
                 {
                     if (_citiesClients[i].CheckCurrentCapacityStock())
-                        _citiesClients[i].IngestResources();
+                        _citiesClients[i].IngestResources(_typeProductionResource.ToString());
                     else { Debug.Log("Хранилище города полное"); }
                 }
             }
@@ -237,7 +249,7 @@ namespace Fabric
             }
         }
 
-        private void CheckFreeProduction()
+        private void SpendFreeProduction()
         {
             if (_uploadResourceAddWay < _currentFreeProductionKgPerDay)
                 _currentFreeProductionKgPerDay -= _uploadResourceAddWay;
@@ -245,6 +257,17 @@ namespace Fabric
             {
                 _uploadResourceAddWay = _currentFreeProductionKgPerDay;
                 _currentFreeProductionKgPerDay -= _uploadResourceAddWay;
+            }
+        }
+
+        private void ReturnFreeProduction()
+        {
+            if (_currentFreeProductionKgPerDay < _productivityKgPerDay)
+            {
+                if (_currentFreeProductionKgPerDay >= _productivityKgPerDay)
+                    _currentFreeProductionKgPerDay = _productivityKgPerDay;
+                else
+                    _currentFreeProductionKgPerDay += _uploadResourceAddWay;
             }
         }
     }

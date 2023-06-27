@@ -16,7 +16,11 @@ namespace Data.Player
             _researchPoints = configDataPlayer.startPlayerResearchPoints;
         }
 
-        void IDataPlayer.AddPlayerMoney(in double amountMoney) => _money += amountMoney;
+        void IDataPlayer.AddPlayerMoney(in double amountMoney)
+        {
+            _money += amountMoney;
+            Debug.Log(_money);
+        }
 
         void IDataPlayer.AddPlayerResearchPoints(in ushort amountResearchPoints) => _researchPoints += amountResearchPoints;
 

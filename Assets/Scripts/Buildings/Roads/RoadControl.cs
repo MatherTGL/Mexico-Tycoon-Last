@@ -42,16 +42,10 @@ namespace Road
             Debug.Log(_dictionaryBuildedRoad);
         }
 
-        public void AddDecliningDemand(in float decliningDemand)
+        public void DecliningDemandUpdate(float decliningDemand, string typeFabricDrug, bool isAddDrugs)
         {
-            _objectRoadBuilded.AddDecliningDemand(decliningDemand);
+            _objectRoadBuilded.DecliningDemandUpdate(decliningDemand, typeFabricDrug, isAddDrugs);
+            Debug.Log($"{decliningDemand} / {typeFabricDrug} / {isAddDrugs}");
         }
-
-        public void ReduceDecliningDemand(in float decliningDemand)
-        {
-            _objectRoadBuilded.ReduceDecliningDemand(decliningDemand);
-        }
-
-        //?private void SetParameters() 
     }
 }

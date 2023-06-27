@@ -20,6 +20,9 @@ namespace City
         private ICityView _IcityView;
 
         //private Dictionary<string, ushort> _dictionaryConnectionToObject = new Dictionary<string, ushort>();
+        private Dictionary<string, float> _decliningDemandDictionary = new Dictionary<string, float>();
+
+        private Dictionary<string, float> _decliningDemand = new Dictionary<string, float>();
 
         private CityReproduction _cityReproduction;
 
@@ -61,6 +64,10 @@ namespace City
         [MinValue(0.0f), Tooltip("Текущая вместимость хранилища города в кг"), ReadOnly]
         private float _currentCapacityStock;
 
+        [FoldoutGroup("Parameters/Drugs"), Title("Weight to Sell in kg", horizontalLine: false)]
+        [MinValue(1), SerializeField, HideLabel]
+        private float _weightToSell;
+
         [FoldoutGroup("Parameters/Drugs"), SerializeField, HideLabel]
         [FoldoutGroup("Parameters/Drugs/Cocaine"), Title("Percentage of Users Cocaine in %", horizontalLine: false)]
         [MinValue(1.0f), MaxValue(80.0f), Tooltip("Процент наркоманов употребляющих кокаин в данном городе")]
@@ -70,10 +77,6 @@ namespace City
         [SerializeField, FoldoutGroup("Parameters/Drugs/Cocaine"), HideLabel]
         private uint _averageCostCocaine;
 
-        [FoldoutGroup("Parameters/Drugs/Cocaine"), Title("Weight to Sell Cocaine in kg", horizontalLine: false)]
-        [MinValue(1), SerializeField, HideLabel]
-        private float _weightToSellCocaine;
-
         [FoldoutGroup("Parameters/Drugs/Cocaine"), Title("Current Drug Demand Cocaine in kg/day")]
         [MinValue(0.0f), HideLabel, SerializeField]
         private float _currentDrugDemandCocaine;
@@ -82,7 +85,8 @@ namespace City
         [MinValue(0.01f), HideLabel, SerializeField]
         private float _increasedDemandCocaine;
 
-        private float _decliningDemand;
+        // [SerializeField]
+        // private float _decliningDemand;
 
         private byte _connectFabricsCount = 0;
 
@@ -106,15 +110,19 @@ namespace City
             StartCoroutine(Reproduction());
         }
 
-        public void ConnectFabricToCity(float decliningDemand, Vector2 positionFabric, string gameObjectConnectionTo)
+        public void ConnectFabricToCity(float decliningDemand, string typeFabricDrug, Vector2 positionFabric, string gameObjectConnectionTo)
         {
             Debug.Log(gameObjectConnectionTo);
             if (_connectFabricsCount < _maxConnectionFabrics)
             {
                 _connectFabricsCount++;
-                _decliningDemand = decliningDemand;
+
+                CheckDemandDictionary(decliningDemand, typeFabricDrug, true);
+
+                Debug.Log(_decliningDemandDictionary[typeFabricDrug]);
+                _decliningDemand.Add(typeFabricDrug, decliningDemand);
                 _roadControl.BuildRoad(transform.position, positionFabric, gameObjectConnectionTo);
-                AddDecliningDemand(decliningDemand);
+                _roadControl.DecliningDemandUpdate(decliningDemand, typeFabricDrug, true);
             }
 
             if (_connectFabricsCount! > 0) { _IcityView.ConnectFabric(ref _spriteRendererObject); }
@@ -131,19 +139,46 @@ namespace City
             else { _IcityView.DisconnectFabric(ref _spriteRendererObject); }
         }
 
-        public void AddDecliningDemand(in float decliningDemand)
+        public void AddDecliningDemand(in float decliningDemand, in string typeFabricDrug)
         {
-            _decliningDemand += decliningDemand;
-            _roadControl.AddDecliningDemand(decliningDemand);
+            //Debug.Log($"{_decliningDemand} / {decliningDemand}");
+            Debug.Log(typeFabricDrug);
+            CheckDemandDictionary(decliningDemand, typeFabricDrug, true);
+            Debug.Log(_decliningDemandDictionary);
+            _decliningDemand[typeFabricDrug] += decliningDemand;
+            _roadControl.DecliningDemandUpdate(decliningDemand, typeFabricDrug, true);
         }
 
-        public void ReduceDecliningDemand(in float decliningDemand)
+        public void ReduceDecliningDemand(in float decliningDemand, in string typeFabricDrug)
         {
-            _decliningDemand -= decliningDemand;
-            _roadControl.ReduceDecliningDemand(decliningDemand);
+            if (_decliningDemandDictionary[typeFabricDrug] >= decliningDemand)
+            {
+                CheckDemandDictionary(decliningDemand, typeFabricDrug, false);
+
+                Debug.Log(_decliningDemandDictionary[typeFabricDrug]);
+                _decliningDemand[typeFabricDrug] -= decliningDemand;
+                _roadControl.DecliningDemandUpdate(decliningDemand, typeFabricDrug, false);
+                //Debug.Log(_decliningDemand);
+            }
         }
 
-        public float GetDecliningDemand() => _decliningDemand;
+        private void CheckDemandDictionary(float decliningDemand, string typeFabricDrug, bool isAddDrugs)
+        {
+            if (_decliningDemandDictionary.ContainsKey(typeFabricDrug))
+            {
+                if (isAddDrugs)
+                {
+                    _decliningDemandDictionary[typeFabricDrug] += decliningDemand;
+                    Debug.Log(_decliningDemandDictionary[typeFabricDrug]);
+                }
+                else
+                {
+                    _decliningDemandDictionary[typeFabricDrug] -= decliningDemand;
+                    Debug.Log(_decliningDemandDictionary[typeFabricDrug]);
+                }
+            }
+            else { _decliningDemandDictionary.Add(typeFabricDrug, decliningDemand); }
+        }
 
         public bool CheckCurrentCapacityStock()
         {
@@ -151,24 +186,36 @@ namespace City
             else return false;
         }
 
-        public void IngestResources() //todo докинуть тип наркотика
+        public void IngestResources(string typeFabricDrug)
         {
-            if (_currentDrugDemandCocaine > _decliningDemand)
+            if (_decliningDemandDictionary[typeFabricDrug] < _maxCapacityStock)
             {
-                _currentDrugDemandCocaine += _increasedDemandCocaine - _decliningDemand;
-                _currentCapacityStock += _decliningDemand;
-                SellDrugs();
+                if (_currentDrugDemandCocaine > _decliningDemandDictionary[typeFabricDrug])
+                {
+                    _currentDrugDemandCocaine += _increasedDemandCocaine - _decliningDemandDictionary[typeFabricDrug];
+                    _currentCapacityStock += _decliningDemandDictionary[typeFabricDrug];
+
+                    _decliningDemandDictionary[typeFabricDrug] += _decliningDemand[typeFabricDrug];
+                    Debug.Log($"{_decliningDemandDictionary[typeFabricDrug]} / {_decliningDemand[typeFabricDrug]}");
+                    SellDrugs(typeFabricDrug);
+                }
+                else
+                {
+                    _currentDrugDemandCocaine += _increasedDemandCocaine;
+                    Debug.Log($"{_currentDrugDemandCocaine} / {typeFabricDrug}");
+                }
             }
-            else
-                _currentDrugDemandCocaine += _increasedDemandCocaine;
+            else { Debug.Log("Хранилище заполнено"); }
         }
 
-        private void SellDrugs() //? вынести в отдельный класс для реализации
+        private void SellDrugs(in string typeFabricDrug) //? вынести в отдельный класс для реализации
         {
-            if (_currentCapacityStock > _weightToSellCocaine)
+            if (_currentCapacityStock > _weightToSell)
             {
-                _currentCapacityStock -= _weightToSellCocaine;
+                _currentCapacityStock -= _weightToSell;
+                _decliningDemandDictionary[typeFabricDrug] -= _weightToSell;
                 DataControl.IdataPlayer.AddPlayerMoney(_averageCostCocaine);
+                Debug.Log("Sell drugs!");
             }
         }
 
