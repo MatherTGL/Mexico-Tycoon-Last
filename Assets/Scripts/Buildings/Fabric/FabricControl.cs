@@ -51,7 +51,7 @@ namespace Fabric
         private float _currentFreeProductionKgPerDay;
 
         [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Product in Stock in kg", horizontalLine: false), HideLabel]
-        [MinValue(0.0f)]
+        [MinValue(0.0f), ReadOnly]
         private float _productInStock;
 
         [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Security Level in Star (0-10)", horizontalLine: false), HideLabel]

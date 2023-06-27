@@ -659,6 +659,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1993232431}
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _weightToSell
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: _timeDateControl
       value: 
       objectReference: {fileID: 519420036}
@@ -927,7 +931,7 @@ PrefabInstance:
       objectReference: {fileID: 4375912937590698603}
     - target: {fileID: 8688798508615415645, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
       propertyPath: _isUseAddAutoArrayObjects
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8688798508615415645, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
       propertyPath: _bootCityControl.Array.size

@@ -36,16 +36,13 @@ namespace Road
 
         public void DestroyRoad(string indexDestroyRoad)
         {
-            Debug.Log(_dictionaryBuildedRoad);
             Destroy(_dictionaryBuildedRoad[indexDestroyRoad].gameObject);
             _dictionaryBuildedRoad.Remove(indexDestroyRoad);
-            Debug.Log(_dictionaryBuildedRoad);
         }
 
         public void DecliningDemandUpdate(float decliningDemand, string typeFabricDrug, bool isAddDrugs)
         {
             _objectRoadBuilded.DecliningDemandUpdate(decliningDemand, typeFabricDrug, isAddDrugs);
-            Debug.Log($"{decliningDemand} / {typeFabricDrug} / {isAddDrugs}");
         }
     }
 }

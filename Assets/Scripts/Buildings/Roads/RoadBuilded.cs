@@ -45,12 +45,8 @@ namespace Road
                     _allTransportingDrugs[typeFabricDrug] += decliningDemand;
                 else
                     _allTransportingDrugs[typeFabricDrug] -= decliningDemand;
-                Debug.Log(_allTransportingDrugs[typeFabricDrug]);
             }
             else { _allTransportingDrugs.Add(typeFabricDrug, decliningDemand); }
-            Debug.Log(_allTransportingDrugs[typeFabricDrug]);
-            //_resTransportationTrafficCapacityCurrent = decliningDemand;
-            //Debug.Log(_resTransportationTrafficCapacityCurrent);
         }
     }
 }

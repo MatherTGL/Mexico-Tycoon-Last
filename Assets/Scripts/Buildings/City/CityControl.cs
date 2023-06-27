@@ -85,9 +85,6 @@ namespace City
         [MinValue(0.01f), HideLabel, SerializeField]
         private float _increasedDemandCocaine;
 
-        // [SerializeField]
-        // private float _decliningDemand;
-
         private byte _connectFabricsCount = 0;
 
 
@@ -119,7 +116,6 @@ namespace City
 
                 CheckDemandDictionary(decliningDemand, typeFabricDrug, true);
 
-                Debug.Log(_decliningDemandDictionary[typeFabricDrug]);
                 _decliningDemand.Add(typeFabricDrug, decliningDemand);
                 _roadControl.BuildRoad(transform.position, positionFabric, gameObjectConnectionTo);
                 _roadControl.DecliningDemandUpdate(decliningDemand, typeFabricDrug, true);
@@ -141,10 +137,7 @@ namespace City
 
         public void AddDecliningDemand(in float decliningDemand, in string typeFabricDrug)
         {
-            //Debug.Log($"{_decliningDemand} / {decliningDemand}");
-            Debug.Log(typeFabricDrug);
             CheckDemandDictionary(decliningDemand, typeFabricDrug, true);
-            Debug.Log(_decliningDemandDictionary);
             _decliningDemand[typeFabricDrug] += decliningDemand;
             _roadControl.DecliningDemandUpdate(decliningDemand, typeFabricDrug, true);
         }
@@ -155,10 +148,8 @@ namespace City
             {
                 CheckDemandDictionary(decliningDemand, typeFabricDrug, false);
 
-                Debug.Log(_decliningDemandDictionary[typeFabricDrug]);
                 _decliningDemand[typeFabricDrug] -= decliningDemand;
                 _roadControl.DecliningDemandUpdate(decliningDemand, typeFabricDrug, false);
-                //Debug.Log(_decliningDemand);
             }
         }
 
@@ -167,15 +158,9 @@ namespace City
             if (_decliningDemandDictionary.ContainsKey(typeFabricDrug))
             {
                 if (isAddDrugs)
-                {
                     _decliningDemandDictionary[typeFabricDrug] += decliningDemand;
-                    Debug.Log(_decliningDemandDictionary[typeFabricDrug]);
-                }
                 else
-                {
                     _decliningDemandDictionary[typeFabricDrug] -= decliningDemand;
-                    Debug.Log(_decliningDemandDictionary[typeFabricDrug]);
-                }
             }
             else { _decliningDemandDictionary.Add(typeFabricDrug, decliningDemand); }
         }
@@ -196,14 +181,9 @@ namespace City
                     _currentCapacityStock += _decliningDemandDictionary[typeFabricDrug];
 
                     _decliningDemandDictionary[typeFabricDrug] += _decliningDemand[typeFabricDrug];
-                    Debug.Log($"{_decliningDemandDictionary[typeFabricDrug]} / {_decliningDemand[typeFabricDrug]}");
                     SellDrugs(typeFabricDrug);
                 }
-                else
-                {
-                    _currentDrugDemandCocaine += _increasedDemandCocaine;
-                    Debug.Log($"{_currentDrugDemandCocaine} / {typeFabricDrug}");
-                }
+                else { _currentDrugDemandCocaine += _increasedDemandCocaine; }
             }
             else { Debug.Log("Хранилище заполнено"); }
         }
@@ -215,7 +195,6 @@ namespace City
                 _currentCapacityStock -= _weightToSell;
                 _decliningDemandDictionary[typeFabricDrug] -= _weightToSell;
                 DataControl.IdataPlayer.AddPlayerMoney(_averageCostCocaine);
-                Debug.Log("Sell drugs!");
             }
         }
 
