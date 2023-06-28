@@ -11,7 +11,7 @@ using Config.FabricControl.View;
 
 namespace Fabric
 {
-    internal sealed class FabricControl : MonoBehaviour, IBoot
+    public sealed class FabricControl : MonoBehaviour, IBoot
     {
         #region Variables
 
@@ -66,9 +66,9 @@ namespace Fabric
         [MinValue(10.0f)]
         private float _maxCapacityStock;
 
-        private enum TypeProductionResource
+        public enum TypeProductionResource
         {
-            Cocaine, Marijuana
+            Cocaine, Marijuana, Crack
         }
 
         [SerializeField, EnumPaging, BoxGroup("Parameters/Main Settings"), DisableIf("_isBuyed")]

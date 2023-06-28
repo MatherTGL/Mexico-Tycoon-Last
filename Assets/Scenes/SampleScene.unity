@@ -123,6 +123,145 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &169269452
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 2
+    m_TransformParent: {fileID: 1515127981}
+    m_Modifications:
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _roadControl
+      value: 
+      objectReference: {fileID: 1993232431}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _populationCity
+      value: 530780
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _increasedDemand
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _timeDateControl
+      value: 
+      objectReference: {fileID: 519420036}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _averageCostCocaine
+      value: 25000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _percentageUsersCocaine
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _averageCostDrugs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _averageCostDrugs.Array.data[0]
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _averageCostDrugs.Array.data[1]
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _averageCostDrugs.Array.data[2]
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _populationChangeStepPercentMax
+      value: 0.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _populationChangeStepPercentMin
+      value: -0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _nameDrugEditorAverageCost.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _nameDrugEditorAverageCost.Array.data[0]
+      value: Cocaine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _nameDrugEditorAverageCost.Array.data[1]
+      value: Marijuana
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _nameDrugEditorAverageCost.Array.data[2]
+      value: Crack
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217400, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_Name
+      value: City (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_AddedGameObjects: []
+  m_SourcePrefab: {fileID: 100100000, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+--- !u!4 &169269453 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+  m_PrefabInstance: {fileID: 169269452}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &169269454 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+  m_PrefabInstance: {fileID: 169269452}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 456eb46f8f9c78b7d9a7e86acae3f43b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &224708754
 GameObject:
   m_ObjectHideFlags: 0
@@ -166,6 +305,137 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cce1df000ec734dcb6cbb3c51b4e24c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &841380262
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 2
+    m_TransformParent: {fileID: 1515127981}
+    m_Modifications:
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _roadControl
+      value: 
+      objectReference: {fileID: 1993232431}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _populationCity
+      value: 232000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _increasedDemand
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _timeDateControl
+      value: 
+      objectReference: {fileID: 519420036}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _averageCostDrugs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _averageCostDrugs.Array.data[0]
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _averageCostDrugs.Array.data[1]
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _averageCostDrugs.Array.data[2]
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _populationChangeStepPercentMax
+      value: 0.21
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _populationChangeStepPercentMin
+      value: -0.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _nameDrugEditorAverageCost.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _nameDrugEditorAverageCost.Array.data[0]
+      value: Cocaine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _nameDrugEditorAverageCost.Array.data[1]
+      value: Marijuana
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _nameDrugEditorAverageCost.Array.data[2]
+      value: Crack
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217400, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_Name
+      value: City (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 13.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.78
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_AddedGameObjects: []
+  m_SourcePrefab: {fileID: 100100000, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+--- !u!4 &841380263 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+  m_PrefabInstance: {fileID: 841380262}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &841380264 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+  m_PrefabInstance: {fileID: 841380262}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 456eb46f8f9c78b7d9a7e86acae3f43b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &857232772
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -183,6 +453,10 @@ PrefabInstance:
       value: 530780
       objectReference: {fileID: 0}
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _increasedDemand
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: _timeDateControl
       value: 
       objectReference: {fileID: 519420036}
@@ -195,12 +469,44 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _averageCostDrugs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _averageCostDrugs.Array.data[0]
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _averageCostDrugs.Array.data[1]
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _averageCostDrugs.Array.data[2]
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: _populationChangeStepPercentMax
       value: 0.23
       objectReference: {fileID: 0}
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: _populationChangeStepPercentMin
       value: -0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _nameDrugEditorAverageCost.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _nameDrugEditorAverageCost.Array.data[0]
+      value: Cocaine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _nameDrugEditorAverageCost.Array.data[1]
+      value: Marijuana
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _nameDrugEditorAverageCost.Array.data[2]
+      value: Crack
       objectReference: {fileID: 0}
     - target: {fileID: 3276379949940217400, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: m_Name
@@ -350,6 +656,89 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 456eb46f8f9c78b7d9a7e86acae3f43b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &1318488956
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 2
+    m_TransformParent: {fileID: 1648672142}
+    m_Modifications:
+    - target: {fileID: 3614819644002739043, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+      propertyPath: _roadControl
+      value: 
+      objectReference: {fileID: 1993232431}
+    - target: {fileID: 3614819644002739043, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+      propertyPath: _timeDateControl
+      value: 
+      objectReference: {fileID: 519420036}
+    - target: {fileID: 3614819644002739045, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614819644002739045, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 19.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614819644002739045, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.99
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614819644002739045, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614819644002739045, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614819644002739045, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614819644002739045, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614819644002739045, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614819644002739045, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614819644002739045, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614819644002739045, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614819644002739046, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+      propertyPath: m_Name
+      value: Fabric (3)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_AddedGameObjects: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+--- !u!4 &1318488957 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3614819644002739045, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+  m_PrefabInstance: {fileID: 1318488956}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1318488958 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3614819644002739043, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+  m_PrefabInstance: {fileID: 1318488956}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96f16415af5242ce485286af690fd02c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1515127980
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,9 +770,139 @@ Transform:
   - {fileID: 1172566790}
   - {fileID: 1583395832}
   - {fileID: 857232773}
+  - {fileID: 1534867369}
+  - {fileID: 841380263}
+  - {fileID: 169269453}
   m_Father: {fileID: 924062924}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1534867368
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 2
+    m_TransformParent: {fileID: 1515127981}
+    m_Modifications:
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _roadControl
+      value: 
+      objectReference: {fileID: 1993232431}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _increasedDemand
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _timeDateControl
+      value: 
+      objectReference: {fileID: 519420036}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _currentDrugDemandCocaine
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _averageCostDrugs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _weightToSellChangeDictionary
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _averageCostDrugs.Array.data[0]
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _averageCostDrugs.Array.data[1]
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _averageCostDrugs.Array.data[2]
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _nameDrugEditorAverageCost.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _nameDrugEditorAverageCost.Array.data[0]
+      value: Cocaine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _nameDrugEditorAverageCost.Array.data[1]
+      value: Marijuana
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _nameDrugEditorAverageCost.Array.data[2]
+      value: Crack
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217400, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_Name
+      value: City (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 11.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_AddedGameObjects: []
+  m_SourcePrefab: {fileID: 100100000, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+--- !u!4 &1534867369 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+  m_PrefabInstance: {fileID: 1534867368}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1534867370 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+  m_PrefabInstance: {fileID: 1534867368}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 456eb46f8f9c78b7d9a7e86acae3f43b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1583395831
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -401,9 +920,29 @@ PrefabInstance:
       value: 232000
       objectReference: {fileID: 0}
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _increasedDemand
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: _timeDateControl
       value: 
       objectReference: {fileID: 519420036}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _averageCostDrugs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _averageCostDrugs.Array.data[0]
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _averageCostDrugs.Array.data[1]
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _averageCostDrugs.Array.data[2]
+      value: 5000
+      objectReference: {fileID: 0}
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: _populationChangeStepPercentMax
       value: 0.21
@@ -411,6 +950,22 @@ PrefabInstance:
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: _populationChangeStepPercentMin
       value: -0.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _nameDrugEditorAverageCost.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _nameDrugEditorAverageCost.Array.data[0]
+      value: Cocaine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _nameDrugEditorAverageCost.Array.data[1]
+      value: Marijuana
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _nameDrugEditorAverageCost.Array.data[2]
+      value: Crack
       objectReference: {fileID: 0}
     - target: {fileID: 3276379949940217400, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: m_Name
@@ -509,6 +1064,8 @@ Transform:
   m_Children:
   - {fileID: 2115739770}
   - {fileID: 1931697885}
+  - {fileID: 2043566658}
+  - {fileID: 1318488957}
   m_Father: {fileID: 924062924}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -630,6 +1187,93 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c79c626b042d11bb89efba5b9d4373d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &2043566657
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 2
+    m_TransformParent: {fileID: 1648672142}
+    m_Modifications:
+    - target: {fileID: 3614819644002739043, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+      propertyPath: _roadControl
+      value: 
+      objectReference: {fileID: 1993232431}
+    - target: {fileID: 3614819644002739043, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+      propertyPath: _timeDateControl
+      value: 
+      objectReference: {fileID: 519420036}
+    - target: {fileID: 3614819644002739043, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+      propertyPath: _typeProductionResource
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614819644002739045, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614819644002739045, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614819644002739045, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614819644002739045, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614819644002739045, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614819644002739045, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614819644002739045, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614819644002739045, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614819644002739045, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614819644002739045, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614819644002739045, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614819644002739046, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+      propertyPath: m_Name
+      value: Fabric (2)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_AddedGameObjects: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+--- !u!4 &2043566658 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3614819644002739045, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+  m_PrefabInstance: {fileID: 2043566657}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2043566659 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3614819644002739043, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+  m_PrefabInstance: {fileID: 2043566657}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96f16415af5242ce485286af690fd02c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2115739770 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3614819644002739045, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
@@ -659,13 +1303,53 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1993232431}
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
-      propertyPath: _weightToSell
-      value: 1
+      propertyPath: _increasedDemand
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: _timeDateControl
       value: 
       objectReference: {fileID: 519420036}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _currentDrugDemandCocaine
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _averageCostDrugs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _weightToSellChangeDictionary
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _averageCostDrugs.Array.data[0]
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _averageCostDrugs.Array.data[1]
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _averageCostDrugs.Array.data[2]
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _nameDrugEditorAverageCost.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _nameDrugEditorAverageCost.Array.data[0]
+      value: Cocaine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _nameDrugEditorAverageCost.Array.data[1]
+      value: Marijuana
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _nameDrugEditorAverageCost.Array.data[2]
+      value: Crack
+      objectReference: {fileID: 0}
     - target: {fileID: 3276379949940217400, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: m_Name
       value: City
@@ -792,6 +1476,22 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4375912937434679829, guid: c00373ece0d50ffd1aec08aa9999744d, type: 3}
+      propertyPath: field of view
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4375912937434679829, guid: c00373ece0d50ffd1aec08aa9999744d, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0.764151
+      objectReference: {fileID: 0}
+    - target: {fileID: 4375912937434679829, guid: c00373ece0d50ffd1aec08aa9999744d, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0.764151
+      objectReference: {fileID: 0}
+    - target: {fileID: 4375912937434679829, guid: c00373ece0d50ffd1aec08aa9999744d, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0.764151
+      objectReference: {fileID: 0}
     - target: {fileID: 4375912937434679830, guid: c00373ece0d50ffd1aec08aa9999744d, type: 3}
       propertyPath: m_Name
       value: Player Camera
@@ -810,7 +1510,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4375912937434680042, guid: c00373ece0d50ffd1aec08aa9999744d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 20
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 4375912937434680042, guid: c00373ece0d50ffd1aec08aa9999744d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -934,27 +1634,55 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8688798508615415645, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
+      propertyPath: _countAutoSearchIterations
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8688798508615415645, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
       propertyPath: _bootCityControl.Array.size
-      value: 3
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8688798508615415645, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
+      propertyPath: _bootFabricControl.Array.size
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8688798508615415645, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
       propertyPath: _bootCityControl.Array.data[0]
       value: 
-      objectReference: {fileID: 857232774}
+      objectReference: {fileID: 841380264}
     - target: {fileID: 8688798508615415645, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
       propertyPath: _bootCityControl.Array.data[1]
       value: 
-      objectReference: {fileID: 1172566792}
+      objectReference: {fileID: 1534867370}
     - target: {fileID: 8688798508615415645, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
       propertyPath: _bootCityControl.Array.data[2]
+      value: 
+      objectReference: {fileID: 169269454}
+    - target: {fileID: 8688798508615415645, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
+      propertyPath: _bootCityControl.Array.data[3]
+      value: 
+      objectReference: {fileID: 857232774}
+    - target: {fileID: 8688798508615415645, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
+      propertyPath: _bootCityControl.Array.data[4]
+      value: 
+      objectReference: {fileID: 1172566792}
+    - target: {fileID: 8688798508615415645, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
+      propertyPath: _bootCityControl.Array.data[5]
       value: 
       objectReference: {fileID: 1583395834}
     - target: {fileID: 8688798508615415645, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
       propertyPath: _bootFabricControl.Array.data[0]
       value: 
-      objectReference: {fileID: 1931697886}
+      objectReference: {fileID: 1318488958}
     - target: {fileID: 8688798508615415645, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
       propertyPath: _bootFabricControl.Array.data[1]
+      value: 
+      objectReference: {fileID: 2043566659}
+    - target: {fileID: 8688798508615415645, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
+      propertyPath: _bootFabricControl.Array.data[2]
+      value: 
+      objectReference: {fileID: 1931697886}
+    - target: {fileID: 8688798508615415645, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
+      propertyPath: _bootFabricControl.Array.data[3]
       value: 
       objectReference: {fileID: 2115739772}
     - target: {fileID: 8688798508615415646, guid: 02065e06e79e4268b9747242f4e12812, type: 3}

@@ -10,6 +10,7 @@ namespace Road
         [SerializeField, Required, BoxGroup("Parameters"), AssetsOnly]
         private LineRenderer _linePrefab;
 
+        [ShowInInspector, BoxGroup("Parameters"), ReadOnly]
         private Dictionary<string, RoadBuilded> _dictionaryBuildedRoad = new Dictionary<string, RoadBuilded>();
 
         private RoadBuilded _objectRoadBuilded;

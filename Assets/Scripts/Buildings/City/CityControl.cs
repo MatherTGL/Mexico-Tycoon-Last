@@ -2,12 +2,12 @@ using UnityEngine;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using Boot;
-using Data;
 using Config.CityControl.View;
 using System.Collections;
 using TimeControl;
 using Road;
 using Fabric;
+using System;
 
 namespace City
 {
@@ -15,14 +15,15 @@ namespace City
     {
         private const byte c_mathematicalDivisor = 100;
 
-        private const byte _maxConnectionFabrics = 4;
+        private const byte c_maxConnectionFabrics = 4;
 
         private ICityView _IcityView;
 
-        //private Dictionary<string, ushort> _dictionaryConnectionToObject = new Dictionary<string, ushort>();
-        private Dictionary<string, float> _decliningDemandDictionary = new Dictionary<string, float>();
+        [ShowInInspector, BoxGroup("Parameters"), ReadOnly]
+        private Dictionary<string, float> d_amountDrugsInCity = new Dictionary<string, float>();
 
-        private Dictionary<string, float> _decliningDemand = new Dictionary<string, float>();
+        [ShowInInspector, BoxGroup("Parameters"), ReadOnly]
+        private Dictionary<string, float> d_addingResourceEveryStep = new Dictionary<string, float>();
 
         private CityReproduction _cityReproduction;
 
@@ -33,6 +34,8 @@ namespace City
 
         [SerializeField, BoxGroup("Parameters"), Required, Title("Road Control"), HideLabel]
         private RoadControl _roadControl;
+
+        private CityDrugsSell _cityDrugsSell;
 
         [SerializeField, BoxGroup("Parameters")]
         [Title("Config City Control View"), HideLabel, Required, PropertySpace(0, 15)]
@@ -64,26 +67,59 @@ namespace City
         [MinValue(0.0f), Tooltip("Текущая вместимость хранилища города в кг"), ReadOnly]
         private float _currentCapacityStock;
 
-        [FoldoutGroup("Parameters/Drugs"), Title("Weight to Sell in kg", horizontalLine: false)]
-        [MinValue(1), SerializeField, HideLabel]
-        private float _weightToSell;
+        [FoldoutGroup("Parameters/Drugs/Sell"), Title("Weight to Sell in kg", horizontalLine: false)]
+        [MinValue(1), SerializeField, HideLabel, HorizontalGroup("Parameters/Drugs/Sell/hor")]
+        private float _weightToSell = 1;
 
         [FoldoutGroup("Parameters/Drugs"), SerializeField, HideLabel]
         [FoldoutGroup("Parameters/Drugs/Cocaine"), Title("Percentage of Users Cocaine in %", horizontalLine: false)]
         [MinValue(1.0f), MaxValue(80.0f), Tooltip("Процент наркоманов употребляющих кокаин в данном городе")]
         private float _percentageUsersCocaine;
 
-        [Title("Average Cost Cocaine in $/kg", horizontalLine: false)]
-        [SerializeField, FoldoutGroup("Parameters/Drugs/Cocaine"), HideLabel]
-        private uint _averageCostCocaine;
+#if UNITY_EDITOR
+        [SerializeField, FoldoutGroup("Parameters/Drugs/Cost Parameters"), HideLabel, ReadOnly, HorizontalGroup("Parameters/Drugs/Cost Parameters/Average Cost")]
+        [Title("Name Drug", horizontalLine: false)]
+        private string[] _nameDrugEditorAverageCost;
 
-        [FoldoutGroup("Parameters/Drugs/Cocaine"), Title("Current Drug Demand Cocaine in kg/day")]
+        [SerializeField, FoldoutGroup("Parameters/Drugs/Cost Parameters"), HideLabel, MinValue(5_000)]
+        [Title("Min Value Average Cost", horizontalLine: false), ShowIf("_isShowAdditionalParameters")]
+        private uint _minValueEditorAverageCost = 5_000;
+
+        private bool _isShowAdditionalParameters;
+
+        [Button("Additional", 30), FoldoutGroup("Parameters/Drugs/Cost Parameters"), HorizontalGroup("Parameters/Drugs/Cost Parameters/BtnHor")]
+        private void ShowAdditionalParametersEditor()
+        {
+            _isShowAdditionalParameters = !_isShowAdditionalParameters;
+        }
+
+        [Button("Update", 30), FoldoutGroup("Parameters/Drugs/Cost Parameters"), HorizontalGroup("Parameters/Drugs/Cost Parameters/BtnHor")]
+        private void InitCosts()
+        {
+            var countsTypesDrugs = Enum.GetNames(typeof(FabricControl.TypeProductionResource));
+            _averageCostDrugs = new uint[countsTypesDrugs.Length];
+            _nameDrugEditorAverageCost = new string[countsTypesDrugs.Length];
+
+            for (int i = 0; i < countsTypesDrugs.Length; i++)
+            {
+                _averageCostDrugs[i] = _minValueEditorAverageCost;
+                _nameDrugEditorAverageCost[i] = countsTypesDrugs[i];
+                //? пофиксить цену, которая всегда значится 0 после нажатия кнопки
+            }
+        }
+#endif
+
+        [Title("Cost $/kg", horizontalLine: false), MinValue(5_000)]
+        [SerializeField, FoldoutGroup("Parameters/Drugs/Cost Parameters"), HideLabel, HorizontalGroup("Parameters/Drugs/Cost Parameters/Average Cost")]
+        private uint[] _averageCostDrugs;
+
+        [FoldoutGroup("Parameters/Drugs/Cocaine"), Title("Current Drug Demand in kg/day", horizontalLine: false)]
         [MinValue(0.0f), HideLabel, SerializeField]
-        private float _currentDrugDemandCocaine;
+        private float _currentDrugDemand;
 
-        [FoldoutGroup("Parameters/Drugs/Cocaine"), Title("Increased Demand Cocaine in kg/day")]
+        [FoldoutGroup("Parameters/Drugs/Cocaine"), Title("Increased Demand in kg/day", horizontalLine: false)]
         [MinValue(0.01f), HideLabel, SerializeField]
-        private float _increasedDemandCocaine;
+        private float _increasedDemand;
 
         private byte _connectFabricsCount = 0;
 
@@ -103,20 +139,24 @@ namespace City
                 _cityReproduction = new CityReproduction(c_mathematicalDivisor,
                                                          _populationChangeStepPercentMax,
                                                          _populationChangeStepPercentMin);
+            _cityDrugsSell = new CityDrugsSell(_averageCostDrugs);
 
             StartCoroutine(Reproduction());
         }
 
-        public void ConnectFabricToCity(float decliningDemand, string typeFabricDrug, Vector2 positionFabric, string gameObjectConnectionTo)
+        public void ConnectFabricToCity(float decliningDemand,
+                                        string typeFabricDrug,
+                                        Vector2 positionFabric,
+                                        string gameObjectConnectionTo)
         {
             Debug.Log(gameObjectConnectionTo);
-            if (_connectFabricsCount < _maxConnectionFabrics)
+            if (_connectFabricsCount < c_maxConnectionFabrics)
             {
                 _connectFabricsCount++;
 
                 CheckDemandDictionary(decliningDemand, typeFabricDrug, true);
 
-                _decliningDemand.Add(typeFabricDrug, decliningDemand);
+                d_addingResourceEveryStep.Add(typeFabricDrug, decliningDemand);
                 _roadControl.BuildRoad(transform.position, positionFabric, gameObjectConnectionTo);
                 _roadControl.DecliningDemandUpdate(decliningDemand, typeFabricDrug, true);
             }
@@ -138,31 +178,31 @@ namespace City
         public void AddDecliningDemand(in float decliningDemand, in string typeFabricDrug)
         {
             CheckDemandDictionary(decliningDemand, typeFabricDrug, true);
-            _decliningDemand[typeFabricDrug] += decliningDemand;
+            d_addingResourceEveryStep[typeFabricDrug] += decliningDemand;
             _roadControl.DecliningDemandUpdate(decliningDemand, typeFabricDrug, true);
         }
 
         public void ReduceDecliningDemand(in float decliningDemand, in string typeFabricDrug)
         {
-            if (_decliningDemandDictionary[typeFabricDrug] >= decliningDemand)
+            if (d_amountDrugsInCity[typeFabricDrug] >= decliningDemand)
             {
                 CheckDemandDictionary(decliningDemand, typeFabricDrug, false);
 
-                _decliningDemand[typeFabricDrug] -= decliningDemand;
+                d_addingResourceEveryStep[typeFabricDrug] -= decliningDemand;
                 _roadControl.DecliningDemandUpdate(decliningDemand, typeFabricDrug, false);
             }
         }
 
         private void CheckDemandDictionary(float decliningDemand, string typeFabricDrug, bool isAddDrugs)
         {
-            if (_decliningDemandDictionary.ContainsKey(typeFabricDrug))
+            if (d_amountDrugsInCity.ContainsKey(typeFabricDrug))
             {
                 if (isAddDrugs)
-                    _decliningDemandDictionary[typeFabricDrug] += decliningDemand;
+                    d_amountDrugsInCity[typeFabricDrug] += decliningDemand;
                 else
-                    _decliningDemandDictionary[typeFabricDrug] -= decliningDemand;
+                    d_amountDrugsInCity[typeFabricDrug] -= decliningDemand;
             }
-            else { _decliningDemandDictionary.Add(typeFabricDrug, decliningDemand); }
+            else { d_amountDrugsInCity.Add(typeFabricDrug, decliningDemand); }
         }
 
         public bool CheckCurrentCapacityStock()
@@ -173,29 +213,25 @@ namespace City
 
         public void IngestResources(string typeFabricDrug)
         {
-            if (_decliningDemandDictionary[typeFabricDrug] < _maxCapacityStock)
+            if (d_amountDrugsInCity[typeFabricDrug] < _maxCapacityStock)
             {
-                if (_currentDrugDemandCocaine > _decliningDemandDictionary[typeFabricDrug])
+                if (_currentDrugDemand > d_addingResourceEveryStep[typeFabricDrug])
                 {
-                    _currentDrugDemandCocaine += _increasedDemandCocaine - _decliningDemandDictionary[typeFabricDrug];
-                    _currentCapacityStock += _decliningDemandDictionary[typeFabricDrug];
+                    _currentDrugDemand += _increasedDemand - d_addingResourceEveryStep[typeFabricDrug];
+                    _currentCapacityStock += d_addingResourceEveryStep[typeFabricDrug];
 
-                    _decliningDemandDictionary[typeFabricDrug] += _decliningDemand[typeFabricDrug];
-                    SellDrugs(typeFabricDrug);
+                    d_amountDrugsInCity[typeFabricDrug] += d_addingResourceEveryStep[typeFabricDrug];
+                    SellResources(ref typeFabricDrug);
                 }
-                else { _currentDrugDemandCocaine += _increasedDemandCocaine; }
+                else { _currentDrugDemand += _increasedDemand; }
             }
             else { Debug.Log("Хранилище заполнено"); }
         }
 
-        private void SellDrugs(in string typeFabricDrug) //? вынести в отдельный класс для реализации
+        private void SellResources(ref string typeFabricDrug)
         {
-            if (_currentCapacityStock > _weightToSell)
-            {
-                _currentCapacityStock -= _weightToSell;
-                _decliningDemandDictionary[typeFabricDrug] -= _weightToSell;
-                DataControl.IdataPlayer.AddPlayerMoney(_averageCostCocaine);
-            }
+            _cityDrugsSell.Sell(typeFabricDrug, ref _weightToSell, ref _currentCapacityStock);
+            d_amountDrugsInCity[typeFabricDrug] -= _weightToSell;
         }
 
         private IEnumerator Reproduction()

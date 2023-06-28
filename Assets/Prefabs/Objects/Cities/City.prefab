@@ -107,9 +107,9 @@ MonoBehaviour:
   _policeLevel: 2
   _maxCapacityStock: 100
   _currentCapacityStock: 0
+  _weightToSell: 1
   _percentageUsersCocaine: 1
   _averageCostCocaine: 8000
-  _weightToSellCocaine: 1
   _currentDrugDemandCocaine: 3
   _increasedDemandCocaine: 0.1
 --- !u!58 &3276379949940217396

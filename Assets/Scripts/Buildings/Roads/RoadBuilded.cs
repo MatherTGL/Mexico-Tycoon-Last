@@ -8,6 +8,7 @@ namespace Road
     public sealed class RoadBuilded : MonoBehaviour
     {
         //*лист с транспоротом на маршруте
+        [ShowInInspector, BoxGroup("Parameters"), ReadOnly]
         private Dictionary<string, float> _allTransportingDrugs = new Dictionary<string, float>();
 
         [SerializeField, BoxGroup("Parameters"), HideLabel, MinValue(0.0f)]
