@@ -38,16 +38,12 @@ namespace Road
             Debug.Log("Дорога инициализирована");
         }
 
-        public void DecliningDemandUpdate(in float decliningDemand, in string typeFabricDrug, in bool isAddDrugs)
+        public void DecliningDemandUpdate(in float addResEveryStep, in string typeFabricDrug)
         {
             if (_allTransportingDrugs.ContainsKey(typeFabricDrug))
-            {
-                if (isAddDrugs)
-                    _allTransportingDrugs[typeFabricDrug] += decliningDemand;
-                else
-                    _allTransportingDrugs[typeFabricDrug] -= decliningDemand;
-            }
-            else { _allTransportingDrugs.Add(typeFabricDrug, decliningDemand); }
+                _allTransportingDrugs[typeFabricDrug] = addResEveryStep;
+            else
+                _allTransportingDrugs.Add(typeFabricDrug, addResEveryStep);
         }
     }
 }

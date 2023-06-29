@@ -87,6 +87,9 @@ namespace Fabric
         [Tooltip("Города, в которые фабрика будет поставлять ресурс"), ReadOnly]
         private List<CityControl> _citiesClients = new List<CityControl>();
 
+        [ShowInInspector, FoldoutGroup("Parameters/Control")]
+        private Dictionary<string, float> d_allInfoCitiesClientsTransition = new Dictionary<string, float>();
+
         [SerializeField, FoldoutGroup("Parameters/Control/Transporting"), EnableIf("_isBuyed")]
         [HideLabel, Title("City New Transport Way Link", horizontalLine: false)]
         private CityControl _cityNewTransportWay;
@@ -120,6 +123,7 @@ namespace Fabric
         private void WorkFabricEditor()
         {
             _isWork = !_isWork;
+
             _IfabricView.ChangeWorkStateFabricView(ref _spriteRendererObject, _isWork);
         }
 
@@ -137,15 +141,18 @@ namespace Fabric
         [PropertySpace(10)]
         private void AddNewTransportWay()
         {
-            _citiesClients.Add(_cityNewTransportWay);
-            SpendFreeProduction();
+            if (_citiesClients.Contains(_cityNewTransportWay) is false && d_allInfoCitiesClientsTransition.ContainsKey(_cityNewTransportWay.name) is false)
+            {
+                _citiesClients.Add(_cityNewTransportWay);
+                d_allInfoCitiesClientsTransition.Add(_cityNewTransportWay.name, _uploadResourceAddWay);
+                SpendFreeProduction();
 
-            _cityNewTransportWay.ConnectFabricToCity(_uploadResourceAddWay,
-                                                     _typeProductionResource.ToString(),
-                                                     transform.position,
-                                                     gameObject.name + _cityNewTransportWay.name);
-            _uploadResourceAddWay = 0;
-            _cityNewTransportWay = null;
+                _cityNewTransportWay.ConnectFabricToCity(_typeProductionResource.ToString(),
+                                                         transform.position,
+                                                         gameObject.name + _cityNewTransportWay.name);
+                _uploadResourceAddWay = 0;
+                _cityNewTransportWay = null;
+            }
         }
 
         [Button("Remove Way"), EnableIf("_isBuyed"), FoldoutGroup("Parameters/Control/Transporting")]
@@ -157,6 +164,7 @@ namespace Fabric
             {
                 _citiesClients.Remove(_cityNewTransportWay);
                 _cityNewTransportWay.DisconnectFabricToCity(gameObject.name + _cityNewTransportWay.name);
+                d_allInfoCitiesClientsTransition.Remove(_cityNewTransportWay.name);
             }
         }
 
@@ -169,6 +177,7 @@ namespace Fabric
                 _citiesClients[i].DisconnectFabricToCity(gameObject.name + _cityNewTransportWay.name);
             }
             _citiesClients.Clear();
+            d_allInfoCitiesClientsTransition.Clear();
         }
 
         [Button("Load Res"), EnableIf("_isBuyed"), FoldoutGroup("Parameters/Control/Transporting")]
@@ -177,7 +186,7 @@ namespace Fabric
         private void AddUploadResourceWay()
         {
             SpendFreeProduction();
-            _citiesClients[_indexChangeCityDecliningDemand].AddDecliningDemand(_uploadResourceAddWay, _typeProductionResource.ToString());
+            d_allInfoCitiesClientsTransition[_citiesClients[_indexChangeCityDecliningDemand].name] += _uploadResourceAddWay;
         }
 
         [Button("Unload Res"), EnableIf("_isBuyed"), FoldoutGroup("Parameters/Control/Transporting")]
@@ -186,7 +195,7 @@ namespace Fabric
         private void ReduceUploadResourcecWay()
         {
             ReturnFreeProduction();
-            _citiesClients[_indexChangeCityDecliningDemand].ReduceDecliningDemand(_uploadResourceAddWay, _typeProductionResource.ToString());
+            d_allInfoCitiesClientsTransition[_citiesClients[_indexChangeCityDecliningDemand].name] -= _uploadResourceAddWay;
         }
 #endif
         #endregion
@@ -224,9 +233,9 @@ namespace Fabric
             {
                 for (int i = 0; i < _citiesClients.Count; i++)
                 {
-                    if (_citiesClients[i].CheckCurrentCapacityStock())
-                        _citiesClients[i].IngestResources(_typeProductionResource.ToString());
-                    else { Debug.Log("Хранилище города полное"); }
+                    _citiesClients[i].IngestResources(_typeProductionResource.ToString(),
+                                                      _isWork,
+                                                      d_allInfoCitiesClientsTransition[_citiesClients[i].name]);
                 }
             }
         }
@@ -235,15 +244,15 @@ namespace Fabric
         {
             while (true)
             {
-                if (_isWork)
+                if (_timeDateControl.GetStatePaused() is false)
                 {
-                    if (_timeDateControl.GetStatePaused() is false)
+                    if (_isWork)
                     {
                         _IfabricProduction.ProductionProduct(_currentFreeProductionKgPerDay,
-                                                             _maxCapacityStock,
-                                                             ref _productInStock);
-                        TransportingResourcesProduction();
+                                                         _maxCapacityStock,
+                                                         ref _productInStock);
                     }
+                    TransportingResourcesProduction();
                 }
                 yield return new WaitForSecondsRealtime(_timeDateControl.GetCurrentTimeOneDay(true));
             }

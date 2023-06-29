@@ -41,9 +41,9 @@ namespace Road
             _dictionaryBuildedRoad.Remove(indexDestroyRoad);
         }
 
-        public void DecliningDemandUpdate(float decliningDemand, string typeFabricDrug, bool isAddDrugs)
+        public void DecliningDemandUpdate(in float addResEveryStep, string typeFabricDrug)
         {
-            _objectRoadBuilded.DecliningDemandUpdate(decliningDemand, typeFabricDrug, isAddDrugs);
+            _objectRoadBuilded.DecliningDemandUpdate(addResEveryStep, typeFabricDrug);
         }
     }
 }

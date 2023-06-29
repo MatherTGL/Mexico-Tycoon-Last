@@ -25,15 +25,9 @@ namespace City
             }
         }
 
-        public void Sell(string typeFabricDrug, ref float weightToSell, ref float currentCapacityStock)
+        public void Sell(string typeFabricDrug)
         {
-            if (currentCapacityStock > weightToSell)
-            {
-                currentCapacityStock -= weightToSell;
-                DataControl.IdataPlayer.AddPlayerMoney(d_costDrugs[typeFabricDrug]);
-                Debug.Log($"Sell {weightToSell} / cost {d_costDrugs[typeFabricDrug]}");
-                Debug.Log($"Capacity {currentCapacityStock}");
-            }
+            DataControl.IdataPlayer.AddPlayerMoney(d_costDrugs[typeFabricDrug]);
         }
     }
 }

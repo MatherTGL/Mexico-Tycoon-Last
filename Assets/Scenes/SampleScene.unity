@@ -1315,6 +1315,18 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _buyersDrugsClampDemandMax
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _buyersDrugsClampDemandMin
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _minValueEditorAverageCost
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: _averageCostDrugs.Array.size
       value: 3
       objectReference: {fileID: 0}
