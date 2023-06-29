@@ -87,7 +87,7 @@ namespace Fabric
         [Tooltip("Города, в которые фабрика будет поставлять ресурс"), ReadOnly]
         private List<CityControl> _citiesClients = new List<CityControl>();
 
-        [ShowInInspector, FoldoutGroup("Parameters/Control")]
+        [ShowInInspector, FoldoutGroup("Parameters/Control"), ReadOnly]
         private Dictionary<string, float> d_allInfoCitiesClientsTransition = new Dictionary<string, float>();
 
         [SerializeField, FoldoutGroup("Parameters/Control/Transporting"), EnableIf("_isBuyed")]
@@ -144,8 +144,9 @@ namespace Fabric
             if (_citiesClients.Contains(_cityNewTransportWay) is false && d_allInfoCitiesClientsTransition.ContainsKey(_cityNewTransportWay.name) is false)
             {
                 _citiesClients.Add(_cityNewTransportWay);
-                d_allInfoCitiesClientsTransition.Add(_cityNewTransportWay.name, _uploadResourceAddWay);
                 SpendFreeProduction();
+
+                d_allInfoCitiesClientsTransition.Add(_cityNewTransportWay.name, _uploadResourceAddWay);
 
                 _cityNewTransportWay.ConnectFabricToCity(_typeProductionResource.ToString(),
                                                          transform.position,

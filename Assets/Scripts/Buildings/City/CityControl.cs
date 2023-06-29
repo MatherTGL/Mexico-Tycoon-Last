@@ -8,6 +8,7 @@ using TimeControl;
 using Road;
 using Fabric;
 using System;
+using Upgrade.Buildings;
 
 
 namespace City
@@ -18,29 +19,30 @@ namespace City
 
         private const byte c_maxConnectionFabrics = 4;
 
-        private const float c_weightToSell = 1;
-
         private ICityView _IcityView;
 
-        [ShowInInspector, BoxGroup("Parameters"), ReadOnly]
+        private IUpgradeBuildings _IupgradeBuildings;
+
+        [ShowInInspector, FoldoutGroup("Parameters/Drugs"), ReadOnly]
         private Dictionary<string, float> d_amountDrugsInCity = new Dictionary<string, float>();
 
-        //[ShowInInspector, BoxGroup("Parameters"), ReadOnly]
-        //private Dictionary<string, float> d_addingResourceEveryStep = new Dictionary<string, float>();
+        [ShowInInspector, FoldoutGroup("Parameters/Drugs/WeightSell"), ReadOnly]
+        private Dictionary<string, float> d_weightToSellDrugs = new Dictionary<string, float>();
 
         private CityReproduction _cityReproduction;
 
         private SpriteRenderer _spriteRendererObject;
 
-        [SerializeField, BoxGroup("Parameters"), Required, Title("Time Date Control"), HideLabel]
+        [SerializeField, FoldoutGroup("Parameters/Links"), Required, Title("Time Date Control"), HideLabel]
         private TimeDateControl _timeDateControl;
 
-        [SerializeField, BoxGroup("Parameters"), Required, Title("Road Control"), HideLabel]
+        [SerializeField, FoldoutGroup("Parameters/Links"), Required, Title("Road Control"), HideLabel]
         private RoadControl _roadControl;
 
+        [SerializeField, FoldoutGroup("Parameters/Links"), Required, Title("City Drugs Sell"), HideLabel, ReadOnly]
         private CityDrugsSell _cityDrugsSell;
 
-        [SerializeField, BoxGroup("Parameters")]
+        [SerializeField, FoldoutGroup("Parameters/Links")]
         [Title("Config City Control View"), HideLabel, Required, PropertySpace(0, 15)]
         private ConfigCityControlView _configCityControlView;
 
@@ -74,7 +76,9 @@ namespace City
         [FoldoutGroup("Parameters/Drugs/Percentage Users"), Title("Buyers Drugs name/kg", horizontalLine: false)]
         private Dictionary<string, float> d_buyersDrugsDemand = new Dictionary<string, float>();
 
+
 #if UNITY_EDITOR
+
         [SerializeField, FoldoutGroup("Parameters/Drugs/Cost Parameters"), HideLabel, ReadOnly, HorizontalGroup("Parameters/Drugs/Cost Parameters/Average Cost")]
         [Title("Name Drug", horizontalLine: false)]
         private string[] _nameDrugEditorAverageCost;
@@ -92,7 +96,7 @@ namespace City
         }
 
         [Button("Update", 30), FoldoutGroup("Parameters/Drugs/Cost Parameters"), HorizontalGroup("Parameters/Drugs/Cost Parameters/BtnHor")]
-        private void InitCosts()
+        private void SetCostDrugs()
         {
             var countsTypesDrugs = Enum.GetNames(typeof(FabricControl.TypeProductionResource));
             _averageCostDrugs = new uint[countsTypesDrugs.Length];
@@ -105,21 +109,15 @@ namespace City
             }
         }
 
-        [Button("Set Users Parameters", 30), FoldoutGroup("Parameters/Drugs/Percentage Users")]
-        private void SetBuyersDrugs()
-        {
-            var countsDrugBuyers = Enum.GetNames(typeof(DrugBuyers.AllBuyers));
-
-            for (int i = 0; i < countsDrugBuyers.Length; i++)
-            {
-                d_buyersDrugsDemand.Add(countsDrugBuyers[i], UnityEngine.Random.Range(1, 10)); //!1/10
-            }
-        }
 #endif
+
 
         [Title("Cost $/kg", horizontalLine: false), MinValue("@_minValueEditorAverageCost")]
         [SerializeField, FoldoutGroup("Parameters/Drugs/Cost Parameters"), HideLabel, HorizontalGroup("Parameters/Drugs/Cost Parameters/Average Cost")]
         private uint[] _averageCostDrugs;
+
+        [SerializeField, FoldoutGroup("Parameters/Drugs/WeightSell"), MinValue(0.0f)]
+        private float[] _weightToSellArray;
 
         [FoldoutGroup("Parameters/Drugs"), Title("Increased Demand in kg/day", horizontalLine: false)]
         [MinValue(0.01f), HideLabel, SerializeField]
@@ -134,7 +132,13 @@ namespace City
         private float _buyersDrugsClampDemandMax = 4;
 
 
-        public void InitAwake() => SearchAndCreateComponents();
+        public void InitAwake()
+        {
+            SearchAndCreateComponents();
+
+            SetBuyersDrugs();
+            SetWeightToSellDrugs();
+        }
 
         private void SearchAndCreateComponents()
         {
@@ -151,8 +155,6 @@ namespace City
                                                          _populationChangeStepPercentMin);
 
             _cityDrugsSell = new CityDrugsSell(_averageCostDrugs);
-
-            SetBuyersDrugs();
 
             StartCoroutine(Reproduction());
         }
@@ -172,6 +174,9 @@ namespace City
             }
 
             if (_connectFabricsCount! > 0) { _IcityView.ConnectFabric(ref _spriteRendererObject); }
+
+            if (_IupgradeBuildings is null)
+                _IupgradeBuildings = new UpgradeBuildingsCity();
         }
 
         public void DisconnectFabricToCity(string gameObjectDisconnectTo)
@@ -207,17 +212,46 @@ namespace City
                                                                    _buyersDrugsClampDemandMin,
                                                                    _buyersDrugsClampDemandMax);
 
-            //SellResources(ref typeFabricDrug);
+            SellResources(ref typeFabricDrug);
         }
 
         private void SellResources(ref string typeFabricDrug)
         {
-            if (d_amountDrugsInCity[typeFabricDrug] >= c_weightToSell && d_buyersDrugsDemand["FirstClan"] >= c_weightToSell) //todo добавить возможность менять weightToSell для каждого типа
+            if (d_amountDrugsInCity[typeFabricDrug] >= d_weightToSellDrugs[typeFabricDrug] && d_buyersDrugsDemand["FirstClan"] >= d_weightToSellDrugs[typeFabricDrug]) //todo добавить возможность менять weightToSell для каждого типа
             {
-                _cityDrugsSell.Sell(typeFabricDrug);
-                d_amountDrugsInCity[typeFabricDrug] -= c_weightToSell;
-                d_buyersDrugsDemand["FirstClan"] -= c_weightToSell;
+                _cityDrugsSell.Sell(typeFabricDrug, d_weightToSellDrugs[typeFabricDrug]);
+                //! начисляется просто так, потому что проверку проходит d_weightToSellDrugs = 0, начисляя деньги просто так
+                d_amountDrugsInCity[typeFabricDrug] -= d_weightToSellDrugs[typeFabricDrug];
+                d_buyersDrugsDemand["FirstClan"] -= d_weightToSellDrugs[typeFabricDrug];
                 Debug.Log($"Sell {d_buyersDrugsDemand["FirstClan"]}");
+            }
+        }
+
+        [Button("Set Users Parameters", 30), FoldoutGroup("Parameters/Drugs/Percentage Users")]
+        private void SetBuyersDrugs()
+        {
+            var countsDrugBuyers = Enum.GetNames(typeof(DrugBuyers.AllBuyers));
+
+            for (int i = 0; i < countsDrugBuyers.Length; i++)
+            {
+                d_buyersDrugsDemand.Add(countsDrugBuyers[i], UnityEngine.Random.Range(1, 10)); //!1/10
+            }
+        }
+
+        [Button("Set Weight Parameters", 30), FoldoutGroup("Parameters/Drugs/WeightSell")]
+        private void SetWeightToSellDrugs()
+        {
+            var countsDrugBuyers = Enum.GetNames(typeof(FabricControl.TypeProductionResource));
+
+            if (_weightToSellArray.Length < countsDrugBuyers.Length)
+                _weightToSellArray = new float[countsDrugBuyers.Length];
+
+            for (int i = 0; i < countsDrugBuyers.Length; i++)
+            {
+                if (d_weightToSellDrugs.ContainsKey(countsDrugBuyers[i]) is false)
+                    d_weightToSellDrugs.Add(countsDrugBuyers[i], _weightToSellArray[i]);
+                else
+                    d_weightToSellDrugs[countsDrugBuyers[i]] = _weightToSellArray[i];
             }
         }
 

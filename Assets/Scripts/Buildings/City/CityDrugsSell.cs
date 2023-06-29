@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using UnityEngine;
 using Sirenix.OdinInspector;
 using Fabric;
 using System;
 using Data;
+
 
 namespace City
 {
@@ -25,9 +25,10 @@ namespace City
             }
         }
 
-        public void Sell(string typeFabricDrug)
+        public void Sell(string typeFabricDrug, float weightSell)
         {
-            DataControl.IdataPlayer.AddPlayerMoney(d_costDrugs[typeFabricDrug]);
+            var addMoneySum = d_costDrugs[typeFabricDrug] * weightSell;
+            DataControl.IdataPlayer.AddPlayerMoney(addMoneySum);
         }
     }
 }

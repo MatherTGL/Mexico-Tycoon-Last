@@ -160,6 +160,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _weightToSellArray.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: _averageCostDrugs.Array.data[0]
       value: 5000
       objectReference: {fileID: 0}
@@ -178,6 +182,18 @@ PrefabInstance:
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: _populationChangeStepPercentMin
       value: -0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _weightToSellArray.Array.data[0]
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _weightToSellArray.Array.data[1]
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _weightToSellArray.Array.data[2]
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: _nameDrugEditorAverageCost.Array.size
@@ -334,6 +350,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _weightToSellArray.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: _averageCostDrugs.Array.data[0]
       value: 5000
       objectReference: {fileID: 0}
@@ -352,6 +372,18 @@ PrefabInstance:
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: _populationChangeStepPercentMin
       value: -0.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _weightToSellArray.Array.data[0]
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _weightToSellArray.Array.data[1]
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _weightToSellArray.Array.data[2]
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: _nameDrugEditorAverageCost.Array.size
@@ -473,6 +505,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _weightToSellArray.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: _averageCostDrugs.Array.data[0]
       value: 5000
       objectReference: {fileID: 0}
@@ -491,6 +527,18 @@ PrefabInstance:
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: _populationChangeStepPercentMin
       value: -0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _weightToSellArray.Array.data[0]
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _weightToSellArray.Array.data[1]
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _weightToSellArray.Array.data[2]
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: _nameDrugEditorAverageCost.Array.size
@@ -805,6 +853,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _weightToSellArray.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: _weightToSellChangeDictionary
       value: 1
       objectReference: {fileID: 0}
@@ -819,6 +871,18 @@ PrefabInstance:
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: _averageCostDrugs.Array.data[2]
       value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _weightToSellArray.Array.data[0]
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _weightToSellArray.Array.data[1]
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _weightToSellArray.Array.data[2]
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: _nameDrugEditorAverageCost.Array.size
@@ -932,6 +996,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _weightToSellArray.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: _averageCostDrugs.Array.data[0]
       value: 5000
       objectReference: {fileID: 0}
@@ -950,6 +1018,18 @@ PrefabInstance:
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: _populationChangeStepPercentMin
       value: -0.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _weightToSellArray.Array.data[0]
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _weightToSellArray.Array.data[1]
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _weightToSellArray.Array.data[2]
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: _nameDrugEditorAverageCost.Array.size
@@ -1331,6 +1411,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _weightToSellArray.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: _weightToSellChangeDictionary
       value: 1
       objectReference: {fileID: 0}
@@ -1345,6 +1429,18 @@ PrefabInstance:
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: _averageCostDrugs.Array.data[2]
       value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _weightToSellArray.Array.data[0]
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _weightToSellArray.Array.data[1]
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+      propertyPath: _weightToSellArray.Array.data[2]
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: _nameDrugEditorAverageCost.Array.size

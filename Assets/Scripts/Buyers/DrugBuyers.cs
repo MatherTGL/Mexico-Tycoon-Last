@@ -1,4 +1,4 @@
-public class DrugBuyers
+public sealed class DrugBuyers
 {
     public enum AllBuyers
     {
