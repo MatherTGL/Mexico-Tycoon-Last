@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Upgrade.Buildings
 {
-    public sealed class UpgradeBuildingsCity : IUpgradeBuildings
+    public sealed class UpgradeBuildingsCity
     {
 
     }

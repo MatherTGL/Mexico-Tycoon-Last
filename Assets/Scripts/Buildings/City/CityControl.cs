@@ -21,8 +21,6 @@ namespace City
 
         private ICityView _IcityView;
 
-        private IUpgradeBuildings _IupgradeBuildings;
-
         [ShowInInspector, FoldoutGroup("Parameters/Drugs"), ReadOnly]
         private Dictionary<string, float> d_amountDrugsInCity = new Dictionary<string, float>();
 
@@ -174,9 +172,6 @@ namespace City
             }
 
             if (_connectFabricsCount! > 0) { _IcityView.ConnectFabric(ref _spriteRendererObject); }
-
-            if (_IupgradeBuildings is null)
-                _IupgradeBuildings = new UpgradeBuildingsCity();
         }
 
         public void DisconnectFabricToCity(string gameObjectDisconnectTo)

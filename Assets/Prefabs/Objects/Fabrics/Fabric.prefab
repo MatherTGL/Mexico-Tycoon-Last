@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3614819644002739044}
   - component: {fileID: 3614819644002739043}
   - component: {fileID: 3789888796381256930}
+  - component: {fileID: 8807359625844121403}
   m_Layer: 0
   m_Name: Fabric
   m_TagString: Untagged
@@ -145,3 +146,19 @@ PolygonCollider2D:
       - {x: -0.5, y: -0.28866667}
       - {x: 0.5, y: -0.28866667}
   m_UseDelaunayMesh: 0
+--- !u!114 &8807359625844121403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3614819644002739046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 784765a95e69616c88d2994f62939f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _typeUpgradableObject: 0
+  _typeUpgrade: 1
+  _amount: 0
+  _isEqually: 0

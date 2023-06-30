@@ -7,11 +7,13 @@ using Data;
 using City;
 using System.Collections.Generic;
 using Config.FabricControl.View;
+using Upgrade.Buildings.Fabric;
 
 
 namespace Fabric
 {
-    public sealed class FabricControl : MonoBehaviour, IBoot
+    [RequireComponent(typeof(Upgrade.UpgradeControl))]
+    public sealed class FabricControl : MonoBehaviour, IBoot, IUpgradableFabric
     {
         #region Variables
 
@@ -41,18 +43,22 @@ namespace Fabric
         [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Product Quality", horizontalLine: false)]
         [MinValue(10.0f), MaxValue(95.0f), HideLabel, SuffixLabel("10%-95%")]
         private float _productQuality;
+        public float productQuality { get => _productQuality; set => _productQuality = value; }
 
         [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Productivity Production", horizontalLine: false), HideLabel]
         [MinValue(0.0f), SuffixLabel("kg/day")]
         private float _productivityKgPerDay;
+        public float productivityKgPerDay { get => _productivityKgPerDay; set => _productivityKgPerDay = value; }
 
         [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Current Free Production", horizontalLine: false), HideLabel]
         [MinValue(0.0f), ReadOnly, SuffixLabel("kg/day")]
         private float _currentFreeProductionKgPerDay;
+        public float currentFreeProductionKgPerDay { get => _currentFreeProductionKgPerDay; set => _currentFreeProductionKgPerDay = value; }
 
         [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Product in Stock", horizontalLine: false), HideLabel]
         [MinValue(0.0f), ReadOnly, SuffixLabel("kg")] //! заюзать суффикс везде
         private float _productInStock;
+        public float productInStock => _productInStock;
 
         [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Security Level", horizontalLine: false), HideLabel]
         [MinValue(0), MaxValue(10), SuffixLabel("Star (0-10)")]
@@ -65,6 +71,7 @@ namespace Fabric
         [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Max Capacity Stock", horizontalLine: false), HideLabel]
         [MinValue(10.0f), SuffixLabel("kg")]
         private float _maxCapacityStock;
+        public float maxCapacityStock { get => _maxCapacityStock; set => _maxCapacityStock = value; }
 
         public enum TypeProductionResource
         {

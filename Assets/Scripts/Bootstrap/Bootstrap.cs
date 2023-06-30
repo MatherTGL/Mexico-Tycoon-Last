@@ -6,6 +6,7 @@ using Data;
 using City;
 using Player.Movement;
 using TimeControl;
+using Upgrade;
 
 
 namespace Boot
@@ -33,6 +34,9 @@ namespace Boot
         [SerializeField, FoldoutGroup("Parameters/Medium Important")]
         private List<CityControl> _bootCityControl = new List<CityControl>();
 
+        [SerializeField, FoldoutGroup("Parameters/Medium Important")]
+        private List<UpgradeControl> _bootUpgradeControl = new List<UpgradeControl>();
+
 
         private void Awake() => AddBootObjects();
 
@@ -50,6 +54,7 @@ namespace Boot
         {
             _bootObjectList.AddRange(_bootFabricControl);
             _bootObjectList.AddRange(_bootCityControl);
+            _bootObjectList.AddRange(_bootUpgradeControl);
             SimpleImportantObjects();
         }
 
@@ -90,9 +95,11 @@ namespace Boot
                 {
                     var _findedObjectCityControl = FindObjectsOfType<CityControl>();
                     var _findedObjectFabricControl = FindObjectsOfType<FabricControl>();
+                    var _findedObjectsUpgradeControl = FindObjectsOfType<UpgradeControl>();
 
                     _bootCityControl.Add(_findedObjectCityControl[i]);
                     _bootFabricControl.Add(_findedObjectFabricControl[i]);
+                    _bootUpgradeControl.Add(_findedObjectsUpgradeControl[i]);
                 }
             }
 
@@ -107,6 +114,7 @@ namespace Boot
         {
             _bootCityControl.Clear();
             _bootFabricControl.Clear();
+            _bootUpgradeControl.Clear();
         }
 #endif
     }
