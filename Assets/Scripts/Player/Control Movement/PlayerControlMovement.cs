@@ -93,8 +93,9 @@ namespace Player.Movement
                 _direcionMoveX = _distanceZoomSpeedMove * _inputControl.axisHorizontalMove;
                 _directionMoveY = _distanceZoomSpeedMove * _inputControl.axisVerticalMove;
             }
-
-            _directionMoveZ = _configPlayerControlMove.speedZoom * _inputControl.axisMouseScrollWheel;
+            var distanceZoomSpeedZoom = transform.position.z / _configPlayerControlMove.speedZoom;
+            _directionMoveZ = distanceZoomSpeedZoom * _inputControl.axisMouseScrollWheel;
+            Debug.Log(_directionMoveZ);
         }
     }
 }
