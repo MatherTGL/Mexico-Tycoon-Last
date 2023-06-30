@@ -38,32 +38,32 @@ namespace Fabric
         [SerializeField, ReadOnly, TabGroup("Parameters/Tabs", "Toggles"), LabelText("Work"), ToggleLeft]
         private bool _isWork;
 
-        [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Product Quality 10%-95%", horizontalLine: false)]
-        [MinValue(10.0f), MaxValue(95.0f), HideLabel]
+        [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Product Quality", horizontalLine: false)]
+        [MinValue(10.0f), MaxValue(95.0f), HideLabel, SuffixLabel("10%-95%")]
         private float _productQuality;
 
-        [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Productivity Production in kg/day", horizontalLine: false), HideLabel]
-        [MinValue(0.0f)]
+        [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Productivity Production", horizontalLine: false), HideLabel]
+        [MinValue(0.0f), SuffixLabel("kg/day")]
         private float _productivityKgPerDay;
 
-        [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Current Free Production in kg/day", horizontalLine: false), HideLabel]
-        [MinValue(0.0f), ReadOnly]
+        [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Current Free Production", horizontalLine: false), HideLabel]
+        [MinValue(0.0f), ReadOnly, SuffixLabel("kg/day")]
         private float _currentFreeProductionKgPerDay;
 
-        [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Product in Stock in kg", horizontalLine: false), HideLabel]
-        [MinValue(0.0f), ReadOnly]
+        [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Product in Stock", horizontalLine: false), HideLabel]
+        [MinValue(0.0f), ReadOnly, SuffixLabel("kg")] //! заюзать суффикс везде
         private float _productInStock;
 
-        [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Security Level in Star (0-10)", horizontalLine: false), HideLabel]
-        [MinValue(0), MaxValue(10)]
+        [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Security Level", horizontalLine: false), HideLabel]
+        [MinValue(0), MaxValue(10), SuffixLabel("Star (0-10)")]
         private byte _securityLevel;
 
-        [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Level Suspicion in %", horizontalLine: false), HideLabel]
-        [MinValue(0.0f), MaxValue(100.0f)]
+        [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Level Suspicion", horizontalLine: false), HideLabel]
+        [MinValue(0.0f), MaxValue(100.0f), SuffixLabel("%")]
         private float _levelSuspicion;
 
-        [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Max Capacity Stock in kg", horizontalLine: false), HideLabel]
-        [MinValue(10.0f)]
+        [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Max Capacity Stock", horizontalLine: false), HideLabel]
+        [MinValue(10.0f), SuffixLabel("kg")]
         private float _maxCapacityStock;
 
         public enum TypeProductionResource
@@ -75,12 +75,12 @@ namespace Fabric
         [Title("Type Production Resource", horizontalLine: false), HideLabel]
         private TypeProductionResource _typeProductionResource;
 
-        [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Buy $", horizontalLine: false), HideLabel]
-        [MinValue(10000), HorizontalGroup("Parameters/Main Settings/Fabric Cost")]
+        [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Buy", horizontalLine: false), HideLabel]
+        [MinValue(10000), HorizontalGroup("Parameters/Main Settings/Fabric Cost"), SuffixLabel("$")]
         private double _fabricBuyCost = 10_000;
 
-        [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Sell $", horizontalLine: false), HideLabel]
-        [MinValue(5000), HorizontalGroup("Parameters/Main Settings/Fabric Cost")]
+        [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Sell", horizontalLine: false), HideLabel]
+        [MinValue(5000), HorizontalGroup("Parameters/Main Settings/Fabric Cost"), SuffixLabel("$")]
         private double _fabricSellCost = 5_000;
 
         [SerializeField, FoldoutGroup("Parameters/Control"), PropertySpace(10, 10)]
@@ -95,7 +95,7 @@ namespace Fabric
         private CityControl _cityNewTransportWay;
 
         [SerializeField, FoldoutGroup("Parameters/Control/Transporting"), ShowIf("@_cityNewTransportWay != null || _citiesClients.Count != 0")]
-        [MinValue(0.0f), EnableIf("_isBuyed"), Title("Upload Resource", horizontalLine: false), HideLabel]
+        [MinValue(0.0f), EnableIf("_isBuyed"), Title("Upload Resource", horizontalLine: false), HideLabel, SuffixLabel("kg")]
         private float _uploadResourceAddWay;
 
         [SerializeField, FoldoutGroup("Parameters/Control/Transporting"), ShowIf("@_citiesClients.Count != 0")]
@@ -210,6 +210,9 @@ namespace Fabric
                 _timeDateControl = FindObjectOfType<TimeDateControl>();
             }
 
+            if (_spriteRendererObject is null) { _spriteRendererObject = GetComponent<SpriteRenderer>(); }
+            _IfabricView = new FabricControlView(_configFabricControlView);
+
             SetFabricProduction();
         }
 
@@ -218,14 +221,8 @@ namespace Fabric
             _IfabricProduction = new FabricProduction();
             _currentFreeProductionKgPerDay = _productivityKgPerDay;
 
-            SetFabricControlViewParameters();
+            Debug.Log("Фабрика успешно инициализирована!");
             StartCoroutine(DrugProduction());
-        }
-
-        private void SetFabricControlViewParameters()
-        {
-            if (_spriteRendererObject is null) { _spriteRendererObject = GetComponent<SpriteRenderer>(); }
-            _IfabricView = new FabricControlView(_configFabricControlView);
         }
 
         private void TransportingResourcesProduction()

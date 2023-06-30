@@ -12,10 +12,6 @@ namespace Road
         private Dictionary<string, float> _allTransportingDrugs = new Dictionary<string, float>();
 
         [SerializeField, BoxGroup("Parameters"), HideLabel, MinValue(0.0f)]
-        [Title("Resource Transportation Traffic Capacity in %", horizontalLine: false)]
-        private float _resTransportationTrafficCapacityCurrent;
-
-        [SerializeField, BoxGroup("Parameters"), HideLabel, MinValue(0.0f)]
         [Title("Resource Transportation Traffic Capacity Max in kg/day", horizontalLine: false)]
         private float _resTransportationTrafficCapacityMax = 10;
 
@@ -35,7 +31,7 @@ namespace Road
         //? будет содержать инфу по дороге
         public void InitRoad()
         {
-            Debug.Log("Дорога инициализирована");
+            Debug.Log("Road Init");
         }
 
         public void DecliningDemandUpdate(in float addResEveryStep, in string typeFabricDrug)

@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3614819644002739045}
   - component: {fileID: 3614819644002739044}
-  - component: {fileID: 3614819644002739042}
   - component: {fileID: 3614819644002739043}
+  - component: {fileID: 3789888796381256930}
   m_Layer: 0
   m_Name: Fabric
   m_TagString: Untagged
@@ -86,22 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &3614819644002739042
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3614819644002739046}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.71
 --- !u!114 &3614819644002739043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,7 +99,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timeDateControl: {fileID: 0}
-  _roadControl: {fileID: 0}
   _configFabricControlView: {fileID: 11400000, guid: 42d51f288392f1dc3bff129765832533, type: 2}
   _isBuyed: 0
   _isWork: 0
@@ -132,3 +115,33 @@ MonoBehaviour:
   _citiesClients: []
   _cityNewTransportWay: {fileID: 0}
   _uploadResourceAddWay: 0
+  _indexChangeCityDecliningDemand: 0
+--- !u!60 &3789888796381256930
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3614819644002739046}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.28866667}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0, y: 0.5773587}
+      - {x: -0.5, y: -0.28866667}
+      - {x: 0.5, y: -0.28866667}
+  m_UseDelaunayMesh: 0

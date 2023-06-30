@@ -19,7 +19,7 @@ namespace Data.Player
         void IDataPlayer.AddPlayerMoney(in double amountMoney)
         {
             _money += amountMoney;
-            Debug.Log(_money);
+            Debug.Log($"Player Current Amount Money: {_money}$");
         }
 
         void IDataPlayer.AddPlayerResearchPoints(in ushort amountResearchPoints) => _researchPoints += amountResearchPoints;

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3276379949940217403}
   - component: {fileID: 3276379949940217402}
   - component: {fileID: 3276379949940217397}
-  - component: {fileID: 3276379949940217396}
+  - component: {fileID: 8379331431061844164}
   m_Layer: 0
   m_Name: City
   m_TagString: Untagged
@@ -105,15 +105,23 @@ MonoBehaviour:
   _populationChangeStepPercentMax: 0.3
   _populationChangeStepPercentMin: -0.1
   _policeLevel: 2
+  _connectFabricsCount: 0
   _maxCapacityStock: 100
-  _currentCapacityStock: 0
-  _weightToSell: 1
-  _percentageUsersCocaine: 1
-  _averageCostCocaine: 8000
-  _currentDrugDemandCocaine: 3
-  _increasedDemandCocaine: 0.1
---- !u!58 &3276379949940217396
-CircleCollider2D:
+  _nameDrugEditorAverageCost:
+  - Cocaine
+  - Marijuana
+  - Crack
+  _minValueEditorAverageCost: 5000
+  _averageCostDrugs: 881300008813000088130000
+  _weightToSellArray:
+  - 0.2
+  - 0.3
+  - 0.1
+  _increasedDemand: 0.3
+  _buyersDrugsClampDemandMin: 3
+  _buyersDrugsClampDemandMax: 7
+--- !u!60 &8379331431061844164
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -126,5 +134,19 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.77
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.5, y: 0.5}
+      - {x: -0.5, y: -0.5}
+      - {x: 0.5, y: -0.5}
+      - {x: 0.5, y: 0.5}
+  m_UseDelaunayMesh: 0

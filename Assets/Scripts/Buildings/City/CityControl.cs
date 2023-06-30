@@ -50,17 +50,17 @@ namespace City
         [MinValue(0), MaxValue(double.MaxValue / 2), HideLabel, SerializeField]
         private uint _populationCity;
 
-        [FoldoutGroup("Parameters/Population City/Population Change Step"), Title("Max %/day", horizontalLine: false)]
-        [MinValue(0.1f), MaxValue(1.0f), SerializeField, HideLabel]
+        [FoldoutGroup("Parameters/Population City/Population Change Step"), Title("Max", horizontalLine: false)]
+        [MinValue(0.1f), MaxValue(1.0f), SerializeField, HideLabel, SuffixLabel("%/day")]
         [HorizontalGroup("Parameters/Population City/Population Change Step/Horizontal")]
         private float _populationChangeStepPercentMax;
 
-        [FoldoutGroup("Parameters/Population City/Population Change Step"), Title("Min %/day", horizontalLine: false)]
-        [MinValue(-1.0f), MaxValue(-0.01f), SerializeField, HideLabel]
+        [FoldoutGroup("Parameters/Population City/Population Change Step"), Title("Min", horizontalLine: false)]
+        [MinValue(-1.0f), MaxValue(-0.01f), SerializeField, HideLabel, SuffixLabel("%/day")]
         [HorizontalGroup("Parameters/Population City/Population Change Step/Horizontal")]
         private float _populationChangeStepPercentMin;
 
-        [SerializeField, BoxGroup("Parameters"), Title("Police Level in star (0-10)", horizontalLine: false)]
+        [SerializeField, BoxGroup("Parameters"), Title("Police Level", horizontalLine: false), SuffixLabel("Star (0-10)")]
         [MinValue(0), MaxValue(10), Tooltip("Уровень полиции в данном городе"), PropertySpace(5), HideLabel]
         private byte _policeLevel;
 
@@ -68,8 +68,8 @@ namespace City
         [MinValue(0), HideLabel]
         private byte _connectFabricsCount = 0;
 
-        [SerializeField, BoxGroup("Parameters"), Title("Max Capacity Stock in kg", horizontalLine: false)]
-        [MinValue(0.0f), Tooltip("Максимальная вместимость хранилища города в кг"), HideLabel]
+        [SerializeField, BoxGroup("Parameters"), Title("Max Capacity Stock", horizontalLine: false)]
+        [MinValue(0.0f), Tooltip("Максимальная вместимость хранилища города в кг"), HideLabel, SuffixLabel("kg")]
         private float _maxCapacityStock;
 
         [FoldoutGroup("Parameters/Drugs"), ShowInInspector, HideLabel, ReadOnly]
@@ -163,7 +163,7 @@ namespace City
                                         Vector2 positionFabric,
                                         string gameObjectConnectionTo)
         {
-            Debug.Log(gameObjectConnectionTo);
+            Debug.Log($"{gameObjectConnectionTo} Connected to City");
             if (_connectFabricsCount < c_maxConnectionFabrics)
             {
                 _connectFabricsCount++;
@@ -202,7 +202,7 @@ namespace City
                 if (d_amountDrugsInCity[typeFabricDrug] < _maxCapacityStock)
                 {
                     d_amountDrugsInCity[typeFabricDrug] += addResEveryStep;
-                    Debug.Log(addResEveryStep);
+                    Debug.Log($"CityControl Add Resources {typeFabricDrug} Every Step{addResEveryStep}");
                 }
                 else { Debug.Log("Хранилище заполнено"); }
             }
@@ -223,7 +223,7 @@ namespace City
                 //! начисляется просто так, потому что проверку проходит d_weightToSellDrugs = 0, начисляя деньги просто так
                 d_amountDrugsInCity[typeFabricDrug] -= d_weightToSellDrugs[typeFabricDrug];
                 d_buyersDrugsDemand["FirstClan"] -= d_weightToSellDrugs[typeFabricDrug];
-                Debug.Log($"Sell {d_buyersDrugsDemand["FirstClan"]}");
+                Debug.Log($"Sell {typeFabricDrug} | Current Demand Contracts {d_buyersDrugsDemand["FirstClan"]}");
             }
         }
 

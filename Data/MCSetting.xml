@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MCSetting>
+  <useHierarchy>true</useHierarchy>
+  <useProject>true</useProject>
+  <showPreferenceItem>true</showPreferenceItem>
+  <logOutput>false</logOutput>
+  <customHierarchyRoot />
+  <customProjectRoot />
+  <hierarchyItemList>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>GameObject/Create Empty</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>Create Empty</label>
+    </MCItem>
+    <MCItem>
+      <type>Separator</type>
+      <command />
+      <original>None</original>
+      <overrideLabel>false</overrideLabel>
+      <label />
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>GameObject/2D Object/Sprites/Triangle</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>GameObject/Sprites/Triangle</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>GameObject/2D Object/Sprites/Square</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>GameObject/Sprites/Square</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>GameObject/2D Object/Sprites/Circle</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>GameObject/Sprites/Circle</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>GameObject/Effects/Line</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>Effects/Line</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>GameObject/Effects/Particle System</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>Effects/Particle System</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>GameObject/UI/Image</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>UI/Image</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>GameObject/UI/Text - TextMeshPro</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>UI/Text - TextMeshPro</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>GameObject/UI/Panel</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>UI/Panel</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>GameObject/UI/Toggle</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>UI/Toggle</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>GameObject/UI/Slider</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>UI/Slider</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>GameObject/UI/Scrollbar</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>UI/Scrollbar</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>GameObject/UI/Scroll View</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>UI/Scroll View</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>GameObject/UI/Button - TextMeshPro</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>UI/Button - TextMeshPro</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>GameObject/UI/Dropdown - TextMeshPro</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>UI/Dropdown - TextMeshPro</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>GameObject/UI/Input Field - TextMeshPro</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>UI/Input Field - TextMeshPro</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>GameObject/UI/Canvas</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>UI/Canvas</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>GameObject/Camera</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>Camera</label>
+    </MCItem>
+  </hierarchyItemList>
+  <projectItemList>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>Assets/Create/Folder</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>Folder</label>
+    </MCItem>
+    <MCItem>
+      <type>Separator</type>
+      <command />
+      <original>None</original>
+      <overrideLabel>false</overrideLabel>
+      <label />
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>Assets/Create/C# MonoBehaviour</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>C# Script</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>Assets/Create/C# Interface</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>C# Interface</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>Assets/Create/C# ScriptableObject</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>C# ScriptableObject</label>
+    </MCItem>
+    <MCItem>
+      <type>Separator</type>
+      <command />
+      <original>None</original>
+      <overrideLabel>false</overrideLabel>
+      <label />
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>Assets/Create/Config/Time/Create New</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>Create Config/Time/Create New</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>Assets/Create/Config/Player/Control/Move/Create New</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>Create Config/Player/Control/Move/Create New</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>Assets/Create/Config/Data/Data Player/Create New</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>Create Config/Data/Data Player/Create New</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>Assets/Create/Config/Buildings/Fabric/Fabric Control/View/Create New</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>Create Config/Buildings/Fabric/Fabric Control/View/Create New</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>Assets/Create/Config/Buildings/City/City Control/View/Create New</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>Create Config/Buildings/City/City Control/View/Create New</label>
+    </MCItem>
+    <MCItem>
+      <type>Separator</type>
+      <command />
+      <original>None</original>
+      <overrideLabel>false</overrideLabel>
+      <label />
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>Assets/Create/Scene</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>Scene</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>Assets/Create/Prefab</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>Prefab</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>Assets/Create/Material</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>Material</label>
+    </MCItem>
+    <MCItem>
+      <type>Separator</type>
+      <command />
+      <original>None</original>
+      <overrideLabel>false</overrideLabel>
+      <label />
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>Assets/Rename</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>Rename</label>
+    </MCItem>
+  </projectItemList>
+</MCSetting>
