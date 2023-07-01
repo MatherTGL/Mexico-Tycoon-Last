@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speedMove: 50
   _speedMoveMouse: 60
-  _speedMoveFast: 25
+  _speedMoveFast: 65
   _speedZoom: 10
-  _minZoomCameraDistance: 30
+  _minZoomCameraDistance: 20
   _maxZoomCameraDistance: 150
   _maxHorizontalDistanceCamera: 100
   _maxVerticalDistanceCamera: 100

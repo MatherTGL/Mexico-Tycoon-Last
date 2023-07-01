@@ -8,11 +8,11 @@ using TimeControl;
 using Road;
 using Fabric;
 using System;
-using Upgrade.Buildings;
 
 
 namespace City
 {
+    [RequireComponent(typeof(DrugBuyersContractControl))]
     internal sealed class CityControl : MonoBehaviour, IBoot
     {
         private const byte c_mathematicalDivisor = 100;
@@ -20,6 +20,9 @@ namespace City
         private const byte c_maxConnectionFabrics = 4;
 
         private ICityView _IcityView;
+
+        [ShowInInspector]
+        private ICityDrugBuyers _IcityDrugBuyers;
 
         [ShowInInspector, FoldoutGroup("Parameters/Drugs"), ReadOnly]
         private Dictionary<string, float> d_amountDrugsInCity = new Dictionary<string, float>();
@@ -70,49 +73,11 @@ namespace City
         [MinValue(0.0f), Tooltip("Максимальная вместимость хранилища города в кг"), HideLabel, SuffixLabel("kg")]
         private float _maxCapacityStock;
 
-        [FoldoutGroup("Parameters/Drugs"), ShowInInspector, HideLabel, ReadOnly]
-        [FoldoutGroup("Parameters/Drugs/Percentage Users"), Title("Buyers Drugs name/kg", horizontalLine: false)]
-        private Dictionary<string, float> d_buyersDrugsDemand = new Dictionary<string, float>();
+        // [FoldoutGroup("Parameters/Drugs"), ShowInInspector, HideLabel, ReadOnly]
+        // [FoldoutGroup("Parameters/Drugs/Percentage Users"), Title("Buyers Drugs name/kg", horizontalLine: false)]
+        // private Dictionary<string, float> d_buyersDrugsCity = new Dictionary<string, float>();
+        // Dictionary<string, float> IContractedCity.d_buyersDrugsCity => d_buyersDrugsCity;
 
-
-#if UNITY_EDITOR
-
-        [SerializeField, FoldoutGroup("Parameters/Drugs/Cost Parameters"), HideLabel, ReadOnly, HorizontalGroup("Parameters/Drugs/Cost Parameters/Average Cost")]
-        [Title("Name Drug", horizontalLine: false)]
-        private string[] _nameDrugEditorAverageCost;
-
-        [SerializeField, FoldoutGroup("Parameters/Drugs/Cost Parameters"), HideLabel, MinValue("@_minValueEditorAverageCost")]
-        [Title("Min Value Average Cost", horizontalLine: false), ShowIf("_isShowAdditionalParameters")]
-        private uint _minValueEditorAverageCost = 5_000;
-
-        private bool _isShowAdditionalParameters;
-
-        [Button("Additional", 30), FoldoutGroup("Parameters/Drugs/Cost Parameters"), HorizontalGroup("Parameters/Drugs/Cost Parameters/BtnHor")]
-        private void ShowAdditionalParametersEditor()
-        {
-            _isShowAdditionalParameters = !_isShowAdditionalParameters;
-        }
-
-        [Button("Update", 30), FoldoutGroup("Parameters/Drugs/Cost Parameters"), HorizontalGroup("Parameters/Drugs/Cost Parameters/BtnHor")]
-        private void SetCostDrugs()
-        {
-            var countsTypesDrugs = Enum.GetNames(typeof(FabricControl.TypeProductionResource));
-            _averageCostDrugs = new uint[countsTypesDrugs.Length];
-            _nameDrugEditorAverageCost = new string[countsTypesDrugs.Length];
-
-            for (int i = 0; i < countsTypesDrugs.Length; i++)
-            {
-                _averageCostDrugs[i] = _minValueEditorAverageCost;
-                _nameDrugEditorAverageCost[i] = countsTypesDrugs[i];
-            }
-        }
-
-#endif
-
-
-        [Title("Cost $/kg", horizontalLine: false), MinValue("@_minValueEditorAverageCost")]
-        [SerializeField, FoldoutGroup("Parameters/Drugs/Cost Parameters"), HideLabel, HorizontalGroup("Parameters/Drugs/Cost Parameters/Average Cost")]
-        private uint[] _averageCostDrugs;
 
         [SerializeField, FoldoutGroup("Parameters/Drugs/WeightSell"), MinValue(0.0f)]
         private float[] _weightToSellArray;
@@ -152,7 +117,7 @@ namespace City
                                                          _populationChangeStepPercentMax,
                                                          _populationChangeStepPercentMin);
 
-            _cityDrugsSell = new CityDrugsSell(_averageCostDrugs);
+            _cityDrugsSell = new CityDrugsSell();
 
             StartCoroutine(Reproduction());
         }
@@ -161,13 +126,11 @@ namespace City
                                         Vector2 positionFabric,
                                         string gameObjectConnectionTo)
         {
-            Debug.Log($"{gameObjectConnectionTo} Connected to City");
             if (_connectFabricsCount < c_maxConnectionFabrics)
             {
                 _connectFabricsCount++;
 
                 CheckDemandDictionary(typeFabricDrug);
-
                 _roadControl.BuildRoad(transform.position, positionFabric, gameObjectConnectionTo);
             }
 
@@ -186,6 +149,7 @@ namespace City
 
         private void CheckDemandDictionary(string typeFabricDrug)
         {
+            Debug.Log(typeFabricDrug);
             if (d_amountDrugsInCity.ContainsKey(typeFabricDrug) is false)
                 d_amountDrugsInCity.Add(typeFabricDrug, 0);
         }
@@ -203,33 +167,45 @@ namespace City
             }
             _roadControl.DecliningDemandUpdate(addResEveryStep, typeFabricDrug);
 
-            d_buyersDrugsDemand["FirstClan"] = Mathf.Clamp(d_buyersDrugsDemand["FirstClan"] + _increasedDemand,
-                                                                   _buyersDrugsClampDemandMin,
-                                                                   _buyersDrugsClampDemandMax);
+            _IcityDrugBuyers.d_contractDrugsCityDemand[typeFabricDrug] = Mathf.Clamp(_IcityDrugBuyers.d_contractDrugsCityDemand[typeFabricDrug] + _increasedDemand,
+                                                                    _buyersDrugsClampDemandMin,
+                                                                    _buyersDrugsClampDemandMax);
 
-            SellResources(ref typeFabricDrug);
+            //SellResources(in typeFabricDrug);
         }
 
-        private void SellResources(ref string typeFabricDrug)
+        private void SellResources(in string typeFabricDrug)
         {
-            if (d_amountDrugsInCity[typeFabricDrug] >= d_weightToSellDrugs[typeFabricDrug] && d_buyersDrugsDemand["FirstClan"] >= d_weightToSellDrugs[typeFabricDrug]) //todo добавить возможность менять weightToSell для каждого типа
+            foreach (var buyers in _IcityDrugBuyers.d_contractContactAndDrug.Keys)
             {
-                _cityDrugsSell.Sell(typeFabricDrug, d_weightToSellDrugs[typeFabricDrug]);
-                //! начисляется просто так, потому что проверку проходит d_weightToSellDrugs = 0, начисляя деньги просто так
-                d_amountDrugsInCity[typeFabricDrug] -= d_weightToSellDrugs[typeFabricDrug];
-                d_buyersDrugsDemand["FirstClan"] -= d_weightToSellDrugs[typeFabricDrug];
-                Debug.Log($"Sell {typeFabricDrug} | Current Demand Contracts {d_buyersDrugsDemand["FirstClan"]}");
+                if (d_amountDrugsInCity[typeFabricDrug] >= d_weightToSellDrugs[typeFabricDrug] && _IcityDrugBuyers.d_contractDrugsCityDemand[buyers] >= d_weightToSellDrugs[typeFabricDrug])
+                {
+                    //? начисляется просто так, потому что проверку проходит d_weightToSellDrugs = 0, начисляя деньги просто так
+                    d_amountDrugsInCity[typeFabricDrug] -= d_weightToSellDrugs[typeFabricDrug];
+
+                    _IcityDrugBuyers.d_contractDrugsCityDemand[buyers] -= d_weightToSellDrugs[typeFabricDrug];
+                    _cityDrugsSell.Sell(d_weightToSellDrugs[typeFabricDrug], _IcityDrugBuyers);
+                    //Debug.Log(d_buyersDrugsCity[buyers]);
+
+                    //! сделать контрактные поставки
+                    //Debug.Log($"Sell {typeFabricDrug} | Current Demand Contracts {d_buyersDrugsCity[buyers]}");
+                }
             }
         }
 
         [Button("Set Users Parameters", 30), FoldoutGroup("Parameters/Drugs/Percentage Users")]
         private void SetBuyersDrugs()
         {
+            _IcityDrugBuyers = GetComponent<DrugBuyersContractControl>();
+
             var countsDrugBuyers = Enum.GetNames(typeof(DrugBuyers.AllBuyers));
 
-            for (int i = 0; i < countsDrugBuyers.Length; i++)
+            for (int i = 0; i < countsDrugBuyers.Length / 2; i++)
             {
-                d_buyersDrugsDemand.Add(countsDrugBuyers[i], UnityEngine.Random.Range(1, 10)); //!1/10
+                var addRandomBuyer = UnityEngine.Random.Range(0, countsDrugBuyers.Length);
+
+                if (_IcityDrugBuyers.d_contractContactAndDrug.ContainsKey(countsDrugBuyers[addRandomBuyer]) is false)
+                    _IcityDrugBuyers.d_contractContactAndDrug.Add(countsDrugBuyers[addRandomBuyer], false);
             }
         }
 

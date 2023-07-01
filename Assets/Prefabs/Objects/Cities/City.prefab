@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3276379949940217402}
   - component: {fileID: 3276379949940217397}
   - component: {fileID: 8379331431061844164}
+  - component: {fileID: 7998808199365959460}
   m_Layer: 0
   m_Name: City
   m_TagString: Untagged
@@ -107,14 +108,8 @@ MonoBehaviour:
   _policeLevel: 2
   _connectFabricsCount: 0
   _maxCapacityStock: 100
-  _nameDrugEditorAverageCost:
-  - Cocaine
-  - Marijuana
-  - Crack
-  _minValueEditorAverageCost: 5000
-  _averageCostDrugs: 881300008813000088130000
   _weightToSellArray:
-  - 0.2
+  - 0.5
   - 0.3
   - 0.1
   _increasedDemand: 0.3
@@ -150,3 +145,16 @@ PolygonCollider2D:
       - {x: 0.5, y: -0.5}
       - {x: 0.5, y: 0.5}
   m_UseDelaunayMesh: 0
+--- !u!114 &7998808199365959460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3276379949940217400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8206096676eba49ed864653ef1d36a40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _nameAddContractBuyer: 

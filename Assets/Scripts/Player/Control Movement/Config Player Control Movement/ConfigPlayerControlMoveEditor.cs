@@ -19,7 +19,7 @@ namespace Config.Player
         public float speedMoveMouse => _speedMoveMouse;
 
         [SerializeField, FoldoutGroup("Parameters/Speed/Move"), Title("Fast", HorizontalLine = false)]
-        [HorizontalGroup("Parameters/Speed/Move/HorizontalMove"), HideLabel]
+        [HorizontalGroup("Parameters/Speed/Move/HorizontalMove"), HideLabel, MinValue("@_speedMove")]
         private float _speedMoveFast;
         public float speedMoveFast => _speedMoveFast;
 
@@ -27,14 +27,14 @@ namespace Config.Player
         private float _speedZoom;
         public float speedZoom => _speedZoom;
 
-        [BoxGroup("Parameters/Clamp Distance")]
+        [BoxGroup("Parameters/Clamp Distance"), MinValue(10.0f)]
         [SerializeField, FoldoutGroup("Parameters/Clamp Distance/Zoom"), Tooltip("Минимальное расстояние от 0 координат по Z")]
         [Title("Min", HorizontalLine = false), HideLabel, HorizontalGroup("Parameters/Clamp Distance/Zoom/HorizontalZoom")]
         private float _minZoomCameraDistance;
         public float minZoomCameraDistance => _minZoomCameraDistance;
 
         [SerializeField, FoldoutGroup("Parameters/Clamp Distance/Zoom"), Tooltip("Максимальное расстояние от 0 координат по Z")]
-        [Title("Max", HorizontalLine = false), HideLabel, HorizontalGroup("Parameters/Clamp Distance/Zoom/HorizontalZoom")]
+        [Title("Max", HorizontalLine = false), HideLabel, HorizontalGroup("Parameters/Clamp Distance/Zoom/HorizontalZoom"), MinValue("@_minZoomCameraDistance")]
         private float _maxZoomCameraDistance;
         public float maxZoomCameraDistance => _maxZoomCameraDistance;
 

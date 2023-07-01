@@ -40,10 +40,18 @@ namespace Fabric
         [SerializeField, ReadOnly, TabGroup("Parameters/Tabs", "Toggles"), LabelText("Work"), ToggleLeft]
         private bool _isWork;
 
+        [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Product Quality Local Max", horizontalLine: false)]
+        [MinValue("@_currentProductQuality"), MaxValue(95.0f), HideLabel]
+        private float _productQualityLocalMax;
+        public float productQualityLocalMax { get => _productQualityLocalMax; set => _productQualityLocalMax = value; }
+
         [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Product Quality", horizontalLine: false)]
-        [MinValue(10.0f), MaxValue(95.0f), HideLabel, SuffixLabel("10%-95%")]
-        private float _productQuality;
-        public float productQuality { get => _productQuality; set => _productQuality = value; }
+        [MinValue(10.0f), MaxValue("@_productQualityLocalMax"), HideLabel]
+        private float _currentProductQuality;
+
+        [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Product Quality Local Step Upgrade", horizontalLine: false)]
+        [MinValue(0.01f), MaxValue(1.0f), HideLabel]
+        private float _productQualityLocalStepUpgrade = 0.01f;
 
         [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Productivity Production", horizontalLine: false), HideLabel]
         [MinValue(0.0f), SuffixLabel("kg/day")]
@@ -56,7 +64,7 @@ namespace Fabric
         public float currentFreeProductionKgPerDay { get => _currentFreeProductionKgPerDay; set => _currentFreeProductionKgPerDay = value; }
 
         [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Product in Stock", horizontalLine: false), HideLabel]
-        [MinValue(0.0f), ReadOnly, SuffixLabel("kg")] //! заюзать суффикс везде
+        [MinValue(0.0f), ReadOnly, SuffixLabel("kg")]
         private float _productInStock;
         public float productInStock => _productInStock;
 
@@ -212,10 +220,7 @@ namespace Fabric
         void IBoot.InitAwake()
         {
             if (_timeDateControl is null)
-            {
-                Debug.LogWarning("TimeDateControl is null in FabricControl.cs");
                 _timeDateControl = FindObjectOfType<TimeDateControl>();
-            }
 
             if (_spriteRendererObject is null) { _spriteRendererObject = GetComponent<SpriteRenderer>(); }
             _IfabricView = new FabricControlView(_configFabricControlView);
@@ -228,8 +233,7 @@ namespace Fabric
             _IfabricProduction = new FabricProduction();
             _currentFreeProductionKgPerDay = _productivityKgPerDay;
 
-            Debug.Log("Фабрика успешно инициализирована!");
-            StartCoroutine(DrugProduction());
+            StartCoroutine(FabricWork());
         }
 
         private void TransportingResourcesProduction()
@@ -245,7 +249,7 @@ namespace Fabric
             }
         }
 
-        private IEnumerator DrugProduction()
+        private IEnumerator FabricWork()
         {
             while (true)
             {
@@ -258,9 +262,18 @@ namespace Fabric
                                                          ref _productInStock);
                     }
                     TransportingResourcesProduction();
+                    LocalUpgradeProductQuality();
                 }
                 yield return new WaitForSecondsRealtime(_timeDateControl.GetCurrentTimeOneDay(true));
             }
+        }
+
+        private void LocalUpgradeProductQuality()
+        {
+            if (_currentProductQuality < _productQualityLocalMax)
+                _currentProductQuality += _productQualityLocalStepUpgrade;
+
+            //Debug.Log($"Current {_currentProductQuality} | LocalMax {_productQualityLocalMax} | Step {_productQualityLocalStepUpgrade}");
         }
 
         private void SpendFreeProduction()

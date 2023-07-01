@@ -18,9 +18,9 @@ namespace Upgrade.Buildings
         public void UpgradeProductQuality()
         {
             if (_upgradeControl.isEqually)
-                _IupgradableFabric.productQuality = _upgradeControl.amount;
+                _IupgradableFabric.productQualityLocalMax = _upgradeControl.amount;
             else
-                _IupgradableFabric.productQuality += _upgradeControl.amount;
+                _IupgradableFabric.productQualityLocalMax += _upgradeControl.amount;
         }
 
         public void UpgradeMaxCapacityStock()

@@ -159,6 +159,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _typeUpgradableObject: 0
-  _typeUpgrade: 1
+  _typeUpgrade: 0
   _amount: 0
   _isEqually: 0
