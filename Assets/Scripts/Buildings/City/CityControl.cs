@@ -21,7 +21,6 @@ namespace City
 
         private ICityView _IcityView;
 
-        [ShowInInspector]
         private ICityDrugBuyers _IcityDrugBuyers;
 
         [ShowInInspector, FoldoutGroup("Parameters/Drugs"), ReadOnly]
@@ -73,12 +72,6 @@ namespace City
         [MinValue(0.0f), Tooltip("Максимальная вместимость хранилища города в кг"), HideLabel, SuffixLabel("kg")]
         private float _maxCapacityStock;
 
-        // [FoldoutGroup("Parameters/Drugs"), ShowInInspector, HideLabel, ReadOnly]
-        // [FoldoutGroup("Parameters/Drugs/Percentage Users"), Title("Buyers Drugs name/kg", horizontalLine: false)]
-        // private Dictionary<string, float> d_buyersDrugsCity = new Dictionary<string, float>();
-        // Dictionary<string, float> IContractedCity.d_buyersDrugsCity => d_buyersDrugsCity;
-
-
         [SerializeField, FoldoutGroup("Parameters/Drugs/WeightSell"), MinValue(0.0f)]
         private float[] _weightToSellArray;
 
@@ -106,7 +99,6 @@ namespace City
         private void SearchAndCreateComponents()
         {
             if (_configCityControlView is not null) { _IcityView = new CityControlView(_configCityControlView); }
-            else { Debug.LogError("Config City Control View missing in CityControl.cs"); }
 
             if (_spriteRendererObject is null) { _spriteRendererObject = GetComponent<SpriteRenderer>(); }
 
@@ -122,9 +114,7 @@ namespace City
             StartCoroutine(Reproduction());
         }
 
-        public void ConnectFabricToCity(string typeFabricDrug,
-                                        Vector2 positionFabric,
-                                        string gameObjectConnectionTo)
+        public void ConnectFabricToCity(string typeFabricDrug, Vector2 positionFabric, string gameObjectConnectionTo)
         {
             if (_connectFabricsCount < c_maxConnectionFabrics)
             {
@@ -149,7 +139,6 @@ namespace City
 
         private void CheckDemandDictionary(string typeFabricDrug)
         {
-            Debug.Log(typeFabricDrug);
             if (d_amountDrugsInCity.ContainsKey(typeFabricDrug) is false)
                 d_amountDrugsInCity.Add(typeFabricDrug, 0);
         }
@@ -167,28 +156,29 @@ namespace City
             }
             _roadControl.DecliningDemandUpdate(addResEveryStep, typeFabricDrug);
 
-            _IcityDrugBuyers.d_contractDrugsCityDemand[typeFabricDrug] = Mathf.Clamp(_IcityDrugBuyers.d_contractDrugsCityDemand[typeFabricDrug] + _increasedDemand,
-                                                                    _buyersDrugsClampDemandMin,
-                                                                    _buyersDrugsClampDemandMax);
+            // _IcityDrugBuyers.d_contractDrugsCityDemand[typeFabricDrug] = Mathf.Clamp(_IcityDrugBuyers.d_contractDrugsCityDemand[typeFabricDrug] + _increasedDemand,
+            //                                                         _buyersDrugsClampDemandMin,
+            //                                                         _buyersDrugsClampDemandMax);
 
-            //SellResources(in typeFabricDrug);
+            SellResources(in typeFabricDrug);
         }
 
         private void SellResources(in string typeFabricDrug)
         {
             foreach (var buyers in _IcityDrugBuyers.d_contractContactAndDrug.Keys)
             {
-                if (d_amountDrugsInCity[typeFabricDrug] >= d_weightToSellDrugs[typeFabricDrug] && _IcityDrugBuyers.d_contractDrugsCityDemand[buyers] >= d_weightToSellDrugs[typeFabricDrug])
+                if (_IcityDrugBuyers.d_contractContactAndDrug[buyers] is true)
                 {
-                    //? начисляется просто так, потому что проверку проходит d_weightToSellDrugs = 0, начисляя деньги просто так
-                    d_amountDrugsInCity[typeFabricDrug] -= d_weightToSellDrugs[typeFabricDrug];
+                    if (d_amountDrugsInCity[typeFabricDrug] >= d_weightToSellDrugs[typeFabricDrug] && _IcityDrugBuyers.d_contractDrugsCityDemand[buyers + typeFabricDrug] >= d_weightToSellDrugs[typeFabricDrug])
+                    {
+                        //? начисляется просто так, потому что проверку проходит d_weightToSellDrugs = 0, начисляя деньги просто так
+                        d_amountDrugsInCity[typeFabricDrug] -= d_weightToSellDrugs[typeFabricDrug];
+                        _IcityDrugBuyers.d_contractDrugsCityDemand[buyers + typeFabricDrug] -= d_weightToSellDrugs[typeFabricDrug];
+                        //_cityDrugsSell.Sell(d_weightToSellDrugs[typeFabricDrug], _IcityDrugBuyers);
 
-                    _IcityDrugBuyers.d_contractDrugsCityDemand[buyers] -= d_weightToSellDrugs[typeFabricDrug];
-                    _cityDrugsSell.Sell(d_weightToSellDrugs[typeFabricDrug], _IcityDrugBuyers);
-                    //Debug.Log(d_buyersDrugsCity[buyers]);
-
-                    //! сделать контрактные поставки
-                    //Debug.Log($"Sell {typeFabricDrug} | Current Demand Contracts {d_buyersDrugsCity[buyers]}");
+                        //! сделать контрактные поставки
+                        Debug.Log($"Sell {typeFabricDrug} | Current Demand Contracts {_IcityDrugBuyers.d_contractDrugsCityDemand[buyers]}");
+                    }
                 }
             }
         }

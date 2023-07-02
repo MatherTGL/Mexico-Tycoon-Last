@@ -5,13 +5,13 @@ using System.Collections.Generic;
 
 namespace Road
 {
-    public sealed class RoadControl : MonoBehaviour
+    internal sealed class RoadControl : MonoBehaviour
     {
         [SerializeField, Required, BoxGroup("Parameters"), AssetsOnly]
         private LineRenderer _linePrefab;
 
         [ShowInInspector, BoxGroup("Parameters"), ReadOnly]
-        private Dictionary<string, RoadBuilded> _dictionaryBuildedRoad = new Dictionary<string, RoadBuilded>();
+        private Dictionary<string, RoadBuilded> d_dictionaryBuildedRoad = new Dictionary<string, RoadBuilded>();
 
         private RoadBuilded _objectRoadBuilded;
 
@@ -21,7 +21,7 @@ namespace Road
         {
             _objectRoadBuilded = CreateObjectRoad(fromPosition, toPosition).GetComponent<RoadBuilded>();
 
-            _dictionaryBuildedRoad.Add(indexDestroyRoad, _objectRoadBuilded);
+            d_dictionaryBuildedRoad.Add(indexDestroyRoad, _objectRoadBuilded);
             _objectRoadBuilded.InitRoad();
         }
 
@@ -37,8 +37,8 @@ namespace Road
 
         public void DestroyRoad(string indexDestroyRoad)
         {
-            Destroy(_dictionaryBuildedRoad[indexDestroyRoad].gameObject);
-            _dictionaryBuildedRoad.Remove(indexDestroyRoad);
+            Destroy(d_dictionaryBuildedRoad[indexDestroyRoad].gameObject);
+            d_dictionaryBuildedRoad.Remove(indexDestroyRoad);
         }
 
         public void DecliningDemandUpdate(in float addResEveryStep, string typeFabricDrug)

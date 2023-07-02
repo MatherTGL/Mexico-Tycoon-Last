@@ -9,7 +9,7 @@ namespace Road
     {
         //*лист с транспоротом на маршруте
         [ShowInInspector, BoxGroup("Parameters"), ReadOnly]
-        private Dictionary<string, float> _allTransportingDrugs = new Dictionary<string, float>();
+        private Dictionary<string, float> d_allTransportingDrugs = new Dictionary<string, float>();
 
         [SerializeField, BoxGroup("Parameters"), HideLabel, MinValue(0.0f)]
         [Title("Resource Transportation Traffic Capacity Max in kg/day", horizontalLine: false)]
@@ -36,10 +36,10 @@ namespace Road
 
         public void DecliningDemandUpdate(in float addResEveryStep, in string typeFabricDrug)
         {
-            if (_allTransportingDrugs.ContainsKey(typeFabricDrug))
-                _allTransportingDrugs[typeFabricDrug] = addResEveryStep;
+            if (d_allTransportingDrugs.ContainsKey(typeFabricDrug))
+                d_allTransportingDrugs[typeFabricDrug] = addResEveryStep;
             else
-                _allTransportingDrugs.Add(typeFabricDrug, addResEveryStep);
+                d_allTransportingDrugs.Add(typeFabricDrug, addResEveryStep);
         }
     }
 }
