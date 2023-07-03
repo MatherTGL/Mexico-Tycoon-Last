@@ -106,8 +106,7 @@ namespace City
 
             if (_cityReproduction is null)
                 _cityReproduction = new CityReproduction(c_mathematicalDivisor,
-                                                         _populationChangeStepPercentMax,
-                                                         _populationChangeStepPercentMin);
+                                                         _populationChangeStepPercentMax, _populationChangeStepPercentMin);
 
             _cityDrugsSell = new CityDrugsSell();
 
@@ -148,36 +147,42 @@ namespace City
             if (isWork)
             {
                 if (d_amountDrugsInCity[typeFabricDrug] < _maxCapacityStock)
-                {
                     d_amountDrugsInCity[typeFabricDrug] += addResEveryStep;
-                    Debug.Log($"CityControl Add Resources {typeFabricDrug} Every Step{addResEveryStep}");
-                }
-                else { Debug.Log("Хранилище заполнено"); }
+                else
+                    Debug.Log("Хранилище заполнено");
             }
             _roadControl.DecliningDemandUpdate(addResEveryStep, typeFabricDrug);
-
-            // _IcityDrugBuyers.d_contractDrugsCityDemand[typeFabricDrug] = Mathf.Clamp(_IcityDrugBuyers.d_contractDrugsCityDemand[typeFabricDrug] + _increasedDemand,
-            //                                                         _buyersDrugsClampDemandMin,
-            //                                                         _buyersDrugsClampDemandMax);
-
             SellResources(in typeFabricDrug);
         }
 
         private void SellResources(in string typeFabricDrug)
         {
-            foreach (var buyers in _IcityDrugBuyers.d_contractContactAndDrug.Keys)
-            {
-                if (_IcityDrugBuyers.d_contractContactAndDrug[buyers] is true)
-                {
-                    if (d_amountDrugsInCity[typeFabricDrug] >= d_weightToSellDrugs[typeFabricDrug] && _IcityDrugBuyers.d_contractDrugsCityDemand[buyers + typeFabricDrug] >= d_weightToSellDrugs[typeFabricDrug])
-                    {
-                        //? начисляется просто так, потому что проверку проходит d_weightToSellDrugs = 0, начисляя деньги просто так
-                        d_amountDrugsInCity[typeFabricDrug] -= d_weightToSellDrugs[typeFabricDrug];
-                        _IcityDrugBuyers.d_contractDrugsCityDemand[buyers + typeFabricDrug] -= d_weightToSellDrugs[typeFabricDrug];
-                        //_cityDrugsSell.Sell(d_weightToSellDrugs[typeFabricDrug], _IcityDrugBuyers);
+            var allTypeDrugs = Enum.GetNames(typeof(FabricControl.TypeProductionResource));
 
-                        //! сделать контрактные поставки
-                        Debug.Log($"Sell {typeFabricDrug} | Current Demand Contracts {_IcityDrugBuyers.d_contractDrugsCityDemand[buyers]}");
+            foreach (var contractBuyers in _IcityDrugBuyers.d_contractBuyers.Keys)
+            {
+                if (_IcityDrugBuyers.d_contractBuyers[contractBuyers].isCooperation is true
+                    && _IcityDrugBuyers.d_contractBuyers[contractBuyers].drugName.Contains(typeFabricDrug))
+                {
+                    if (d_amountDrugsInCity[typeFabricDrug] >= d_weightToSellDrugs[typeFabricDrug])
+                    {
+                        if (_IcityDrugBuyers.d_contractBuyers[contractBuyers].d_drugDemand[typeFabricDrug] >= d_weightToSellDrugs[typeFabricDrug])
+                        {
+                            d_amountDrugsInCity[typeFabricDrug] -= d_weightToSellDrugs[typeFabricDrug];
+
+                            var clampDemand = _IcityDrugBuyers.d_contractBuyers[contractBuyers].d_drugDemand[typeFabricDrug] + _IcityDrugBuyers.d_contractBuyers[contractBuyers].d_drugIncreasedDemand[typeFabricDrug];
+                            _IcityDrugBuyers.d_contractBuyers[contractBuyers].d_drugDemand[typeFabricDrug] = Mathf.Clamp(clampDemand,
+                                                                                                 _buyersDrugsClampDemandMin, _buyersDrugsClampDemandMax);
+
+                            _cityDrugsSell.Sell(d_weightToSellDrugs[typeFabricDrug], _IcityDrugBuyers, contractBuyers, typeFabricDrug);
+
+                            _IcityDrugBuyers.d_contractBuyers[contractBuyers].d_drugDemand[typeFabricDrug] += d_weightToSellDrugs[typeFabricDrug]
+                            + _IcityDrugBuyers.d_contractBuyers[contractBuyers].d_drugIncreasedDemand[typeFabricDrug];
+
+                            Debug.Log("Sell");
+                        }
+                        else
+                            _IcityDrugBuyers.d_contractBuyers[contractBuyers].d_drugDemand[typeFabricDrug] += _IcityDrugBuyers.d_contractBuyers[contractBuyers].d_drugIncreasedDemand[typeFabricDrug];
                     }
                 }
             }
@@ -194,8 +199,8 @@ namespace City
             {
                 var addRandomBuyer = UnityEngine.Random.Range(0, countsDrugBuyers.Length);
 
-                if (_IcityDrugBuyers.d_contractContactAndDrug.ContainsKey(countsDrugBuyers[addRandomBuyer]) is false)
-                    _IcityDrugBuyers.d_contractContactAndDrug.Add(countsDrugBuyers[addRandomBuyer], false);
+                if (_IcityDrugBuyers.d_contractBuyers.ContainsKey(countsDrugBuyers[addRandomBuyer]) is false)
+                    _IcityDrugBuyers.d_contractBuyers.Add(countsDrugBuyers[addRandomBuyer], new ContractBuyerInfo());
             }
         }
 
