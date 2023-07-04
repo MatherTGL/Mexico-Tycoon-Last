@@ -20,6 +20,7 @@ internal sealed class DrugBuyersContractControl : MonoBehaviour, ICityDrugBuyers
     [Button("Add New Contract")]
     private void AddNewContractBuyer()
     {
+        //! хардкод
         if (d_contractBuyers.ContainsKey(_nameAddContractBuyer))
         {
             Debug.Log(d_contractBuyers[_nameAddContractBuyer]);
@@ -31,9 +32,13 @@ internal sealed class DrugBuyersContractControl : MonoBehaviour, ICityDrugBuyers
             for (int i = 0; i < lenghtTypesProductionResources.Length; i++)
             {
                 d_contractBuyers[_nameAddContractBuyer].drugName.Add(lenghtTypesProductionResources[i]);
-                d_contractBuyers[_nameAddContractBuyer].d_drugCost.Add(lenghtTypesProductionResources[i], ((uint)UnityEngine.Random.Range(15000, 25000)));
+                d_contractBuyers[_nameAddContractBuyer].d_drugCost.Add(lenghtTypesProductionResources[i],
+                                                                       ((uint)UnityEngine.Random.Range(15000, 25000)));
+
                 d_contractBuyers[_nameAddContractBuyer].d_drugDemand.Add(lenghtTypesProductionResources[i], UnityEngine.Random.Range(10, 30));
-                d_contractBuyers[_nameAddContractBuyer].d_drugIncreasedDemand.Add(lenghtTypesProductionResources[i], UnityEngine.Random.Range(0.1f, 0.5f));
+
+                d_contractBuyers[_nameAddContractBuyer].d_drugIncreasedDemand.Add(lenghtTypesProductionResources[i],
+                                                                                  UnityEngine.Random.Range(0.1f, 0.5f));
             }
         }
     }

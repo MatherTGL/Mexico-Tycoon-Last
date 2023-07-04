@@ -13,7 +13,7 @@ using System;
 namespace City
 {
     [RequireComponent(typeof(DrugBuyersContractControl))]
-    internal sealed class CityControl : MonoBehaviour, IBoot
+    internal sealed class CityControl : MonoBehaviour, IBoot, ICityControlSell
     {
         private const byte c_mathematicalDivisor = 100;
 
@@ -22,12 +22,19 @@ namespace City
         private ICityView _IcityView;
 
         private ICityDrugBuyers _IcityDrugBuyers;
+        ICityDrugBuyers ICityControlSell._IcityDrugBuyers => _IcityDrugBuyers;
+
+        private ICityControlSell _IcityControlSell;
+
+        private ICityDrugSell _IcityDrugSell;
 
         [ShowInInspector, FoldoutGroup("Parameters/Drugs"), ReadOnly]
         private Dictionary<string, float> d_amountDrugsInCity = new Dictionary<string, float>();
+        Dictionary<string, float> ICityControlSell.d_amountDrugsInCity => d_amountDrugsInCity;
 
         [ShowInInspector, FoldoutGroup("Parameters/Drugs/WeightSell"), ReadOnly]
         private Dictionary<string, float> d_weightToSellDrugs = new Dictionary<string, float>();
+        Dictionary<string, float> ICityControlSell.d_weightToSellDrugs => d_weightToSellDrugs;
 
         private CityReproduction _cityReproduction;
 
@@ -82,10 +89,12 @@ namespace City
         [FoldoutGroup("Parameters/Drugs"), Title("Min Clamp Demand Buyers", horizontalLine: false), HorizontalGroup("Parameters/Drugs/ClampDemand")]
         [MinValue("@_buyersDrugsClampDemandMin"), HideLabel, SerializeField, MaxValue("@_buyersDrugsClampDemandMax - 1")]
         private float _buyersDrugsClampDemandMin = 3;
+        float ICityControlSell.buyersDrugsClampDemandMin => _buyersDrugsClampDemandMin;
 
         [FoldoutGroup("Parameters/Drugs"), Title("Max", horizontalLine: false)]
         [MinValue("@_buyersDrugsClampDemandMin + 1"), HideLabel, SerializeField, HorizontalGroup("Parameters/Drugs/ClampDemand")]
         private float _buyersDrugsClampDemandMax = 4;
+        float ICityControlSell.buyersDrugsClampDemandMax => _buyersDrugsClampDemandMax;
 
 
         public void InitAwake()
@@ -105,10 +114,9 @@ namespace City
             if (_timeDateControl is null) { _timeDateControl = FindObjectOfType<TimeDateControl>(); }
 
             if (_cityReproduction is null)
-                _cityReproduction = new CityReproduction(c_mathematicalDivisor,
-                                                         _populationChangeStepPercentMax, _populationChangeStepPercentMin);
+                _cityReproduction = new CityReproduction(c_mathematicalDivisor, _populationChangeStepPercentMax, _populationChangeStepPercentMin);
 
-            _cityDrugsSell = new CityDrugsSell();
+            _IcityDrugSell = new CityDrugsSell();
 
             StartCoroutine(Reproduction());
         }
@@ -138,18 +146,15 @@ namespace City
 
         private void CheckDemandDictionary(string typeFabricDrug)
         {
-            if (d_amountDrugsInCity.ContainsKey(typeFabricDrug) is false)
-                d_amountDrugsInCity.Add(typeFabricDrug, 0);
+            if (d_amountDrugsInCity.ContainsKey(typeFabricDrug) is false) { d_amountDrugsInCity.Add(typeFabricDrug, 0); }
         }
 
         public void IngestResources(string typeFabricDrug, in bool isWork, in float addResEveryStep)
         {
             if (isWork)
             {
-                if (d_amountDrugsInCity[typeFabricDrug] < _maxCapacityStock)
-                    d_amountDrugsInCity[typeFabricDrug] += addResEveryStep;
-                else
-                    Debug.Log("Хранилище заполнено");
+                if (d_amountDrugsInCity[typeFabricDrug] < _maxCapacityStock) { d_amountDrugsInCity[typeFabricDrug] += addResEveryStep; }
+                else { Debug.Log("Хранилище заполнено"); }
             }
             _roadControl.DecliningDemandUpdate(addResEveryStep, typeFabricDrug);
             SellResources(in typeFabricDrug);
@@ -160,32 +165,7 @@ namespace City
             var allTypeDrugs = Enum.GetNames(typeof(FabricControl.TypeProductionResource));
 
             foreach (var contractBuyers in _IcityDrugBuyers.d_contractBuyers.Keys)
-            {
-                if (_IcityDrugBuyers.d_contractBuyers[contractBuyers].isCooperation is true
-                    && _IcityDrugBuyers.d_contractBuyers[contractBuyers].drugName.Contains(typeFabricDrug))
-                {
-                    if (d_amountDrugsInCity[typeFabricDrug] >= d_weightToSellDrugs[typeFabricDrug])
-                    {
-                        if (_IcityDrugBuyers.d_contractBuyers[contractBuyers].d_drugDemand[typeFabricDrug] >= d_weightToSellDrugs[typeFabricDrug])
-                        {
-                            d_amountDrugsInCity[typeFabricDrug] -= d_weightToSellDrugs[typeFabricDrug];
-
-                            var clampDemand = _IcityDrugBuyers.d_contractBuyers[contractBuyers].d_drugDemand[typeFabricDrug] + _IcityDrugBuyers.d_contractBuyers[contractBuyers].d_drugIncreasedDemand[typeFabricDrug];
-                            _IcityDrugBuyers.d_contractBuyers[contractBuyers].d_drugDemand[typeFabricDrug] = Mathf.Clamp(clampDemand,
-                                                                                                 _buyersDrugsClampDemandMin, _buyersDrugsClampDemandMax);
-
-                            _cityDrugsSell.Sell(d_weightToSellDrugs[typeFabricDrug], _IcityDrugBuyers, contractBuyers, typeFabricDrug);
-
-                            _IcityDrugBuyers.d_contractBuyers[contractBuyers].d_drugDemand[typeFabricDrug] += d_weightToSellDrugs[typeFabricDrug]
-                            + _IcityDrugBuyers.d_contractBuyers[contractBuyers].d_drugIncreasedDemand[typeFabricDrug];
-
-                            Debug.Log("Sell");
-                        }
-                        else
-                            _IcityDrugBuyers.d_contractBuyers[contractBuyers].d_drugDemand[typeFabricDrug] += _IcityDrugBuyers.d_contractBuyers[contractBuyers].d_drugIncreasedDemand[typeFabricDrug];
-                    }
-                }
-            }
+                _IcityDrugSell.Sell(d_weightToSellDrugs[typeFabricDrug], contractBuyers, typeFabricDrug, _IcityControlSell);
         }
 
         [Button("Set Users Parameters", 30), FoldoutGroup("Parameters/Drugs/Percentage Users")]
