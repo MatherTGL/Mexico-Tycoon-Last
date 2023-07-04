@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89e9fd01b41ae7d6981c8ea859ab4bb7, type: 3}
+  m_Name: DrugParametersRandomCrack
+  m_EditorClassIdentifier: 
+  _nameTypeDrug: 2
+  _minCostDrug: 2000
+  _maxCostDrug: 5000
+  _minDemandDrug: 1
+  _maxDemandDrug: 2
+  _minIncreasedDemand: 0.1
+  _maxIncreasedDemand: 0.4

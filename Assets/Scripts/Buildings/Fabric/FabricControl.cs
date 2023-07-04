@@ -55,7 +55,7 @@ namespace Fabric
 
         [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Productivity Production", horizontalLine: false), HideLabel]
         [MinValue(0.0f), SuffixLabel("kg/day")]
-        private float _productivityKgPerDay;
+        private float _productivityKgPerDay; //! под каждый наркотик
         public float productivityKgPerDay { get => _productivityKgPerDay; set => _productivityKgPerDay = value; }
 
         [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Current Free Production", horizontalLine: false), HideLabel]
@@ -80,7 +80,6 @@ namespace Fabric
         [MinValue(10.0f), SuffixLabel("kg")]
         private float _maxCapacityStock;
         public float maxCapacityStock { get => _maxCapacityStock; set => _maxCapacityStock = value; }
-
         public enum TypeProductionResource { Cocaine, Marijuana, Crack }
 
         [SerializeField, EnumPaging, BoxGroup("Parameters/Main Settings"), DisableIf("_isBuyed")]
@@ -245,7 +244,7 @@ namespace Fabric
             {
                 if (_timeDateControl.GetStatePaused() is false)
                 {
-                    if (_isWork)
+                    if (_isWork is true)
                         _IfabricProduction.ProductionProduct(_currentFreeProductionKgPerDay,
                                                          _maxCapacityStock, ref _productInStock);
 
@@ -258,8 +257,11 @@ namespace Fabric
 
         private void LocalUpgradeProductQuality()
         {
-            if (_currentProductQuality < _productQualityLocalMax)
-                _currentProductQuality += _productQualityLocalStepUpgrade;
+            if (_isWork is true && _isBuyed is true)
+            {
+                if (_currentProductQuality < _productQualityLocalMax)
+                    _currentProductQuality += _productQualityLocalStepUpgrade;
+            }
         }
 
         private void SpendFreeProduction()

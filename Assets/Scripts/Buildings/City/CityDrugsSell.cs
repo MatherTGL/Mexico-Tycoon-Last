@@ -9,7 +9,7 @@ namespace City
         public void Sell(float weightSell, in string contractBuyers, in string typeFabricDrug, in ICityControlSell IcityControlSell)
         {
             if (IcityControlSell._IcityDrugBuyers.d_contractBuyers[contractBuyers].isCooperation is true
-                    && IcityControlSell._IcityDrugBuyers.d_contractBuyers[contractBuyers].drugName.Contains(typeFabricDrug))
+                    && IcityControlSell._IcityDrugBuyers.d_contractBuyers[contractBuyers].l_drugName.Contains(typeFabricDrug))
             {
                 if (IcityControlSell.d_amountDrugsInCity[typeFabricDrug] >= IcityControlSell.d_weightToSellDrugs[typeFabricDrug])
                 {
@@ -31,7 +31,6 @@ namespace City
                     DataControl.IdataPlayer.AddPlayerMoney(addMoneySum);
                     Debug.Log(addMoneySum);
                 }
-
             }
         }
     }

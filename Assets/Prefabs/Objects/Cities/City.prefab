@@ -157,4 +157,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8206096676eba49ed864653ef1d36a40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _setDrugsParametersRandom: {fileID: 11400000, guid: bdf9add5957ba0aaa8f11c5054478a9c, type: 2}
   _nameAddContractBuyer: 
