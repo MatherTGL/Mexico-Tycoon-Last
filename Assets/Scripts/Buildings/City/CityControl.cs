@@ -24,8 +24,10 @@ namespace City
         private ICityDrugBuyers _IcityDrugBuyers;
         ICityDrugBuyers ICityControlSell._IcityDrugBuyers => _IcityDrugBuyers;
 
+        [ShowInInspector, FoldoutGroup("Parameters/Links"), ReadOnly]
         private ICityControlSell _IcityControlSell;
 
+        [ShowInInspector, FoldoutGroup("Parameters/Links"), ReadOnly]
         private ICityDrugSell _IcityDrugSell;
 
         [ShowInInspector, FoldoutGroup("Parameters/Drugs"), ReadOnly]

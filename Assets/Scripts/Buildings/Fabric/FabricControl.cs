@@ -80,6 +80,7 @@ namespace Fabric
         [MinValue(10.0f), SuffixLabel("kg")]
         private float _maxCapacityStock;
         public float maxCapacityStock { get => _maxCapacityStock; set => _maxCapacityStock = value; }
+
         public enum TypeProductionResource { Cocaine, Marijuana, Crack }
 
         [SerializeField, EnumPaging, BoxGroup("Parameters/Main Settings"), DisableIf("_isBuyed")]

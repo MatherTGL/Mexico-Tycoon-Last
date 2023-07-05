@@ -33,6 +33,7 @@ public sealed class DrugParametersRandom : ScriptableObject
     [Title("", "Max")]
     private float _maxIncreasedDemand;
 
+
     public uint GetMinCostDrugParameter()
     {
         return _minCostDrug;
