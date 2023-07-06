@@ -13,11 +13,12 @@ using System;
 namespace City
 {
     [RequireComponent(typeof(DrugBuyersContractControl))]
-    internal sealed class CityControl : MonoBehaviour, IBoot, ICityControlSell
+    internal sealed class CityControl : MonoBehaviour, IBoot, ICityControlSell, IPluggableingRoad
     {
         private const byte c_mathematicalDivisor = 100;
 
-        private const byte c_maxConnectionFabrics = 4;
+        private const byte c_maxConnectionObjects = 4;
+        byte IPluggableingRoad.c_maxConnectionObjects => c_maxConnectionObjects;
 
         private ICityView _IcityView;
 
@@ -73,9 +74,10 @@ namespace City
         [MinValue(0), MaxValue(10), Tooltip("Уровень полиции в данном городе"), PropertySpace(5), HideLabel]
         private byte _policeLevel;
 
-        [BoxGroup("Parameters"), Title("Connect Fabrics", horizontalLine: false), SerializeField, ReadOnly]
+        [BoxGroup("Parameters"), Title("Connect Objects", horizontalLine: false), SerializeField, ReadOnly]
         [MinValue(0), HideLabel]
-        private byte _connectFabricsCount = 0;
+        private byte _connectObjectsCount = 0;
+        public byte connectObjectsCount => _connectObjectsCount;
 
         [SerializeField, BoxGroup("Parameters"), Title("Max Capacity Stock", horizontalLine: false)]
         [MinValue(0.0f), Tooltip("Максимальная вместимость хранилища города в кг"), HideLabel, SuffixLabel("kg")]
@@ -98,6 +100,44 @@ namespace City
         private float _buyersDrugsClampDemandMax = 4;
         float ICityControlSell.buyersDrugsClampDemandMax => _buyersDrugsClampDemandMax;
 
+        [SerializeField, FoldoutGroup("Parameters/Control"), ReadOnly]
+        private List<IPluggableingRoad> l_allConnectedObject = new List<IPluggableingRoad>();
+        List<IPluggableingRoad> IPluggableingRoad.l_allConnectedObject => l_allConnectedObject;
+
+        [ShowInInspector, FoldoutGroup("Parameters/Control"), ReadOnly]
+        private Dictionary<string, float> d_allInfoObjectClientsTransition = new Dictionary<string, float>();
+        Dictionary<string, float> IPluggableingRoad.d_allInfoObjectClientsTransition => d_allInfoObjectClientsTransition;
+
+        [ShowInInspector, FoldoutGroup("Parameters/Control")]
+        [HideLabel, Title("New Transport Way Link", horizontalLine: false)]
+        private IPluggableingRoad _connectingObject;
+        public IPluggableingRoad connectingObject { get => _connectingObject; }
+
+        private float _uploadResourceAddWay;
+        public float uploadResourceAddWay => _uploadResourceAddWay;
+
+        [SerializeField, FoldoutGroup("Parameters/Control"), EnumPaging]
+        private FabricControl.TypeProductionResource _typeProductionResource;
+
+
+#if UNITY_EDITOR
+        [Button("New Way"), FoldoutGroup("Parameters/Control"), PropertySpace(10)]
+        [ShowIf("@_connectingObject != null"), HorizontalGroup("Parameters/Control")]
+        private void AddNewTransportWay()
+        {
+            if (l_allConnectedObject.Contains(_connectingObject) is false && d_allInfoObjectClientsTransition.ContainsKey(_connectingObject.ToString()) is false)
+            {
+                l_allConnectedObject.Add(_connectingObject);
+                //SpendFreeProduction();
+
+                d_allInfoObjectClientsTransition.Add(_connectingObject.ToString(), _uploadResourceAddWay);
+                _connectingObject.ConnectObjectToObject(_typeProductionResource.ToString(), gameObject.name + _connectingObject.ToString(), _connectingObject, this);
+
+                _uploadResourceAddWay = 0;
+            }
+        }
+#endif
+
 
         public void InitAwake()
         {
@@ -119,32 +159,38 @@ namespace City
                 _cityReproduction = new CityReproduction(c_mathematicalDivisor, _populationChangeStepPercentMax, _populationChangeStepPercentMin);
 
             _IcityDrugSell = new CityDrugsSell();
+            _IcityControlSell = this;
 
             StartCoroutine(Reproduction());
         }
 
-        public void ConnectFabricToCity(string typeFabricDrug, Vector2 positionFabric, string gameObjectConnectionTo)
+        public void ConnectObjectToObject(string typeFabricDrug, string gameObjectConnectionTo, IPluggableingRoad FirstObject, IPluggableingRoad SecondObject)
         {
-            if (_connectFabricsCount < c_maxConnectionFabrics)
+            Debug.Log(FirstObject.GetPositionVector2());
+            Debug.Log(FirstObject);
+            Debug.Log(SecondObject);
+            if (_connectObjectsCount < c_maxConnectionObjects)
             {
-                _connectFabricsCount++;
+                _connectObjectsCount++;
 
                 CheckDemandDictionary(typeFabricDrug);
-                _roadControl.BuildRoad(transform.position, positionFabric, gameObjectConnectionTo);
+                _roadControl.BuildRoad(transform.position, SecondObject.GetPositionVector2(), gameObjectConnectionTo);
             }
 
-            if (_connectFabricsCount! > 0) { _IcityView.ConnectFabric(ref _spriteRendererObject); }
+            if (_connectObjectsCount! > 0) { _IcityView.ConnectFabric(ref _spriteRendererObject); }
         }
 
-        public void DisconnectFabricToCity(string gameObjectDisconnectTo)
+        public void DisconnectObjectToObject(string gameObjectDisconnectTo)
         {
-            if (_connectFabricsCount >= 1)
+            if (_connectObjectsCount >= 1)
             {
                 _roadControl.DestroyRoad(gameObjectDisconnectTo);
-                _connectFabricsCount--;
+                _connectObjectsCount--;
             }
             else { _IcityView.DisconnectFabric(ref _spriteRendererObject); }
         }
+
+        public Vector2 GetPositionVector2() => transform.position;
 
         private void CheckDemandDictionary(string typeFabricDrug)
         {

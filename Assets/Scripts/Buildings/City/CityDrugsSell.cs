@@ -8,6 +8,7 @@ namespace City
     {
         public void Sell(float weightSell, in string contractBuyers, in string typeFabricDrug, in ICityControlSell IcityControlSell)
         {
+            Debug.Log(IcityControlSell);
             if (IcityControlSell._IcityDrugBuyers.d_contractBuyers[contractBuyers].isCooperation is true
                     && IcityControlSell._IcityDrugBuyers.d_contractBuyers[contractBuyers].l_drugName.Contains(typeFabricDrug))
             {

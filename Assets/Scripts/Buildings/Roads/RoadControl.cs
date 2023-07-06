@@ -19,6 +19,7 @@ namespace Road
         //? будет управлять вью, билдед
         public void BuildRoad(in Vector2 fromPosition, in Vector2 toPosition, string indexDestroyRoad)
         {
+            Debug.Log(toPosition);
             _objectRoadBuilded = CreateObjectRoad(fromPosition, toPosition).GetComponent<RoadBuilded>();
 
             d_dictionaryBuildedRoad.Add(indexDestroyRoad, _objectRoadBuilded);
