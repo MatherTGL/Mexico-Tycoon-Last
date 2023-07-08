@@ -10,7 +10,7 @@ Available memory:        15911 MB
 Using pre-set license
 Pro License: YES
 
-(Unity:88667): Gdk-CRITICAL **: 04:30:17.521: gdk_window_get_cursor: assertion 'GDK_IS_WINDOW (window)' failed
+(Unity:173170): Gdk-CRITICAL **: 20:11:37.850: gdk_window_get_cursor: assertion 'GDK_IS_WINDOW (window)' failed
 Desktop is 1600 x 900 @ 60 Hz
 Initialize udev device monitor.
 
@@ -26,7 +26,7 @@ AssetImportWorker0
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-44659
+42783
 Successfully changed project path to: /home/black/GitHub/Mexico-Tycoon-Last/Mexico_Tycoon_Last
 /home/black/GitHub/Mexico-Tycoon-Last/Mexico_Tycoon_Last
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -58,7 +58,7 @@ Successfully changed project path to: /home/black/GitHub/Mexico-Tycoon-Last/Mexi
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Refreshing native plugins compatible for Editor in 388.96 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 418.82 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2022.1.20f1 (01d83b40d570)
 [Subsystems] Discovering subsystems at path /home/black/Unity/Hub/Editor/2022.1.20f1/Editor/Data/Resources/UnitySubsystems
@@ -73,101 +73,101 @@ coord_conventions GL_ARB_fragment_layer_viewport GL_ARB_fragment_shader GL_ARB_f
 nclude GL_ARB_shading_language_packing GL_ARB_sync GL_ARB_texture_barrier GL_ARB_texture_buffer_object GL_ARB_texture_buffer_object_rgb32 GL_ARB_texture_buffer_range GL_ARB_texture_compression_bptc GL_ARB_texture_compression_rgtc GL_ARB_texture_cube_map_array GL_ARB_texture_filter_anisotropic GL_ARB_texture_float GL_ARB_texture_gather GL_ARB_texture_mirror_clamp_to_edge GL_ARB_texture_multisample GL_ARB_texture_non_power_of_two GL_ARB_texture_query_levels GL_ARB_texture_query_lod GL_ARB_texture_rectangle GL_ARB_texture_rg GL_ARB_texture_rgb10_a2ui GL_ARB_texture_storage GL_ARB_texture_storage_multisample GL_ARB_texture_swizzle GL_ARB_timer_query GL_ARB_transform_feedback2 GL_ARB_transform_feedback_instanced GL_ARB_transform_feedback_overflow_query GL_ARB_uniform_buffer_object GL_ARB_vertex_array_bgra GL_ARB_vertex_array_object GL_ARB_vertex_attrib_binding GL_ARB_vertex_buffer_object GL_ARB_vertex_shader GL_ARB_vertex_type_10f_11f_11f_rev GL_ARB_vertex_type_2_10_10_10_rev GL_ARB_viewport_array GL_ATI_blend_eq
 uation_separate GL_ATI_texture_float GL_EXT_EGL_image_storage GL_EXT_EGL_sync GL_EXT_abgr GL_EXT_blend_equation_separate GL_EXT_debug_label GL_EXT_demote_to_helper_invocation GL_EXT_draw_buffers2 GL_EXT_draw_instanced GL_EXT_framebuffer_blit GL_EXT_framebuffer_multisample GL_EXT_framebuffer_multisample_blit_scaled GL_EXT_framebuffer_object GL_EXT_framebuffer_sRGB GL_EXT_packed_depth_stencil GL_EXT_packed_float GL_EXT_pixel_buffer_object GL_EXT_polygon_offset_clamp GL_EXT_provoking_vertex GL_EXT_semaphore GL_EXT_semaphore_fd GL_EXT_shader_framebuffer_fetch_non_coherent GL_EXT_shader_integer_mix GL_EXT_texture_array GL_EXT_texture_compression_dxt1 GL_EXT_texture_compression_rgtc GL_EXT_texture_compression_s3tc GL_EXT_texture_filter_anisotropic GL_EXT_texture_integer GL_EXT_texture_sRGB GL_EXT_texture_sRGB_R8 GL_EXT_texture_sRGB_decode GL_EXT_texture_shadow_lod GL_EXT_texture_shared_exponent GL_EXT_texture_snorm GL_EXT_texture_swizzle GL_EXT_timer_query GL_EXT_transform_feedback GL_EXT_vertex_array_bgra GL_IBM_
 multimode_draw_arrays GL_INTEL_blackhole_render GL_INTEL_performance_query GL_KHR_blend_equation_advanced GL_KHR_context_flush_control GL_KHR_debug GL_KHR_no_error GL_KHR_parallel_shader_compile GL_KHR_texture_compression_astc_ldr GL_KHR_texture_compression_astc_sliced_3d GL_MESA_pack_invert GL_MESA_shader_integer_functions GL_MESA_texture_signed_rgba GL_NV_conditional_render GL_NV_copy_image GL_NV_depth_clamp GL_NV_packed_depth_stencil GL_NV_texture_barrier GL_OES_EGL_image GL_S3_s3tc
-OPENGL LOG: Creating OpenGL 3.3 graphics device ; Context level  <OpenGL 3.3> ; Context handle 1073447344
+OPENGL LOG: Creating OpenGL 3.3 graphics device ; Context level  <OpenGL 3.3> ; Context handle -1863823424
 Initialize mono
 Mono path[0] = '/home/black/Unity/Hub/Editor/2022.1.20f1/Editor/Data/Managed'
 Mono path[1] = '/home/black/Unity/Hub/Editor/2022.1.20f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-linux'
 Mono config path = '/home/black/Unity/Hub/Editor/2022.1.20f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56667
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56170
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: /home/black/Unity/Hub/Editor/2022.1.20f1/Editor/Data/PlaybackEngines/LinuxStandaloneSupport/UnityEditor.LinuxStandalone.Extensions.dll
-Registered in 0.031831 seconds.
+Registered in 0.031647 seconds.
 Native extension for LinuxStandalone target not found
-Refreshing native plugins compatible for Editor in 401.91 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 334.97 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  2.264 seconds
+- Completed reload, in  2.441 seconds
 Domain Reload Profiling:
-	ReloadAssembly (2265ms)
-		BeginReloadAssembly (157ms)
+	ReloadAssembly (2442ms)
+		BeginReloadAssembly (199ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (2ms)
-		EndReloadAssembly (1712ms)
-			LoadAssemblies (152ms)
+		EndReloadAssembly (1774ms)
+			LoadAssemblies (193ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (400ms)
-				TypeCache.Initialize (398ms)
-					TypeCache.ScanAssembly (394ms)
-				ResolveRequiredComponents (2ms)
+			SetupTypeCache (508ms)
+				TypeCache.Initialize (506ms)
+					TypeCache.ScanAssembly (503ms)
+				ResolveRequiredComponents (1ms)
 			ReleaseScriptCaches (0ms)
-			RebuildScriptCaches (127ms)
-			SetupLoadedEditorAssemblies (998ms)
+			RebuildScriptCaches (132ms)
+			SetupLoadedEditorAssemblies (947ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (24ms)
-				SetLoadedEditorAssemblies (24ms)
-				RefreshPlugins (402ms)
-				BeforeProcessingInitializeOnLoad (4ms)
-				ProcessInitializeOnLoadAttributes (410ms)
-				ProcessInitializeOnLoadMethodAttributes (134ms)
+				InitializePlatformSupportModulesInManaged (31ms)
+				SetLoadedEditorAssemblies (23ms)
+				RefreshPlugins (335ms)
+				BeforeProcessingInitializeOnLoad (3ms)
+				ProcessInitializeOnLoadAttributes (431ms)
+				ProcessInitializeOnLoadMethodAttributes (124ms)
 				AfterProcessingInitializeOnLoad (0ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.035005 seconds.
+Registered in 0.024335 seconds.
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory is not a mono symbol file
 Symbol file LoadedFromMemory doesn't match image /home/black/GitHub/Mexico-Tycoon-Last/Mexico_Tycoon_Last/Library/PackageCache/com.unity.visualscripting@1.7.8/Editor/VisualScripting.Core/Dependencies/YamlDotNet/Unity.VisualScripting.YamlDotNet.dll
 Symbol file LoadedFromMemory doesn't match image /home/black/GitHub/Mexico-Tycoon-Last/Mexico_Tycoon_Last/Library/PackageCache/com.unity.visualscripting@1.7.8/Editor/VisualScripting.Core/Dependencies/DotNetZip/Unity.VisualScripting.IonicZip.dll
 Native extension for LinuxStandalone target not found
-Refreshing native plugins compatible for Editor in 394.35 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 470.32 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Launched and connected shader compiler UnityShaderCompiler after 0.04 seconds
+Launched and connected shader compiler UnityShaderCompiler after 0.03 seconds
 Mono: successfully reloaded assembly
-- Completed reload, in  5.890 seconds
+- Completed reload, in  5.832 seconds
 Domain Reload Profiling:
-	ReloadAssembly (5892ms)
-		BeginReloadAssembly (273ms)
+	ReloadAssembly (5834ms)
+		BeginReloadAssembly (250ms)
 			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (18ms)
+			DisableScriptedObjects (15ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (46ms)
-		EndReloadAssembly (5255ms)
-			LoadAssemblies (201ms)
+			CreateAndSetChildDomain (43ms)
+		EndReloadAssembly (5253ms)
+			LoadAssemblies (177ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (994ms)
-				TypeCache.Initialize (975ms)
-					TypeCache.ScanAssembly (962ms)
-				ResolveRequiredComponents (20ms)
-			ReleaseScriptCaches (2ms)
-			RebuildScriptCaches (224ms)
-			SetupLoadedEditorAssemblies (3614ms)
+			SetupTypeCache (871ms)
+				TypeCache.Initialize (856ms)
+					TypeCache.ScanAssembly (846ms)
+				ResolveRequiredComponents (16ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (252ms)
+			SetupLoadedEditorAssemblies (3718ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (23ms)
-				SetLoadedEditorAssemblies (20ms)
-				RefreshPlugins (395ms)
-				BeforeProcessingInitializeOnLoad (393ms)
-				ProcessInitializeOnLoadAttributes (1670ms)
-				ProcessInitializeOnLoadMethodAttributes (1099ms)
-				AfterProcessingInitializeOnLoad (15ms)
+				InitializePlatformSupportModulesInManaged (20ms)
+				SetLoadedEditorAssemblies (22ms)
+				RefreshPlugins (470ms)
+				BeforeProcessingInitializeOnLoad (457ms)
+				ProcessInitializeOnLoadAttributes (1758ms)
+				ProcessInitializeOnLoadMethodAttributes (972ms)
+				AfterProcessingInitializeOnLoad (18ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (9ms)
+			AwakeInstancesAfterBackupRestoration (11ms)
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
-Refreshing native plugins compatible for Editor in 1.73 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 1.74 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 5283 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 54 unused Assets / (383.8 KB). Loaded Objects now: 5793.
-Memory consumption went from 0.78 GB to 0.78 GB.
-Total: 70.903243 ms (FindLiveObjects: 0.665701 ms CreateObjectMapping: 0.615327 ms MarkObjects: 69.184775 ms  DeleteObjects: 0.434004 ms)
+Unloading 5323 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 57 unused Assets / (383.9 KB). Loaded Objects now: 5865.
+Memory consumption went from 0.79 GB to 0.79 GB.
+Total: 60.572983 ms (FindLiveObjects: 0.500581 ms CreateObjectMapping: 0.407707 ms MarkObjects: 59.310043 ms  DeleteObjects: 0.351515 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
@@ -180,37 +180,13 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
-  Time since last request: 172722.296365 seconds.
-  path: Assets/Models/Test
-  artifactKey: Guid(264e9dbd035aa0f19acc10395c49d2ab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Test using Guid(264e9dbd035aa0f19acc10395c49d2ab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6537b61eb6627221d1bd0a0f6b689ab1') in 0.005231 seconds 
+  Time since last request: 315589.470142 seconds.
+  path: Assets/Editor/81-C# Script-NewBehaviourScript.cs.txt
+  artifactKey: Guid(b7626e09006c77b859fe075bab53422a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Editor/81-C# Script-NewBehaviourScript.cs.txt using Guid(b7626e09006c77b859fe075bab53422a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3c2e224b387daa419d8fb3c6cc61c5c3') in 0.021858 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000039 seconds.
-  path: Assets/Models/Test/Landscape/source
-  artifactKey: Guid(a7dd31d1544cffda7afcd5f62e3ef529) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Test/Landscape/source using Guid(a7dd31d1544cffda7afcd5f62e3ef529) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c471bc07a426a6864403b4c24fe7888a') in 0.002904 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000036 seconds.
-  path: Assets/Models
-  artifactKey: Guid(13f6333b46d6c7725954fa6f3c75bb3f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models using Guid(13f6333b46d6c7725954fa6f3c75bb3f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '289a7e696af519db93b4218c8240eac2') in 0.002766 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000041 seconds.
-  path: Assets/Models/Test/Landscape
-  artifactKey: Guid(61d83ceabde9aa4e3a6675970be5a0fa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Test/Landscape using Guid(61d83ceabde9aa4e3a6675970be5a0fa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'adf8ee3e1eb42c650ed3a3497aa393ad') in 0.002669 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 88.383403 seconds.
-  path: Assets/Models/Test/Landscape/source/3.fbx
-  artifactKey: Guid(ed4042113573aa2469eed03c6e5402ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Test/Landscape/source/3.fbx using Guid(ed4042113573aa2469eed03c6e5402ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f2c0b85ae120d47860b8c24697d6218e') in 0.912638 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 43.861550 seconds.
-  path: Assets/Models/Test/Landscape/source/3.fbx
-  artifactKey: Guid(ed4042113573aa2469eed03c6e5402ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Test/Landscape/source/3.fbx using Guid(ed4042113573aa2469eed03c6e5402ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e4a355729dc9a39b76941b0fab9ce68d') in 0.494072 seconds 
+  Time since last request: 260.386959 seconds.
+  path: Assets/Plugins/AutoRefs
+  artifactKey: Guid(c75ca2786705d4f2f9293585c0c0c036) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Plugins/AutoRefs using Guid(c75ca2786705d4f2f9293585c0c0c036) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '12e00f7b8a860efc64fb807e0e0bcdf7') in 0.002220 seconds 

@@ -113,10 +113,12 @@ namespace City
         private IPluggableingRoad _connectingObject;
         public IPluggableingRoad connectingObject { get => _connectingObject; }
 
+        [SerializeField, FoldoutGroup("Parameters/Control"), MinValue(0.0f), HideLabel, Title("Upload Resource", horizontalLine: false)]
+        [SuffixLabel("kg")]
         private float _uploadResourceAddWay;
         public float uploadResourceAddWay => _uploadResourceAddWay;
 
-        [SerializeField, FoldoutGroup("Parameters/Control"), EnumPaging]
+        [SerializeField, FoldoutGroup("Parameters/Control"), EnumPaging, HideLabel, Title("Type Drug")]
         private FabricControl.TypeProductionResource _typeProductionResource;
 
 
@@ -162,13 +164,11 @@ namespace City
             _IcityControlSell = this;
 
             StartCoroutine(Reproduction());
+            StartCoroutine(SubmittingResources());
         }
 
         public void ConnectObjectToObject(string typeFabricDrug, string gameObjectConnectionTo, IPluggableingRoad FirstObject, IPluggableingRoad SecondObject)
         {
-            Debug.Log(FirstObject.GetPositionVector2());
-            Debug.Log(FirstObject);
-            Debug.Log(SecondObject);
             if (_connectObjectsCount < c_maxConnectionObjects)
             {
                 _connectObjectsCount++;
@@ -254,6 +254,21 @@ namespace City
             while (true)
             {
                 if (!_timeDateControl.GetStatePaused()) { _cityReproduction.ReproductionPopulation(ref _populationCity); }
+                yield return new WaitForSeconds(_timeDateControl.GetCurrentTimeOneDay(true));
+            }
+        }
+
+        private IEnumerator SubmittingResources()
+        {
+            while (true)
+            {
+                if (l_allConnectedObject.Count > 0)
+                {
+                    for (int i = 0; i < l_allConnectedObject.Count; i++)
+                    {
+                        l_allConnectedObject[i].IngestResources("Cocaine", true, 0.2f);
+                    }
+                }
                 yield return new WaitForSeconds(_timeDateControl.GetCurrentTimeOneDay(true));
             }
         }

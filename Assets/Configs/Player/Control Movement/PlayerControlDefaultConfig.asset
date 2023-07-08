@@ -16,7 +16,7 @@ MonoBehaviour:
   _speedMoveMouse: 60
   _speedMoveFast: 65
   _speedZoom: 10
-  _minZoomCameraDistance: 20
+  _minZoomCameraDistance: 10
   _maxZoomCameraDistance: 150
-  _maxHorizontalDistanceCamera: 100
-  _maxVerticalDistanceCamera: 100
+  _maxHorizontalDistanceCamera: 200
+  _maxVerticalDistanceCamera: 200

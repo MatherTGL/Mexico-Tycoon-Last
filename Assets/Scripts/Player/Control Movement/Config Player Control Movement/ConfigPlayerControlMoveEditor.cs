@@ -27,7 +27,7 @@ namespace Config.Player
         private float _speedZoom;
         public float speedZoom => _speedZoom;
 
-        [BoxGroup("Parameters/Clamp Distance"), MinValue(10.0f)]
+        [BoxGroup("Parameters/Clamp Distance"), MinValue(0.01f)]
         [SerializeField, FoldoutGroup("Parameters/Clamp Distance/Zoom"), Tooltip("Минимальное расстояние от 0 координат по Z")]
         [Title("Min", HorizontalLine = false), HideLabel, HorizontalGroup("Parameters/Clamp Distance/Zoom/HorizontalZoom")]
         private float _minZoomCameraDistance;
