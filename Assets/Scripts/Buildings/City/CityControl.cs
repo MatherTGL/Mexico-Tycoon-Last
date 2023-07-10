@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
@@ -17,8 +18,7 @@ namespace City
     {
         private const byte c_mathematicalDivisor = 100;
 
-        private const byte c_maxConnectionObjects = 4;
-        byte IPluggableingRoad.c_maxConnectionObjects => c_maxConnectionObjects;
+        private static byte c_maxConnectionObjects = 4;
 
         private ICityView _IcityView;
 
@@ -30,6 +30,8 @@ namespace City
 
         [ShowInInspector, FoldoutGroup("Parameters/Links"), ReadOnly]
         private ICityDrugSell _IcityDrugSell;
+
+        private RoadBuilded _roadBuilded;
 
         [ShowInInspector, FoldoutGroup("Parameters/Drugs"), ReadOnly]
         private Dictionary<string, float> d_amountDrugsInCity = new Dictionary<string, float>();
@@ -111,12 +113,17 @@ namespace City
         [ShowInInspector, FoldoutGroup("Parameters/Control")]
         [HideLabel, Title("New Transport Way Link", horizontalLine: false)]
         private IPluggableingRoad _connectingObject;
-        public IPluggableingRoad connectingObject { get => _connectingObject; }
+        IPluggableingRoad IPluggableingRoad.connectingObject => _connectingObject;
+
+        [ShowInInspector, FoldoutGroup("Parameters/Control"), ReadOnly]
+        private Dictionary<IPluggableingRoad, IPluggableingRoad[]> d_allClientObjects = new Dictionary<IPluggableingRoad, IPluggableingRoad[]>();
 
         [SerializeField, FoldoutGroup("Parameters/Control"), MinValue(0.0f), HideLabel, Title("Upload Resource", horizontalLine: false)]
         [SuffixLabel("kg")]
         private float _uploadResourceAddWay;
         public float uploadResourceAddWay => _uploadResourceAddWay;
+
+
 
         [SerializeField, FoldoutGroup("Parameters/Control"), EnumPaging, HideLabel, Title("Type Drug")]
         private FabricControl.TypeProductionResource _typeProductionResource;
@@ -127,16 +134,27 @@ namespace City
         [ShowIf("@_connectingObject != null"), HorizontalGroup("Parameters/Control")]
         private void AddNewTransportWay()
         {
-            if (l_allConnectedObject.Contains(_connectingObject) is false && d_allInfoObjectClientsTransition.ContainsKey(_connectingObject.ToString()) is false)
+            Debug.Log(_connectingObject);
+
+            _roadBuilded.roadResourcesManagement.CreateNewRoute(this, _connectingObject);
+
+            if (d_allClientObjects.ContainsKey(this) is false)
             {
-                l_allConnectedObject.Add(_connectingObject);
-                //SpendFreeProduction();
-
-                d_allInfoObjectClientsTransition.Add(_connectingObject.ToString(), _uploadResourceAddWay);
-                _connectingObject.ConnectObjectToObject(_typeProductionResource.ToString(), gameObject.name + _connectingObject.ToString(), _connectingObject, this);
-
-                _uploadResourceAddWay = 0;
+                d_allClientObjects.Add(this, _roadBuilded.roadResourcesManagement.CheckAllConnectionObjectsRoad(this));
             }
+
+            _connectingObject = null;
+            _uploadResourceAddWay = 0;
+            // if (l_allConnectedObject.Contains(_connectingObject) is false && d_allInfoObjectClientsTransition.ContainsKey(_connectingObject.ToString()) is false)
+            // {
+            //     l_allConnectedObject.Add(_connectingObject);
+            //     //SpendFreeProduction();
+
+            //     d_allInfoObjectClientsTransition.Add(_connectingObject.ToString(), _uploadResourceAddWay);
+            //     _connectingObject.ConnectObjectToObject(_typeProductionResource.ToString(), gameObject.name + _connectingObject.ToString(), _connectingObject, this);
+
+            //     _uploadResourceAddWay = 0;
+            // }
         }
 #endif
 
@@ -161,6 +179,7 @@ namespace City
                 _cityReproduction = new CityReproduction(c_mathematicalDivisor, _populationChangeStepPercentMax, _populationChangeStepPercentMin);
 
             _IcityDrugSell = new CityDrugsSell();
+            _roadBuilded = new RoadBuilded();
             _IcityControlSell = this;
 
             StartCoroutine(Reproduction());
@@ -199,13 +218,14 @@ namespace City
 
         public void IngestResources(string typeFabricDrug, in bool isWork, in float addResEveryStep)
         {
+            Debug.Log("Ingest res");
             if (isWork)
             {
                 if (d_amountDrugsInCity[typeFabricDrug] < _maxCapacityStock) { d_amountDrugsInCity[typeFabricDrug] += addResEveryStep; }
                 else { Debug.Log("Хранилище заполнено"); }
             }
-            _roadControl.DecliningDemandUpdate(addResEveryStep, typeFabricDrug);
-            SellResources(in typeFabricDrug);
+            //_roadControl.DecliningDemandUpdate(addResEveryStep, typeFabricDrug);
+            //SellResources(in typeFabricDrug);
         }
 
         private void SellResources(in string typeFabricDrug)

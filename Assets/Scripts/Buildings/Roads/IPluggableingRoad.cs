@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IPluggableingRoad
 {
-    byte c_maxConnectionObjects { get; }
+    static byte c_maxConnectionObjects { get; }
     byte connectObjectsCount { get; }
     float uploadResourceAddWay { get; }
     List<IPluggableingRoad> l_allConnectedObject { get; }

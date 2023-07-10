@@ -1330,6 +1330,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1648672142}
     m_Modifications:
     - target: {fileID: 3614819644002739043, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+      propertyPath: _roadControl
+      value: 
+      objectReference: {fileID: 1993232431}
+    - target: {fileID: 3614819644002739043, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
       propertyPath: _timeDateControl
       value: 
       objectReference: {fileID: 519420036}
@@ -2338,6 +2342,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1648672142}
     m_Modifications:
     - target: {fileID: 3614819644002739043, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+      propertyPath: _roadControl
+      value: 
+      objectReference: {fileID: 1993232431}
+    - target: {fileID: 3614819644002739043, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
       propertyPath: _timeDateControl
       value: 
       objectReference: {fileID: 519420036}
@@ -2558,6 +2566,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 1648672142}
     m_Modifications:
+    - target: {fileID: 3614819644002739043, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
+      propertyPath: _roadControl
+      value: 
+      objectReference: {fileID: 1993232431}
     - target: {fileID: 3614819644002739043, guid: 5b6594faed69079b88ecb9706c56c5ce, type: 3}
       propertyPath: _timeDateControl
       value: 

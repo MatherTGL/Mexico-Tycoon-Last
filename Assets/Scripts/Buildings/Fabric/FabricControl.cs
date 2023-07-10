@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Collections;
@@ -17,6 +18,7 @@ namespace Fabric
     public sealed class FabricControl : MonoBehaviour, IBoot, IUpgradableFabric, IPluggableingRoad
     {
         #region Variables
+        private static byte c_maxConnectionObjects = 4;
 
         private IFabricProduction _IfabricProduction;
 
@@ -29,6 +31,8 @@ namespace Fabric
 
         [SerializeField, BoxGroup("Parameters/Links"), Required, Title("Road Control"), HideLabel]
         private RoadControl _roadControl;
+
+        private RoadBuilded _roadBuilded;
 
         [BoxGroup("Parameters", centerLabel: true), TabGroup("Parameters/Tabs", "Links")]
         [SerializeField, Required, Title("Config Fabric Control View", horizontalLine: false), HideLabel]
@@ -105,6 +109,9 @@ namespace Fabric
         List<IPluggableingRoad> IPluggableingRoad.l_allConnectedObject => l_allConnectedObject;
 
         [ShowInInspector, FoldoutGroup("Parameters/Control"), ReadOnly]
+        private Dictionary<IPluggableingRoad, IPluggableingRoad[]> d_allClientObjects = new Dictionary<IPluggableingRoad, IPluggableingRoad[]>();
+
+        [ShowInInspector, FoldoutGroup("Parameters/Control"), ReadOnly]
         private Dictionary<string, float> d_allInfoObjectClientsTransition = new Dictionary<string, float>();
         Dictionary<string, float> IPluggableingRoad.d_allInfoObjectClientsTransition => d_allInfoObjectClientsTransition;
 
@@ -117,8 +124,6 @@ namespace Fabric
         [MinValue(0.0f), EnableIf("_isBuyed"), Title("Upload Resource", horizontalLine: false), HideLabel, SuffixLabel("kg")]
         private float _uploadResourceAddWay;
         public float uploadResourceAddWay => _uploadResourceAddWay;
-
-        public byte c_maxConnectionObjects => throw new System.NotImplementedException();
 
         [BoxGroup("Parameters"), Title("Connect Objects", horizontalLine: false), SerializeField, ReadOnly]
         [MinValue(0), HideLabel]
@@ -150,7 +155,6 @@ namespace Fabric
         private void WorkFabricEditor()
         {
             _isWork = !_isWork;
-
             _IfabricView.ChangeWorkStateFabricView(ref _spriteRendererObject, _isWork);
         }
 
@@ -168,19 +172,33 @@ namespace Fabric
         [PropertySpace(10)]
         private void AddNewTransportWay()
         {
-            if (l_allConnectedObject.Contains(_connectingObject) is false && d_allInfoObjectClientsTransition.ContainsKey(_connectingObject.ToString()) is false)
-            {
-                l_allConnectedObject.Add(_connectingObject);
-                SpendFreeProduction();
+            _roadBuilded = new RoadBuilded();
+            Debug.Log(_connectingObject);
+            var allObjects = _connectingObject;
 
-                d_allInfoObjectClientsTransition.Add(_connectingObject.ToString(), _uploadResourceAddWay);
+            // for (int i = 0; i < allObjects.Count; i++)
+            //     _roadBuilded.roadResourcesManagement.CreateNewRoute(this, allObjects[i]);
 
-                //Vector2 position = _connectingObject.GetPositionVector2();
-                _connectingObject.ConnectObjectToObject(_typeProductionResource.ToString(), gameObject.name + _connectingObject.ToString(), _connectingObject, this);
 
-                _uploadResourceAddWay = 0;
-                _connectingObject = null;
-            }
+            // if (d_allClientObjects.ContainsKey(this) is false)
+            //     d_allClientObjects.Add(this, _roadBuilded.roadResourcesManagement.CheckAllConnectionObjectsRoad(this));
+            // else
+            //     d_allClientObjects[this] = _roadBuilded.roadResourcesManagement.CheckAllConnectionObjectsRoad(this);
+
+            _connectingObject = null;
+            _uploadResourceAddWay = 0;
+            // if (l_allConnectedObject.Contains(_connectingObject) is false && d_allInfoObjectClientsTransition.ContainsKey(_connectingObject.ToString()) is false)
+            // {
+            //     l_allConnectedObject.Add(_connectingObject);
+            //     SpendFreeProduction();
+
+            //     d_allInfoObjectClientsTransition.Add(_connectingObject.ToString(), _uploadResourceAddWay);
+
+            //     _connectingObject.ConnectObjectToObject(_typeProductionResource.ToString(), gameObject.name + _connectingObject.ToString(), _connectingObject, this);
+
+            //     _uploadResourceAddWay = 0;
+            //     _connectingObject = null;
+            // }
         }
 
         [Button("Remove Way"), EnableIf("_isBuyed"), FoldoutGroup("Parameters/Control/Transporting")]
@@ -188,12 +206,12 @@ namespace Fabric
         [PropertySpace(10)]
         private void RemoveTransportWay()
         {
-            if (_connectingObject != null)
-            {
-                l_allConnectedObject.Remove(_connectingObject);
-                _connectingObject.DisconnectObjectToObject(gameObject.name + _connectingObject.ToString());
-                d_allInfoObjectClientsTransition.Remove(_connectingObject.ToString());
-            }
+            // if (_connectingObject != null)
+            // {
+            //     l_allConnectedObject.Remove(_connectingObject);
+            //     _connectingObject.DisconnectObjectToObject(gameObject.name + _connectingObject.ToString());
+            //     d_allInfoObjectClientsTransition.Remove(_connectingObject.ToString());
+            // }
         }
 
         [Button("Clear Cities Clients"), EnableIf("_isBuyed"), FoldoutGroup("Parameters/Control/Transporting")]
@@ -248,10 +266,9 @@ namespace Fabric
 
         private void TransportingResourcesProduction()
         {
-            if (l_allConnectedObject.Count != 0)
-                for (int i = 0; i < l_allConnectedObject.Count; i++)
-                    l_allConnectedObject[i].IngestResources(_typeProductionResource.ToString(),
-                                                      _isWork, d_allInfoObjectClientsTransition[l_allConnectedObject[i].ToString()]);
+            if (d_allClientObjects.Count != 0)
+                for (int i = 0; i < d_allClientObjects.Count; i++)
+                    d_allClientObjects[this][i].IngestResources(_typeProductionResource.ToString(), _isWork, 0.1f);
         }
 
         private IEnumerator FabricWork()

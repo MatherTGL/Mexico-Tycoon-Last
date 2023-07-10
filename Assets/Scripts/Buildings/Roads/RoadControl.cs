@@ -23,7 +23,6 @@ namespace Road
             _objectRoadBuilded = CreateObjectRoad(fromPosition, toPosition).GetComponent<RoadBuilded>();
 
             d_dictionaryBuildedRoad.Add(indexDestroyRoad, _objectRoadBuilded);
-            _objectRoadBuilded.InitRoad();
         }
 
         private GameObject CreateObjectRoad(in Vector2 fromPosition, in Vector2 toPosition)
@@ -38,7 +37,6 @@ namespace Road
 
         public void DestroyRoad(string indexDestroyRoad)
         {
-            Destroy(d_dictionaryBuildedRoad[indexDestroyRoad].gameObject);
             d_dictionaryBuildedRoad.Remove(indexDestroyRoad);
         }
 
