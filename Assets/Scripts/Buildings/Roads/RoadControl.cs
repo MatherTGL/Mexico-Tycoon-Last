@@ -19,9 +19,8 @@ namespace Road
         //? будет управлять вью, билдед
         public void BuildRoad(in Vector2 fromPosition, in Vector2 toPosition, string indexDestroyRoad)
         {
-            Debug.Log(toPosition);
+            //var createdObject = CreateObjectRoad(fromPosition, toPosition);
             _objectRoadBuilded = CreateObjectRoad(fromPosition, toPosition).GetComponent<RoadBuilded>();
-
             d_dictionaryBuildedRoad.Add(indexDestroyRoad, _objectRoadBuilded);
         }
 
@@ -40,9 +39,10 @@ namespace Road
             d_dictionaryBuildedRoad.Remove(indexDestroyRoad);
         }
 
-        public void DecliningDemandUpdate(in float addResEveryStep, string typeFabricDrug)
+        public void DecliningDemandUpdate(in float addResEveryStep, string typeFabricDrug, string indexRoad)
         {
-            _objectRoadBuilded.DecliningDemandUpdate(addResEveryStep, typeFabricDrug);
+            d_dictionaryBuildedRoad[indexRoad].DecliningDemandUpdate(addResEveryStep, typeFabricDrug);
+            //_objectRoadBuilded.DecliningDemandUpdate(addResEveryStep, typeFabricDrug);
         }
     }
 }

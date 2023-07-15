@@ -173,32 +173,19 @@ namespace Fabric
         private void AddNewTransportWay()
         {
             _roadBuilded = new RoadBuilded();
+
             Debug.Log(_connectingObject);
-            var allObjects = _connectingObject;
+            if (d_allClientObjects.ContainsKey(this) is false)
+            {
+                _roadBuilded.roadResourcesManagement.CreateNewRoute(this, _connectingObject);
+                d_allInfoObjectClientsTransition.Add(_connectingObject.ToString() + _typeProductionResource.ToString(), _uploadResourceAddWay);
+                d_allClientObjects.Add(this, _roadBuilded.roadResourcesManagement.CheckAllConnectionObjectsRoad(this));
+                _connectingObject.ConnectObjectToObject(_typeProductionResource.ToString(), gameObject.name + _connectingObject.ToString(), _connectingObject, this);
+            }
 
-            // for (int i = 0; i < allObjects.Count; i++)
-            //     _roadBuilded.roadResourcesManagement.CreateNewRoute(this, allObjects[i]);
-
-
-            // if (d_allClientObjects.ContainsKey(this) is false)
-            //     d_allClientObjects.Add(this, _roadBuilded.roadResourcesManagement.CheckAllConnectionObjectsRoad(this));
-            // else
-            //     d_allClientObjects[this] = _roadBuilded.roadResourcesManagement.CheckAllConnectionObjectsRoad(this);
 
             _connectingObject = null;
             _uploadResourceAddWay = 0;
-            // if (l_allConnectedObject.Contains(_connectingObject) is false && d_allInfoObjectClientsTransition.ContainsKey(_connectingObject.ToString()) is false)
-            // {
-            //     l_allConnectedObject.Add(_connectingObject);
-            //     SpendFreeProduction();
-
-            //     d_allInfoObjectClientsTransition.Add(_connectingObject.ToString(), _uploadResourceAddWay);
-
-            //     _connectingObject.ConnectObjectToObject(_typeProductionResource.ToString(), gameObject.name + _connectingObject.ToString(), _connectingObject, this);
-
-            //     _uploadResourceAddWay = 0;
-            //     _connectingObject = null;
-            // }
         }
 
         [Button("Remove Way"), EnableIf("_isBuyed"), FoldoutGroup("Parameters/Control/Transporting")]
@@ -267,8 +254,15 @@ namespace Fabric
         private void TransportingResourcesProduction()
         {
             if (d_allClientObjects.Count != 0)
+            {
                 for (int i = 0; i < d_allClientObjects.Count; i++)
-                    d_allClientObjects[this][i].IngestResources(_typeProductionResource.ToString(), _isWork, 0.1f);
+                {
+                    foreach (string item in d_allInfoObjectClientsTransition.Keys)
+                    {
+                        d_allClientObjects[this][i].IngestResources(_typeProductionResource.ToString(), _isWork, d_allInfoObjectClientsTransition[item]);
+                    }
+                }
+            }
         }
 
         private IEnumerator FabricWork()

@@ -34,7 +34,7 @@ namespace Road
 
         public IPluggableingRoad[] CheckAllConnectionObjectsRoad(IPluggableingRoad sendingObject)
         {
-            return d_allConnectedObjects[sendingObject];
+            return d_allConnectedObjects[sendingObject]; //! тут проблема
         }
     }
 }
