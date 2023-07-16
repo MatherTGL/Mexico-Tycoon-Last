@@ -29,7 +29,8 @@ namespace Fabric
         [EnableIf("@_timeDateControl == null")]
         private TimeDateControl _timeDateControl;
 
-        [SerializeField, BoxGroup("Parameters/Links"), Required, Title("Road Control"), HideLabel]
+        [SerializeField, BoxGroup("Parameters", centerLabel: true), Required, Title("Road Control"), HideLabel]
+        [TabGroup("Parameters/Tabs", "Links"), EnableIf("@_roadControl == null")]
         private RoadControl _roadControl;
 
         private RoadBuilded _roadBuilded;
@@ -103,24 +104,12 @@ namespace Fabric
         [MinValue(5000), HorizontalGroup("Parameters/Main Settings/Fabric Cost"), SuffixLabel("$")]
         private double _fabricSellCost = 5_000;
 
-        [SerializeField, FoldoutGroup("Parameters/Control"), PropertySpace(10, 10)]
-        [Tooltip("Города, в которые фабрика будет поставлять ресурс"), ReadOnly]
-        private List<IPluggableingRoad> l_allConnectedObject = new List<IPluggableingRoad>();
-        List<IPluggableingRoad> IPluggableingRoad.l_allConnectedObject => l_allConnectedObject;
-
-        [ShowInInspector, FoldoutGroup("Parameters/Control"), ReadOnly]
-        private Dictionary<IPluggableingRoad, IPluggableingRoad[]> d_allClientObjects = new Dictionary<IPluggableingRoad, IPluggableingRoad[]>();
-
-        [ShowInInspector, FoldoutGroup("Parameters/Control"), ReadOnly]
-        private Dictionary<string, float> d_allInfoObjectClientsTransition = new Dictionary<string, float>();
-        Dictionary<string, float> IPluggableingRoad.d_allInfoObjectClientsTransition => d_allInfoObjectClientsTransition;
-
         [ShowInInspector, FoldoutGroup("Parameters/Control/Transporting"), EnableIf("_isBuyed")]
         [HideLabel, Title("City New Transport Way Link", horizontalLine: false)]
         private IPluggableingRoad _connectingObject;
         public IPluggableingRoad connectingObject => _connectingObject;
 
-        [SerializeField, FoldoutGroup("Parameters/Control/Transporting"), ShowIf("@_connectingObject != null || l_allConnectedObject.Count != 0")]
+        [SerializeField, FoldoutGroup("Parameters/Control/Transporting"), ShowIf("@_connectingObject != null")]
         [MinValue(0.0f), EnableIf("_isBuyed"), Title("Upload Resource", horizontalLine: false), HideLabel, SuffixLabel("kg")]
         private float _uploadResourceAddWay;
         public float uploadResourceAddWay => _uploadResourceAddWay;
@@ -130,7 +119,11 @@ namespace Fabric
         private byte _connectObjectsCount = 0;
         public byte connectObjectsCount => _connectObjectsCount;
 
-        [SerializeField, FoldoutGroup("Parameters/Control/Transporting"), ShowIf("@l_allConnectedObject.Count != 0")]
+        [ShowInInspector, FoldoutGroup("Parameters/Control"), ReadOnly]
+        private Dictionary<string, InfoDrugClientsTransition> d_allInfoObjectClientsTransition = new Dictionary<string, InfoDrugClientsTransition>();
+        Dictionary<string, InfoDrugClientsTransition> IPluggableingRoad.d_allInfoObjectClientsTransition => d_allInfoObjectClientsTransition;
+
+        [SerializeField, FoldoutGroup("Parameters/Control/Transporting"), ShowIf("@_connectingObject != null")]
         [MinValue(0), EnableIf("_isBuyed"), Title("Index Change City Declining Demand", horizontalLine: false), HideLabel]
         private ushort _indexChangeCityDecliningDemand;
 
@@ -173,16 +166,19 @@ namespace Fabric
         private void AddNewTransportWay()
         {
             _roadBuilded = new RoadBuilded();
+            d_allInfoObjectClientsTransition.Add(_connectingObject.ToString() + _typeProductionResource.ToString(), new InfoDrugClientsTransition());
 
-            Debug.Log(_connectingObject);
-            if (d_allClientObjects.ContainsKey(this) is false)
+            if (d_allInfoObjectClientsTransition[_connectingObject.ToString() + _typeProductionResource.ToString()].d_allClientObjects.ContainsKey(this) is false)
             {
                 _roadBuilded.roadResourcesManagement.CreateNewRoute(this, _connectingObject);
-                d_allInfoObjectClientsTransition.Add(_connectingObject.ToString() + _typeProductionResource.ToString(), _uploadResourceAddWay);
-                d_allClientObjects.Add(this, _roadBuilded.roadResourcesManagement.CheckAllConnectionObjectsRoad(this));
-                _connectingObject.ConnectObjectToObject(_typeProductionResource.ToString(), gameObject.name + _connectingObject.ToString(), _connectingObject, this);
-            }
 
+                d_allInfoObjectClientsTransition[_connectingObject.ToString() + _typeProductionResource.ToString()].d_allClientObjects.Add(this, _roadBuilded.roadResourcesManagement.CheckAllConnectionObjectsRoad(this));
+                d_allInfoObjectClientsTransition[_connectingObject.ToString() + _typeProductionResource.ToString()].d_typeDrugAndAmountTransition.Add(_typeProductionResource.ToString(), _uploadResourceAddWay);
+
+                _connectingObject.ConnectObjectToObject(_typeProductionResource.ToString(), gameObject.name + _connectingObject.ToString(), _connectingObject, this);
+                //l_allConnectedObject.Add(_connectingObject);
+                //d_allClientObjects.Add(this, _roadBuilded.roadResourcesManagement.CheckAllConnectionObjectsRoad(this));
+            }
 
             _connectingObject = null;
             _uploadResourceAddWay = 0;
@@ -202,32 +198,32 @@ namespace Fabric
         }
 
         [Button("Clear Cities Clients"), EnableIf("_isBuyed"), FoldoutGroup("Parameters/Control/Transporting")]
-        [ShowIf("@l_allConnectedObject.Count != 0"), PropertySpace(5, 5)]
+        [ShowIf("@_connectingObject != null"), PropertySpace(5, 5)]
         private void RemoveAllCitiesClients()
         {
-            for (int i = 0; i < l_allConnectedObject.Count; i++)
-                l_allConnectedObject[i].DisconnectObjectToObject(gameObject.name + _connectingObject.ToString());
+            // for (int i = 0; i < l_allConnectedObject.Count; i++)
+            //     l_allConnectedObject[i].DisconnectObjectToObject(gameObject.name + _connectingObject.ToString());
 
-            l_allConnectedObject.Clear();
-            d_allInfoObjectClientsTransition.Clear();
+            // l_allConnectedObject.Clear();
+            // d_allInfoObjectClientsTransition.Clear();
         }
 
         [Button("Load Res"), EnableIf("_isBuyed"), FoldoutGroup("Parameters/Control/Transporting")]
-        [ShowIf("@_uploadResourceAddWay != 0 && _connectingObject != null && l_allConnectedObject.Count != 0"), HorizontalGroup("Parameters/Control/Transporting/Upload")]
+        [ShowIf("@_uploadResourceAddWay != 0 && _connectingObject != null")]
         [PropertySpace(5, 10)]
         private void AddUploadResourceWay()
         {
-            SpendFreeProduction();
-            d_allInfoObjectClientsTransition[l_allConnectedObject[_indexChangeCityDecliningDemand].ToString()] += _uploadResourceAddWay;
+            // SpendFreeProduction();
+            // d_allInfoObjectClientsTransition[l_allConnectedObject[_indexChangeCityDecliningDemand].ToString()] += _uploadResourceAddWay;
         }
 
         [Button("Unload Res"), EnableIf("_isBuyed"), FoldoutGroup("Parameters/Control/Transporting")]
-        [ShowIf("@_uploadResourceAddWay != 0 && _connectingObject != null && l_allConnectedObject.Count != 0"), HorizontalGroup("Parameters/Control/Transporting/Upload")]
+        [ShowIf("@_uploadResourceAddWay != 0 && _connectingObject != null"), HorizontalGroup("Parameters/Control/Transporting/Upload")]
         [PropertySpace(5, 10)]
         private void ReduceUploadResourcecWay()
         {
-            ReturnFreeProduction();
-            d_allInfoObjectClientsTransition[l_allConnectedObject[_indexChangeCityDecliningDemand].ToString()] -= _uploadResourceAddWay;
+            // ReturnFreeProduction();
+            // d_allInfoObjectClientsTransition[l_allConnectedObject[_indexChangeCityDecliningDemand].ToString()] -= _uploadResourceAddWay;
         }
 #endif
         #endregion
@@ -253,13 +249,18 @@ namespace Fabric
 
         private void TransportingResourcesProduction()
         {
-            if (d_allClientObjects.Count != 0)
+            if (d_allInfoObjectClientsTransition.Count > 0)
             {
-                for (int i = 0; i < d_allClientObjects.Count; i++)
+                foreach (string allInfoDictionaryItems in d_allInfoObjectClientsTransition.Keys)
                 {
-                    foreach (string item in d_allInfoObjectClientsTransition.Keys)
+                    if (d_allInfoObjectClientsTransition[allInfoDictionaryItems].d_allClientObjects.Count != 0)
                     {
-                        d_allClientObjects[this][i].IngestResources(_typeProductionResource.ToString(), _isWork, d_allInfoObjectClientsTransition[item]);
+                        for (int i = 0; i < d_allInfoObjectClientsTransition[allInfoDictionaryItems].d_allClientObjects.Count; i++)
+                        {
+                            d_allInfoObjectClientsTransition[allInfoDictionaryItems].d_allClientObjects[this][i].IngestResources(_typeProductionResource.ToString(),
+                                    _isWork,
+                                    d_allInfoObjectClientsTransition[allInfoDictionaryItems].d_typeDrugAndAmountTransition[_typeProductionResource.ToString()]);
+                        }
                     }
                 }
             }

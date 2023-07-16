@@ -7,8 +7,7 @@ public interface IPluggableingRoad
     static byte c_maxConnectionObjects { get; }
     byte connectObjectsCount { get; }
     float uploadResourceAddWay { get; }
-    List<IPluggableingRoad> l_allConnectedObject { get; }
-    Dictionary<string, float> d_allInfoObjectClientsTransition { get; }
+    Dictionary<string, InfoDrugClientsTransition> d_allInfoObjectClientsTransition { get; }
     IPluggableingRoad connectingObject { get; }
     void ConnectObjectToObject(string typeFabricDrug, string gameObjectConnectionTo, IPluggableingRoad FirstObject, IPluggableingRoad SecondObject);
     void DisconnectObjectToObject(string gameObjectDisconnectTo);

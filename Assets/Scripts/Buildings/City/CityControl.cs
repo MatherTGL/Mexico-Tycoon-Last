@@ -104,21 +104,14 @@ namespace City
 
         private string _gameObjectConnectionIndex;
 
-        [SerializeField, FoldoutGroup("Parameters/Control"), ReadOnly]
-        private List<IPluggableingRoad> l_allConnectedObject = new List<IPluggableingRoad>();
-        List<IPluggableingRoad> IPluggableingRoad.l_allConnectedObject => l_allConnectedObject;
-
         [ShowInInspector, FoldoutGroup("Parameters/Control"), ReadOnly]
-        private Dictionary<string, float> d_allInfoObjectClientsTransition = new Dictionary<string, float>();
-        Dictionary<string, float> IPluggableingRoad.d_allInfoObjectClientsTransition => d_allInfoObjectClientsTransition;
+        private Dictionary<string, InfoDrugClientsTransition> d_allInfoObjectClientsTransition = new Dictionary<string, InfoDrugClientsTransition>();
+        Dictionary<string, InfoDrugClientsTransition> IPluggableingRoad.d_allInfoObjectClientsTransition => d_allInfoObjectClientsTransition;
 
         [ShowInInspector, FoldoutGroup("Parameters/Control")]
         [HideLabel, Title("New Transport Way Link", horizontalLine: false)]
         private IPluggableingRoad _connectingObject;
         IPluggableingRoad IPluggableingRoad.connectingObject => _connectingObject;
-
-        [ShowInInspector, FoldoutGroup("Parameters/Control"), ReadOnly]
-        private Dictionary<IPluggableingRoad, IPluggableingRoad[]> d_allClientObjects = new Dictionary<IPluggableingRoad, IPluggableingRoad[]>();
 
         [SerializeField, FoldoutGroup("Parameters/Control"), MinValue(0.0f), HideLabel, Title("Upload Resource", horizontalLine: false)]
         [SuffixLabel("kg")]
@@ -135,13 +128,15 @@ namespace City
         private void AddNewTransportWay() //! сделать общим, т.к код одинаковый
         {
             _roadBuilded = new RoadBuilded();
+            d_allInfoObjectClientsTransition.Add(_connectingObject.ToString() + _typeProductionResource.ToString(), new InfoDrugClientsTransition());
 
-            if (d_allClientObjects.ContainsKey(this) is false)
+            if (d_allInfoObjectClientsTransition[_connectingObject.ToString() + _typeProductionResource.ToString()].d_allClientObjects.ContainsKey(this) is false)
             {
                 _roadBuilded.roadResourcesManagement.CreateNewRoute(this, _connectingObject);
-                d_allInfoObjectClientsTransition.Add(_connectingObject.ToString() + _typeProductionResource.ToString(), _uploadResourceAddWay);
-                l_allConnectedObject.Add(_connectingObject);
-                d_allClientObjects.Add(this, _roadBuilded.roadResourcesManagement.CheckAllConnectionObjectsRoad(this));
+
+                d_allInfoObjectClientsTransition[_connectingObject.ToString() + _typeProductionResource.ToString()].d_allClientObjects.Add(this, _roadBuilded.roadResourcesManagement.CheckAllConnectionObjectsRoad(this));
+                d_allInfoObjectClientsTransition[_connectingObject.ToString() + _typeProductionResource.ToString()].d_typeDrugAndAmountTransition.Add(_typeProductionResource.ToString(), _uploadResourceAddWay);
+
                 _connectingObject.ConnectObjectToObject(_typeProductionResource.ToString(), gameObject.name + _connectingObject.ToString(), _connectingObject, this);
             }
 
@@ -165,7 +160,7 @@ namespace City
                 _cityReproduction = new CityReproduction(c_mathematicalDivisor, _populationChangeStepPercentMax, _populationChangeStepPercentMin);
 
             _IcityDrugSell = new CityDrugsSell();
-            _roadBuilded = new RoadBuilded();
+            //_roadBuilded = new RoadBuilded();
             _IcityControlSell = this;
 
             SetBuyersDrugs();
@@ -208,7 +203,6 @@ namespace City
 
         public void IngestResources(string typeFabricDrug, in bool isWork, in float addResEveryStep)
         {
-            Debug.Log("Ingest res");
             if (isWork)
                 if (d_amountDrugsInCity[typeFabricDrug] < _maxCapacityStock)
                     d_amountDrugsInCity[typeFabricDrug] += addResEveryStep;
@@ -271,10 +265,11 @@ namespace City
         {
             while (true)
             {
-                if (l_allConnectedObject.Count > 0)
-                    for (int i = 0; i < l_allConnectedObject.Count; i++)
-                        foreach (string item in d_allInfoObjectClientsTransition.Keys)
-                            l_allConnectedObject[i].IngestResources("Cocaine", true, d_allInfoObjectClientsTransition[item]);
+                foreach (string item in d_allInfoObjectClientsTransition.Keys)
+                    if (d_allInfoObjectClientsTransition[item].d_allClientObjects.Count > 0)
+                        for (int i = 0; i < d_allInfoObjectClientsTransition[item].d_allClientObjects.Count; i++)
+                            Debug.Log("HSHHHA");
+
                 yield return new WaitForSeconds(_timeDateControl.GetCurrentTimeOneDay(true));
             }
         }
