@@ -1,0 +1,23 @@
+Transform Info Changelog
+
+v1.0: 
+- First draft 
+
+v1.1: 
+- Minor performance update
+
+v2.0:
+- Major performance update (replaced gizmo with menu)
+- Fixed transform values
+- Fixed hotkeys only work inside scene view
+- Added rect/transform mode values
+- Added menu items for increasing text size and adding decimals
+- Added transform component context menu
+- Added value edit mode with keyboard shortcuts
+- Added follow handle
+- Added revert
+- Added cyle root transforms
+- Added support for multiple objects
+- Added average values for multiple objects
+
+
