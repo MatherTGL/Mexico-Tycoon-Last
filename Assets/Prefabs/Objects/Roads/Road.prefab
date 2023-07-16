@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9087581474654985303}
   - component: {fileID: 9087581474654985302}
-  - component: {fileID: 4624965966596091913}
   m_Layer: 0
   m_Name: Road
   m_TagString: Untagged
@@ -31,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!120 &9087581474654985302
 LineRenderer:
@@ -136,19 +135,3 @@ LineRenderer:
   m_UseWorldSpace: 0
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &4624965966596091913
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9087581474654985301}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a2b39eda5314665bbf8052273b87cd6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _resTransportationTrafficCapacityMax: 10
-  _patrolLevel: 1
-  _levelRobberies: 1
-  _costMaintenance: 0

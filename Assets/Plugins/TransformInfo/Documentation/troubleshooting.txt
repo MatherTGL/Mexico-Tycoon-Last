@@ -1,0 +1,11 @@
+No Transform Values:
+Transform values are only drawn in the following Tool modes: Move, Rotate, Scale, Rect, Transform
+
+2 Number Key goes to 2D mode and overrides value entry fix:
+Go to Edit >> Preferences >> Keys >> Scene View/Toggle 2D Mode and press the clear button.
+
+Lag in scene view fix:
+If your graphics card drivers are not up to date, Unity might lag in the scene view.
+To find out if TransformInfo is the source of lag please open an empty project withouth it installed and see if the issue persists. 
+If the tool is the cause of lag please submit a bug report at https://connect.unity.com/p/transform-info 
+or you can reach out to me directly through socials >> Twitter/Facebook/Youtube/Instagram @qaisAhm
