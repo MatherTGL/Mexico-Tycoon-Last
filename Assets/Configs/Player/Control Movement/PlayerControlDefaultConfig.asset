@@ -17,6 +17,6 @@ MonoBehaviour:
   _speedMoveFast: 65
   _speedZoom: 10
   _minZoomCameraDistance: 10
-  _maxZoomCameraDistance: 150
+  _maxZoomCameraDistance: 300
   _maxHorizontalDistanceCamera: 200
   _maxVerticalDistanceCamera: 200
