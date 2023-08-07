@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 3276379949940217397}
   - component: {fileID: 8379331431061844164}
   - component: {fileID: 7998808199365959460}
+  - component: {fileID: 4623061035745898651}
+  - component: {fileID: 8095271129375588859}
   m_Layer: 0
   m_Name: City
   m_TagString: Untagged
@@ -106,7 +108,7 @@ MonoBehaviour:
   _populationChangeStepPercentMax: 0.3
   _populationChangeStepPercentMin: -0.1
   _policeLevel: 2
-  _connectFabricsCount: 0
+  _connectObjectsCount: 0
   _maxCapacityStock: 100
   _weightToSellArray:
   - 0.5
@@ -115,6 +117,8 @@ MonoBehaviour:
   _increasedDemand: 0.3
   _buyersDrugsClampDemandMin: 3
   _buyersDrugsClampDemandMax: 7
+  _uploadResourceAddWay: 0
+  _typeProductionResource: 0
 --- !u!60 &8379331431061844164
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -157,5 +161,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8206096676eba49ed864653ef1d36a40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _setDrugsParametersRandom: {fileID: 11400000, guid: bdf9add5957ba0aaa8f11c5054478a9c, type: 2}
+  _setDrugsParametersRandom:
+  - {fileID: 11400000, guid: 39d0ea4a6c2cb87bbb9e999ffc69c213, type: 2}
+  - {fileID: 11400000, guid: 898aa2c3b1374a68c800688db6e15326, type: 2}
+  - {fileID: 11400000, guid: 65af072d3c2095dafa1d897315e1e0fd, type: 2}
   _nameAddContractBuyer: 
+--- !u!114 &4623061035745898651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3276379949940217400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8d45044f4362f5b8a96271309af5e1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timeDateControl: {fileID: 0}
+  _buildingSlots: 5
+  _maxBuildingSlots: 5
+  _typeCreateBusiness: 0
+  _businessDataSO: {fileID: 0}
+  _indexRemovingBusiness: 0
+  _isWorkBusiness: 0
+  _indexBusiness: 0
+  _percentMoneyLaundered: 0
+  _businessInstitutionPopularity: 0
+--- !u!114 &8095271129375588859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3276379949940217400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 784765a95e69616c88d2994f62939f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _typeUpgradableObject: 1
+  _typeUpgrade: 0
+  _amount: 0
+  _isEqually: 0

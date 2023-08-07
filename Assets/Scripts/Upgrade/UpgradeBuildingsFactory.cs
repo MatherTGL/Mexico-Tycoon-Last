@@ -34,7 +34,7 @@ namespace Upgrade.Buildings
         public void ProductivityKgPerDay()
         {
             _IupgradableFabric.productivityKgPerDay += _upgradeControl.amount;
-            _IupgradableFabric.currentFreeProductionKgPerDay += _upgradeControl.amount;
+            //_IupgradableFabric.currentFreeProductionKgPerDay += _upgradeControl.amount;
         }
     }
 }

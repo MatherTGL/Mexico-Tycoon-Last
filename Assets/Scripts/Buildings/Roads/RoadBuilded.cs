@@ -20,9 +20,14 @@ namespace Road
 
         private double _costMaintenance;
 
+        private Vector2[] _fromAndToPositions = new Vector2[2];
+        public Vector2[] fromAndToPositions => _fromAndToPositions;
 
-        public RoadBuilded()
+
+        public RoadBuilded(Vector2 fromPosition, Vector2 toPosition)
         {
+            _fromAndToPositions[0] = fromPosition;
+            _fromAndToPositions[1] = toPosition;
             _roadResourceManagement = new RoadResourcesManagement();
             Debug.Log(_roadResourceManagement);
         }

@@ -268,5 +268,19 @@
       <overrideLabel>true</overrideLabel>
       <label>Rename</label>
     </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>Assets/Create/Config/Business/Data</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>Create Config/Business/Data</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>Assets/Create/Config/Transport/Kind Transport/Car</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>Create Config/Transport/Kind Transport/Car</label>
+    </MCItem>
   </projectItemList>
 </MCSetting>

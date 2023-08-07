@@ -9,16 +9,20 @@ using TimeControl;
 using Road;
 using Fabric;
 using System;
+using City.Business;
+using Upgrade;
 
 
 namespace City
 {
     [RequireComponent(typeof(DrugBuyersContractControl))]
-    internal sealed class CityControl : MonoBehaviour, IBoot, ICityControlSell, IPluggableingRoad
+    [RequireComponent(typeof(CityBusinessControl))]
+    [RequireComponent(typeof(UpgradeControl))]
+    public sealed class CityControl : MonoBehaviour, IBoot, ICityControlSell, IPluggableingRoad
     {
         private const byte c_mathematicalDivisor = 100;
 
-        private static byte c_maxConnectionObjects = 4;
+        private static byte _maxConnectionObjects = 4;
 
         private ICityView _IcityView;
 
@@ -32,6 +36,9 @@ namespace City
         private ICityDrugSell _IcityDrugSell;
 
         private RoadBuilded _roadBuilded;
+
+        private CityTreasury _cityTreasury;
+        public CityTreasury cityTreasury => _cityTreasury;
 
         [ShowInInspector, FoldoutGroup("Parameters/Drugs"), ReadOnly]
         private Dictionary<string, float> d_amountDrugsInCity = new Dictionary<string, float>();
@@ -61,6 +68,7 @@ namespace City
         [FoldoutGroup("Parameters/Population City"), Title("Population in City", horizontalLine: false)]
         [MinValue(0), MaxValue(double.MaxValue / 2), HideLabel, SerializeField]
         private uint _populationCity;
+        public uint populationCity => _populationCity;
 
         [FoldoutGroup("Parameters/Population City/Population Change Step"), Title("Max", horizontalLine: false)]
         [MinValue(0.1f), MaxValue(1.0f), SerializeField, HideLabel, SuffixLabel("%/day")]
@@ -114,7 +122,7 @@ namespace City
         IPluggableingRoad IPluggableingRoad.connectingObject => _connectingObject;
 
         [SerializeField, FoldoutGroup("Parameters/Control"), MinValue(0.0f), HideLabel, Title("Upload Resource", horizontalLine: false)]
-        [SuffixLabel("kg")]
+        [SuffixLabel("kg"), ShowIf("@_connectingObject != null")]
         private float _uploadResourceAddWay;
         public float uploadResourceAddWay => _uploadResourceAddWay;
 
@@ -127,7 +135,7 @@ namespace City
         [ShowIf("@_connectingObject != null"), HorizontalGroup("Parameters/Control")]
         private void AddNewTransportWay() //! сделать общим, т.к код одинаковый
         {
-            _roadBuilded = new RoadBuilded();
+            _roadBuilded = new RoadBuilded(transform.position, _connectingObject.GetPositionVector2());
             d_allInfoObjectClientsTransition.Add(_connectingObject.ToString() + _typeProductionResource.ToString(), new InfoDrugClientsTransition());
 
             if (d_allInfoObjectClientsTransition[_connectingObject.ToString() + _typeProductionResource.ToString()].d_allClientObjects.ContainsKey(this) is false)
@@ -159,8 +167,8 @@ namespace City
             if (_cityReproduction is null)
                 _cityReproduction = new CityReproduction(c_mathematicalDivisor, _populationChangeStepPercentMax, _populationChangeStepPercentMin);
 
-            _IcityDrugSell = new CityDrugsSell();
-            //_roadBuilded = new RoadBuilded();
+            _cityTreasury = new CityTreasury();
+            _IcityDrugSell = new CityDrugsSell(_cityTreasury);
             _IcityControlSell = this;
 
             SetBuyersDrugs();
@@ -172,7 +180,7 @@ namespace City
 
         public void ConnectObjectToObject(string typeFabricDrug, string gameObjectConnectionIndex, IPluggableingRoad FirstObject, IPluggableingRoad SecondObject)
         {
-            if (_connectObjectsCount < c_maxConnectionObjects)
+            if (_connectObjectsCount < _maxConnectionObjects)
             {
                 _gameObjectConnectionIndex = gameObjectConnectionIndex;
                 _connectObjectsCount++;
@@ -181,12 +189,17 @@ namespace City
                 _roadControl.BuildRoad(transform.position, SecondObject.GetPositionVector2(), gameObjectConnectionIndex);
             }
 
+            void CheckDemandDictionary(string typeFabricDrug)
+            {
+                if (d_amountDrugsInCity.ContainsKey(typeFabricDrug) is false) { d_amountDrugsInCity.Add(typeFabricDrug, 0); }
+            }
+
             if (_connectObjectsCount! > 0) { _IcityView.ConnectFabric(ref _spriteRendererObject); }
         }
 
         public void DisconnectObjectToObject(string gameObjectDisconnectTo)
         {
-            if (_connectObjectsCount >= 1)
+            if (_connectObjectsCount > 0)
             {
                 _roadControl.DestroyRoad(gameObjectDisconnectTo);
                 _connectObjectsCount--;
@@ -196,27 +209,21 @@ namespace City
 
         public Vector2 GetPositionVector2() => transform.position;
 
-        private void CheckDemandDictionary(string typeFabricDrug)
-        {
-            if (d_amountDrugsInCity.ContainsKey(typeFabricDrug) is false) { d_amountDrugsInCity.Add(typeFabricDrug, 0); }
-        }
-
         public void IngestResources(string typeFabricDrug, in bool isWork, in float addResEveryStep)
         {
-            if (isWork)
-                if (d_amountDrugsInCity[typeFabricDrug] < _maxCapacityStock)
-                    d_amountDrugsInCity[typeFabricDrug] += addResEveryStep;
+            if (isWork && d_amountDrugsInCity[typeFabricDrug] < _maxCapacityStock)
+                d_amountDrugsInCity[typeFabricDrug] += addResEveryStep;
 
             _roadControl.DecliningDemandUpdate(addResEveryStep, typeFabricDrug, _gameObjectConnectionIndex);
             SellResources(in typeFabricDrug);
-        }
 
-        private void SellResources(in string typeFabricDrug)
-        {
-            var allTypeDrugs = Enum.GetNames(typeof(FabricControl.TypeProductionResource));
+            void SellResources(in string typeFabricDrug)
+            {
+                var allTypeDrugs = Enum.GetNames(typeof(FabricControl.TypeProductionResource));
 
-            foreach (var contractBuyers in _IcityDrugBuyers.d_contractBuyers.Keys)
-                _IcityDrugSell.Sell(d_weightToSellDrugs[typeFabricDrug], contractBuyers, typeFabricDrug, _IcityControlSell);
+                foreach (var contractBuyers in _IcityDrugBuyers.d_contractBuyers.Keys)
+                    _IcityDrugSell.Sell(d_weightToSellDrugs[typeFabricDrug], contractBuyers, typeFabricDrug, _IcityControlSell);
+            }
         }
 
         [Button("Set Users Parameters", 30), FoldoutGroup("Parameters/Drugs/Percentage Users")]
@@ -226,7 +233,7 @@ namespace City
 
             var countsDrugBuyers = Enum.GetNames(typeof(DrugBuyers.AllBuyers));
 
-            for (int i = 0; i < countsDrugBuyers.Length / 2; i++)
+            for (int i = 0; i < countsDrugBuyers.Length / 2; i++) //!хардкод
             {
                 var addRandomBuyer = UnityEngine.Random.Range(0, countsDrugBuyers.Length);
 
@@ -265,10 +272,27 @@ namespace City
         {
             while (true)
             {
-                foreach (string item in d_allInfoObjectClientsTransition.Keys)
-                    if (d_allInfoObjectClientsTransition[item].d_allClientObjects.Count > 0)
-                        for (int i = 0; i < d_allInfoObjectClientsTransition[item].d_allClientObjects.Count; i++)
-                            Debug.Log("HSHHHA");
+                foreach (var item in d_allInfoObjectClientsTransition.Keys)
+                {
+                    foreach (var typeDrug in d_allInfoObjectClientsTransition[item].d_typeDrugAndAmountTransition.Keys)
+                    {
+                        if (d_amountDrugsInCity[typeDrug] >= d_allInfoObjectClientsTransition[item].d_typeDrugAndAmountTransition[typeDrug])
+                        {
+                            foreach (var allClients in d_allInfoObjectClientsTransition[item].d_allClientObjects.Keys)
+                            {
+                                for (int i = 0; i < d_allInfoObjectClientsTransition[item].d_allClientObjects[allClients].Length; i++)
+                                {
+                                    if (d_allInfoObjectClientsTransition[item].d_allClientObjects[allClients][i] is not null)
+                                    {
+                                        IPluggableingRoad pluggableObject = d_allInfoObjectClientsTransition[item].d_allClientObjects[allClients][i];
+                                        pluggableObject.IngestResources(typeDrug, true, d_allInfoObjectClientsTransition[item].d_typeDrugAndAmountTransition[typeDrug]);
+                                        d_amountDrugsInCity[typeDrug] -= d_allInfoObjectClientsTransition[item].d_typeDrugAndAmountTransition[typeDrug];
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
 
                 yield return new WaitForSeconds(_timeDateControl.GetCurrentTimeOneDay(true));
             }

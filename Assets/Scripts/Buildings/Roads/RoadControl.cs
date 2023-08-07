@@ -1,17 +1,22 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
+using Transport;
 
 
 namespace Road
 {
     internal sealed class RoadControl : MonoBehaviour
     {
+        [SerializeField, Required, BoxGroup("Parameters")]
+        private TransportControl _transportControl;
+
         [SerializeField, Required, BoxGroup("Parameters"), AssetsOnly]
         private LineRenderer _linePrefab;
 
         [ShowInInspector, BoxGroup("Parameters"), ReadOnly]
         private Dictionary<string, RoadBuilded> d_dictionaryBuildedRoad = new Dictionary<string, RoadBuilded>();
+        public Dictionary<string, RoadBuilded> dictionaryBuildedRoad => d_dictionaryBuildedRoad;
 
         private RoadBuilded _objectRoadBuilded;
 
@@ -19,9 +24,10 @@ namespace Road
         //? будет управлять вью, билдед
         public void BuildRoad(in Vector2 fromPosition, in Vector2 toPosition, string indexDestroyRoad)
         {
-            _objectRoadBuilded = new RoadBuilded();
+            _objectRoadBuilded = new RoadBuilded(fromPosition, toPosition);
             CreateObjectRoad(fromPosition, toPosition);
             d_dictionaryBuildedRoad.Add(indexDestroyRoad, _objectRoadBuilded);
+            _transportControl.AddNewRoad(indexDestroyRoad);
         }
 
         private GameObject CreateObjectRoad(in Vector2 fromPosition, in Vector2 toPosition)
@@ -41,7 +47,6 @@ namespace Road
 
         public void DecliningDemandUpdate(in float addResEveryStep, string typeFabricDrug, string indexRoad)
         {
-            Debug.Log(indexRoad);
             if (d_dictionaryBuildedRoad.ContainsKey(indexRoad) is true)
                 d_dictionaryBuildedRoad[indexRoad].DecliningDemandUpdate(addResEveryStep, typeFabricDrug);
             //_objectRoadBuilded.DecliningDemandUpdate(addResEveryStep, typeFabricDrug);

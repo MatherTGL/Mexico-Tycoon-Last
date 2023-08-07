@@ -1,4 +1,3 @@
-using Data;
 using UnityEngine;
 
 
@@ -6,6 +5,14 @@ namespace City
 {
     public sealed class CityDrugsSell : ICityDrugSell
     {
+        private CityTreasury _cityTreasury;
+
+
+        public CityDrugsSell(in CityTreasury cityTreasury)
+        {
+            _cityTreasury = cityTreasury;
+        }
+
         public void Sell(float weightSell, in string contractBuyers, in string typeFabricDrug, in ICityControlSell IcityControlSell)
         {
             Debug.Log(IcityControlSell);
@@ -29,7 +36,7 @@ namespace City
                         IcityControlSell._IcityDrugBuyers.d_contractBuyers[contractBuyers].d_drugDemand[typeFabricDrug] += IcityControlSell._IcityDrugBuyers.d_contractBuyers[contractBuyers].d_drugIncreasedDemand[typeFabricDrug];
 
                     var addMoneySum = IcityControlSell._IcityDrugBuyers.d_contractBuyers[contractBuyers].d_drugCost[typeFabricDrug] * weightSell;
-                    DataControl.IdataPlayer.AddPlayerMoney(addMoneySum);
+                    _cityTreasury.AddMoneyToTreasury(addMoneySum);
                     Debug.Log(addMoneySum);
                 }
             }

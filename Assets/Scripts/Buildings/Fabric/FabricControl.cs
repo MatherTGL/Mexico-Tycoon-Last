@@ -18,7 +18,7 @@ namespace Fabric
     public sealed class FabricControl : MonoBehaviour, IBoot, IUpgradableFabric, IPluggableingRoad
     {
         #region Variables
-        private static byte c_maxConnectionObjects = 4;
+        private static byte _maxConnectionObjects = 4;
 
         private IFabricProduction _IfabricProduction;
 
@@ -64,13 +64,14 @@ namespace Fabric
 
         [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Productivity Production", horizontalLine: false), HideLabel]
         [MinValue(0.0f), SuffixLabel("kg/day")]
-        private float _productivityKgPerDay; //! под каждый наркотик
+        private float _productivityKgPerDay;
         public float productivityKgPerDay { get => _productivityKgPerDay; set => _productivityKgPerDay = value; }
 
-        [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Current Free Production", horizontalLine: false), HideLabel]
-        [MinValue(0.0f), ReadOnly, SuffixLabel("kg/day")]
-        private float _currentFreeProductionKgPerDay;
-        public float currentFreeProductionKgPerDay { get => _currentFreeProductionKgPerDay; set => _currentFreeProductionKgPerDay = value; }
+        //?
+        // [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Current Free Production", horizontalLine: false), HideLabel]
+        // [MinValue(0.0f), ReadOnly, SuffixLabel("kg/day")]
+        //private float _currentFreeProductionKgPerDay;
+        //public float currentFreeProductionKgPerDay { get => _currentFreeProductionKgPerDay; set => _currentFreeProductionKgPerDay = value; }
 
         [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Product in Stock", horizontalLine: false), HideLabel]
         [MinValue(0.0f), ReadOnly, SuffixLabel("kg")]
@@ -165,7 +166,8 @@ namespace Fabric
         [PropertySpace(10)]
         private void AddNewTransportWay()
         {
-            _roadBuilded = new RoadBuilded();
+            _roadBuilded = new RoadBuilded(transform.position, _connectingObject.GetPositionVector2());
+
             d_allInfoObjectClientsTransition.Add(_connectingObject.ToString() + _typeProductionResource.ToString(), new InfoDrugClientsTransition());
 
             if (d_allInfoObjectClientsTransition[_connectingObject.ToString() + _typeProductionResource.ToString()].d_allClientObjects.ContainsKey(this) is false)
@@ -220,7 +222,7 @@ namespace Fabric
         [Button("Unload Res"), EnableIf("_isBuyed"), FoldoutGroup("Parameters/Control/Transporting")]
         [ShowIf("@_uploadResourceAddWay != 0 && _connectingObject != null"), HorizontalGroup("Parameters/Control/Transporting/Upload")]
         [PropertySpace(5, 10)]
-        private void ReduceUploadResourcecWay()
+        private void ReduceUploadResourceWay()
         {
             // ReturnFreeProduction();
             // d_allInfoObjectClientsTransition[l_allConnectedObject[_indexChangeCityDecliningDemand].ToString()] -= _uploadResourceAddWay;
@@ -242,9 +244,24 @@ namespace Fabric
         private void SetFabricProduction()
         {
             _IfabricProduction = new FabricProduction();
-            _currentFreeProductionKgPerDay = _productivityKgPerDay;
 
             StartCoroutine(FabricWork());
+        }
+
+        private IEnumerator FabricWork()
+        {
+            while (true)
+            {
+                if (_timeDateControl.GetStatePaused() is false)
+                {
+                    if (_isWork is true)
+                        _IfabricProduction.ProductionProduct(_productivityKgPerDay,
+                                                             _maxCapacityStock, ref _productInStock);
+
+                    TransportingResourcesProduction();
+                }
+                yield return new WaitForSecondsRealtime(_timeDateControl.GetCurrentTimeOneDay(true));
+            }
         }
 
         private void TransportingResourcesProduction()
@@ -257,69 +274,35 @@ namespace Fabric
                     {
                         for (int i = 0; i < d_allInfoObjectClientsTransition[allInfoDictionaryItems].d_allClientObjects.Count; i++)
                         {
-                            d_allInfoObjectClientsTransition[allInfoDictionaryItems].d_allClientObjects[this][i].IngestResources(_typeProductionResource.ToString(),
+                            if (_productInStock >= d_allInfoObjectClientsTransition[allInfoDictionaryItems].d_typeDrugAndAmountTransition[_typeProductionResource.ToString()])
+                            {
+                                d_allInfoObjectClientsTransition[allInfoDictionaryItems].d_allClientObjects[this][i].IngestResources(_typeProductionResource.ToString(),
                                     _isWork,
                                     d_allInfoObjectClientsTransition[allInfoDictionaryItems].d_typeDrugAndAmountTransition[_typeProductionResource.ToString()]);
+
+                                _productInStock -= d_allInfoObjectClientsTransition[allInfoDictionaryItems].d_typeDrugAndAmountTransition[_typeProductionResource.ToString()];
+                            }
                         }
                     }
                 }
             }
-        }
+            LocalUpgradeProductQuality();
 
-        private IEnumerator FabricWork()
-        {
-            while (true)
+            void LocalUpgradeProductQuality()
             {
-                if (_timeDateControl.GetStatePaused() is false)
+                if (_isWork is true && _isBuyed is true)
                 {
-                    if (_isWork is true)
-                        _IfabricProduction.ProductionProduct(_currentFreeProductionKgPerDay,
-                                                         _maxCapacityStock, ref _productInStock);
-
-                    TransportingResourcesProduction();
-                    LocalUpgradeProductQuality();
+                    if (_currentProductQuality < _productQualityLocalMax)
+                        _currentProductQuality += _productQualityLocalStepUpgrade;
                 }
-                yield return new WaitForSecondsRealtime(_timeDateControl.GetCurrentTimeOneDay(true));
-            }
-        }
-
-        private void LocalUpgradeProductQuality()
-        {
-            if (_isWork is true && _isBuyed is true)
-            {
-                if (_currentProductQuality < _productQualityLocalMax)
-                    _currentProductQuality += _productQualityLocalStepUpgrade;
-            }
-        }
-
-        private void SpendFreeProduction()
-        {
-            if (_uploadResourceAddWay < _currentFreeProductionKgPerDay)
-                _currentFreeProductionKgPerDay -= _uploadResourceAddWay;
-            else
-            {
-                _uploadResourceAddWay = _currentFreeProductionKgPerDay;
-                _currentFreeProductionKgPerDay -= _uploadResourceAddWay;
-            }
-        }
-
-        private void ReturnFreeProduction()
-        {
-            if (_currentFreeProductionKgPerDay < _productivityKgPerDay)
-            {
-                if (_currentFreeProductionKgPerDay >= _productivityKgPerDay)
-                    _currentFreeProductionKgPerDay = _productivityKgPerDay;
-                else
-                    _currentFreeProductionKgPerDay += _uploadResourceAddWay;
             }
         }
 
         public void ConnectObjectToObject(string typeFabricDrug, string gameObjectConnectionTo, IPluggableingRoad FirstObject, IPluggableingRoad SecondObject)
         {
-            if (_connectObjectsCount < c_maxConnectionObjects)
+            if (_connectObjectsCount < _maxConnectionObjects)
             {
                 _connectObjectsCount++;
-                //CheckDemandDictionary(typeFabricDrug);
                 _roadControl.BuildRoad(transform.position, transform.position, gameObjectConnectionTo);
             }
         }
@@ -331,12 +314,9 @@ namespace Fabric
 
         public void IngestResources(string typeFabricDrug, in bool isWork, in float addResEveryStep)
         {
-            throw new System.NotImplementedException();
+            Debug.Log("bbbb");
         }
 
-        public Vector2 GetPositionVector2()
-        {
-            return transform.position;
-        }
+        public Vector2 GetPositionVector2() { return transform.position; }
     }
 }

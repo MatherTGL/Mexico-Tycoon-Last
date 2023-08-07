@@ -7,6 +7,7 @@ using City;
 using Player.Movement;
 using TimeControl;
 using Upgrade;
+using City.Business;
 
 
 namespace Boot
@@ -37,6 +38,9 @@ namespace Boot
         [SerializeField, FoldoutGroup("Parameters/Medium Important")]
         private List<UpgradeControl> _bootUpgradeControl = new List<UpgradeControl>();
 
+        [SerializeField, FoldoutGroup("Parameters/Simple Important")]
+        private List<CityBusinessControl> _bootCityBusinessControl = new List<CityBusinessControl>();
+
 
         private void Awake() => AddBootObjects();
 
@@ -60,7 +64,7 @@ namespace Boot
 
         private void SimpleImportantObjects()
         {
-            //*тут будут грузиться все остальные менее важные штуки
+            _bootObjectList.AddRange(_bootCityBusinessControl);
             InitList();
         }
 
@@ -94,12 +98,24 @@ namespace Boot
                 for (int i = 0; i < _countAutoSearchIterations; i++)
                 {
                     var _findedObjectCityControl = FindObjectsOfType<CityControl>();
-                    var _findedObjectFabricControl = FindObjectsOfType<FabricControl>();
-                    var _findedObjectsUpgradeControl = FindObjectsOfType<UpgradeControl>();
+                    Debug.Log(_findedObjectCityControl.Length);
+                    if (_findedObjectCityControl.Length > i)
+                        _bootCityControl.Add(_findedObjectCityControl[i]);
 
-                    _bootCityControl.Add(_findedObjectCityControl[i]);
-                    _bootFabricControl.Add(_findedObjectFabricControl[i]);
-                    _bootUpgradeControl.Add(_findedObjectsUpgradeControl[i]);
+                    var _findedObjectFabricControl = FindObjectsOfType<FabricControl>();
+                    Debug.Log(_findedObjectFabricControl.Length);
+                    if (_findedObjectFabricControl.Length > i)
+                        _bootFabricControl.Add(_findedObjectFabricControl[i]);
+
+                    var _findedObjectsUpgradeControl = FindObjectsOfType<UpgradeControl>();
+                    Debug.Log(_findedObjectsUpgradeControl.Length);
+                    if (_findedObjectsUpgradeControl.Length > i)
+                        _bootUpgradeControl.Add(_findedObjectsUpgradeControl[i]);
+
+                    var _findedObjectsCityBusinessControl = FindObjectsOfType<CityBusinessControl>();
+                    Debug.Log(_findedObjectsCityBusinessControl.Length);
+                    if (_findedObjectsCityBusinessControl.Length > i)
+                        _bootCityBusinessControl.Add(_findedObjectsCityBusinessControl[i]);
                 }
             }
 
@@ -115,6 +131,7 @@ namespace Boot
             _bootCityControl.Clear();
             _bootFabricControl.Clear();
             _bootUpgradeControl.Clear();
+            _bootCityBusinessControl.Clear();
         }
 #endif
     }

@@ -4,7 +4,8 @@ using Sirenix.OdinInspector;
 using Boot;
 using Fabric;
 using Upgrade.Buildings.Fabric;
-
+using City.Business;
+using City;
 
 namespace Upgrade
 {
@@ -13,6 +14,10 @@ namespace Upgrade
         private IUpgradeBuildingsFabric _IupgradeBuildingsFabric;
 
         private IUpgradableFabric _IupgradableFabric;
+
+        private IUpgradableCityBusiness _IupgradableCityBusiness;
+
+        //private IUpgradeBuildingsCity
 
         private enum TypeUpgradableObject
         {
@@ -48,26 +53,48 @@ namespace Upgrade
 
 
 #if UNITY_EDITOR
-        [Button("Upgrade"), BoxGroup("Parameters/Control Upgrade")]
+        #region Fabric
+        [Button("Upgrade"), BoxGroup("Parameters/Control Upgrade Fabric")]
         [ShowIf("@_typeUpgradableObject == TypeUpgradableObject.Fabric && _typeUpgrade == TypeUpgrade.ProductQuality")]
         private void BtnUpgradeProductQualityFabric()
         {
             _IupgradeBuildingsFabric.UpgradeProductQuality();
         }
 
-        [Button("Upgrade"), BoxGroup("Parameters/Control Upgrade")]
+        [Button("Upgrade"), BoxGroup("Parameters/Control Upgrade Fabric")]
         [ShowIf("@_typeUpgradableObject == TypeUpgradableObject.Fabric && _typeUpgrade == TypeUpgrade.MaxCapacityStock")]
         private void BtnUpgradeMaxCapacityStock()
         {
             _IupgradeBuildingsFabric.UpgradeMaxCapacityStock();
         }
 
-        [Button("Upgrade"), BoxGroup("Parameters/Control Upgrade")]
+        [Button("Upgrade"), BoxGroup("Parameters/Control Upgrade Fabric")]
         [ShowIf("@_typeUpgradableObject == TypeUpgradableObject.Fabric && _typeUpgrade == TypeUpgrade.ProductivityKgPerDay")]
         private void BtnUpgradedProductivityKgPerDay()
         {
             _IupgradeBuildingsFabric.ProductivityKgPerDay();
         }
+        #endregion
+
+
+        #region City
+
+        [Button("Upgrade"), BoxGroup("Parameters/Control Upgrade City")]
+        [ShowIf("@_typeUpgradableObject == TypeUpgradableObject.City")]
+        private void BtnUpgradeBuildingSlots()
+        {
+            _IupgradableCityBusiness.UpgradeBuildingSlots();
+        }
+
+        [Button("Upgrade"), BoxGroup("Parameters/Control Upgrade City")]
+        [ShowIf("@_typeUpgradableObject == TypeUpgradableObject.City")]
+        private void BtnUpgradeBusinessMaxNumberVisitors()
+        {
+            _IupgradableCityBusiness.UpgradeBusinessMaxNumberVisitors();
+        }
+
+        #endregion
+
 #endif
 
 
@@ -77,6 +104,10 @@ namespace Upgrade
             {
                 _IupgradableFabric = GetComponent<FabricControl>();
                 _IupgradeBuildingsFabric = new UpgradeBuildingsFactory(_IupgradableFabric, this);
+            }
+            else if (_typeUpgradableObject == TypeUpgradableObject.City)
+            {
+                _IupgradableCityBusiness = GetComponent<CityBusinessControl>();
             }
         }
     }
