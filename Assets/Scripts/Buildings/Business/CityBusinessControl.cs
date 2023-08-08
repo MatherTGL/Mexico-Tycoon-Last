@@ -10,7 +10,7 @@ namespace City.Business
 {
     public sealed class CityBusinessControl : MonoBehaviour, IBoot, IUpgradableCityBusiness
     {
-        [SerializeField, BoxGroup("Parameters"), ReadOnly, InfoBox("Find in awake"), HideLabel]
+        [SerializeField, BoxGroup("Parameters"), ReadOnly, InfoBox("Find in awake")]
         private TimeDateControl _timeDateControl;
 
         [SerializeField, BoxGroup("Parameters")]
@@ -151,6 +151,20 @@ namespace City.Business
                 Debug.Log("Отсутствует объект в массиве");
         }
 
+        void IUpgradableCityBusiness.UpgradeBuildingSlots()
+        {
+            if (Application.isPlaying)
+            {
+                if (_buildingSlots < _maxBuildingSlots)
+                {
+                    _buildingSlots++;
+                    Debug.Log("Upgrade building slots");
+                }
+            }
+            else { Debug.Log("Изменения доступны только в play mode"); }
+        }
+
+
         [SerializeField, BoxGroup("Parameters/Control Business", false), MaxValue(1.0f), MinValue(0.0f), Title("Institution Popularity", horizontalLine: false)]
         [InlineButton("SetInstitutionPopularity", "Set"), Tooltip("Установить популярность заведения"), HideLabel, PropertySpace(0, 10f)]
         private float _businessInstitutionPopularity;
@@ -163,19 +177,6 @@ namespace City.Business
         void IUpgradableCityBusiness.UpgradeBusinessMaxNumberVisitors()
         {
             _IbusinessBuilding[_indexBusiness].UpgradeMaxNumberVisitors();
-        }
-
-        void IUpgradableCityBusiness.UpgradeBuildingSlots()
-        {
-            if (Application.isPlaying)
-            {
-                if (_buildingSlots < _maxBuildingSlots)
-                {
-                    _buildingSlots++;
-                    Debug.Log("Upgrade building slots");
-                }
-            }
-            else { Debug.Log("Изменения доступны только в play mode"); }
         }
         #endregion
 #endif
