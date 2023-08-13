@@ -30,6 +30,10 @@ namespace Player.Movement
         [HideLabel, Title("Rigidbody", HorizontalLine = false)]
         private Rigidbody _rigidbody;
 
+        [SerializeField, Required, BoxGroup("Parameters/Components"), EnableIf("_isEditParametersEditor")]
+        [HideLabel, Title("Transform", HorizontalLine = false)]
+        private Transform _transform;
+
         [SerializeField, BoxGroup("Parameters/Readonly"), ReadOnly]
         private float _currentSpeed;
 
@@ -40,62 +44,68 @@ namespace Player.Movement
         private float _directionMoveY;
         private float _directionMoveZ;
 
+        private Vector3 _directionMoveCamera;
+
 
         public void InitAwake() => DontDestroyOnLoad(gameObject);
 
-        private void Update() => PlayerTransformClamp();
+        private void LateUpdate() => PlayerTransformClamp();
 
         private void FixedUpdate() => MovementPlayer();
 
         private void PlayerTransformClamp()
         {
-            float clampPositionX = Mathf.Clamp(transform.position.x,
+            float clampPositionX = Mathf.Clamp(_transform.position.x,
                                                -_configPlayerControlMove.maxHorizontalDistanceCamera,
                                                _configPlayerControlMove.maxHorizontalDistanceCamera);
 
-            float clampPositionY = Mathf.Clamp(transform.position.y,
+            float clampPositionY = Mathf.Clamp(_transform.position.y,
                                                -_configPlayerControlMove.maxVerticalDistanceCamera,
                                                _configPlayerControlMove.maxVerticalDistanceCamera);
 
-            float clampPositionZ = Mathf.Clamp(transform.position.z,
+            float clampPositionZ = Mathf.Clamp(_transform.position.z,
                                                _configPlayerControlMove.minZoomCameraDistance,
                                                _configPlayerControlMove.maxZoomCameraDistance);
 
-            transform.position = new Vector3(clampPositionX, clampPositionY, clampPositionZ);
+            _transform.position = new Vector3(clampPositionX, clampPositionY, clampPositionZ);
         }
 
         private void MovementPlayer()
         {
             GetDirections();
 
-            Vector3 directionMoveCamera = new Vector3(_direcionMoveX, _directionMoveY, _directionMoveZ);
-            _rigidbody.AddForce(directionMoveCamera, ForceMode.Impulse);
+            _directionMoveCamera = new Vector3(_direcionMoveX, _directionMoveY, _directionMoveZ);
+            _rigidbody.AddForce(_directionMoveCamera, ForceMode.Impulse);
         }
 
         private void GetDirections()
         {
             if (Input.GetKey(_inputControl.keycodeRightMouseButton))
             {
-                _distanceZoomSpeedMove = transform.position.z / _configPlayerControlMove.speedMoveMouse;
+                _distanceZoomSpeedMove = _transform.position.z / _configPlayerControlMove.speedMoveMouse;
 
                 _direcionMoveX = _distanceZoomSpeedMove * _inputControl.axisMouseX;
                 _directionMoveY = _distanceZoomSpeedMove * _inputControl.axisMouseY;
             }
             else
             {
-                if (Input.GetKey(_inputControl.keycodeFastMove)) //? переименовать в действие, а не клавишу
+                if (Input.GetKey(_inputControl.keycodeFastMove))
                     _currentSpeed = _configPlayerControlMove.speedMoveFast;
                 else
                     _currentSpeed = _configPlayerControlMove.speedMove;
 
-                _distanceZoomSpeedMove = transform.position.z / _currentSpeed;
+                _distanceZoomSpeedMove = _transform.position.z / _currentSpeed;
 
                 _direcionMoveX = _distanceZoomSpeedMove * _inputControl.axisHorizontalMove;
                 _directionMoveY = _distanceZoomSpeedMove * _inputControl.axisVerticalMove;
             }
-            var distanceZoomSpeedZoom = transform.position.z / _configPlayerControlMove.speedZoom;
+            var distanceZoomSpeedZoom = _transform.position.z / _configPlayerControlMove.speedZoom;
             _directionMoveZ = distanceZoomSpeedZoom * _inputControl.axisMouseScrollWheel;
-            Debug.Log(_directionMoveZ);
+        }
+
+        public (Bootstrap.TypeLoadObject typeLoad, bool isSingle) GetTypeLoad()
+        {
+            return (typeLoad: Bootstrap.TypeLoadObject.SuperImportant, isSingle: true);
         }
     }
 }

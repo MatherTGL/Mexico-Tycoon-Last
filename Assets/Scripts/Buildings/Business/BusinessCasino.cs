@@ -62,13 +62,12 @@ namespace City.Business
             _averageCheckVisitor = _businessDataSO.averageCheckVisitor;
             _averageSpendPerVisitor = _businessDataSO.averageSpendPerVisitor;
             _maxNumberVisitors = _businessDataSO.maxNumberVisitors;
-
             _maxAmountMoneyLaundered = 20_000; //!
         }
 
         public void WorkBusiness()
         {
-            if (_isWork is true)
+            if (_isWork)
             {
                 CalculationNumberVisitors();
                 _income = _numberVisitors * _averageCheckVisitor;
@@ -102,6 +101,10 @@ namespace City.Business
             _institutionPopularity = percentPopularity;
         }
 
-        public void UpgradeMaxNumberVisitors() { _maxNumberVisitors *= 2; } //!
+        public void UpgradeMaxNumberVisitors()
+        {
+            _maxNumberVisitors *= 2; //!
+            Debug.Log(_maxNumberVisitors);
+        }
     }
 }

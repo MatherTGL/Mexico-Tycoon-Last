@@ -22,6 +22,11 @@ namespace Data
             _IDataPlayer = new DataPlayer();
             _IDataPlayer.SetDataConfig(_configDataPlayer);
         }
+
+        public (Bootstrap.TypeLoadObject typeLoad, bool isSingle) GetTypeLoad()
+        {
+            return (typeLoad: Bootstrap.TypeLoadObject.SuperImportant, isSingle: true);
+        }
     }
 }
 

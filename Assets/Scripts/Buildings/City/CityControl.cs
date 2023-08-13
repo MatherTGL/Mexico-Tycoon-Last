@@ -1,4 +1,4 @@
-using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
@@ -11,6 +11,7 @@ using Fabric;
 using System;
 using City.Business;
 using Upgrade;
+using System.Threading;
 
 
 namespace City
@@ -22,179 +23,156 @@ namespace City
     {
         private const byte c_mathematicalDivisor = 100;
 
-        private static byte _maxConnectionObjects = 4;
+        private const byte c_maxConnectionObjects = 4;
 
         private ICityView _IcityView;
 
         private ICityDrugBuyers _IcityDrugBuyers;
         ICityDrugBuyers ICityControlSell._IcityDrugBuyers => _IcityDrugBuyers;
 
-        [ShowInInspector, FoldoutGroup("Parameters/Links"), ReadOnly]
         private ICityControlSell _IcityControlSell;
 
-        [ShowInInspector, FoldoutGroup("Parameters/Links"), ReadOnly]
         private ICityDrugSell _IcityDrugSell;
 
+        private IPluggableingRoad _pluggableObject;
+
+        [ShowInInspector, BoxGroup("Parameters"), HideLabel, Title("New Transport Way Link", horizontalLine: false), PropertyOrder(1)]
+        private IPluggableingRoad _connectingObject;
+        IPluggableingRoad IPluggableingRoad.connectingObject => _connectingObject;
+
         private RoadBuilded _roadBuilded;
+
+        private RoadControl _roadControl;
+
+        private CityReproduction _cityReproduction;
+
+        private TimeDateControl _timeDateControl;
+
+        private SpriteRenderer _spriteRendererObject;
+
+        [SerializeField, BoxGroup("Parameters"), Title("Config City Control View", horizontalLine: false)]
+        [PropertyOrder(0), HideLabel, Required]
+        private ConfigCityControlView _configCityControlView;
+
+        [SerializeField, BoxGroup("Parameters"), EnumPaging, HideLabel, Title("Type Drug"), PropertyOrder(3)]
+        private FabricControl.TypeProductionResource _typeProductionResource;
+
+        private WaitForSeconds _coroutineTimeStep;
+
+        private CancellationTokenSource _cancellationTokenSource;
 
         private CityTreasury _cityTreasury;
         public CityTreasury cityTreasury => _cityTreasury;
 
-        [ShowInInspector, FoldoutGroup("Parameters/Drugs"), ReadOnly]
         private Dictionary<string, float> d_amountDrugsInCity = new Dictionary<string, float>();
         Dictionary<string, float> ICityControlSell.d_amountDrugsInCity => d_amountDrugsInCity;
 
-        [ShowInInspector, FoldoutGroup("Parameters/Drugs/WeightSell"), ReadOnly]
         private Dictionary<string, float> d_weightToSellDrugs = new Dictionary<string, float>();
         Dictionary<string, float> ICityControlSell.d_weightToSellDrugs => d_weightToSellDrugs;
 
-        private CityReproduction _cityReproduction;
-
-        private SpriteRenderer _spriteRendererObject;
-
-        [SerializeField, FoldoutGroup("Parameters/Links"), Required, Title("Time Date Control"), HideLabel]
-        private TimeDateControl _timeDateControl;
-
-        [SerializeField, FoldoutGroup("Parameters/Links"), Required, Title("Road Control"), HideLabel]
-        private RoadControl _roadControl;
-
-        [SerializeField, FoldoutGroup("Parameters/Links"), Required, Title("City Drugs Sell"), HideLabel, ReadOnly]
-        private CityDrugsSell _cityDrugsSell;
-
-        [SerializeField, FoldoutGroup("Parameters/Links")]
-        [Title("Config City Control View"), HideLabel, Required, PropertySpace(0, 15)]
-        private ConfigCityControlView _configCityControlView;
-
-        [FoldoutGroup("Parameters/Population City"), Title("Population in City", horizontalLine: false)]
-        [MinValue(0), MaxValue(double.MaxValue / 2), HideLabel, SerializeField]
-        private uint _populationCity;
-        public uint populationCity => _populationCity;
-
-        [FoldoutGroup("Parameters/Population City/Population Change Step"), Title("Max", horizontalLine: false)]
-        [MinValue(0.1f), MaxValue(1.0f), SerializeField, HideLabel, SuffixLabel("%/day")]
-        [HorizontalGroup("Parameters/Population City/Population Change Step/Horizontal")]
-        private float _populationChangeStepPercentMax;
-
-        [FoldoutGroup("Parameters/Population City/Population Change Step"), Title("Min", horizontalLine: false)]
-        [MinValue(-1.0f), MaxValue(-0.01f), SerializeField, HideLabel, SuffixLabel("%/day")]
-        [HorizontalGroup("Parameters/Population City/Population Change Step/Horizontal")]
-        private float _populationChangeStepPercentMin;
-
-        [SerializeField, BoxGroup("Parameters"), Title("Police Level", horizontalLine: false), SuffixLabel("Star (0-10)")]
-        [MinValue(0), MaxValue(10), Tooltip("Уровень полиции в данном городе"), PropertySpace(5), HideLabel]
-        private byte _policeLevel;
-
-        [BoxGroup("Parameters"), Title("Connect Objects", horizontalLine: false), SerializeField, ReadOnly]
-        [MinValue(0), HideLabel]
-        private byte _connectObjectsCount = 0;
-        public byte connectObjectsCount => _connectObjectsCount;
-
-        [SerializeField, BoxGroup("Parameters"), Title("Max Capacity Stock", horizontalLine: false)]
-        [MinValue(0.0f), Tooltip("Максимальная вместимость хранилища города в кг"), HideLabel, SuffixLabel("kg")]
-        private float _maxCapacityStock;
-
-        [SerializeField, FoldoutGroup("Parameters/Drugs/WeightSell"), MinValue(0.0f)]
-        private float[] _weightToSellArray;
-
-        [FoldoutGroup("Parameters/Drugs"), Title("Increased Demand in kg/day", horizontalLine: false)]
-        [MinValue(0.01f), HideLabel, SerializeField]
-        private float _increasedDemand;
-
-        [FoldoutGroup("Parameters/Drugs"), Title("Min Clamp Demand Buyers", horizontalLine: false), HorizontalGroup("Parameters/Drugs/ClampDemand")]
-        [MinValue("@_buyersDrugsClampDemandMin"), HideLabel, SerializeField, MaxValue("@_buyersDrugsClampDemandMax - 1")]
-        private float _buyersDrugsClampDemandMin = 3;
-        float ICityControlSell.buyersDrugsClampDemandMin => _buyersDrugsClampDemandMin;
-
-        [FoldoutGroup("Parameters/Drugs"), Title("Max", horizontalLine: false)]
-        [MinValue("@_buyersDrugsClampDemandMin + 1"), HideLabel, SerializeField, HorizontalGroup("Parameters/Drugs/ClampDemand")]
-        private float _buyersDrugsClampDemandMax = 4;
-        float ICityControlSell.buyersDrugsClampDemandMax => _buyersDrugsClampDemandMax;
-
-        private string _gameObjectConnectionIndex;
-
-        [ShowInInspector, FoldoutGroup("Parameters/Control"), ReadOnly]
+        [ShowInInspector, BoxGroup("Parameters"), ReadOnly, PropertyOrder(4)]
         private Dictionary<string, InfoDrugClientsTransition> d_allInfoObjectClientsTransition = new Dictionary<string, InfoDrugClientsTransition>();
         Dictionary<string, InfoDrugClientsTransition> IPluggableingRoad.d_allInfoObjectClientsTransition => d_allInfoObjectClientsTransition;
 
-        [ShowInInspector, FoldoutGroup("Parameters/Control")]
-        [HideLabel, Title("New Transport Way Link", horizontalLine: false)]
-        private IPluggableingRoad _connectingObject;
-        IPluggableingRoad IPluggableingRoad.connectingObject => _connectingObject;
+        [SerializeField, BoxGroup("Parameters"), MinValue(0.0f), PropertyOrder(5)]
+        private float[] _weightToSellArray;
 
-        [SerializeField, FoldoutGroup("Parameters/Control"), MinValue(0.0f), HideLabel, Title("Upload Resource", horizontalLine: false)]
-        [SuffixLabel("kg"), ShowIf("@_connectingObject != null")]
+        [SerializeField, BoxGroup("Parameters"), TitleGroup("Parameters/Population"), HideLabel, PropertyOrder(6)]
+        [HorizontalGroup("Parameters/Population/Hor"), MinValue(0.1f), MaxValue(1.0f), Title("Change % Max", horizontalLine: false)]
+        private float _populationChangeStepPercentMax;
+
+        [SerializeField, BoxGroup("Parameters"), TitleGroup("Parameters/Population"), HideLabel, MinValue(-1.0f), MaxValue(-0.01f)]
+        [HorizontalGroup("Parameters/Population/Hor"), Title("Change % Min", horizontalLine: false), PropertyOrder(7)]
+        private float _populationChangeStepPercentMin;
+
+        [BoxGroup("Parameters"), Title("Max Capacity City Stock")]
+        [MinValue(0.0f), HideLabel, PropertyOrder(8), SerializeField]
+        private float _maxCapacityStock;
+
+        [Title("Min Clamp Demand Buyers", horizontalLine: false), HorizontalGroup("Parameters/Drugs/ClampDemand"), PropertyOrder(9)]
+        [MinValue(1), HideLabel, SerializeField, MaxValue("@_buyersDrugsClampDemandMax - 1"), TitleGroup("Parameters/Drugs")]
+        private float _buyersDrugsClampDemandMin = 3;
+        float ICityControlSell.buyersDrugsClampDemandMin => _buyersDrugsClampDemandMin;
+
+        [TitleGroup("Parameters/Drugs"), Title("Max", horizontalLine: false), SerializeField, PropertyOrder(10)]
+        [MinValue("@_buyersDrugsClampDemandMin + 1"), HideLabel, HorizontalGroup("Parameters/Drugs/ClampDemand")]
+        private float _buyersDrugsClampDemandMax = 4;
+        float ICityControlSell.buyersDrugsClampDemandMax => _buyersDrugsClampDemandMax;
+
+        [SerializeField, Title("Upload Resource", horizontalLine: false), HideLabel, PropertyOrder(11)]
+        [ShowIf("@_connectingObject != null"), BoxGroup("Parameters"), MinValue(0.0f)]
         private float _uploadResourceAddWay;
         public float uploadResourceAddWay => _uploadResourceAddWay;
 
-        [SerializeField, FoldoutGroup("Parameters/Control"), EnumPaging, HideLabel, Title("Type Drug")]
-        private FabricControl.TypeProductionResource _typeProductionResource;
+        [SerializeField, BoxGroup("Parameters"), TitleGroup("Parameters/Population"), HideLabel, PropertyOrder(12)]
+        [MinValue(0), MaxValue(double.MaxValue / 2), Title("Population", horizontalLine: false)]
+        private uint _populationCity;
+        public uint populationCity => _populationCity;
+
+        [SerializeField, BoxGroup("Parameters"), Title("Police Level (0-10)", horizontalLine: false), PropertyOrder(13)]
+        [MinValue(0), MaxValue(10), Tooltip("Уровень полиции в данном городе"), PropertySpace(5), HideLabel]
+        private byte _policeLevel;
+
+        private byte _connectObjectsCount = 0;
+        public byte connectObjectsCount => _connectObjectsCount;
+
+        private string _gameObjectConnectionIndex;
 
 
-#if UNITY_EDITOR
-        [Button("New Way"), FoldoutGroup("Parameters/Control"), PropertySpace(10)]
-        [ShowIf("@_connectingObject != null"), HorizontalGroup("Parameters/Control")]
-        private void AddNewTransportWay() //! сделать общим, т.к код одинаковый
+        public void InitAwake()
         {
-            _roadBuilded = new RoadBuilded(transform.position, _connectingObject.GetPositionVector2());
-            d_allInfoObjectClientsTransition.Add(_connectingObject.ToString() + _typeProductionResource.ToString(), new InfoDrugClientsTransition());
+            SearchComponents();
 
-            if (d_allInfoObjectClientsTransition[_connectingObject.ToString() + _typeProductionResource.ToString()].d_allClientObjects.ContainsKey(this) is false)
+            void SearchComponents()
             {
-                _roadBuilded.roadResourcesManagement.CreateNewRoute(this, _connectingObject);
+                if (_spriteRendererObject is null) _spriteRendererObject = GetComponent<SpriteRenderer>();
+                if (_timeDateControl is null) _timeDateControl = FindObjectOfType<TimeDateControl>();
 
-                d_allInfoObjectClientsTransition[_connectingObject.ToString() + _typeProductionResource.ToString()].d_allClientObjects.Add(this, _roadBuilded.roadResourcesManagement.CheckAllConnectionObjectsRoad(this));
-                d_allInfoObjectClientsTransition[_connectingObject.ToString() + _typeProductionResource.ToString()].d_typeDrugAndAmountTransition.Add(_typeProductionResource.ToString(), _uploadResourceAddWay);
+                _IcityControlSell = this;
+                _IcityDrugBuyers = GetComponent<DrugBuyersContractControl>();
+                _roadControl = FindObjectOfType<RoadControl>();
 
-                _connectingObject.ConnectObjectToObject(_typeProductionResource.ToString(), gameObject.name + _connectingObject.ToString(), _connectingObject, this);
+                CreateComponents();
             }
 
-            _connectingObject = null;
-            _uploadResourceAddWay = 0;
-        }
-#endif
+            void CreateComponents()
+            {
+                if (_configCityControlView is not null) _IcityView = new CityControlView(_configCityControlView);
 
+                if (_cityReproduction is null)
+                    _cityReproduction = new CityReproduction(c_mathematicalDivisor, _populationChangeStepPercentMax, _populationChangeStepPercentMin);
 
-        public void InitAwake() => SearchAndCreateComponents();
+                _cityTreasury = new();
+                _cancellationTokenSource = new();
+                _IcityDrugSell = new CityDrugsSell(_cityTreasury);
+                _coroutineTimeStep = new WaitForSeconds(_timeDateControl.GetCurrentTimeOneDay(true));
 
-        private void SearchAndCreateComponents()
-        {
-            if (_configCityControlView is not null) { _IcityView = new CityControlView(_configCityControlView); }
+                InvokeComponents();
+            }
 
-            if (_spriteRendererObject is null) { _spriteRendererObject = GetComponent<SpriteRenderer>(); }
+            void InvokeComponents()
+            {
+                GetComponent<CityBusinessControl>().InitAwake();
 
-            if (_timeDateControl is null) { _timeDateControl = FindObjectOfType<TimeDateControl>(); }
-
-            if (_cityReproduction is null)
-                _cityReproduction = new CityReproduction(c_mathematicalDivisor, _populationChangeStepPercentMax, _populationChangeStepPercentMin);
-
-            _cityTreasury = new CityTreasury();
-            _IcityDrugSell = new CityDrugsSell(_cityTreasury);
-            _IcityControlSell = this;
-
-            SetBuyersDrugs();
-            SetWeightToSellDrugs();
-
-            StartCoroutine(Reproduction());
-            StartCoroutine(SubmittingResources());
+                SetBuyersDrugsAsync();
+                SubmittingResourcesAsync();
+                StartCoroutine(Reproduction());
+            }
         }
 
-        public void ConnectObjectToObject(string typeFabricDrug, string gameObjectConnectionIndex, IPluggableingRoad FirstObject, IPluggableingRoad SecondObject)
+        public void ConnectObjectToObject(string typeFabricDrug, string gameObjectConnectionIndex,
+                                          IPluggableingRoad FirstObject, IPluggableingRoad SecondObject)
         {
-            if (_connectObjectsCount < _maxConnectionObjects)
+            if (_connectObjectsCount < c_maxConnectionObjects)
             {
                 _gameObjectConnectionIndex = gameObjectConnectionIndex;
                 _connectObjectsCount++;
 
-                CheckDemandDictionary(typeFabricDrug);
+                if (!d_amountDrugsInCity.ContainsKey(typeFabricDrug)) { d_amountDrugsInCity.Add(typeFabricDrug, 0); }
                 _roadControl.BuildRoad(transform.position, SecondObject.GetPositionVector2(), gameObjectConnectionIndex);
             }
 
-            void CheckDemandDictionary(string typeFabricDrug)
-            {
-                if (d_amountDrugsInCity.ContainsKey(typeFabricDrug) is false) { d_amountDrugsInCity.Add(typeFabricDrug, 0); }
-            }
-
-            if (_connectObjectsCount! > 0) { _IcityView.ConnectFabric(ref _spriteRendererObject); }
+            if (_connectObjectsCount! > 0) _IcityView.Connect(ref _spriteRendererObject);
         }
 
         public void DisconnectObjectToObject(string gameObjectDisconnectTo)
@@ -203,8 +181,9 @@ namespace City
             {
                 _roadControl.DestroyRoad(gameObjectDisconnectTo);
                 _connectObjectsCount--;
+
+                if (_connectObjectsCount == 0) _IcityView.Disconnect(ref _spriteRendererObject);
             }
-            else { _IcityView.DisconnectFabric(ref _spriteRendererObject); }
         }
 
         public Vector2 GetPositionVector2() => transform.position;
@@ -226,36 +205,48 @@ namespace City
             }
         }
 
-        [Button("Set Users Parameters", 30), FoldoutGroup("Parameters/Drugs/Percentage Users")]
-        private void SetBuyersDrugs()
+        public (Bootstrap.TypeLoadObject typeLoad, bool isSingle) GetTypeLoad()
         {
-            _IcityDrugBuyers = GetComponent<DrugBuyersContractControl>();
-
-            var countsDrugBuyers = Enum.GetNames(typeof(DrugBuyers.AllBuyers));
-
-            for (int i = 0; i < countsDrugBuyers.Length / 2; i++) //!хардкод
-            {
-                var addRandomBuyer = UnityEngine.Random.Range(0, countsDrugBuyers.Length);
-
-                if (_IcityDrugBuyers.d_contractBuyers.ContainsKey(countsDrugBuyers[addRandomBuyer]) is false)
-                    _IcityDrugBuyers.d_contractBuyers.Add(countsDrugBuyers[addRandomBuyer], new ContractBuyerInfo());
-            }
+            return (typeLoad: Bootstrap.TypeLoadObject.MediumImportant, isSingle: false);
         }
 
-        [Button("Set Weight Parameters", 30), FoldoutGroup("Parameters/Drugs/WeightSell")]
-        private void SetWeightToSellDrugs()
+        private void OnApplicationQuit() { _cancellationTokenSource.Cancel(); }
+
+        private async void SetBuyersDrugsAsync()
         {
-            var countsDrugBuyers = Enum.GetNames(typeof(FabricControl.TypeProductionResource));
-
-            if (_weightToSellArray.Length < countsDrugBuyers.Length)
-                _weightToSellArray = new float[countsDrugBuyers.Length];
-
-            for (int i = 0; i < countsDrugBuyers.Length; i++)
+            await Task.Run(() =>
             {
-                if (d_weightToSellDrugs.ContainsKey(countsDrugBuyers[i]) is false)
-                    d_weightToSellDrugs.Add(countsDrugBuyers[i], _weightToSellArray[i]);
-                else
-                    d_weightToSellDrugs[countsDrugBuyers[i]] = _weightToSellArray[i];
+                SetWeightToSellDrugsAsync();
+                var countsDrugBuyers = Enum.GetNames(typeof(DrugBuyers.AllBuyers));
+
+                for (int i = 0; i < countsDrugBuyers.Length / 2; i++) //!хардкод
+                {
+                    System.Random systemRandom = new System.Random();
+                    var addRandomBuyer = systemRandom.Next(0, countsDrugBuyers.Length);
+                    systemRandom = null;
+
+                    if (!_IcityDrugBuyers.d_contractBuyers.ContainsKey(countsDrugBuyers[addRandomBuyer]))
+                        _IcityDrugBuyers.d_contractBuyers.Add(countsDrugBuyers[addRandomBuyer], new ContractBuyerInfo());
+                }
+            });
+
+            async void SetWeightToSellDrugsAsync()
+            {
+                await Task.Run(() =>
+                {
+                    var countsDrugBuyers = Enum.GetNames(typeof(FabricControl.TypeProductionResource));
+
+                    if (_weightToSellArray.Length < countsDrugBuyers.Length)
+                        _weightToSellArray = new float[countsDrugBuyers.Length];
+
+                    for (int i = 0; i < countsDrugBuyers.Length; i++)
+                    {
+                        if (!d_weightToSellDrugs.ContainsKey(countsDrugBuyers[i]))
+                            d_weightToSellDrugs.Add(countsDrugBuyers[i], _weightToSellArray[i]);
+                        else
+                            d_weightToSellDrugs[countsDrugBuyers[i]] = _weightToSellArray[i];
+                    }
+                });
             }
         }
 
@@ -264,38 +255,91 @@ namespace City
             while (true)
             {
                 if (!_timeDateControl.GetStatePaused()) { _cityReproduction.ReproductionPopulation(ref _populationCity); }
-                yield return new WaitForSeconds(_timeDateControl.GetCurrentTimeOneDay(true));
+                yield return _coroutineTimeStep;
             }
         }
 
-        private IEnumerator SubmittingResources()
+        private async ValueTask SubmittingResourcesAsync()
         {
             while (true)
             {
-                foreach (var item in d_allInfoObjectClientsTransition.Keys)
+                await Task.Run(() =>
                 {
-                    foreach (var typeDrug in d_allInfoObjectClientsTransition[item].d_typeDrugAndAmountTransition.Keys)
+                    foreach (var item in d_allInfoObjectClientsTransition.Keys)
                     {
-                        if (d_amountDrugsInCity[typeDrug] >= d_allInfoObjectClientsTransition[item].d_typeDrugAndAmountTransition[typeDrug])
+                        foreach (var typeDrug in d_allInfoObjectClientsTransition[item].d_typeDrugAndAmountTransition.Keys)
                         {
-                            foreach (var allClients in d_allInfoObjectClientsTransition[item].d_allClientObjects.Keys)
+                            if (d_amountDrugsInCity[typeDrug] >= d_allInfoObjectClientsTransition[item].d_typeDrugAndAmountTransition[typeDrug])
                             {
-                                for (int i = 0; i < d_allInfoObjectClientsTransition[item].d_allClientObjects[allClients].Length; i++)
+                                foreach (var allClients in d_allInfoObjectClientsTransition[item].d_allClientObjects.Keys)
                                 {
-                                    if (d_allInfoObjectClientsTransition[item].d_allClientObjects[allClients][i] is not null)
+                                    for (int i = 0; i < d_allInfoObjectClientsTransition[item].d_allClientObjects[allClients].Length; i++)
                                     {
-                                        IPluggableingRoad pluggableObject = d_allInfoObjectClientsTransition[item].d_allClientObjects[allClients][i];
-                                        pluggableObject.IngestResources(typeDrug, true, d_allInfoObjectClientsTransition[item].d_typeDrugAndAmountTransition[typeDrug]);
-                                        d_amountDrugsInCity[typeDrug] -= d_allInfoObjectClientsTransition[item].d_typeDrugAndAmountTransition[typeDrug];
+                                        if (d_allInfoObjectClientsTransition[item].d_allClientObjects[allClients][i] is not null)
+                                        {
+                                            _pluggableObject = d_allInfoObjectClientsTransition[item].d_allClientObjects[allClients][i];
+                                            _pluggableObject.IngestResources(typeDrug, true, d_allInfoObjectClientsTransition[item].d_typeDrugAndAmountTransition[typeDrug]);
+                                            d_amountDrugsInCity[typeDrug] -= d_allInfoObjectClientsTransition[item].d_typeDrugAndAmountTransition[typeDrug];
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-                }
+                }, _cancellationTokenSource.Token);
 
-                yield return new WaitForSeconds(_timeDateControl.GetCurrentTimeOneDay(true));
+                await Task.Delay((int)(_timeDateControl.GetCurrentTimeOneDay(true) * 1000));
+
+                if (_cancellationTokenSource.IsCancellationRequested)
+                    return;
             }
         }
+
+
+#if UNITY_EDITOR
+        [Button("New Way"), BoxGroup("Parameters"), TitleGroup("Parameters/Control")]
+        [ShowIf("@_connectingObject != null"), PropertySpace(10), PropertyOrder(14)]
+        private void AddNewTransportWay()
+        {
+            _roadBuilded = new RoadBuilded(transform.position, _connectingObject.GetPositionVector2());
+            string nameInfoClients = _connectingObject.ToString() + _typeProductionResource.ToString();
+
+            d_allInfoObjectClientsTransition.Add(nameInfoClients, new InfoDrugClientsTransition());
+
+            if (!d_allInfoObjectClientsTransition[nameInfoClients].d_allClientObjects.ContainsKey(this))
+            {
+                _roadBuilded.roadResourcesManagement.CreateNewRoute(this, _connectingObject);
+
+                d_allInfoObjectClientsTransition[nameInfoClients].d_allClientObjects.Add(
+                    this, _roadBuilded.roadResourcesManagement.CheckAllConnectionObjectsRoad(this));
+
+                d_allInfoObjectClientsTransition[nameInfoClients].d_typeDrugAndAmountTransition.Add(
+                    _typeProductionResource.ToString(), _uploadResourceAddWay);
+
+                _connectingObject.ConnectObjectToObject(_typeProductionResource.ToString(), gameObject.name
+                    + _connectingObject.ToString(), _connectingObject, this);
+            }
+
+            _connectingObject = null;
+            _uploadResourceAddWay = 0;
+        }
+
+        [Button("Remove Way"), BoxGroup("Parameters"), TitleGroup("Parameters/Control"), PropertySpace(10)]
+        [ShowIf("@_connectingObject != null && d_allInfoObjectClientsTransition.Count > 0"), PropertyOrder(14)]
+        private void RemoveTransportWay()
+        {
+            string nameInfoClients = _connectingObject.ToString() + _typeProductionResource.ToString();
+
+            if (d_allInfoObjectClientsTransition.ContainsKey(nameInfoClients))
+            {
+                _roadBuilded.roadResourcesManagement.DestroyRoute(this, _connectingObject);
+                d_allInfoObjectClientsTransition[nameInfoClients].d_allClientObjects.Remove(this);
+                d_allInfoObjectClientsTransition[nameInfoClients].d_typeDrugAndAmountTransition.Remove(_typeProductionResource.ToString());
+                _connectingObject.DisconnectObjectToObject(gameObject.name + _connectingObject.ToString());
+                d_allInfoObjectClientsTransition.Remove(nameInfoClients);
+                _connectingObject = null;
+            }
+        }
+#endif
     }
 }

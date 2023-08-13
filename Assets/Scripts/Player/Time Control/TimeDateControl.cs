@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using Config.Time;
@@ -29,7 +27,11 @@ namespace TimeControl
             _timeAcceleration = new TimeAcceleration(_configTimeControl, _inputControl);
         }
 
-        private void Update() => _timeAcceleration.AccelerationCheck(ref _currentTimeOneDay, ref _isPaused);
+        private void Update()
+        {
+            if (_timeAcceleration is not null)
+                _timeAcceleration.AccelerationCheck(ref _currentTimeOneDay, ref _isPaused);
+        }
 
         public float GetCurrentTimeOneDay(bool isUseCoroutine = false)
         {
@@ -40,5 +42,10 @@ namespace TimeControl
         }
 
         public bool GetStatePaused() => _isPaused;
+
+        public (Bootstrap.TypeLoadObject typeLoad, bool isSingle) GetTypeLoad()
+        {
+            return (typeLoad: Bootstrap.TypeLoadObject.SuperImportant, isSingle: true);
+        }
     }
 }

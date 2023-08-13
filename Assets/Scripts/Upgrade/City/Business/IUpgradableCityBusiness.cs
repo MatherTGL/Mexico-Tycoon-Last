@@ -5,7 +5,8 @@ namespace City.Business
 {
     public interface IUpgradableCityBusiness
     {
-        void UpgradeBuildingSlots();
-        void UpgradeBusinessMaxNumberVisitors();
+        byte buildingSlots { get; set; }
+        byte maxBuildingSlots { get; set; }
+        IBuisinessBuilding[] IbusinessBuilding { get; }
     }
 }

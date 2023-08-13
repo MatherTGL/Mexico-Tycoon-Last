@@ -7,6 +7,7 @@ using Upgrade.Buildings.Fabric;
 using City.Business;
 using City;
 
+
 namespace Upgrade
 {
     public sealed class UpgradeControl : MonoBehaviour, IBoot
@@ -17,7 +18,7 @@ namespace Upgrade
 
         private IUpgradableCityBusiness _IupgradableCityBusiness;
 
-        //private IUpgradeBuildingsCity
+        private IUpgradeCityBusiness _IupgradeCityBusiness;
 
         private enum TypeUpgradableObject
         {
@@ -26,6 +27,20 @@ namespace Upgrade
 
         [SerializeField, BoxGroup("Parameters"), EnumToggleButtons, HideLabel]
         private TypeUpgradableObject _typeUpgradableObject;
+
+
+        public void InitAwake()
+        {
+            if (_typeUpgradableObject == TypeUpgradableObject.Fabric)
+                _IupgradeBuildingsFabric = new UpgradeBuildingsFactory(_IupgradableFabric = GetComponent<FabricControl>(), this);
+            else if (_typeUpgradableObject == TypeUpgradableObject.City)
+                _IupgradeCityBusiness = new UpgradeBuildingsCity(_IupgradableCityBusiness = GetComponent<CityBusinessControl>());
+        }
+
+        public (Bootstrap.TypeLoadObject typeLoad, bool isSingle) GetTypeLoad()
+        {
+            return (typeLoad: Bootstrap.TypeLoadObject.SimpleImportant, isSingle: false);
+        }
 
 
 #if UNITY_EDITOR
@@ -42,12 +57,13 @@ namespace Upgrade
 
         [SerializeField, BoxGroup("Parameters"), MinValue(0.0f), Title("amount"), HideLabel]
         [PropertySpace(10, 10), HorizontalGroup("Parameters/Hor", marginRight: 10)]
+        [ShowIf("@_typeUpgradableObject == TypeUpgradableObject.Fabric")]
         private float _amount;
         public float amount => _amount;
 
         [SerializeField, BoxGroup("Parameters"), Title("Equally or Add (false = Equally)")]
         [DisableIf("@_typeUpgrade == TypeUpgrade.ProductivityKgPerDay"), PropertySpace(10, 10), HideLabel]
-        [HorizontalGroup("Parameters/Hor", marginLeft: 10)]
+        [HorizontalGroup("Parameters/Hor", marginLeft: 10), ShowIf("@_typeUpgradableObject == TypeUpgradableObject.Fabric")]
         private bool _isEqually;
         public bool isEqually => _isEqually;
 
@@ -79,36 +95,25 @@ namespace Upgrade
 
         #region City
 
-        [Button("Upgrade"), BoxGroup("Parameters/Control Upgrade City")]
-        [ShowIf("@_typeUpgradableObject == TypeUpgradableObject.City")]
+        [SerializeField, BoxGroup("Parameters/Control Upgrade City")]
+        private byte _indexBusiness;
+
+        [Button("Building Slots"), BoxGroup("Parameters/Control Upgrade City")]
+        [ShowIf("@_typeUpgradableObject == TypeUpgradableObject.City"), HorizontalGroup("Parameters/Control Upgrade City/Hor")]
         private void BtnUpgradeBuildingSlots()
         {
-            _IupgradableCityBusiness.UpgradeBuildingSlots();
+            _IupgradeCityBusiness.UpgradeBuildingSlots();
         }
 
-        [Button("Upgrade"), BoxGroup("Parameters/Control Upgrade City")]
-        [ShowIf("@_typeUpgradableObject == TypeUpgradableObject.City")]
+        [Button("Max Number Visitors"), BoxGroup("Parameters/Control Upgrade City")]
+        [ShowIf("@_typeUpgradableObject == TypeUpgradableObject.City"), HorizontalGroup("Parameters/Control Upgrade City/Hor")]
         private void BtnUpgradeBusinessMaxNumberVisitors()
         {
-            _IupgradableCityBusiness.UpgradeBusinessMaxNumberVisitors();
+            _IupgradeCityBusiness.UpgradeBusinessMaxNumberVisitors(_indexBusiness);
         }
 
         #endregion
 
 #endif
-
-
-        public void InitAwake()
-        {
-            if (_typeUpgradableObject == TypeUpgradableObject.Fabric)
-            {
-                _IupgradableFabric = GetComponent<FabricControl>();
-                _IupgradeBuildingsFabric = new UpgradeBuildingsFactory(_IupgradableFabric, this);
-            }
-            else if (_typeUpgradableObject == TypeUpgradableObject.City)
-            {
-                _IupgradableCityBusiness = GetComponent<CityBusinessControl>();
-            }
-        }
     }
 }

@@ -8,16 +8,18 @@ using Config.City.Business;
 
 namespace City.Business
 {
-    public sealed class CityBusinessControl : MonoBehaviour, IBoot, IUpgradableCityBusiness
+    public sealed class CityBusinessControl : MonoBehaviour, IUpgradableCityBusiness
     {
         [SerializeField, BoxGroup("Parameters"), ReadOnly, InfoBox("Find in awake")]
         private TimeDateControl _timeDateControl;
 
         [SerializeField, BoxGroup("Parameters")]
         private byte _buildingSlots = 5; //? рандом, константа или под апгрейд?
+        public byte buildingSlots { get => _buildingSlots; set => _buildingSlots = value; }
 
         [SerializeField, BoxGroup("Parameters"), MinValue("@_buildingSlots"), MaxValue(100)]
         private byte _maxBuildingSlots = 5;
+        public byte maxBuildingSlots { get => _maxBuildingSlots; set => _maxBuildingSlots = value; }
 
         [ShowInInspector, BoxGroup("Parameters"), ReadOnly]
         private IBuisinessBuilding[] _IbusinessBuilding;
@@ -31,6 +33,8 @@ namespace City.Business
         [SerializeField, BoxGroup("Parameters"), Required, HideIf("_typeCreateBusiness", TypeCreateBusiness.None)]
         private BusinessDataSO _businessDataSO;
 
+        private WaitForSeconds _coroutineTimeStep;
+
 
         public void InitAwake()
         {
@@ -39,8 +43,16 @@ namespace City.Business
             if (_timeDateControl is null)
                 _timeDateControl = FindObjectOfType<TimeDateControl>();
 
+            _coroutineTimeStep = new WaitForSeconds(_timeDateControl.GetCurrentTimeOneDay(true));
+
             StartCoroutine(WorkBusiness());
         }
+
+        public (Bootstrap.TypeLoadObject typeLoad, bool isSingle) GetTypeLoad()
+        {
+            return (typeLoad: Bootstrap.TypeLoadObject.MediumImportant, isSingle: false);
+        }
+
         private IEnumerator WorkBusiness()
         {
             while (true)
@@ -48,7 +60,7 @@ namespace City.Business
                 for (int i = 0; i < _IbusinessBuilding.Length; i++)
                     if (_IbusinessBuilding[i] is not null)
                         _IbusinessBuilding[i].WorkBusiness();
-                yield return new WaitForSeconds(_timeDateControl.GetCurrentTimeOneDay(true));
+                yield return _coroutineTimeStep;
             }
         }
 
@@ -151,20 +163,6 @@ namespace City.Business
                 Debug.Log("Отсутствует объект в массиве");
         }
 
-        void IUpgradableCityBusiness.UpgradeBuildingSlots()
-        {
-            if (Application.isPlaying)
-            {
-                if (_buildingSlots < _maxBuildingSlots)
-                {
-                    _buildingSlots++;
-                    Debug.Log("Upgrade building slots");
-                }
-            }
-            else { Debug.Log("Изменения доступны только в play mode"); }
-        }
-
-
         [SerializeField, BoxGroup("Parameters/Control Business", false), MaxValue(1.0f), MinValue(0.0f), Title("Institution Popularity", horizontalLine: false)]
         [InlineButton("SetInstitutionPopularity", "Set"), Tooltip("Установить популярность заведения"), HideLabel, PropertySpace(0, 10f)]
         private float _businessInstitutionPopularity;
@@ -172,11 +170,6 @@ namespace City.Business
         private void SetInstitutionPopularity()  //* используется в InlineButton у _businessInstitutionPopularity
         {
             _IbusinessBuilding[_indexBusiness].SetInstitutionPopularity(_businessInstitutionPopularity);
-        }
-
-        void IUpgradableCityBusiness.UpgradeBusinessMaxNumberVisitors()
-        {
-            _IbusinessBuilding[_indexBusiness].UpgradeMaxNumberVisitors();
         }
         #endregion
 #endif

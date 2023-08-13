@@ -15,8 +15,7 @@ namespace City
 
         public void Sell(float weightSell, in string contractBuyers, in string typeFabricDrug, in ICityControlSell IcityControlSell)
         {
-            Debug.Log(IcityControlSell);
-            if (IcityControlSell._IcityDrugBuyers.d_contractBuyers[contractBuyers].isCooperation is true
+            if (IcityControlSell._IcityDrugBuyers.d_contractBuyers[contractBuyers].isCooperation
                     && IcityControlSell._IcityDrugBuyers.d_contractBuyers[contractBuyers].l_drugName.Contains(typeFabricDrug))
             {
                 if (IcityControlSell.d_amountDrugsInCity[typeFabricDrug] >= IcityControlSell.d_weightToSellDrugs[typeFabricDrug])
@@ -37,7 +36,6 @@ namespace City
 
                     var addMoneySum = IcityControlSell._IcityDrugBuyers.d_contractBuyers[contractBuyers].d_drugCost[typeFabricDrug] * weightSell;
                     _cityTreasury.AddMoneyToTreasury(addMoneySum);
-                    Debug.Log(addMoneySum);
                 }
             }
         }

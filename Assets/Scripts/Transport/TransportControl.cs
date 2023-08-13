@@ -92,5 +92,11 @@ namespace Transport
         {
             d_allTransportRoad.Add(indexRoad, new TransportObject[5]); //? можно добавить улучшения гаража или что-то типо того
         }
+
+        public void DestroyRoad(string indexRoad)
+        {
+            if (d_allTransportRoad.ContainsKey(indexRoad))
+                d_allTransportRoad.Remove(indexRoad);
+        }
     }
 }

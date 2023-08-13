@@ -14,12 +14,12 @@ namespace City
             _configCityControlView = configCityControlView;
         }
 
-        void ICityView.ConnectFabric(ref SpriteRenderer spriteRenderer)
+        void ICityView.Connect(ref SpriteRenderer spriteRenderer)
         {
             spriteRenderer.color = _configCityControlView.colorConnectFabric;
         }
 
-        void ICityView.DisconnectFabric(ref SpriteRenderer spriteRenderer)
+        void ICityView.Disconnect(ref SpriteRenderer spriteRenderer)
         {
             spriteRenderer.color = _configCityControlView.colorDisconnectFabric;
         }

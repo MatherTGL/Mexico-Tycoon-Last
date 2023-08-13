@@ -2,14 +2,17 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using Road;
 using System.Collections;
-using System.Threading;
+
 
 namespace Transport
 {
     public sealed class TransportObject : MonoBehaviour
     {
         private const byte _startedPosition = 1;
+
         private const byte _endPosition = 0;
+
+        private const float _timeStepDelay = 5.0f;
 
         [SerializeField, BoxGroup("Parameters"), ReadOnly]
         private RoadControl _roadControl;
@@ -28,6 +31,8 @@ namespace Transport
 
         [SerializeField, BoxGroup("Parameters")]
         private float _lerpSpeedMove = 0.4f;
+
+        private WaitForSeconds _coroutineTimeStep;
 
 
         public void SetKindTransportAndIndexRoad(KindTransport kindTransport, string indexRoad)
@@ -50,11 +55,15 @@ namespace Transport
             transform.position = _fromAndToPositions[_startedPosition];
         }
 
-        private void Start() => StartCoroutine(RepearLerpTransport());
-
-        private void FixedUpdate()
+        private void Start()
         {
-            if (_isStartedPosition is false)
+            _coroutineTimeStep = new WaitForSeconds(_timeStepDelay);
+            StartCoroutine(RepeatLerpTransport());
+        }
+
+        private void LateUpdate()
+        {
+            if (!_isStartedPosition)
                 transform.position = Vector3.Lerp(transform.position, _fromAndToPositions[_endPosition], _lerpSpeedMove
                                                                                                          * Time.deltaTime
                                                                                                          * _kindTransport.maxSpeed);
@@ -64,12 +73,12 @@ namespace Transport
                                                                                                              * _kindTransport.maxSpeed);
         }
 
-        private IEnumerator RepearLerpTransport()
+        private IEnumerator RepeatLerpTransport() //! оптимизировать
         {
             while (true)
             {
                 _isStartedPosition = !_isStartedPosition;
-                yield return new WaitForSecondsRealtime(4);
+                yield return _coroutineTimeStep;
             }
         }
     }

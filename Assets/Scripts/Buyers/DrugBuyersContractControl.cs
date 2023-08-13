@@ -43,7 +43,7 @@ internal sealed class DrugBuyersContractControl : MonoBehaviour, ICityDrugBuyers
                 d_contractBuyers[_nameAddContractBuyer].d_drugDemand.Add(lengthTypesProductionResources[i], UnityEngine.Random.Range(10, 30));
 
                 d_contractBuyers[_nameAddContractBuyer].d_drugIncreasedDemand.Add(lengthTypesProductionResources[i],
-                                                                                  UnityEngine.Random.Range(0.1f, 0.5f));
+                                                                                  UnityEngine.Random.Range(0.1f, 0.5f)); //!
             }
         }
     }
@@ -54,9 +54,7 @@ internal sealed class DrugBuyersContractControl : MonoBehaviour, ICityDrugBuyers
         var lengthTypesProductionResources = Enum.GetNames(typeof(FabricControl.TypeProductionResource));
 
         for (int i = 0; i < lengthTypesProductionResources.Length; i++)
-        {
             d_allParametersDrugs.Add(lengthTypesProductionResources[i].ToString(), _setDrugsParametersRandom[i]);
-        }
     }
 }
 

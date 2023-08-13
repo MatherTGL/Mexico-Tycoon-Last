@@ -59,19 +59,31 @@ namespace City.Business
             _cityControl = cityControl;
             _businessDataSO = businessDataSO;
 
-            _income = 10_000;
-            _consumption = 5_000;
-            _maxAmountMoneyLaundered = 20_000;
+            _averageCheckVisitor = _businessDataSO.averageCheckVisitor;
+            _averageSpendPerVisitor = _businessDataSO.averageSpendPerVisitor;
             _maxNumberVisitors = _businessDataSO.maxNumberVisitors;
+            _maxAmountMoneyLaundered = 20_000; //!
         }
 
         public void WorkBusiness()
         {
-            if (_isWork is true)
+            if (_isWork)
             {
+                CalculationNumberVisitors();
+                _income = _numberVisitors * _averageCheckVisitor;
+                _consumption = _numberVisitors * _averageSpendPerVisitor;
                 var netProfit = _income + _cityTreasury.LaunderMoney(_percentageMoneyLaundered, _maxAmountMoneyLaundered) - _consumption;
-                Debug.Log($"Casino is work | Net Profit {netProfit}");
+                Debug.Log($"Bank is work | Net Profit {netProfit} I: {_income}  C: {_consumption}");
                 DataControl.IdataPlayer.AddPlayerMoney(netProfit);
+
+                void CalculationNumberVisitors()
+                {
+                    _numberVisitors = (ushort)Mathf.Clamp(_cityControl.populationCity *
+                                                          _institutionPopularity * Random.Range(_businessDataSO.minPercentageVisitors,
+                                                                                          _businessDataSO.maxPercentageVisitors),
+                                                                                          0, _maxNumberVisitors);
+                    Debug.Log($"Number visitors bank: {_numberVisitors}");
+                }
             }
         }
 
@@ -91,7 +103,7 @@ namespace City.Business
 
         public void UpgradeMaxNumberVisitors()
         {
-            _maxNumberVisitors *= 2;
+            _maxNumberVisitors *= 2; //!
         }
     }
 }

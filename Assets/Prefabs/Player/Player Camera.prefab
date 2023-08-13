@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 4375912937434680046}
   m_Layer: 0
   m_Name: Player Camera
-  m_TagString: MainCamera
+  m_TagString: Boot
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,13 +29,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4375912937434679830}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!20 &4375912937434679829
 Camera:
@@ -47,13 +47,21 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.9339623, g: 0.9339623, b: 0.9339623, a: 0}
+  m_BackGroundColor: {r: 0.8584906, g: 0.8584906, b: 0.8584906, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -62,7 +70,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 10
+  field of view: 24.6
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -87,10 +95,21 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4375912937434679830}
-  serializedVersion: 2
+  serializedVersion: 4
   m_Mass: 2
   m_Drag: 3
   m_AngularDrag: 3
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -116,10 +135,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b788b4c27bb73ad7f8554e620550b3d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isEditParametersEditor: 0
   _configPlayerControlMove: {fileID: 11400000, guid: fc4cf356116db9fdf9ebfdaa58d95679, type: 2}
   _inputControl: {fileID: 4375912937434680041}
   _rigidbody: {fileID: 4375912937434680040}
+  _transform: {fileID: 4375912937434680042}
+  _currentSpeed: 0
+  _distanceZoomSpeedMove: 0
 --- !u!114 &4375912937434680041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,10 +155,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxForceMouseClampHorizontal: 4
   _maxForceMouseClampVertical: 4
-  _keycodeNumberOne: 49
-  _keycodeNumberTwo: 50
-  _keycodeNumberThree: 51
-  _keycodeNumberFour: 52
+  _keycodeAccelerationTimeDefault: 49
+  _keycodeAccelerationTimeTwo: 50
+  _keycodeAccelerationTimeThree: 51
+  _keycodeAccelerationTimeFour: 52
+  _keycodeTimePause: 32
+  _keycodeFastMove: 306
+  _keycodeLeftMouseButton: 323
+  _keycodeRightMouseButton: 324
 --- !u!114 &4375912937434680046
 MonoBehaviour:
   m_ObjectHideFlags: 0

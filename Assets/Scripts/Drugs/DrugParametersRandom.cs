@@ -34,23 +34,11 @@ public sealed class DrugParametersRandom : ScriptableObject
     private float _maxIncreasedDemand;
 
 
-    public uint GetMinCostDrugParameter()
-    {
-        return _minCostDrug;
-    }
+    public uint GetMinCostDrugParameter() { return _minCostDrug; }
 
-    public uint GetMaxCostDrugParameter()
-    {
-        return _maxCostDrug;
-    }
+    public uint GetMaxCostDrugParameter() { return _maxCostDrug; }
 
-    public float GetMinDemandDrugParameter()
-    {
-        return _minDemandDrug;
-    }
+    public float GetMinDemandDrugParameter() { return _minDemandDrug; }
 
-    public float GetMaxDemandDrugParameter()
-    {
-        return _maxDemandDrug;
-    }
+    public float GetMaxDemandDrugParameter() { return _maxDemandDrug; }
 }
