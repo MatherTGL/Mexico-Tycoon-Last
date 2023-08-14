@@ -12,7 +12,7 @@ using System;
 using City.Business;
 using Upgrade;
 using System.Threading;
-
+using System.Linq;
 
 namespace City
 {
@@ -38,7 +38,6 @@ namespace City
 
         [ShowInInspector, BoxGroup("Parameters"), HideLabel, Title("New Transport Way Link", horizontalLine: false), PropertyOrder(1)]
         private IPluggableingRoad _connectingObject;
-        IPluggableingRoad IPluggableingRoad.connectingObject => _connectingObject;
 
         private RoadBuilded _roadBuilded;
 
@@ -72,7 +71,6 @@ namespace City
 
         [ShowInInspector, BoxGroup("Parameters"), ReadOnly, PropertyOrder(4)]
         private Dictionary<string, InfoDrugClientsTransition> d_allInfoObjectClientsTransition = new Dictionary<string, InfoDrugClientsTransition>();
-        Dictionary<string, InfoDrugClientsTransition> IPluggableingRoad.d_allInfoObjectClientsTransition => d_allInfoObjectClientsTransition;
 
         [SerializeField, BoxGroup("Parameters"), MinValue(0.0f), PropertyOrder(5)]
         private float[] _weightToSellArray;
@@ -102,7 +100,6 @@ namespace City
         [SerializeField, Title("Upload Resource", horizontalLine: false), HideLabel, PropertyOrder(11)]
         [ShowIf("@_connectingObject != null"), BoxGroup("Parameters"), MinValue(0.0f)]
         private float _uploadResourceAddWay;
-        public float uploadResourceAddWay => _uploadResourceAddWay;
 
         [SerializeField, BoxGroup("Parameters"), TitleGroup("Parameters/Population"), HideLabel, PropertyOrder(12)]
         [MinValue(0), MaxValue(double.MaxValue / 2), Title("Population", horizontalLine: false)]
@@ -114,7 +111,6 @@ namespace City
         private byte _policeLevel;
 
         private byte _connectObjectsCount = 0;
-        public byte connectObjectsCount => _connectObjectsCount;
 
         private string _gameObjectConnectionIndex;
 
@@ -125,8 +121,8 @@ namespace City
 
             void SearchComponents()
             {
-                if (_spriteRendererObject is null) _spriteRendererObject = GetComponent<SpriteRenderer>();
-                if (_timeDateControl is null) _timeDateControl = FindObjectOfType<TimeDateControl>();
+                _spriteRendererObject = GetComponent<SpriteRenderer>();
+                _timeDateControl = FindObjectOfType<TimeDateControl>();
 
                 _IcityControlSell = this;
                 _IcityDrugBuyers = GetComponent<DrugBuyersContractControl>();
@@ -139,8 +135,7 @@ namespace City
             {
                 if (_configCityControlView is not null) _IcityView = new CityControlView(_configCityControlView);
 
-                if (_cityReproduction is null)
-                    _cityReproduction = new CityReproduction(c_mathematicalDivisor, _populationChangeStepPercentMax, _populationChangeStepPercentMin);
+                _cityReproduction = new CityReproduction(c_mathematicalDivisor, _populationChangeStepPercentMax, _populationChangeStepPercentMin);
 
                 _cityTreasury = new();
                 _cancellationTokenSource = new();
@@ -212,25 +207,26 @@ namespace City
 
         private void OnApplicationQuit() { _cancellationTokenSource.Cancel(); }
 
-        private async void SetBuyersDrugsAsync()
+        private async Task SetBuyersDrugsAsync()
         {
             await Task.Run(() =>
             {
                 SetWeightToSellDrugsAsync();
                 var countsDrugBuyers = Enum.GetNames(typeof(DrugBuyers.AllBuyers));
 
+                System.Random systemRandom = new System.Random();
+
                 for (int i = 0; i < countsDrugBuyers.Length / 2; i++) //!хардкод
                 {
-                    System.Random systemRandom = new System.Random();
                     var addRandomBuyer = systemRandom.Next(0, countsDrugBuyers.Length);
-                    systemRandom = null;
 
                     if (!_IcityDrugBuyers.d_contractBuyers.ContainsKey(countsDrugBuyers[addRandomBuyer]))
                         _IcityDrugBuyers.d_contractBuyers.Add(countsDrugBuyers[addRandomBuyer], new ContractBuyerInfo());
                 }
+                systemRandom = null;
             });
 
-            async void SetWeightToSellDrugsAsync()
+            async Task SetWeightToSellDrugsAsync()
             {
                 await Task.Run(() =>
                 {
@@ -301,43 +297,51 @@ namespace City
         [ShowIf("@_connectingObject != null"), PropertySpace(10), PropertyOrder(14)]
         private void AddNewTransportWay()
         {
-            _roadBuilded = new RoadBuilded(transform.position, _connectingObject.GetPositionVector2());
-            string nameInfoClients = _connectingObject.ToString() + _typeProductionResource.ToString();
-
-            d_allInfoObjectClientsTransition.Add(nameInfoClients, new InfoDrugClientsTransition());
-
-            if (!d_allInfoObjectClientsTransition[nameInfoClients].d_allClientObjects.ContainsKey(this))
+            if (_connectObjectsCount < c_maxConnectionObjects)
             {
-                _roadBuilded.roadResourcesManagement.CreateNewRoute(this, _connectingObject);
+                _connectObjectsCount++;
+                _roadBuilded = new RoadBuilded(transform.position, _connectingObject.GetPositionVector2());
+                string nameInfoClients = _connectingObject.ToString() + _typeProductionResource.ToString();
 
-                d_allInfoObjectClientsTransition[nameInfoClients].d_allClientObjects.Add(
-                    this, _roadBuilded.roadResourcesManagement.CheckAllConnectionObjectsRoad(this));
+                d_allInfoObjectClientsTransition.Add(nameInfoClients, new InfoDrugClientsTransition());
 
-                d_allInfoObjectClientsTransition[nameInfoClients].d_typeDrugAndAmountTransition.Add(
-                    _typeProductionResource.ToString(), _uploadResourceAddWay);
+                if (!d_allInfoObjectClientsTransition[nameInfoClients].d_allClientObjects.ContainsKey(this))
+                {
+                    _roadBuilded.roadResourcesManagement.CreateNewRoute(this, _connectingObject);
 
-                _connectingObject.ConnectObjectToObject(_typeProductionResource.ToString(), gameObject.name
-                    + _connectingObject.ToString(), _connectingObject, this);
+                    d_allInfoObjectClientsTransition[nameInfoClients].d_allClientObjects.Add(
+                        this, _roadBuilded.roadResourcesManagement.CheckAllConnectionObjectsRoad(this));
+
+                    d_allInfoObjectClientsTransition[nameInfoClients].d_typeDrugAndAmountTransition.Add(
+                        _typeProductionResource.ToString(), _uploadResourceAddWay);
+
+                    _connectingObject.ConnectObjectToObject(_typeProductionResource.ToString(), gameObject.name
+                        + _connectingObject.ToString(), _connectingObject, this);
+                }
+
+                _connectingObject = null;
+                _uploadResourceAddWay = 0;
             }
-
-            _connectingObject = null;
-            _uploadResourceAddWay = 0;
         }
 
         [Button("Remove Way"), BoxGroup("Parameters"), TitleGroup("Parameters/Control"), PropertySpace(10)]
         [ShowIf("@_connectingObject != null && d_allInfoObjectClientsTransition.Count > 0"), PropertyOrder(14)]
         private void RemoveTransportWay()
         {
-            string nameInfoClients = _connectingObject.ToString() + _typeProductionResource.ToString();
-
-            if (d_allInfoObjectClientsTransition.ContainsKey(nameInfoClients))
+            if (_connectObjectsCount > 0)
             {
-                _roadBuilded.roadResourcesManagement.DestroyRoute(this, _connectingObject);
-                d_allInfoObjectClientsTransition[nameInfoClients].d_allClientObjects.Remove(this);
-                d_allInfoObjectClientsTransition[nameInfoClients].d_typeDrugAndAmountTransition.Remove(_typeProductionResource.ToString());
-                _connectingObject.DisconnectObjectToObject(gameObject.name + _connectingObject.ToString());
-                d_allInfoObjectClientsTransition.Remove(nameInfoClients);
-                _connectingObject = null;
+                _connectObjectsCount--;
+                string nameInfoClients = _connectingObject.ToString() + _typeProductionResource.ToString();
+
+                if (d_allInfoObjectClientsTransition.ContainsKey(nameInfoClients))
+                {
+                    _roadBuilded.roadResourcesManagement.DestroyRoute(this, _connectingObject);
+                    d_allInfoObjectClientsTransition[nameInfoClients].d_allClientObjects.Remove(this);
+                    d_allInfoObjectClientsTransition[nameInfoClients].d_typeDrugAndAmountTransition.Remove(_typeProductionResource.ToString());
+                    _connectingObject.DisconnectObjectToObject(gameObject.name + _connectingObject.ToString());
+                    d_allInfoObjectClientsTransition.Remove(nameInfoClients);
+                    _connectingObject = null;
+                }
             }
         }
 #endif

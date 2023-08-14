@@ -4,44 +4,40 @@ using Boot;
 using TimeControl;
 using System.Collections;
 using Config.City.Business;
+using System.Linq;
 
 
 namespace City.Business
 {
     public sealed class CityBusinessControl : MonoBehaviour, IUpgradableCityBusiness
     {
-        [SerializeField, BoxGroup("Parameters"), ReadOnly, InfoBox("Find in awake")]
-        private TimeDateControl _timeDateControl;
-
-        [SerializeField, BoxGroup("Parameters")]
-        private byte _buildingSlots = 5; //? рандом, константа или под апгрейд?
-        public byte buildingSlots { get => _buildingSlots; set => _buildingSlots = value; }
-
-        [SerializeField, BoxGroup("Parameters"), MinValue("@_buildingSlots"), MaxValue(100)]
-        private byte _maxBuildingSlots = 5;
-        public byte maxBuildingSlots { get => _maxBuildingSlots; set => _maxBuildingSlots = value; }
-
         [ShowInInspector, BoxGroup("Parameters"), ReadOnly]
         private IBuisinessBuilding[] _IbusinessBuilding;
         public IBuisinessBuilding[] IbusinessBuilding => _IbusinessBuilding;
 
-        private enum TypeCreateBusiness { None, Casino, Bank }
-
         [SerializeField, BoxGroup("Parameters"), EnumToggleButtons, HideLabel, Title("Type Business", horizontalLine: false)]
         private TypeCreateBusiness _typeCreateBusiness;
 
-        [SerializeField, BoxGroup("Parameters"), Required, HideIf("_typeCreateBusiness", TypeCreateBusiness.None)]
         private BusinessDataSO _businessDataSO;
 
         private WaitForSeconds _coroutineTimeStep;
 
+        private TimeDateControl _timeDateControl;
+
+        private enum TypeCreateBusiness { None, Casino, Bank }
+
+        [SerializeField, BoxGroup("Parameters"), ReadOnly, DisableInEditorMode]
+        private byte _maxBuildingSlots = 5;
+        public byte maxBuildingSlots { get => _maxBuildingSlots; set => _maxBuildingSlots = value; }
+
+        [SerializeField, BoxGroup("Parameters"), ReadOnly, DisableInEditorMode]
+        private byte _occupiedSlots = 0;
+
 
         public void InitAwake()
         {
-            _IbusinessBuilding = new IBuisinessBuilding[_buildingSlots];
-
-            if (_timeDateControl is null)
-                _timeDateControl = FindObjectOfType<TimeDateControl>();
+            _IbusinessBuilding = new IBuisinessBuilding[CalculationNumberSlots()];
+            _timeDateControl = FindObjectOfType<TimeDateControl>();
 
             _coroutineTimeStep = new WaitForSeconds(_timeDateControl.GetCurrentTimeOneDay(true));
 
@@ -51,6 +47,11 @@ namespace City.Business
         public (Bootstrap.TypeLoadObject typeLoad, bool isSingle) GetTypeLoad()
         {
             return (typeLoad: Bootstrap.TypeLoadObject.MediumImportant, isSingle: false);
+        }
+
+        public byte CalculationNumberSlots()
+        {
+            return (byte)(_maxBuildingSlots - _occupiedSlots);
         }
 
         private IEnumerator WorkBusiness()
@@ -64,16 +65,17 @@ namespace City.Business
             }
         }
 
-        private void LoadResourceBusiness(in string typeBusiness)
+        private void LoadResourceBusiness(string typeBusiness)
         {
-            foreach (var item in Resources.FindObjectsOfTypeAll<BusinessDataSO>())
-                if (item.name == $"BusinessData{typeBusiness}") _businessDataSO = item;
+            foreach (var item in Resources.FindObjectsOfTypeAll<BusinessDataSO>()
+                .Where(item => item.name.Contains(typeBusiness))
+                .Select(item => _businessDataSO = item)) return;
         }
 
 
 #if UNITY_EDITOR
         [Button("Add new Business"), BoxGroup("Parameters/Buttons", false), DisableInEditorMode]
-        [HideIf("@_typeCreateBusiness == TypeCreateBusiness.None || _buildingSlots == 0")]
+        [HideIf("@_typeCreateBusiness == TypeCreateBusiness.None || CalculationNumberSlots() == 0")]
         private void AddNewBusiness()
         {
             LoadResourceBusiness(_typeCreateBusiness.ToString());
@@ -92,7 +94,7 @@ namespace City.Business
                         if (CheckBuildingSlots(new BusinessBank(GetComponent<CityControl>().cityTreasury,
                                                                 GetComponent<CityControl>(), _businessDataSO), (byte)i)) return;
                     }
-                    else { Debug.Log("Не выбран тип создаваемого бизнеса"); }
+                    else Debug.Log("Не выбран тип создаваемого бизнеса"); ;
                     _businessDataSO = null;
                     return;
                 }
@@ -100,9 +102,9 @@ namespace City.Business
 
             bool CheckBuildingSlots(IBuisinessBuilding createdBusiness, in byte arrayIndexBusinessBuilding)
             {
-                if (_buildingSlots >= createdBusiness.GetOccupiedNumberSlots())
+                if (CalculationNumberSlots() >= createdBusiness.GetOccupiedNumberSlots())
                 {
-                    _buildingSlots -= createdBusiness.GetOccupiedNumberSlots();
+                    _occupiedSlots += createdBusiness.GetOccupiedNumberSlots();
                     _IbusinessBuilding[arrayIndexBusinessBuilding] = createdBusiness;
                     return true;
                 }

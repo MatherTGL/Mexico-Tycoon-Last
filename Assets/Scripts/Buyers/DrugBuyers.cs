@@ -1,4 +1,4 @@
-public sealed class DrugBuyers
+public struct DrugBuyers
 {
     public enum AllBuyers
     {

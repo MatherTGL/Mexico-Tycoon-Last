@@ -19,19 +19,14 @@ namespace Fabric
     public sealed class FabricControl : MonoBehaviour, IBoot, IUpgradableFabric, IPluggableingRoad
     {
         #region Variables
-        private static byte _maxConnectionObjects = 4;
+        private const byte c_maxConnectionObjects = 4;
 
         private IFabricProduction _IfabricProduction;
 
         private IFabricView _IfabricView;
 
-        [BoxGroup("Parameters", centerLabel: true), TabGroup("Parameters/Tabs", "Links")]
-        [SerializeField, Required, Title("Time Date Control", horizontalLine: false), HideLabel]
-        [EnableIf("@_timeDateControl == null")]
         private TimeDateControl _timeDateControl;
 
-        [SerializeField, BoxGroup("Parameters", centerLabel: true), Required, Title("Road Control"), HideLabel]
-        [TabGroup("Parameters/Tabs", "Links"), EnableIf("@_roadControl == null")]
         private RoadControl _roadControl;
 
         private RoadBuilded _roadBuilded;
@@ -43,11 +38,14 @@ namespace Fabric
 
         private SpriteRenderer _spriteRendererObject;
 
-        [TabGroup("Parameters/Tabs", "Toggles")]
-        [SerializeField, ReadOnly, LabelText("Buyed"), ToggleLeft]
+        private WaitForSeconds _coroutineTimeStep;
+
+        private CancellationTokenSource _cancellationTokenSource;
+
+        private Dictionary<string, InfoDrugClientsTransition> d_allInfoObjectClientsTransition = new Dictionary<string, InfoDrugClientsTransition>();
+
         private bool _isBuyed;
 
-        [SerializeField, ReadOnly, TabGroup("Parameters/Tabs", "Toggles"), LabelText("Work"), ToggleLeft]
         private bool _isWork;
 
         [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Product Quality Local Max", horizontalLine: false)]
@@ -68,16 +66,12 @@ namespace Fabric
         private float _productivityKgPerDay;
         public float productivityKgPerDay { get => _productivityKgPerDay; set => _productivityKgPerDay = value; }
 
-        //?
-        // [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Current Free Production", horizontalLine: false), HideLabel]
-        // [MinValue(0.0f), ReadOnly, SuffixLabel("kg/day")]
-        //private float _currentFreeProductionKgPerDay;
-        //public float currentFreeProductionKgPerDay { get => _currentFreeProductionKgPerDay; set => _currentFreeProductionKgPerDay = value; }
+        [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Available Production Capacity", horizontalLine: false), HideLabel, ReadOnly]
+        private float _availableProductionCapacity;
 
         [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Product in Stock", horizontalLine: false), HideLabel]
         [MinValue(0.0f), ReadOnly, SuffixLabel("kg")]
         private float _productInStock;
-        public float productInStock => _productInStock;
 
         [SerializeField, BoxGroup("Parameters/Main Settings"), Title("Security Level", horizontalLine: false), HideLabel]
         [MinValue(0), MaxValue(10), SuffixLabel("Star (0-10)")]
@@ -109,42 +103,30 @@ namespace Fabric
         [ShowInInspector, FoldoutGroup("Parameters/Control/Transporting"), EnableIf("_isBuyed")]
         [HideLabel, Title("City New Transport Way Link", horizontalLine: false)]
         private IPluggableingRoad _connectingObject;
-        public IPluggableingRoad connectingObject => _connectingObject;
 
         [SerializeField, FoldoutGroup("Parameters/Control/Transporting"), ShowIf("@_connectingObject != null")]
         [MinValue(0.0f), EnableIf("_isBuyed"), Title("Upload Resource", horizontalLine: false), HideLabel, SuffixLabel("kg")]
         private float _uploadResourceAddWay;
-        public float uploadResourceAddWay => _uploadResourceAddWay;
 
         [BoxGroup("Parameters"), Title("Connect Objects", horizontalLine: false), SerializeField, ReadOnly]
         [MinValue(0), HideLabel]
         private byte _connectObjectsCount = 0;
-        public byte connectObjectsCount => _connectObjectsCount;
-
-        [ShowInInspector, FoldoutGroup("Parameters/Control"), ReadOnly]
-        private Dictionary<string, InfoDrugClientsTransition> d_allInfoObjectClientsTransition = new Dictionary<string, InfoDrugClientsTransition>();
-        Dictionary<string, InfoDrugClientsTransition> IPluggableingRoad.d_allInfoObjectClientsTransition => d_allInfoObjectClientsTransition;
-
-        private WaitForSeconds _coroutineTimeStep;
-
-        private CancellationTokenSource _cancellationTokenSource;
 
         #endregion
 
 
         void IBoot.InitAwake()
         {
-            if (_timeDateControl is null) { _timeDateControl = FindObjectOfType<TimeDateControl>(); }
-            if (_spriteRendererObject is null) { _spriteRendererObject = GetComponent<SpriteRenderer>(); }
+            if (_timeDateControl is null) _timeDateControl = FindObjectOfType<TimeDateControl>();
+            if (_spriteRendererObject is null) _spriteRendererObject = GetComponent<SpriteRenderer>();
+            if (_roadControl is null) _roadControl = FindObjectOfType<RoadControl>();
             _cancellationTokenSource = new CancellationTokenSource();
 
             SetFabricProduction();
+            SetFabricParameters();
         }
 
-        private void OnApplicationQuit()
-        {
-            _cancellationTokenSource.Cancel();
-        }
+        private void OnApplicationQuit() => _cancellationTokenSource.Cancel();
 
         private void SetFabricProduction()
         {
@@ -153,6 +135,11 @@ namespace Fabric
             _coroutineTimeStep = new WaitForSeconds(_timeDateControl.GetCurrentTimeOneDay(true));
 
             StartCoroutine(FabricWork());
+        }
+
+        private void SetFabricParameters()
+        {
+            _availableProductionCapacity = _productivityKgPerDay;
         }
 
         private IEnumerator FabricWork()
@@ -215,7 +202,7 @@ namespace Fabric
 
         public void ConnectObjectToObject(string typeFabricDrug, string gameObjectConnectionTo, IPluggableingRoad FirstObject, IPluggableingRoad SecondObject)
         {
-            if (_connectObjectsCount < _maxConnectionObjects)
+            if (_connectObjectsCount < c_maxConnectionObjects)
             {
                 _connectObjectsCount++;
                 _roadControl.BuildRoad(transform.position, transform.position, gameObjectConnectionTo);
@@ -278,28 +265,30 @@ namespace Fabric
         [ShowIf("@_connectingObject != null"), HorizontalGroup("Parameters/Control/Transporting/Way")]
         private void AddNewTransportWay()
         {
-            _roadBuilded = new RoadBuilded(transform.position, _connectingObject.GetPositionVector2());
-            string nameInfoClients = _connectingObject.ToString() + _typeProductionResource.ToString();
-
-            d_allInfoObjectClientsTransition.Add(nameInfoClients, new InfoDrugClientsTransition());
-
-            if (!d_allInfoObjectClientsTransition[nameInfoClients].d_allClientObjects.ContainsKey(this))
+            if (_connectObjectsCount < c_maxConnectionObjects && _availableProductionCapacity > _uploadResourceAddWay)
             {
-                _roadBuilded.roadResourcesManagement.CreateNewRoute(this, _connectingObject);
+                _connectObjectsCount++;
+                _availableProductionCapacity -= _uploadResourceAddWay;
 
-                d_allInfoObjectClientsTransition[nameInfoClients].d_allClientObjects.Add(
-                    this, _roadBuilded.roadResourcesManagement.CheckAllConnectionObjectsRoad(this));
+                _roadBuilded = new RoadBuilded(transform.position, _connectingObject.GetPositionVector2());
+                string nameInfoClients = _connectingObject.ToString() + _typeProductionResource.ToString();
 
-                d_allInfoObjectClientsTransition[nameInfoClients].d_typeDrugAndAmountTransition.Add(
-                    _typeProductionResource.ToString(), _uploadResourceAddWay);
+                d_allInfoObjectClientsTransition.Add(nameInfoClients, new InfoDrugClientsTransition());
 
-                _connectingObject.ConnectObjectToObject(_typeProductionResource.ToString(), gameObject.name
-                    + _connectingObject.ToString(), _connectingObject, this);
+                if (!d_allInfoObjectClientsTransition[nameInfoClients].d_allClientObjects.ContainsKey(this))
+                {
+                    _roadBuilded.roadResourcesManagement.CreateNewRoute(this, _connectingObject);
+
+                    d_allInfoObjectClientsTransition[nameInfoClients].d_allClientObjects.Add(
+                        this, _roadBuilded.roadResourcesManagement.CheckAllConnectionObjectsRoad(this));
+
+                    d_allInfoObjectClientsTransition[nameInfoClients].d_typeDrugAndAmountTransition.Add(
+                        _typeProductionResource.ToString(), _uploadResourceAddWay);
+
+                    _connectingObject.ConnectObjectToObject(_typeProductionResource.ToString(), gameObject.name
+                        + _connectingObject.ToString(), _connectingObject, this);
+                }
             }
-
-#if UNITY_EDITOR
-            DebugSystem.Log(this, DebugSystem.SelectedColor.Green, $"Created Way from {this} to {_connectingObject} | Upload Res: {_uploadResourceAddWay}", "Fabric", "Way");
-#endif
 
             _connectingObject = null;
             _uploadResourceAddWay = 0;
@@ -309,15 +298,15 @@ namespace Fabric
         [ShowIf("@_connectingObject != null"), HorizontalGroup("Parameters/Control/Transporting/Way")]
         private void RemoveTransportWay()
         {
-            if (_connectingObject is null)
+            if (_connectObjectsCount > 0 && _connectingObject is not null)
             {
+                _connectObjectsCount--;
+                _availableProductionCapacity += d_allInfoObjectClientsTransition[_connectingObject.ToString()
+                    + _typeProductionResource.ToString()].d_typeDrugAndAmountTransition[_typeProductionResource.ToString()];
+
                 _connectingObject.DisconnectObjectToObject(gameObject.name + _connectingObject.ToString());
                 d_allInfoObjectClientsTransition.Remove(_connectingObject.ToString() + _typeProductionResource.ToString());
                 _roadBuilded.roadResourcesManagement.DestroyRoute(this, _connectingObject);
-
-#if UNITY_EDITOR
-                DebugSystem.Log(this, DebugSystem.SelectedColor.Green, $"Remove Way from {this} to {_connectingObject}", "Fabric", "Way");
-#endif
             }
         }
 
@@ -327,10 +316,6 @@ namespace Fabric
         {
             string nameClient = _connectingObject.ToString() + _typeProductionResource.ToString();
             d_allInfoObjectClientsTransition[nameClient].d_typeDrugAndAmountTransition[_typeProductionResource.ToString()] += _uploadResourceAddWay;
-
-#if UNITY_EDITOR
-            DebugSystem.Log(this, DebugSystem.SelectedColor.Green, $"Connecting object ({nameClient}) upload resource {_uploadResourceAddWay}", "Fabric", "Resources");
-#endif
         }
 
         [Button("Unload Res"), EnableIf("_isBuyed"), FoldoutGroup("Parameters/Control/Transporting"), PropertySpace(5, 10)]
@@ -339,10 +324,6 @@ namespace Fabric
         {
             string nameClient = _connectingObject.ToString() + _typeProductionResource.ToString();
             d_allInfoObjectClientsTransition[nameClient].d_typeDrugAndAmountTransition[_typeProductionResource.ToString()] -= _uploadResourceAddWay;
-
-#if UNITY_EDITOR
-            DebugSystem.Log(this, DebugSystem.SelectedColor.Green, $"Connecting object ({nameClient}) reduce resource {_uploadResourceAddWay}", "Fabric", "Resources");
-#endif
         }
 #endif
         #endregion

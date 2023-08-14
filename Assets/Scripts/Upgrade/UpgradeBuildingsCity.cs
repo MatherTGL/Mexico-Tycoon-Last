@@ -18,11 +18,9 @@ namespace Upgrade.Buildings
         public void UpgradeBuildingSlots()
         {
             if (Application.isPlaying)
-            {
-                if (_IupgradableCityBusiness.buildingSlots < _IupgradableCityBusiness.maxBuildingSlots)
-                    _IupgradableCityBusiness.buildingSlots++;
-            }
-            else { Debug.Log("Изменения доступны только в play mode"); }
+                _IupgradableCityBusiness.maxBuildingSlots++;
+            else
+                Debug.Log("Изменения доступны только в play mode");
         }
 
         public void UpgradeBusinessMaxNumberVisitors(in byte indexBusiness)

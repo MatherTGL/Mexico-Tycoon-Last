@@ -70,11 +70,7 @@ namespace City.Business
             if (_isWork)
             {
                 CalculationNumberVisitors();
-                _income = _numberVisitors * _averageCheckVisitor;
-                _consumption = _numberVisitors * _averageSpendPerVisitor;
-                var netProfit = _income + _cityTreasury.LaunderMoney(_percentageMoneyLaundered, _maxAmountMoneyLaundered) - _consumption;
-                Debug.Log($"Casino is work | Net Profit {netProfit} I: {_income}  C: {_consumption}");
-                DataControl.IdataPlayer.AddPlayerMoney(netProfit);
+                DataControl.IdataPlayer.AddPlayerMoney(CalculationProfit());
 
                 void CalculationNumberVisitors()
                 {
@@ -82,7 +78,14 @@ namespace City.Business
                                                           _institutionPopularity * Random.Range(_businessDataSO.minPercentageVisitors,
                                                                                           _businessDataSO.maxPercentageVisitors),
                                                                                           0, _maxNumberVisitors);
-                    Debug.Log($"Number visitors casino: {_numberVisitors}");
+                }
+
+                double CalculationProfit()
+                {
+                    _income = _numberVisitors * _averageCheckVisitor;
+                    _consumption = _numberVisitors * _averageSpendPerVisitor;
+                    double netProfit = _income + _cityTreasury.LaunderMoney(_percentageMoneyLaundered, _maxAmountMoneyLaundered) - _consumption;
+                    return netProfit;
                 }
             }
         }
@@ -104,7 +107,6 @@ namespace City.Business
         public void UpgradeMaxNumberVisitors()
         {
             _maxNumberVisitors *= 2; //!
-            Debug.Log(_maxNumberVisitors);
         }
     }
 }

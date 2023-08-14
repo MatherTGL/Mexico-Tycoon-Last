@@ -744,7 +744,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01ab353b8168030f7b5228ad01206586, type: 3}
---- !u!1 &115272562
+--- !u!1 &146039958
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -752,37 +752,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 115272564}
-  - component: {fileID: 115272563}
+  - component: {fileID: 146039960}
+  - component: {fileID: 146039959}
   m_Layer: 0
-  m_Name: Research linq
+  m_Name: Test
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &115272563
+  m_IsActive: 1
+--- !u!114 &146039959
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 115272562}
+  m_GameObject: {fileID: 146039958}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5c15e8d5b0139823b6025b7ac8b7462, type: 3}
+  m_Script: {fileID: 11500000, guid: e63e4bb220470f90b8bd74545761b51a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &115272564
+--- !u!4 &146039960
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 115272562}
+  m_GameObject: {fileID: 146039958}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 129.83812, y: 41.732708, z: 0.023483276}
+  m_LocalPosition: {x: 135.58809, y: 43.259777, z: -0.23120093}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1354,97 +1354,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1515127981}
     m_Modifications:
-    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
-      propertyPath: _roadControl
-      value: 
-      objectReference: {fileID: 1993232431}
-    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
-      propertyPath: _populationCity
-      value: 232000
-      objectReference: {fileID: 0}
-    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
-      propertyPath: _increasedDemand
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
-      propertyPath: _timeDateControl
-      value: 
-      objectReference: {fileID: 519420036}
-    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
-      propertyPath: _averageCostDrugs.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
-      propertyPath: _weightToSellArray.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
-      propertyPath: _averageCostDrugs.Array.data[0]
-      value: 5000
-      objectReference: {fileID: 0}
-    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
-      propertyPath: _averageCostDrugs.Array.data[1]
-      value: 5000
-      objectReference: {fileID: 0}
-    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
-      propertyPath: _averageCostDrugs.Array.data[2]
-      value: 5000
-      objectReference: {fileID: 0}
-    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
-      propertyPath: _populationChangeStepPercentMax
-      value: 0.21
-      objectReference: {fileID: 0}
-    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
-      propertyPath: _populationChangeStepPercentMin
-      value: -0.13
-      objectReference: {fileID: 0}
-    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
-      propertyPath: _weightToSellArray.Array.data[0]
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
-      propertyPath: _weightToSellArray.Array.data[1]
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
-      propertyPath: _weightToSellArray.Array.data[2]
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
-      propertyPath: _nameDrugEditorAverageCost.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
-      propertyPath: _nameDrugEditorAverageCost.Array.data[0]
-      value: Cocaine
-      objectReference: {fileID: 0}
-    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
-      propertyPath: _nameDrugEditorAverageCost.Array.data[1]
-      value: Marijuana
-      objectReference: {fileID: 0}
-    - target: {fileID: 3276379949940217397, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
-      propertyPath: _nameDrugEditorAverageCost.Array.data[2]
-      value: Crack
-      objectReference: {fileID: 0}
     - target: {fileID: 3276379949940217400, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: m_Name
       value: City (4)
-      objectReference: {fileID: 0}
-    - target: {fileID: 3276379949940217400, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3276379949940217402, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
-      propertyPath: m_FlipX
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3276379949940217402, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
-      propertyPath: m_FlipY
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
-      propertyPath: m_RootOrder
-      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 3276379949940217403, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1486,24 +1398,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4623061035745898651, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
-      propertyPath: _buildingSlots
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4623061035745898651, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
-      propertyPath: _maxBuildingSlots
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4623061035745898651, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
-      propertyPath: _typeCreateBusiness
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7998808199365959460, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
-      propertyPath: _setDrugsParametersRandom
-      value: 
-      objectReference: {fileID: 11400000, guid: bdf9add5957ba0aaa8f11c5054478a9c, type: 2}
-    m_RemovedComponents:
-    - {fileID: 3276379949940217396, guid: 12fdf5d59841274e08cb8c3581ed3e42, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -8894,4 +8789,4 @@ SceneRoots:
   - {fileID: 4375912937590698602}
   - {fileID: 1083132076}
   - {fileID: 253992074}
-  - {fileID: 115272564}
+  - {fileID: 146039960}

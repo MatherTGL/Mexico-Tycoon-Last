@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12d67090e20f82ba89f5f9c03336580c, type: 3}
   m_Name: BusinessDataBank
   m_EditorClassIdentifier: 
-  _minPercentageVisitors: 0.01
-  _maxPercentageVisitors: 0.03
+  _minPercentageVisitors: 0.005
+  _maxPercentageVisitors: 0.02
