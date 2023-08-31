@@ -206,27 +206,6 @@
       <label>Create Config/Data/Data Player/Create New</label>
     </MCItem>
     <MCItem>
-      <type>MenuPath</type>
-      <command>Assets/Create/Config/Buildings/Fabric/Fabric Control/View/Create New</command>
-      <original>None</original>
-      <overrideLabel>true</overrideLabel>
-      <label>Create Config/Buildings/Fabric/Fabric Control/View/Create New</label>
-    </MCItem>
-    <MCItem>
-      <type>MenuPath</type>
-      <command>Assets/Create/Config/Buildings/City/City Control/View/Create New</command>
-      <original>None</original>
-      <overrideLabel>true</overrideLabel>
-      <label>Create Config/Buildings/City/City Control/View/Create New</label>
-    </MCItem>
-    <MCItem>
-      <type>MenuPath</type>
-      <command>Assets/Create/Config/Drug/Parameters/Random/Create New</command>
-      <original>None</original>
-      <overrideLabel>true</overrideLabel>
-      <label>Create Config/Drug/Parameters/Random/Create New</label>
-    </MCItem>
-    <MCItem>
       <type>Separator</type>
       <command />
       <original>None</original>
@@ -270,17 +249,24 @@
     </MCItem>
     <MCItem>
       <type>MenuPath</type>
-      <command>Assets/Create/Config/Business/Data</command>
+      <command>Assets/Create/Config/Buildings/City/Create New</command>
       <original>None</original>
       <overrideLabel>true</overrideLabel>
-      <label>Create Config/Business/Data</label>
+      <label>Create Config/Buildings/City/Create New</label>
     </MCItem>
     <MCItem>
       <type>MenuPath</type>
-      <command>Assets/Create/Config/Transport/Kind Transport/Car</command>
+      <command>Assets/Create/Config/Buildings/Farm/Create New</command>
       <original>None</original>
       <overrideLabel>true</overrideLabel>
-      <label>Create Config/Transport/Kind Transport/Car</label>
+      <label>Create Config/Buildings/Farm/Create New</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>Assets/Create/Config/Buildings/Fabric/Create New</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>Create Config/Buildings/Fabric/Create New</label>
     </MCItem>
   </projectItemList>
 </MCSetting>

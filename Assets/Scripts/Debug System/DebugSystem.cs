@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DebugCustomSystem
 {
-    public sealed class DebugSystem : MonoBehaviour
+    public sealed class DebugSystem
     {
         private static Color _infoColor = Color.white;
         private static Color _warningColor = Color.yellow;
@@ -16,22 +16,7 @@ namespace DebugCustomSystem
         }
 
 
-        public static void Log(object message)
-        {
-            Debug.Log(FormatMessage(message));
-        }
-
-        public static void Log(object message, string additionalMessage = "")
-        {
-            Debug.Log(FormatMessage(message, additionalMessage));
-        }
-
-        public static void Log(object message, SelectedColor color, string additionalMessage = "")
-        {
-            Debug.Log(FormatMessage(message, CheckColorType(color), additionalMessage));
-        }
-
-        public static void Log(object message, SelectedColor color, string tag, string additionalMessage = "")
+        public static void Log(object message, SelectedColor color, string additionalMessage = "", string tag = "Non")
         {
             Debug.Log(FormatMessage(message, CheckColorType(color), tag, additionalMessage));
         }
@@ -39,16 +24,6 @@ namespace DebugCustomSystem
         public static void Log(object message, SelectedColor color, string additionalMessage = "", params string[] tag)
         {
             Debug.Log(FormatMessage(message, CheckColorType(color), additionalMessage, tag));
-        }
-
-        private static string FormatMessage(object message, string additionalMessage = "")
-        {
-            return $"{additionalMessage}<color={_infoColor}>{message}</color>";
-        }
-
-        private static string FormatMessage(object message, string colorText, string additionalMessage = "")
-        {
-            return $"<b><color={colorText}>{additionalMessage}</color></b> <color={_infoColor}>{message}</color>";
         }
 
         private static string FormatMessage(object message, string colorText, string tag, string additionalMessage = "")

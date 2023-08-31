@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,35 +18,33 @@ namespace Boot
 
         private void Awake() => LoadToList();
 
-        private async void LoadToList()
+        private async ValueTask LoadToList()
         {
             IBoot[] bootObjects = GameObject.FindObjectsOfType<MonoBehaviour>()
-                .OfType<IBoot>()
-                .Where(item => ((MonoBehaviour)item).enabled)
-                .Distinct()
-                .ToArray<IBoot>();
+                .OfType<IBoot>().Where(item => ((MonoBehaviour)item).enabled)
+                .Distinct().ToArray<IBoot>();
 
-            await Task.Run(() =>
-            {
-                _bootObjectList.AddRange(bootObjects.Where(item => item.GetTypeLoad().typeLoad == TypeLoadObject.SuperImportant
-                        && item.GetTypeLoad().isSingle));
-
-                _bootObjectList.AddRange(bootObjects.Where(item => item.GetTypeLoad().typeLoad == TypeLoadObject.SuperImportant
-                        && !item.GetTypeLoad().isSingle));
-
-                _bootObjectList.AddRange(bootObjects.Where(item => item.GetTypeLoad().typeLoad == TypeLoadObject.MediumImportant
-                        && !item.GetTypeLoad().isSingle));
-
-                _bootObjectList.AddRange(bootObjects.Where(item => item.GetTypeLoad().typeLoad == TypeLoadObject.SimpleImportant
-                        && !item.GetTypeLoad().isSingle));
-
-                bootObjects = null;
-            });
-
-            InitList();
+            await Task.Run(() => { SortingObjectsList(ref bootObjects); });
+            StartInit();
         }
 
-        private void InitList()
+        private void SortingObjectsList(ref IBoot[] bootObjects)
+        {
+            foreach (var typeLoad in Enum.GetValues(typeof(TypeLoadObject)))
+            {
+                if (typeLoad is TypeLoadObject.SuperImportant)
+                {
+                    _bootObjectList.AddRange(bootObjects.Where(item => item.GetTypeLoad().typeLoad.Equals(typeLoad)
+                        && item.GetTypeLoad().isSingle));
+                }
+
+                _bootObjectList.AddRange(bootObjects.Where(item => item.GetTypeLoad().typeLoad.Equals(typeLoad)
+                        && !item.GetTypeLoad().isSingle));
+            }
+            Array.Clear(bootObjects, 0, bootObjects.Length);
+        }
+
+        private void StartInit()
         {
             for (int i = 0; i < _bootObjectList.Count; i++)
                 _bootObjectList[i].InitAwake();

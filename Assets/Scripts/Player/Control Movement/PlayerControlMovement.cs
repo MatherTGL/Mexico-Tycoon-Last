@@ -34,18 +34,18 @@ namespace Player.Movement
         [HideLabel, Title("Transform", HorizontalLine = false)]
         private Transform _transform;
 
+        private Vector3 _directionMoveCamera;
+
         [SerializeField, BoxGroup("Parameters/Readonly"), ReadOnly]
         private float _currentSpeed;
 
         [SerializeField, BoxGroup("Parameters/Readonly"), ReadOnly]
         private float _distanceZoomSpeedMove;
 
-        private float _direcionMoveX;
-        private float _directionMoveY;
-        private float _directionMoveZ;
+        private float _direcionMoveX, _directionMoveY, _directionMoveZ;
 
-        private Vector3 _directionMoveCamera;
 
+        private PlayerControlMovement() { }
 
         public void InitAwake() => DontDestroyOnLoad(gameObject);
 

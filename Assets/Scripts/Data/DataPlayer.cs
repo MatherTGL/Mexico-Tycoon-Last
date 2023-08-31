@@ -6,9 +6,14 @@ namespace Data.Player
 {
     public sealed class DataPlayer : IDataPlayer
     {
+        private static readonly DataPlayer _instance = new DataPlayer();
+        public static DataPlayer GetInstance => _instance;
+
         private static double _money;
         private static ushort _researchPoints;
 
+
+        private DataPlayer() { }
 
         public void SetDataConfig(in ConfigDataPlayer configDataPlayer)
         {

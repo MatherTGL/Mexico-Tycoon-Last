@@ -22,6 +22,8 @@ namespace TimeControl
         private bool _isPaused = false;
 
 
+        private TimeDateControl() { }
+
         public void InitAwake()
         {
             _timeAcceleration = new TimeAcceleration(_configTimeControl, _inputControl);
