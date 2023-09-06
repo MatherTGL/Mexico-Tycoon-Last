@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using System.Linq;
 using Building;
+using Resources;
 
 
 namespace Transport.Reception
@@ -81,22 +82,14 @@ namespace Transport.Reception
             else return false;
         }
 
-        public (bool confirmRequest, float quantityPerLoad) RequestConnectionToLoadRes(in float transportCapacity)
+        float ITransportReception.RequestConnectionToLoadRes(in float transportCapacity, in TypeProductionResources.TypeResource typeResource)
         {
-            Debug.Log("пункт 2");
-            if (_buildingRequest.RequestGetResource(transportCapacity).quantity >= transportCapacity)
-                return (true, _buildingRequest.RequestGetResource(transportCapacity).quantity);
-            else
-                return (false, 0);
+            return _buildingRequest.RequestGetResource(transportCapacity, typeResource);
         }
 
-        public bool RequestConnectionToUnloadRes(in float quantityForUnloading)
+        bool ITransportReception.RequestConnectionToUnloadRes(in float quantityForUnloading, in TypeProductionResources.TypeResource typeResource)
         {
-            Debug.Log("пункт 2");
-            if (_buildingRequest.RequestUnloadResource(quantityForUnloading))
-                return true;
-            else
-                return false;
+            return _buildingRequest.RequestUnloadResource(quantityForUnloading, typeResource);
         }
 
         public void AddConnectionToDictionary(in ITransportReception fromObject, in GameObject createdRouteObject)

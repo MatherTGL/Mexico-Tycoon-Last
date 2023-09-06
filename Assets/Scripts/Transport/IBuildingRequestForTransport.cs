@@ -1,8 +1,11 @@
+using Resources;
+
+
 namespace Transport.Reception
 {
     public interface IBuildingRequestForTransport
     {
-        (bool inStock, float quantity) RequestGetResource(in float transportCapacity);
-        bool RequestUnloadResource(in float quantityResource);
+        float RequestGetResource(in float transportCapacity, in TypeProductionResources.TypeResource typeResource);
+        bool RequestUnloadResource(in float quantityResource, in TypeProductionResources.TypeResource typeResource);
     }
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
-
+using Resources;
 
 namespace Transport
 {
@@ -10,6 +10,10 @@ namespace Transport
         [SerializeField]
         private GameObject _prefab;
         public GameObject prefab => _prefab;
+
+        [SerializeField]
+        private TypeProductionResources.TypeResource _typeResource;
+        public TypeProductionResources.TypeResource typeResource => _typeResource;
 
         [SerializeField, MinValue(0.5f)]
         private float _speed;

@@ -6,10 +6,12 @@ using System.Collections;
 using Building.City;
 using Config.Building;
 using Building.Farm;
+using Building.Stock;
 using Transport.Reception;
 using Building.Fabric;
-using DebugCustomSystem;
-
+using Resources;
+using Building.Additional;
+using Building.Border;
 
 namespace Building
 {
@@ -18,6 +20,10 @@ namespace Building
     public sealed class BuildingControl : MonoBehaviour, IBoot, IBuildingRequestForTransport
     {
         private IBuilding _Ibuilding;
+
+        private IBuildingJobStatus _IbuildingJobStatus;
+
+        private IBuildingPurchased _IbuildingPurchased;
 
         [SerializeField, Required, BoxGroup("Parameters"), HideLabel, PropertySpace(0, 5)]
         private ScriptableObject _configSO;
@@ -29,14 +35,11 @@ namespace Building
 
         public enum TypeBuilding : byte
         {
-            City, Fabric, Farm, Aerodrome, SeaPort, Stock
+            City, Fabric, Farm, Aerodrome, SeaPort, Stock, Border
         }
 
         [SerializeField, BoxGroup("Parameters"), EnumToggleButtons, HideLabel]
         private TypeBuilding _typeBuilding;
-
-        [SerializeField, BoxGroup("Parameters"), ToggleLeft, ReadOnly]
-        private bool _isBuyed;
 
 
         private BuildingControl() { }
@@ -63,6 +66,10 @@ namespace Building
                         _Ibuilding = new BuildingFarm((ConfigBuildingFarmEditor)_configSO);
                     else if (_typeBuilding is TypeBuilding.Fabric)
                         _Ibuilding = new BuildingFabric((ConfigBuildingFabricEditor)_configSO);
+                    else if (_typeBuilding is TypeBuilding.Stock)
+                        _Ibuilding = new BuildingStock((ConfigBuildingStockEditor)_configSO);
+                    else if (_typeBuilding is TypeBuilding.Border)
+                        _Ibuilding = new BuildingBorder();
                 }
             }
         }
@@ -72,30 +79,42 @@ namespace Building
             return (Bootstrap.TypeLoadObject.SuperImportant, false);
         }
 
-        (bool inStock, float quantity) IBuildingRequestForTransport.RequestGetResource(in float transportCapacity)
+        float IBuildingRequestForTransport.RequestGetResource(in float transportCapacity, in TypeProductionResources.TypeResource typeResource)
         {
-            Debug.Log($"пункт 3 {transportCapacity} / {_Ibuilding}");
-            if (_Ibuilding.GetResources(transportCapacity).confirm)
-                return (true, _Ibuilding.GetResources(transportCapacity).quantityAmount);
-            else
-                return (false, 0);
+            return _Ibuilding.GetResources(transportCapacity, typeResource);
         }
 
-        bool IBuildingRequestForTransport.RequestUnloadResource(in float quantityResource)
+        bool IBuildingRequestForTransport.RequestUnloadResource(in float quantityResource, in TypeProductionResources.TypeResource typeResource)
         {
-            DebugSystem.Log(this, DebugSystem.SelectedColor.Green, "Отправлен запрос на склад", "Transport");
-            if (_Ibuilding.SetResources(quantityResource))
-                return true;
-            else
-                return false;
+            return _Ibuilding.SetResources(quantityResource, typeResource);
         }
 
         private void ChangeOwnerState(in bool isBuy)
         {
-            if (isBuy == true && _isBuyed == false || isBuy == false && _isBuyed == true) _isBuyed = isBuy;
+            if (_Ibuilding is IBuildingPurchased)
+            {
+                _IbuildingPurchased = (IBuildingPurchased)_Ibuilding;
 
-            if (_isBuyed) StartCoroutine(ConstantUpdating());
-            else StopAllCoroutines();
+                if (isBuy)
+                {
+                    _IbuildingPurchased.Buy();
+                    StartCoroutine(ConstantUpdating());
+                }
+                else
+                {
+                    _IbuildingPurchased.Sell();
+                    StopAllCoroutines();
+                }
+            }
+        }
+
+        private void ChangeJobStatusBuilding(in bool isState)
+        {
+            if (_Ibuilding is IBuildingJobStatus)
+            {
+                _IbuildingJobStatus = (IBuildingJobStatus)_Ibuilding;
+                _IbuildingJobStatus.ChangeJobStatus(isState);
+            }
         }
 
         private IEnumerator ConstantUpdating()
@@ -119,11 +138,11 @@ namespace Building
 
         [Button("Activate"), BoxGroup("Editor Control"), HorizontalGroup("Editor Control/Hor2")]
         [DisableInEditorMode]
-        private void SetActivateBuilding() => _Ibuilding.ChangeJobStatus(true);
+        private void SetActivateBuilding() => ChangeJobStatusBuilding(true);
 
         [Button("Deactivate"), BoxGroup("Editor Control"), HorizontalGroup("Editor Control/Hor2")]
         [DisableInEditorMode]
-        private void SetDeactivateBuilding() => _Ibuilding.ChangeJobStatus(false);
+        private void SetDeactivateBuilding() => ChangeJobStatusBuilding(false);
 #endif
     }
 }

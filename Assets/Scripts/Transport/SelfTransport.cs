@@ -1,5 +1,6 @@
 using System;
-using DebugCustomSystem;
+using System.Collections.Generic;
+using Resources;
 using UnityEngine;
 
 
@@ -11,15 +12,19 @@ namespace Transport
 
         private TypeTransport _typeTransport;
 
-        private GameObject _objectTransport;
+        private GameObject _someObject;
+
+        private Dictionary<byte, bool[]> d_loadAndUnloadStates = new Dictionary<byte, bool[]>();
+
+        private TypeProductionResources.TypeResource _typeCurrentTransportResource;
 
         private float _productLoad;
 
+        private byte _indexCurrentRoutePoint;
+
         private bool _isFirstPosition = true;
 
-        private bool[] _loadAndUnloadStates = new bool[4];
-
-        private byte _indexCurrentRoutePoint;
+        private bool _isWaitingReception = false;
 
 
         public SelfTransport(in TypeTransport typeTransport,
@@ -28,9 +33,18 @@ namespace Transport
         {
             _typeTransport = typeTransport;
             _ItransportInteractRoute = routeTransportControl;
-            _objectTransport = objectTransport;
+            _someObject = objectTransport;
+            _typeCurrentTransportResource = _typeTransport.typeResource;
 
             _ItransportInteractRoute.onLateUpdateAction += MovementTransport;
+
+            InitDictionaryStates();
+        }
+
+        private void InitDictionaryStates()
+        {
+            for (byte i = 0; i != 2; i++)
+                d_loadAndUnloadStates.Add(i, new bool[2]);
         }
 
         public void Dispose()
@@ -52,84 +66,84 @@ namespace Transport
 
             void FirstPosition()
             {
-                Debug.Log(_indexCurrentRoutePoint);
-                if (_objectTransport.transform.position == _ItransportInteractRoute.routePoints[_indexCurrentRoutePoint])
+                if (_someObject.transform.position == _ItransportInteractRoute.routePoints[_indexCurrentRoutePoint])
                 {
                     if (_indexCurrentRoutePoint < _ItransportInteractRoute.routePoints.Length - 1)
                         _indexCurrentRoutePoint++;
                     else if (_indexCurrentRoutePoint == _ItransportInteractRoute.routePoints.Length - 1)
-                    {
-                        Debug.Log("машина на месте и готова для погрузки FIRST-POSITION");
-                        RequestLoad(indexStateLoad: 0, ref _isFirstPosition, indexReception: 0);
-                        RequestUnload(indexStateLoad: 1, ref _isFirstPosition, indexReception: 0);
-                        _isFirstPosition = false;
-                    }
-                    Debug.Log(_indexCurrentRoutePoint);
+                        SendRequestsAndCheckWaitingCar(indexReception: 1, isFirstPosition: false);
                 }
             }
 
             void LastPosition()
             {
-                Debug.Log(_indexCurrentRoutePoint);
-                if (_objectTransport.transform.position == _ItransportInteractRoute.routePoints[_indexCurrentRoutePoint])
+                if (_someObject.transform.position == _ItransportInteractRoute.routePoints[_indexCurrentRoutePoint])
                 {
-                    Debug.Log(_indexCurrentRoutePoint);
-                    if (_indexCurrentRoutePoint > 0) _indexCurrentRoutePoint--;
+                    if (_indexCurrentRoutePoint > 0)
+                        _indexCurrentRoutePoint--;
                     else if (_indexCurrentRoutePoint == 0)
-                    {
-                        Debug.Log("машина на месте и готова для погрузки SECOND-POSITION");
-                        RequestLoad(indexStateLoad: 2, ref _isFirstPosition, indexReception: 1);
-                        RequestUnload(indexStateLoad: 3, ref _isFirstPosition, indexReception: 1);
-                        _isFirstPosition = true;
-                    }
+                        SendRequestsAndCheckWaitingCar(indexReception: 0, isFirstPosition: true);
                 }
+            }
+
+            void SendRequestsAndCheckWaitingCar(in byte indexReception, in bool isFirstPosition)
+            {
+                RequestLoad(indexStateLoad: 0, indexReception: indexReception);
+                RequestUnload(indexStateLoad: 1, indexReception: indexReception);
+
+                if (WaitFullLoadOrUnload()) _isFirstPosition = isFirstPosition;
             }
         }
 
         private void Move(in int indexPositionRoute)
         {
-            _objectTransport.transform.position = Vector3.MoveTowards(_objectTransport.transform.position,
+            _someObject.transform.position = Vector3.MoveTowards(_someObject.transform.position,
                                                     _ItransportInteractRoute.routePoints[indexPositionRoute],
                                                     _typeTransport.speed * Time.deltaTime);
         }
 
-        private void RequestLoad(in byte indexStateLoad, ref bool isFirstPosition, in byte indexReception)
+        private void RequestLoad(in byte indexStateLoad, in byte indexReception)
         {
-            DebugSystem.Log(this, DebugSystem.SelectedColor.Green, "RequestLoad()");
-            if (_loadAndUnloadStates[indexStateLoad])
+            if (d_loadAndUnloadStates[indexReception][indexStateLoad])
             {
-                DebugSystem.Log(this, DebugSystem.SelectedColor.Green, "Запрос на погрузку проверяется");
-                if (_ItransportInteractRoute.GetPointsReception()[indexReception].RequestConnectionToLoadRes(_typeTransport.capacity).confirmRequest)
-                {
-                    DebugSystem.Log(this, DebugSystem.SelectedColor.Green, "Запрос на погрузку принят");
-                    _productLoad = _ItransportInteractRoute.GetPointsReception()[indexReception].RequestConnectionToLoadRes(_typeTransport.capacity).quantityPerLoad;
-                }
+                _productLoad = _ItransportInteractRoute.GetPointsReception()[indexReception]
+                                .RequestConnectionToLoadRes(_typeTransport.capacity, _typeCurrentTransportResource);
             }
         }
 
-        private void RequestUnload(in byte indexStateLoad, ref bool isFirstPosition, in byte indexReception)
+        private void RequestUnload(in byte indexStateLoad, in byte indexReception)
         {
-            if (_loadAndUnloadStates[indexStateLoad])
+            if (d_loadAndUnloadStates[indexReception][indexStateLoad])
             {
-                DebugSystem.Log(this, DebugSystem.SelectedColor.Green, "Запрос на разгрузку отправлен", "Transport");
-                if (_ItransportInteractRoute.GetPointsReception()[indexReception].RequestConnectionToUnloadRes(_productLoad))
-                {
-                    DebugSystem.Log(this, DebugSystem.SelectedColor.Green, "Запрос на разгрузку принят", "Transport");
-                    _productLoad = 0;
-                    DebugSystem.Log(this, DebugSystem.SelectedColor.Green, "Машина разгружена и отправлена", "Transport");
-                    DebugSystem.Log(_isFirstPosition, DebugSystem.SelectedColor.Green, "Состояние позиции", "Transport");
-                }
+                _ItransportInteractRoute.GetPointsReception()[indexReception]
+                                .RequestConnectionToUnloadRes(_productLoad, _typeCurrentTransportResource);
+                _productLoad = 0;
             }
         }
+
+        private bool WaitFullLoadOrUnload()
+        {
+            if (_isWaitingReception && _productLoad >= _typeTransport.capacity || !_isWaitingReception)
+                return true;
+            else
+                return false;
+        }
+
+        public void SetTypeTransportingResource(in TypeProductionResources.TypeResource typeResource)
+        {
+            _typeCurrentTransportResource = typeResource;
+            Debug.Log($"Car: {_typeCurrentTransportResource}");
+        }
+
 
 #if UNITY_EDITOR
-        public void ChangeLoadUnloadStates(in byte index, in bool isState)
+        public void ChangeLoadUnloadStates(in byte indexReception, in byte indexTypeState, in bool isState)
         {
-            DebugSystem.Log(this, DebugSystem.SelectedColor.Green, $"{_loadAndUnloadStates[index]}", "Transport", "Control");
-            if (index <= _loadAndUnloadStates.Length - 1)
-                _loadAndUnloadStates[index] = isState;
-            DebugSystem.Log(this, DebugSystem.SelectedColor.Green, $"{_loadAndUnloadStates[index]}", "Transport", "Control");
+            if (d_loadAndUnloadStates.ContainsKey(indexReception))
+                d_loadAndUnloadStates[indexReception][indexTypeState] = isState;
         }
+
+        public void ChangeStateWaiting(in bool isState) => _isWaitingReception = isState;
 #endif
     }
 }

@@ -1,4 +1,5 @@
 using Building;
+using Resources;
 using UnityEngine;
 
 
@@ -12,8 +13,8 @@ namespace Transport.Reception
         void DisconnectRequest(in ITransportReception fromObject);
         bool ConfirmDisconnectRequest(in ITransportReception fromObject);
 
-        (bool confirmRequest, float quantityPerLoad) RequestConnectionToLoadRes(in float transportCapacity);
-        bool RequestConnectionToUnloadRes(in float quantityForUnloading);
+        float RequestConnectionToLoadRes(in float transportCapacity, in TypeProductionResources.TypeResource typeResource);
+        bool RequestConnectionToUnloadRes(in float quantityForUnloading, in TypeProductionResources.TypeResource typeResource);
 
         Transform GetPosition();
         BuildingControl.TypeBuilding GetTypeBuilding();

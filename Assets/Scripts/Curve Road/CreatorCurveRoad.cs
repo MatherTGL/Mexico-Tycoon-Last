@@ -68,9 +68,13 @@ namespace Route.Builder
 
             if (Vector3.Distance(_positionPoints[_indexPositionPointsFrom].GetPosition().position,
                                  _positionPoints[_indexPositionPointsTo].GetPosition().position) >= 8)
+            {
                 biasDivider = _biasDividerMax;
+            }
             else
+            {
                 biasDivider = _biasDividerMin;
+            }
 
             return biasDivider;
         }

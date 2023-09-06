@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System;
 using DebugCustomSystem;
 using Transport.Reception;
-
+using Resources;
 
 namespace Transport
 {
@@ -43,13 +43,16 @@ namespace Transport
 
         ITransportReception[] ITransportInteractRoute.GetPointsReception()
         {
-            Debug.Log("пункт 1");
             return _IcreatorCurveRoad.GetPointsConnectionRoute();
         }
 
 #if UNITY_EDITOR
         [SerializeField]
-        private byte _indexTypeTransport, _indexTransportToRemove;
+        private TypeProductionResources.TypeResource _typeTransportingResource;
+
+        [SerializeField]
+        private byte _indexTypeTransport, _indexTransportInList;
+
 
         [Button("Buy Transport"), HorizontalGroup("Hor")]
         private void BuyTransport()
@@ -71,10 +74,10 @@ namespace Transport
         {
             try
             {
-                l_purchasedTransportController[_indexTransportToRemove].Dispose();
-                l_purchasedTransportController.RemoveAt(_indexTransportToRemove);
-                Destroy(l_purchasedTransport[_indexTransportToRemove]);
-                l_purchasedTransport.RemoveAt(_indexTransportToRemove);
+                l_purchasedTransportController[_indexTransportInList].Dispose();
+                l_purchasedTransportController.RemoveAt(_indexTransportInList);
+                Destroy(l_purchasedTransport[_indexTransportInList]);
+                l_purchasedTransport.RemoveAt(_indexTransportInList);
             }
             catch (Exception exception)
             {
@@ -83,9 +86,22 @@ namespace Transport
         }
 
         [Button("Load|Unload States")]
-        private void ChangeLoadUnloadStates(in byte index, in bool isState)
+        private void ChangeLoadUnloadStates(in byte indexReception, in byte indexTypeState, in bool isState)
         {
-            l_purchasedTransportController[_indexTransportToRemove].ChangeLoadUnloadStates(index, isState);
+            l_purchasedTransportController[_indexTransportInList].ChangeLoadUnloadStates(indexReception, indexTypeState, isState);
+        }
+
+        [Button("Load|Unload States")]
+        private void SetCarWaitingMode(in bool isState)
+        {
+            l_purchasedTransportController[_indexTransportInList].ChangeStateWaiting(isState);
+        }
+
+        [Button("Set New Type"), Tooltip("Set new type transporting resource on car")]
+        private void UpdateTypeTransportingResource()
+        {
+            l_purchasedTransportController[_indexTransportInList]
+                .SetTypeTransportingResource(_typeTransportingResource);
         }
 #endif
     }
