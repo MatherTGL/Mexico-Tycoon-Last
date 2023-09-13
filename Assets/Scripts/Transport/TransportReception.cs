@@ -32,20 +32,20 @@ namespace Transport.Reception
 
         private TransportReception() { }
 
-        public void InitAwake()
+        void IBoot.InitAwake()
         {
             _routeBuilderControl = FindObjectOfType<RouteBuilderControl>();
             _buildingRequest = GetComponent<IBuildingRequestForTransport>();
         }
 
-        public (Bootstrap.TypeLoadObject typeLoad, bool isSingle) GetTypeLoad()
+        (Bootstrap.TypeLoadObject typeLoad, bool isSingle) IBoot.GetTypeLoad()
         {
             return (Bootstrap.TypeLoadObject.MediumImportant, false);
         }
 
         public void ConnectionRequest(in ITransportReception fromObject)
         {
-            if (d_infoRouteConnect.Count < _freeConnectionCount)
+            if (d_infoRouteConnect.Count <= _freeConnectionCount)
                 if (_typeConnectionBuildings.Contains(fromObject.GetTypeBuilding()))
                     if (fromObject.ConfirmRequest(this) && ConfirmRequest(fromObject))
                         BuildRoute(fromObject);
@@ -82,12 +82,14 @@ namespace Transport.Reception
             else return false;
         }
 
-        float ITransportReception.RequestConnectionToLoadRes(in float transportCapacity, in TypeProductionResources.TypeResource typeResource)
+        float ITransportReception.RequestConnectionToLoadRes(in float transportCapacity,
+                                                             in TypeProductionResources.TypeResource typeResource)
         {
             return _buildingRequest.RequestGetResource(transportCapacity, typeResource);
         }
 
-        bool ITransportReception.RequestConnectionToUnloadRes(in float quantityForUnloading, in TypeProductionResources.TypeResource typeResource)
+        bool ITransportReception.RequestConnectionToUnloadRes(in float quantityForUnloading,
+                                                              in TypeProductionResources.TypeResource typeResource)
         {
             return _buildingRequest.RequestUnloadResource(quantityForUnloading, typeResource);
         }
@@ -99,7 +101,8 @@ namespace Transport.Reception
 
         private void BuildRoute(in ITransportReception secondObject)
         {
-            CreatorCurveRoad createdRoute = Instantiate(_routeBuilderControl.prefabRoute, Vector3.zero, Quaternion.identity);
+            CreatorCurveRoad createdRoute = Instantiate(_routeBuilderControl.prefabRoute, Vector3.zero,
+                                                        Quaternion.identity);
             createdRoute.SetPositionPoints(secondObject, this);
 
             AddConnectionToDictionary(secondObject, createdRoute.gameObject);

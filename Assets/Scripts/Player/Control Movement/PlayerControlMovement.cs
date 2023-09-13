@@ -36,10 +36,8 @@ namespace Player.Movement
 
         private Vector3 _directionMoveCamera;
 
-        [SerializeField, BoxGroup("Parameters/Readonly"), ReadOnly]
         private float _currentSpeed;
 
-        [SerializeField, BoxGroup("Parameters/Readonly"), ReadOnly]
         private float _distanceZoomSpeedMove;
 
         private float _direcionMoveX, _directionMoveY, _directionMoveZ;

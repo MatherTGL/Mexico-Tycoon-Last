@@ -11,6 +11,7 @@ namespace Transport
         private ITransportInteractRoute _ItransportInteractRoute;
 
         private TypeTransport _typeTransport;
+        public TypeTransport typeTransport => _typeTransport;
 
         private GameObject _someObject;
 
@@ -34,7 +35,6 @@ namespace Transport
             _typeTransport = typeTransport;
             _ItransportInteractRoute = routeTransportControl;
             _someObject = objectTransport;
-            _typeCurrentTransportResource = _typeTransport.typeResource;
 
             _ItransportInteractRoute.onLateUpdateAction += MovementTransport;
 
@@ -91,11 +91,11 @@ namespace Transport
                 RequestLoad(indexStateLoad: 0, indexReception: indexReception);
                 RequestUnload(indexStateLoad: 1, indexReception: indexReception);
 
-                if (WaitFullLoadOrUnload()) _isFirstPosition = isFirstPosition;
+                if (WaitLoadOrUnload()) _isFirstPosition = isFirstPosition;
             }
         }
 
-        private void Move(in int indexPositionRoute)
+        private void Move(in byte indexPositionRoute)
         {
             _someObject.transform.position = Vector3.MoveTowards(_someObject.transform.position,
                                                     _ItransportInteractRoute.routePoints[indexPositionRoute],
@@ -121,7 +121,7 @@ namespace Transport
             }
         }
 
-        private bool WaitFullLoadOrUnload()
+        private bool WaitLoadOrUnload()
         {
             if (_isWaitingReception && _productLoad >= _typeTransport.capacity || !_isWaitingReception)
                 return true;
@@ -132,15 +132,24 @@ namespace Transport
         public void SetTypeTransportingResource(in TypeProductionResources.TypeResource typeResource)
         {
             _typeCurrentTransportResource = typeResource;
-            Debug.Log($"Car: {_typeCurrentTransportResource}");
+        }
+
+        public void ChangeRoute(in ITransportInteractRoute routeTransportControl)
+        {
+            if (routeTransportControl is not null)
+            {
+                _ItransportInteractRoute = routeTransportControl;
+                _indexCurrentRoutePoint = 0;
+                _someObject.transform.position = _ItransportInteractRoute.routePoints[0];
+            }
         }
 
 
 #if UNITY_EDITOR
-        public void ChangeLoadUnloadStates(in byte indexReception, in byte indexTypeState, in bool isState)
+        public void ChangeLoadUnloadStates(in byte indexReception, in byte indexLoadOrUnload, in bool isState)
         {
             if (d_loadAndUnloadStates.ContainsKey(indexReception))
-                d_loadAndUnloadStates[indexReception][indexTypeState] = isState;
+                d_loadAndUnloadStates[indexReception][indexLoadOrUnload] = isState;
         }
 
         public void ChangeStateWaiting(in bool isState) => _isWaitingReception = isState;

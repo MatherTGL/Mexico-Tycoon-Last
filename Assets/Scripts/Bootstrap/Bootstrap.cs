@@ -46,7 +46,7 @@ namespace Boot
 
         private void StartInit()
         {
-            for (int i = 0; i < _bootObjectList.Count; i++)
+            for (ushort i = 0; i < _bootObjectList.Count; i++)
                 _bootObjectList[i].InitAwake();
         }
     }

@@ -149,7 +149,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lineRenderer: {fileID: 7178679870288806220}
-  _positionPoints: []
   _offsetCenterPoint: 2.4532886
   _numbersParameters:
   - 0.83
@@ -158,8 +157,8 @@ MonoBehaviour:
   - 1.31
   - 1
   _numberOfPoints: 20
-  _biasDividerMin: 2
-  _biasDividerMax: 3
+  _biasDividerMin: 3
+  _biasDividerMax: 4
 --- !u!114 &7534623058585701940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,4 +178,6 @@ MonoBehaviour:
   _routePoints:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
+  _typeTransportingResource: 0
   _indexTypeTransport: 0
+  _indexTransportInList: 0

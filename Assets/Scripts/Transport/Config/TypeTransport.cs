@@ -22,5 +22,9 @@ namespace Transport
         [SerializeField, MinValue(1.0f)]
         private float _capacity;
         public float capacity => _capacity;
+
+        [SerializeField, MinValue(30)]
+        private ushort _maintenanceExpenses = 30;
+        public ushort maintenanceExpenses => _maintenanceExpenses;
     }
 }

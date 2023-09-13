@@ -1,49 +1,55 @@
+using Data;
 using Resources;
 using System;
+using Config.Building;
 
 
 namespace Building.Border
 {
     public sealed class BuildingBorderMarket : IBuildingBorderMarket
     {
-        private uint[] _quantityInStock;
-
-        private uint[] _costPerKg;
+        private uint[] _costBuyPerKg, _costSellPerKg;
 
         private bool[] _isSale;
 
         private byte _indexTypeDrug;
 
 
-        public BuildingBorderMarket()
-        {
-            InitArrays();
-        }
+        public BuildingBorderMarket(in ConfigBuildingBorderEditor config) => InitArrays(config);
 
-        bool IBuildingBorderMarket.CheckResourceInSale(in TypeProductionResources.TypeResource typeResource)
+        bool IBuildingBorderMarket.CalculateBuyCost(in TypeProductionResources.TypeResource typeResource,
+                                                    in float amount)
         {
             _indexTypeDrug = (byte)typeResource;
+            double productPurchaseCost = amount * _costBuyPerKg[_indexTypeDrug];
 
-            return CheckResources(_indexTypeDrug);
-        }
-
-        private bool CheckResources(in byte indexResource)
-        {
-            if (_isSale[indexResource])
+            if (_isSale[_indexTypeDrug])
+            {
+                DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(productPurchaseCost, true);
                 return true;
-            else
-                return false;
+            }
+            else { return false; }
         }
 
-        private void InitArrays()
+        void IBuildingBorderMarket.SellResources(in TypeProductionResources.TypeResource typeResource,
+                                                 in float amount)
+        {
+            double salesProfit = amount * _costSellPerKg[(int)typeResource];
+            DataControl.IdataPlayer.AddPlayerMoney(salesProfit);
+        }
+
+        private void InitArrays(in ConfigBuildingBorderEditor config)
         {
             int amountTypeDrugs = Enum.GetValues(typeof(TypeProductionResources.TypeResource)).Length;
 
-            _quantityInStock = new uint[amountTypeDrugs];
-            _costPerKg = new uint[amountTypeDrugs];
             _isSale = new bool[amountTypeDrugs];
+            _costBuyPerKg = new uint[amountTypeDrugs];
+            _costSellPerKg = new uint[amountTypeDrugs];
 
-            for (int i = 0; i < _isSale.Length; i++)
+            _costBuyPerKg = config.costResourcesConfig.GetCostsBuyResources();
+            _costSellPerKg = config.costResourcesConfig.GetCostsSellResources();
+
+            for (byte i = 0; i < _isSale.Length; i++)
                 _isSale[i] = true;
         }
     }

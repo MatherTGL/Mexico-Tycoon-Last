@@ -7,10 +7,19 @@ using Building.Additional;
 
 namespace Building.Stock
 {
-    public sealed class BuildingStock : IBuilding, IBuildingPurchased, IBuildingJobStatus
+    public sealed class BuildingStock : IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption
     {
+        private IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
+
         private Dictionary<TypeProductionResources.TypeResource, float> d_amountResources
             = new Dictionary<TypeProductionResources.TypeResource, float>();
+
+        Dictionary<TypeProductionResources.TypeResource, float> IBuilding.d_amountResources
+        {
+            get => d_amountResources; set => d_amountResources = value;
+        }
+
+        private double _maintenanceExpenses;
 
         private bool _isWorked;
         bool IBuildingJobStatus.isWorked { get => _isWorked; set => _isWorked = value; }
@@ -19,26 +28,26 @@ namespace Building.Stock
         bool IBuildingPurchased.isBuyed { get => _isBuyed; set => _isBuyed = value; }
 
 
-        public BuildingStock(in ConfigBuildingStockEditor configBuilding)
+        public BuildingStock(in ConfigBuildingStockEditor config)
         {
-
+            _maintenanceExpenses = config.maintenanceExpenses;
         }
 
         void IBuilding.ConstantUpdatingInfo()
         {
             if (_isBuyed && _isWorked)
-                Debug.Log("Stock is work");
+            {
+                Spending();
+                MonitorEnergyConsumption();
+            }
         }
 
         float IBuilding.GetResources(in float transportCapacity,
                                      in TypeProductionResources.TypeResource typeResource)
         {
-            CheckIncomingDrugType(typeResource);
-
             if (d_amountResources[typeResource] >= transportCapacity)
             {
                 d_amountResources[typeResource] -= transportCapacity;
-                Debug.Log($"Stock: {d_amountResources[typeResource]}");
                 return transportCapacity;
             }
             else return 0;
@@ -47,17 +56,18 @@ namespace Building.Stock
         bool IBuilding.SetResources(in float quantityResource,
                                     in TypeProductionResources.TypeResource typeResource)
         {
-            CheckIncomingDrugType(typeResource);
-
             d_amountResources[typeResource] += quantityResource;
-            Debug.Log($"Stock: {d_amountResources[typeResource]}");
             return true;
         }
 
-        private void CheckIncomingDrugType(in TypeProductionResources.TypeResource typeResource)
+        public void Spending()
         {
-            if (d_amountResources.ContainsKey(typeResource) is false)
-                d_amountResources.Add(typeResource, 0);
+            SpendingToObjects.SendNewExpense(_maintenanceExpenses);
+        }
+
+        private void MonitorEnergyConsumption()
+        {
+            _IbuildingMonitorEnergy.CalculateConsumption(this);
         }
     }
 }

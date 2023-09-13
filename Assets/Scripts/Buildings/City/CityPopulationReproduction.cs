@@ -20,6 +20,7 @@ namespace Building.City
         {
             float populationChangeStepPercent = Random.Range(_configBuilding.populationChangeStepPercentMin,
                                                            _configBuilding.populationChangeStepPercentMax);
+
             uint addedNumberPeople = (uint)(populationCity * populationChangeStepPercent / _mathematicalDivisor);
             populationCity += addedNumberPeople;
         }

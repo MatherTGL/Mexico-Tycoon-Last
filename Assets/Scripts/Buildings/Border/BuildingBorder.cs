@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Config.Building;
 using Resources;
 using UnityEngine;
 
@@ -8,34 +10,45 @@ namespace Building.Border
     {
         private IBuildingBorderMarket _IbuildingBorderMarket;
 
+        #region (Not used!)
 
-        public BuildingBorder()
+        /*
+        A placeholder for implementing an interface so that you don't have to add
+        a separate interface. Should not and will not be used in code.
+         */
+        Dictionary<TypeProductionResources.TypeResource, float> IBuilding.d_amountResources
         {
-            _IbuildingBorderMarket = new BuildingBorderMarket();
+            get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException();
         }
 
-        void IBuilding.ConstantUpdatingInfo()
+        #endregion
+
+
+        public BuildingBorder(in ConfigBuildingBorderEditor config)
         {
-            throw new System.NotImplementedException();
+            _IbuildingBorderMarket = new BuildingBorderMarket(config);
         }
 
-        float IBuilding.GetResources(in float transportCapacity, in TypeProductionResources.TypeResource typeResource)
+        void IBuilding.ConstantUpdatingInfo() { }
+
+        float IBuilding.GetResources(in float transportCapacity,
+                                     in TypeProductionResources.TypeResource typeResource)
         {
-            if (_IbuildingBorderMarket.CheckResourceInSale(typeResource))
-            {
-                Debug.Log("BuildingBorder|GetResources");
+            if (_IbuildingBorderMarket.CalculateBuyCost(typeResource, transportCapacity))
                 return transportCapacity;
-            }
             else
                 return 0.0f;
         }
 
-        bool IBuilding.SetResources(in float quantityResource, in TypeProductionResources.TypeResource typeResource)
+        bool IBuilding.SetResources(in float quantityResource,
+                                    in TypeProductionResources.TypeResource typeResource)
         {
             if (quantityResource > 0)
+            {
+                _IbuildingBorderMarket.SellResources(typeResource, quantityResource);
                 return true;
-            else
-                return false;
+            }
+            else { return false; }
         }
     }
 }

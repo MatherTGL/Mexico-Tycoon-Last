@@ -1,5 +1,6 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
+using Resources;
 
 
 namespace Config.Building
@@ -7,6 +8,10 @@ namespace Config.Building
     [CreateAssetMenu(fileName = "BuildingCityConfig", menuName = "Config/Buildings/City/Create New", order = 50)]
     public sealed class ConfigBuildingCityEditor : ScriptableObject
     {
+        [SerializeField, Required]
+        private CostResourcesConfig _costResourcesConfig;
+        public CostResourcesConfig costResourcesConfig => _costResourcesConfig;
+
         [SerializeField, MinValue(-1.0f), MaxValue(0.0f)]
         private float _populationChangeStepPercentMin;
         public float populationChangeStepPercentMin => _populationChangeStepPercentMin;

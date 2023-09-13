@@ -7,10 +7,12 @@ namespace TimeControl.Acceleration
     public sealed class TimeAcceleration
     {
         private ConfigTimeControlEditor _configTimeControlEditor;
+
         private InputControl _inputControl;
 
 
-        public TimeAcceleration(in ConfigTimeControlEditor configTimeControl, in InputControl inputControl)
+        public TimeAcceleration(in ConfigTimeControlEditor configTimeControl,
+                                in InputControl inputControl)
         {
             _configTimeControlEditor = configTimeControl;
             _inputControl = inputControl;
@@ -19,28 +21,27 @@ namespace TimeControl.Acceleration
         public void AccelerationCheck(ref float currentAcceleration, ref bool pauseState)
         {
             if (Input.GetKeyDown(_inputControl.keycodeTimePause))
-            {
-                currentAcceleration = _configTimeControlEditor.defaultTimeOneDay;
-                pauseState = !pauseState;
-            }
+                ChangeState(ref pauseState, ref currentAcceleration, ConfigTimeControlEditor.AccelerationTime.X1, true);
 
             if (Input.GetKeyDown(_inputControl.keycodeAccelerationTimeDefault))
-            {
-                currentAcceleration = _configTimeControlEditor.defaultTimeOneDay;
-                pauseState = false;
-            }
+                ChangeState(ref pauseState, ref currentAcceleration, ConfigTimeControlEditor.AccelerationTime.X1);
 
             if (Input.GetKeyDown(_inputControl.keycodeAccelerationTimeTwo))
-            {
-                currentAcceleration = _configTimeControlEditor.timeOneDayX2;
-                pauseState = false;
-            }
+                ChangeState(ref pauseState, ref currentAcceleration, ConfigTimeControlEditor.AccelerationTime.X2);
 
             if (Input.GetKeyDown(_inputControl.keycodeAccelerationTimeThree))
-            {
-                currentAcceleration = _configTimeControlEditor.timeOneDayX4;
+                ChangeState(ref pauseState, ref currentAcceleration, ConfigTimeControlEditor.AccelerationTime.X4);
+        }
+
+        private void ChangeState(ref bool pauseState, ref float currentAcceleration,
+            in ConfigTimeControlEditor.AccelerationTime typeAcceleration, in bool isUseInvertState = false)
+        {
+            if (isUseInvertState)
+                pauseState = !pauseState;
+            else
                 pauseState = false;
-            }
+
+            currentAcceleration = (float)typeAcceleration;
         }
     }
 }

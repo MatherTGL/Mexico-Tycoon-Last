@@ -27,25 +27,19 @@ namespace Data.Player
             Debug.Log($"Player Current Amount Money: {_money}$");
         }
 
-        void IDataPlayer.AddPlayerResearchPoints(in ushort amountResearchPoints) => _researchPoints += amountResearchPoints;
+        void IDataPlayer.AddPlayerResearchPoints(in ushort amountResearchPoints)
+        {
+            _researchPoints += amountResearchPoints;
+        }
 
         bool IDataPlayer.CheckAndSpendingPlayerMoney(in double neededSum, in bool isSpending)
         {
-            if (neededSum < _money)
+            if (neededSum < _money && isSpending)
             {
-                if (isSpending)
-                {
-                    SpendingMoney(neededSum);
-                    return true;
-                }
-                else return false;
+                _money -= neededSum;
+                return true;
             }
             else return false;
-        }
-
-        private void SpendingMoney(double neededSum)
-        {
-            _money -= neededSum;
         }
 
         bool IDataPlayer.CheckAndSpendingPlayerResearchPoints(in ushort amount, in bool isSpending)

@@ -17,7 +17,7 @@ namespace TimeControl
         [SerializeField, BoxGroup("Parameters"), Required]
         private InputControl _inputControl;
 
-        private float _currentTimeOneDay = 1;
+        private float _currentTimeOneDay = 5;
 
         private bool _isPaused = false;
 
@@ -31,14 +31,14 @@ namespace TimeControl
 
         private void Update()
         {
-            if (_timeAcceleration is not null)
-                _timeAcceleration.AccelerationCheck(ref _currentTimeOneDay, ref _isPaused);
+            _timeAcceleration?.AccelerationCheck(ref _currentTimeOneDay, ref _isPaused);
         }
 
         public float GetCurrentTimeOneDay(bool isUseCoroutine = false)
         {
+            float accelerationDefault = (float)ConfigTimeControlEditor.AccelerationTime.X1;
             if (isUseCoroutine)
-                return _configTimeControl.defaultTimeOneDay / _currentTimeOneDay;
+                return accelerationDefault / _currentTimeOneDay;
             else
                 return _currentTimeOneDay;
         }

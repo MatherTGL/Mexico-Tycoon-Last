@@ -1,6 +1,8 @@
 using Config.Building;
 using Resources;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 
 namespace Building.City
@@ -9,9 +11,14 @@ namespace Building.City
     {
         private CityPopulationReproduction _cityPopulationReproduction;
 
-        private CitySellDrugs _citySellDrugs;
+        private CitySellDrugs _citySellDrugs = new CitySellDrugs();
 
-        private float[] _quantityInStock;
+        private Dictionary<TypeProductionResources.TypeResource, float> d_amountResource = new Dictionary<TypeProductionResources.TypeResource, float>();
+
+        Dictionary<TypeProductionResources.TypeResource, float> IBuilding.d_amountResources
+        {
+            get => d_amountResource; set => d_amountResource = value;
+        }
 
         private uint[] _costPerKg;
 
@@ -23,9 +30,8 @@ namespace Building.City
         public BuildingCity(in ConfigBuildingCityEditor configBuilding)
         {
             _cityPopulationReproduction = new(configBuilding);
-            _citySellDrugs = new();
 
-            InitArrays();
+            InitArrays(configBuilding);
 
             _population = (uint)UnityEngine.Random.Range(
                 configBuilding.populationStartMin, configBuilding.populationStartMax);
@@ -37,40 +43,39 @@ namespace Building.City
             SellResources();
         }
 
-        float IBuilding.GetResources(in float transportCapacity, in TypeProductionResources.TypeResource typeResource)
+        float IBuilding.GetResources(in float transportCapacity,
+                                     in TypeProductionResources.TypeResource typeResource)
         {
-            _indexSelectedDrugType = GetIndexTypeResource(typeResource);
-            if (_quantityInStock[_indexSelectedDrugType] >= transportCapacity)
+            if (d_amountResource[typeResource] >= transportCapacity)
             {
-                _quantityInStock[_indexSelectedDrugType] -= transportCapacity;
+                d_amountResource[typeResource] -= transportCapacity;
                 return transportCapacity;
             }
             else return 0;
         }
 
-        bool IBuilding.SetResources(in float quantityResource, in TypeProductionResources.TypeResource typeResource)
+        bool IBuilding.SetResources(in float quantityResource,
+                                    in TypeProductionResources.TypeResource typeResource)
         {
-            _indexSelectedDrugType = GetIndexTypeResource(typeResource);
-            _quantityInStock[_indexSelectedDrugType] += quantityResource;
+            d_amountResource[typeResource] += quantityResource;
             return true;
         }
 
         private void SellResources()
         {
-            for (int i = 0; i < _quantityInStock.Length; i++)
-                _citySellDrugs.Sell(ref _quantityInStock[i], _costPerKg[i]);
+            foreach (var drug in d_amountResource.Keys.ToArray())
+            {
+                _citySellDrugs.Sell(d_amountResource[drug], _costPerKg[(int)drug]);
+                d_amountResource[drug] = 0;
+            }
         }
 
-        private void InitArrays()
+        private void InitArrays(in ConfigBuildingCityEditor configBuilding)
         {
             int amountTypeDrugs = Enum.GetValues(typeof(TypeProductionResources.TypeResource)).Length;
-            _quantityInStock = new float[amountTypeDrugs];
-            _costPerKg = new uint[amountTypeDrugs];
-        }
 
-        private byte GetIndexTypeResource(in TypeProductionResources.TypeResource typeResource)
-        {
-            return (byte)typeResource;
+            _costPerKg = new uint[amountTypeDrugs];
+            _costPerKg = configBuilding.costResourcesConfig.GetCostsSellResources();
         }
     }
 }

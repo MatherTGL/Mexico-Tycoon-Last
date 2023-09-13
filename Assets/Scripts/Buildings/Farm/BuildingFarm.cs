@@ -1,23 +1,32 @@
 using Config.Building;
 using System.Collections.Generic;
 using Resources;
-using DebugCustomSystem;
 using Building.Additional;
-using UnityEngine;
 
 
 namespace Building.Farm
 {
-    public sealed class BuildingFarm : IBuilding, IBuildingPurchased, IBuildingJobStatus
+    public sealed class BuildingFarm : IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption
     {
+        private IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
+
+        private ConfigBuildingFarmEditor _config;
+
         private Dictionary<TypeProductionResources.TypeResource, float> d_amountResources
             = new Dictionary<TypeProductionResources.TypeResource, float>();
+
+        Dictionary<TypeProductionResources.TypeResource, float> IBuilding.d_amountResources
+        {
+            get => d_amountResources; set => d_amountResources = value;
+        }
 
         private TypeProductionResources.TypeResource _typeProductionResource;
 
         private ushort _productionPerformance;
 
         private uint _localCapacityProduct;
+
+        private double _maintenanceExpenses;
 
         private bool _isWorked;
         bool IBuildingJobStatus.isWorked { get => _isWorked; set => _isWorked = value; }
@@ -31,59 +40,75 @@ namespace Building.Farm
             _productionPerformance = config.productionStartPerformance;
             _typeProductionResource = config.typeProductionResource;
             _localCapacityProduct = config.localCapacityProduction;
+            _config = config;
 
+            _maintenanceExpenses = _config.maintenanceExpenses;
+
+            AddTypesResources();
+        }
+
+        private void AddTypesResources()
+        {
             d_amountResources.Add(_typeProductionResource, 0);
+
+            foreach (var typeDrug in _config.requiredRawMaterials)
+                if (d_amountResources.ContainsKey(typeDrug) == false)
+                    d_amountResources.Add(typeDrug, 0);
         }
 
         void IBuilding.ConstantUpdatingInfo()
         {
-            if (_isWorked) Production();
-
-            MonitorEnergyConsumption();
+            if (_isWorked && _isBuyed)
+            {
+                Spending();
+                Production();
+                MonitorEnergyConsumption();
+            }
         }
 
         float IBuilding.GetResources(in float transportCapacity,
                                      in TypeProductionResources.TypeResource typeResource)
         {
-            CheckIncomingDrugType(typeResource);
-
             if (d_amountResources[typeResource] >= transportCapacity)
             {
                 d_amountResources[typeResource] -= transportCapacity;
                 return transportCapacity;
             }
-            else return 0;
+            else
+                return 0;
         }
 
         bool IBuilding.SetResources(in float quantityResource,
                                     in TypeProductionResources.TypeResource typeResource)
         {
-            CheckIncomingDrugType(typeResource);
             d_amountResources[typeResource] += quantityResource;
-            Debug.Log($"Farm: {d_amountResources[typeResource]}");
             return true;
         }
 
         private void Production()
         {
             if (d_amountResources[_typeProductionResource] < _localCapacityProduct)
+            {
+                foreach (var typeDrug in _config.requiredRawMaterials)
+                {
+                    for (ushort i = 0; i < _config.quantityRawMaterials.Count; i++)
+                        if (d_amountResources[typeDrug] < _config.quantityRawMaterials[i])
+                            return;
+
+                    d_amountResources[typeDrug] -= _config.quantityRawMaterials[0];
+                }
                 d_amountResources[_typeProductionResource] += _productionPerformance;
+            }
         }
 
-        private void CheckIncomingDrugType(in TypeProductionResources.TypeResource typeResource)
+        public void Spending()
         {
-            if (d_amountResources.ContainsKey(typeResource) is false)
-                d_amountResources.Add(typeResource, 0);
+            SpendingToObjects.SendNewExpense(_maintenanceExpenses);
         }
 
         private void MonitorEnergyConsumption()
         {
-            if (_isWorked)
-                DebugSystem.Log(this, DebugSystem.SelectedColor.Green,
-                    "Потребление энергии фермой составляет 10квт", "Building", "Farm", "Energy");
-            else
-                DebugSystem.Log(this, DebugSystem.SelectedColor.Green,
-                    "Потребление энергии фермой составляет 0квт", "Building", "Farm", "Energy");
+            _IbuildingMonitorEnergy.CalculateConsumption(this);
         }
     }
 }

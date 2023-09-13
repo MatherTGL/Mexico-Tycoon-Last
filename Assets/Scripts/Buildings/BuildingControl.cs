@@ -12,6 +12,8 @@ using Building.Fabric;
 using Resources;
 using Building.Additional;
 using Building.Border;
+using Building.Aerodrome;
+
 
 namespace Building
 {
@@ -27,7 +29,6 @@ namespace Building
 
         [SerializeField, Required, BoxGroup("Parameters"), HideLabel, PropertySpace(0, 5)]
         private ScriptableObject _configSO;
-        public ScriptableObject configSO => _configSO;
 
         private TimeDateControl _timeDateControl;
 
@@ -69,9 +70,15 @@ namespace Building
                     else if (_typeBuilding is TypeBuilding.Stock)
                         _Ibuilding = new BuildingStock((ConfigBuildingStockEditor)_configSO);
                     else if (_typeBuilding is TypeBuilding.Border)
-                        _Ibuilding = new BuildingBorder();
+                        _Ibuilding = new BuildingBorder((ConfigBuildingBorderEditor)_configSO);
+                    else if (_typeBuilding is TypeBuilding.Aerodrome)
+                        _Ibuilding = new BuildingAerodrome((ConfigBuildingAerodromeEditor)_configSO);
                 }
+
+                Invoke();
             }
+
+            void Invoke() => StartCoroutine(ConstantUpdating());
         }
 
         public (Bootstrap.TypeLoadObject typeLoad, bool isSingle) GetTypeLoad()
@@ -79,14 +86,24 @@ namespace Building
             return (Bootstrap.TypeLoadObject.SuperImportant, false);
         }
 
-        float IBuildingRequestForTransport.RequestGetResource(in float transportCapacity, in TypeProductionResources.TypeResource typeResource)
+        float IBuildingRequestForTransport.RequestGetResource(in float transportCapacity,
+            in TypeProductionResources.TypeResource typeResource)
         {
+            CheckIncomingDrugType(typeResource);
             return _Ibuilding.GetResources(transportCapacity, typeResource);
         }
 
-        bool IBuildingRequestForTransport.RequestUnloadResource(in float quantityResource, in TypeProductionResources.TypeResource typeResource)
+        bool IBuildingRequestForTransport.RequestUnloadResource(in float quantityResource,
+            in TypeProductionResources.TypeResource typeResource)
         {
+            CheckIncomingDrugType(typeResource);
             return _Ibuilding.SetResources(quantityResource, typeResource);
+        }
+
+        private void CheckIncomingDrugType(in TypeProductionResources.TypeResource typeResource)
+        {
+            if (_Ibuilding.d_amountResources.ContainsKey(typeResource) == false)
+                _Ibuilding.d_amountResources.Add(typeResource, 0);
         }
 
         private void ChangeOwnerState(in bool isBuy)
@@ -95,16 +112,8 @@ namespace Building
             {
                 _IbuildingPurchased = (IBuildingPurchased)_Ibuilding;
 
-                if (isBuy)
-                {
-                    _IbuildingPurchased.Buy();
-                    StartCoroutine(ConstantUpdating());
-                }
-                else
-                {
-                    _IbuildingPurchased.Sell();
-                    StopAllCoroutines();
-                }
+                if (isBuy) _IbuildingPurchased.Buy();
+                else _IbuildingPurchased.Sell();
             }
         }
 

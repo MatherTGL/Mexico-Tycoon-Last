@@ -19,13 +19,13 @@ namespace Data
 
         private DataControl() { }
 
-        public void InitAwake()
+        void IBoot.InitAwake()
         {
             _IDataPlayer = DataPlayer.GetInstance;
             _IDataPlayer.SetDataConfig(_configDataPlayer);
         }
 
-        public (Bootstrap.TypeLoadObject typeLoad, bool isSingle) GetTypeLoad()
+        (Bootstrap.TypeLoadObject typeLoad, bool isSingle) IBoot.GetTypeLoad()
         {
             return (typeLoad: Bootstrap.TypeLoadObject.SuperImportant, isSingle: true);
         }

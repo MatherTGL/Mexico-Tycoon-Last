@@ -19,5 +19,9 @@ namespace Config.Building
         [SerializeField]
         private ushort _productConversionStep = 5;
         public ushort productConversionStep => _productConversionStep;
+
+        [SerializeField, BoxGroup("Parameters"), MinValue(10)]
+        private double _maintenanceExpenses = 10;
+        public double maintenanceExpenses => _maintenanceExpenses;
     }
 }

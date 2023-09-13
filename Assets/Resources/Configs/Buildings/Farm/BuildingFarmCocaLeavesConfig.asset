@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 634e784815e94251096849ce94d17f86, type: 3}
   m_Name: BuildingFarmCocaLeavesConfig
   m_EditorClassIdentifier: 
+  _requiredRawMaterials: 01
+  _quantityRawMaterials:
+  - 2
   _typeProductionResource: 0
   _productionPerformanceStart: 1
   _localCapacityProduction: 10
+  _maintenanceExpenses: 70

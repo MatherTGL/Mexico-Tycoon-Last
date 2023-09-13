@@ -5,6 +5,7 @@ namespace Building.Border
 {
     public interface IBuildingBorderMarket
     {
-        bool CheckResourceInSale(in TypeProductionResources.TypeResource typeResource);
+        bool CalculateBuyCost(in TypeProductionResources.TypeResource typeResource, in float amount);
+        void SellResources(in TypeProductionResources.TypeResource typeResource, in float amount);
     }
 }

@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd9b29998a8390a5880735f937afb938, type: 3}
   m_Name: BuildingStockConfig
   m_EditorClassIdentifier: 
+  _maintenanceExpenses: 30

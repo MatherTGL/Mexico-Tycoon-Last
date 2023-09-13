@@ -6,7 +6,5 @@ namespace Resources
         {
             CocaLeaves, Petrol, Cocaine
         }
-
-        public TypeResource typeResource;
     }
 }
