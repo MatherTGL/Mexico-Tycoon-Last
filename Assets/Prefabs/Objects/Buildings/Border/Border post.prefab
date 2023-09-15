@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _typeCurrentBuilding: 6
-  _typeConnectionBuildings: 000502
+  _typeConnectBuildings: 0201030405
   _freeConnectionCount: 4
 --- !u!114 &6795591148511223084
 MonoBehaviour:

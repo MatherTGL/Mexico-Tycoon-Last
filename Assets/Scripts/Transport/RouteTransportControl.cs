@@ -8,10 +8,11 @@ using Resources;
 using Building.Additional;
 using TimeControl;
 using System.Collections;
-
+using Obstacle;
 
 namespace Transport
 {
+    [RequireComponent(typeof(CreatorCurveRoad))]
     internal sealed class RouteTransportControl : MonoBehaviour, ITransportInteractRoute, IReRouteTransportation
     {
         [ShowInInspector]
@@ -40,6 +41,9 @@ namespace Transport
             remove { _onLateUpdateAction -= value; }
         }
 
+        private float _impactOfObstaclesOnSpeed;
+        float ITransportInteractRoute.impactOfObstaclesOnSpeed => _impactOfObstaclesOnSpeed;
+
 
         private RouteTransportControl() { }
 
@@ -50,20 +54,15 @@ namespace Transport
 
             void FindAndCreateComponents()
             {
-                _IcreatorCurveRoad = GetComponent<ICreatorCurveRoad>();
-                _timeDateControl = FindObjectOfType<TimeDateControl>();
-                _coroutineTimeStep = new WaitForSeconds(_timeDateControl.GetCurrentTimeOneDay());
+                _IcreatorCurveRoad ??= GetComponent<ICreatorCurveRoad>();
+                _timeDateControl ??= FindObjectOfType<TimeDateControl>();
+                _coroutineTimeStep ??= new WaitForSeconds(_timeDateControl.GetCurrentTimeOneDay());
             }
         }
 
         private void OnDisable() => StopAllCoroutines();
 
         private void LateUpdate() => _onLateUpdateAction?.Invoke();
-
-        ITransportReception[] ITransportInteractRoute.GetPointsReception()
-        {
-            return _IcreatorCurveRoad.GetPointsConnectionRoute();
-        }
 
         private void MaintenanceExenses()
         {
@@ -87,7 +86,40 @@ namespace Transport
             }
         }
 
-        ushort[] IReRouteTransportation.SendTransportTransferRequest(in TransportationDataStorage allTransportation)
+        private void AddTransportDataStorage(in TransportationDataStorage allTransportation,
+                                             in ushort index)
+        {
+            _transportationDataStorage.AddObject
+            (
+                allTransportation.l_purchasedTransportSprite[index],
+                allTransportation.l_purchasedTransportData[index]
+            );
+        }
+
+        private bool CheckRulesBuyingTransport(in byte indexTypeTransport)
+        {
+            if (_allTypesTransport[indexTypeTransport].type == _IcreatorCurveRoad.typeRoute)
+                return true;
+            else
+                return false;
+        }
+
+        private void OnTriggerEnter2D(Collider2D collisionObject)
+        {
+            if (collisionObject.GetComponent(typeof(IObstacle)))
+            {
+                IObstacle obstacle = (IObstacle)collisionObject.GetComponent(typeof(IObstacle));
+                _impactOfObstaclesOnSpeed += obstacle.config.percentageImpactSpeed;
+            }
+        }
+
+        ITransportReception[] ITransportInteractRoute.GetPointsReception()
+        {
+            return _IcreatorCurveRoad.GetPointsConnectionRoute();
+        }
+
+        ushort[] IReRouteTransportation.SendTransportTransferRequest(
+            in TransportationDataStorage allTransportation)
         {
             ushort[] foundObjectsForRerouting = new ushort[allTransportation.l_transportTransferStatus.Count];
 
@@ -102,15 +134,6 @@ namespace Transport
             return foundObjectsForRerouting;
         }
 
-        private void AddTransportDataStorage(in TransportationDataStorage allTransportation, in ushort index)
-        {
-            _transportationDataStorage.AddObject
-            (
-                allTransportation.l_purchasedTransportSprite[index],
-                allTransportation.l_purchasedTransportData[index]
-            );
-        }
-
 
 #if UNITY_EDITOR
         [SerializeField]
@@ -123,14 +146,20 @@ namespace Transport
         [Button("Buy Transport"), HorizontalGroup("Hor")]
         private void BuyTransport()
         {
+            if (CheckRulesBuyingTransport(_indexTypeTransport) == false)
+                return;
+
             if (_routePoints[0] == Vector3.zero)
                 _routePoints = _IcreatorCurveRoad.GetRoutePoints();
 
-            GameObject newTransport = Instantiate(_allTypesTransport[_indexTypeTransport].prefab,
-                                                  _IcreatorCurveRoad.GetRouteMainPoint(),
-                                                  Quaternion.identity);
+            GameObject newTransport = Instantiate(
+                _allTypesTransport[_indexTypeTransport].prefab,
+                _IcreatorCurveRoad.GetRouteMainPoint(),
+                Quaternion.identity
+            );
 
-            SelfTransport selfTransportObject = new(_allTypesTransport[_indexTypeTransport], this, newTransport);
+            SelfTransport selfTransportObject = new(
+                _allTypesTransport[_indexTypeTransport], this, newTransport);
 
             _transportationDataStorage.AddObject(newTransport, selfTransportObject);
             UpdateTypeTransportingResource(_transportationDataStorage.l_purchasedTransportData.Count - 1);
@@ -141,6 +170,8 @@ namespace Transport
         {
             try
             {
+                Destroy(_transportationDataStorage.DestroyTransport(_indexTransportInList).sprite);
+                _transportationDataStorage.DestroyTransport(_indexTransportInList).data.Dispose();
                 _transportationDataStorage.RemoveObjectFromList(_indexTransportInList);
             }
             catch (Exception exception)

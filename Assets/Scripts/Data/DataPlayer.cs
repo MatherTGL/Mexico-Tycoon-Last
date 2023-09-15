@@ -15,12 +15,6 @@ namespace Data.Player
 
         private DataPlayer() { }
 
-        public void SetDataConfig(in ConfigDataPlayer configDataPlayer)
-        {
-            _money = configDataPlayer.startPlayerMoney;
-            _researchPoints = configDataPlayer.startPlayerResearchPoints;
-        }
-
         void IDataPlayer.AddPlayerMoney(in double amountMoney)
         {
             _money += amountMoney;
@@ -50,5 +44,11 @@ namespace Data.Player
         double IDataPlayer.GetPlayerMoney() => _money;
 
         ushort IDataPlayer.GetPlayerResearchPoints() => _researchPoints;
+
+        public void SetDataConfig(in ConfigDataPlayer configDataPlayer)
+        {
+            _money = configDataPlayer.startPlayerMoney;
+            _researchPoints = configDataPlayer.startPlayerResearchPoints;
+        }
     }
 }

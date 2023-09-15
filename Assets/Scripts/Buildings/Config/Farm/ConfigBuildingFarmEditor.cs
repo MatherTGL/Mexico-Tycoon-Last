@@ -10,17 +10,22 @@ namespace Config.Building
     public sealed class ConfigBuildingFarmEditor : ScriptableObject
     {
         [SerializeField, BoxGroup("Raw Materials"), ReadOnly, HideLabel]
-        private List<TypeProductionResources.TypeResource> _requiredRawMaterials
+        private List<TypeProductionResources.TypeResource> l_requiredRawMaterials
             = new List<TypeProductionResources.TypeResource>();
-        public List<TypeProductionResources.TypeResource> requiredRawMaterials => _requiredRawMaterials;
+        public List<TypeProductionResources.TypeResource> requiredRawMaterials => l_requiredRawMaterials;
 
         [SerializeField, BoxGroup("Raw Materials"), ReadOnly, HideLabel]
-        private List<float> _quantityRawMaterials = new List<float>();
-        public List<float> quantityRawMaterials => _quantityRawMaterials;
+        private List<float> l_quantityRequiredRawMaterials = new List<float>();
+        public List<float> quantityRequiredRawMaterials => l_quantityRequiredRawMaterials;
 
         [SerializeField, BoxGroup("Parameters"), EnumToggleButtons]
         private TypeProductionResources.TypeResource _typeProductionResource;
         public TypeProductionResources.TypeResource typeProductionResource => _typeProductionResource;
+
+        public enum TypeFarm { Terrestrial, Underground }
+
+        [SerializeField, BoxGroup("Parameters"), EnumToggleButtons]
+        public TypeFarm typeFarm;
 
         [SerializeField, BoxGroup("Parameters"), MinValue(1)]
         private ushort _productionPerformanceStart = 1;
@@ -40,21 +45,21 @@ namespace Config.Building
         private void AddNewRawMaterial(in TypeProductionResources.TypeResource typeResource,
                                        in float quantityRawMaterial = 1)
         {
-            if (_requiredRawMaterials.Contains(typeResource) == false && quantityRawMaterial > 0)
+            if (l_requiredRawMaterials.Contains(typeResource) == false && quantityRawMaterial > 0)
             {
-                _requiredRawMaterials.Add(typeResource);
-                _quantityRawMaterials.Add(quantityRawMaterial);
+                l_requiredRawMaterials.Add(typeResource);
+                l_quantityRequiredRawMaterials.Add(quantityRawMaterial);
             }
         }
 
         [Button("Remove"), BoxGroup("Raw Materials"), HorizontalGroup("Raw Materials/Hor")]
         private void RemoveRawMaterial(in TypeProductionResources.TypeResource typeResource)
         {
-            if (_requiredRawMaterials.Contains(typeResource) == true)
+            if (l_requiredRawMaterials.Contains(typeResource) == true)
             {
-                int index = _requiredRawMaterials.IndexOf(typeResource);
-                _requiredRawMaterials.RemoveAt(index);
-                _quantityRawMaterials.RemoveAt(index);
+                int index = l_requiredRawMaterials.IndexOf(typeResource);
+                l_requiredRawMaterials.RemoveAt(index);
+                l_quantityRequiredRawMaterials.RemoveAt(index);
             }
         }
 #endif

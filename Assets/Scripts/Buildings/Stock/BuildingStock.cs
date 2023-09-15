@@ -1,4 +1,3 @@
-using UnityEngine;
 using Resources;
 using System.Collections.Generic;
 using Config.Building;
@@ -33,6 +32,11 @@ namespace Building.Stock
             _maintenanceExpenses = config.maintenanceExpenses;
         }
 
+        private void MonitorEnergyConsumption()
+        {
+            _IbuildingMonitorEnergy.CalculateConsumption(this);
+        }
+
         void IBuilding.ConstantUpdatingInfo()
         {
             if (_isBuyed && _isWorked)
@@ -63,11 +67,6 @@ namespace Building.Stock
         public void Spending()
         {
             SpendingToObjects.SendNewExpense(_maintenanceExpenses);
-        }
-
-        private void MonitorEnergyConsumption()
-        {
-            _IbuildingMonitorEnergy.CalculateConsumption(this);
         }
     }
 }

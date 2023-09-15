@@ -12,5 +12,7 @@ namespace Transport
         ITransportReception[] GetPointsReception();
 
         Vector3[] routePoints { get; }
+
+        float impactOfObstaclesOnSpeed { get; }
     }
 }

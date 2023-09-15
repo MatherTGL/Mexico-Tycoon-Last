@@ -18,6 +18,17 @@ namespace TimeControl.Acceleration
             _inputControl = inputControl;
         }
 
+        private void ChangeState(ref bool pauseState, ref float currentAcceleration,
+            in ConfigTimeControlEditor.AccelerationTime typeAcceleration, in bool isUseInvertState = false)
+        {
+            if (isUseInvertState)
+                pauseState = !pauseState;
+            else
+                pauseState = false;
+
+            currentAcceleration = (float)typeAcceleration;
+        }
+
         public void AccelerationCheck(ref float currentAcceleration, ref bool pauseState)
         {
             if (Input.GetKeyDown(_inputControl.keycodeTimePause))
@@ -31,17 +42,6 @@ namespace TimeControl.Acceleration
 
             if (Input.GetKeyDown(_inputControl.keycodeAccelerationTimeThree))
                 ChangeState(ref pauseState, ref currentAcceleration, ConfigTimeControlEditor.AccelerationTime.X4);
-        }
-
-        private void ChangeState(ref bool pauseState, ref float currentAcceleration,
-            in ConfigTimeControlEditor.AccelerationTime typeAcceleration, in bool isUseInvertState = false)
-        {
-            if (isUseInvertState)
-                pauseState = !pauseState;
-            else
-                pauseState = false;
-
-            currentAcceleration = (float)typeAcceleration;
         }
     }
 }

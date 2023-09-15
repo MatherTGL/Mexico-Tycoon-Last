@@ -2,6 +2,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using Resources;
 
+
 namespace Transport
 {
     [CreateAssetMenu(fileName = "ConfigTypeTransport", menuName = "Config/Transport/Create New", order = 50)]
@@ -14,6 +15,14 @@ namespace Transport
         [SerializeField]
         private TypeProductionResources.TypeResource _typeResource;
         public TypeProductionResources.TypeResource typeResource => _typeResource;
+
+        public enum Type : byte
+        {
+            Ground, Air, Marine
+        }
+
+        [EnumToggleButtons]
+        public Type type;
 
         [SerializeField, MinValue(0.5f)]
         private float _speed;

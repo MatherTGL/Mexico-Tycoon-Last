@@ -7,7 +7,6 @@ using System.Linq;
 using Building;
 using Resources;
 
-
 namespace Transport.Reception
 {
     public sealed class TransportReception : MonoBehaviour, ITransportReception, IBoot
@@ -18,16 +17,17 @@ namespace Transport.Reception
 
         [SerializeField]
         private BuildingControl.TypeBuilding _typeCurrentBuilding;
+        BuildingControl.TypeBuilding ITransportReception.typeCurrentBuilding => _typeCurrentBuilding;
 
         [SerializeField]
-        private BuildingControl.TypeBuilding[] _typeConnectionBuildings;
+        private BuildingControl.TypeBuilding[] _typeConnectBuildings;
 
         [ShowInInspector, ReadOnly]
         private Dictionary<ITransportReception, GameObject> d_infoRouteConnect
             = new Dictionary<ITransportReception, GameObject>();
 
         [SerializeField]
-        private sbyte _freeConnectionCount;
+        private byte _freeConnectionCount;
 
 
         private TransportReception() { }
@@ -38,15 +38,42 @@ namespace Transport.Reception
             _buildingRequest = GetComponent<IBuildingRequestForTransport>();
         }
 
+        private void BuildRoute(in ITransportReception secondObject)
+        {
+            CreatorCurveRoad createdRoute = Instantiate(_routeBuilderControl.prefabRoute, Vector3.zero,
+                                                        Quaternion.identity);
+            createdRoute.SetPositionPoints(secondObject, this);
+
+            AddConnectionToDictionary(secondObject, createdRoute.gameObject);
+            secondObject.AddConnectionToDictionary(this, createdRoute.gameObject);
+        }
+
+        float ITransportReception.RequestConnectionToLoadRes(in float transportCapacity,
+                                                             in TypeProductionResources.TypeResource typeResource)
+        {
+            return _buildingRequest.RequestGetResource(transportCapacity, typeResource);
+        }
+
+        bool ITransportReception.RequestConnectionToUnloadRes(in float quantityForUnloading,
+                                                              in TypeProductionResources.TypeResource typeResource)
+        {
+            return _buildingRequest.RequestUnloadResource(quantityForUnloading, typeResource);
+        }
+
         (Bootstrap.TypeLoadObject typeLoad, bool isSingle) IBoot.GetTypeLoad()
         {
             return (Bootstrap.TypeLoadObject.MediumImportant, false);
         }
 
+        public void AddConnectionToDictionary(in ITransportReception fromObject, in GameObject createdRouteObject)
+        {
+            d_infoRouteConnect.Add(fromObject, createdRouteObject);
+        }
+
         public void ConnectionRequest(in ITransportReception fromObject)
         {
             if (d_infoRouteConnect.Count <= _freeConnectionCount)
-                if (_typeConnectionBuildings.Contains(fromObject.GetTypeBuilding()))
+                if (_typeConnectBuildings.Contains(fromObject.GetTypeBuilding()))
                     if (fromObject.ConfirmRequest(this) && ConfirmRequest(fromObject))
                         BuildRoute(fromObject);
         }
@@ -80,33 +107,6 @@ namespace Transport.Reception
                 return true;
             }
             else return false;
-        }
-
-        float ITransportReception.RequestConnectionToLoadRes(in float transportCapacity,
-                                                             in TypeProductionResources.TypeResource typeResource)
-        {
-            return _buildingRequest.RequestGetResource(transportCapacity, typeResource);
-        }
-
-        bool ITransportReception.RequestConnectionToUnloadRes(in float quantityForUnloading,
-                                                              in TypeProductionResources.TypeResource typeResource)
-        {
-            return _buildingRequest.RequestUnloadResource(quantityForUnloading, typeResource);
-        }
-
-        public void AddConnectionToDictionary(in ITransportReception fromObject, in GameObject createdRouteObject)
-        {
-            d_infoRouteConnect.Add(fromObject, createdRouteObject);
-        }
-
-        private void BuildRoute(in ITransportReception secondObject)
-        {
-            CreatorCurveRoad createdRoute = Instantiate(_routeBuilderControl.prefabRoute, Vector3.zero,
-                                                        Quaternion.identity);
-            createdRoute.SetPositionPoints(secondObject, this);
-
-            AddConnectionToDictionary(secondObject, createdRoute.gameObject);
-            secondObject.AddConnectionToDictionary(this, createdRoute.gameObject);
         }
 
         public Transform GetPosition() { return this.transform; }

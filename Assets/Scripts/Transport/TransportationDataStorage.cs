@@ -13,6 +13,12 @@ namespace Transport
         public List<bool> l_transportTransferStatus { get; set; } = new List<bool>();
 
 
+        private void RemoveTransportationFromList(in ushort index)
+        {
+            l_purchasedTransportData.RemoveAt(index);
+            l_purchasedTransportSprite.RemoveAt(index);
+        }
+
         public void AddObject(in GameObject objectSprite, in SelfTransport objectData)
         {
             l_purchasedTransportSprite.Add(objectSprite);
@@ -20,7 +26,10 @@ namespace Transport
             l_transportTransferStatus.Add(false);
         }
 
-        public void RemoveObjectFromList(in ushort index) => RemoveTransportationFromList(index);
+        public void RemoveObjectFromList(in ushort index)
+        {
+            RemoveTransportationFromList(index);
+        }
 
         public void RemoveObjectsFromList(in ushort[] indexes)
         {
@@ -28,10 +37,9 @@ namespace Transport
                 RemoveTransportationFromList(index);
         }
 
-        private void RemoveTransportationFromList(in ushort index)
+        public (GameObject sprite, SelfTransport data) DestroyTransport(in ushort index)
         {
-            l_purchasedTransportData.RemoveAt(index);
-            l_purchasedTransportSprite.RemoveAt(index);
+            return (l_purchasedTransportSprite[index], l_purchasedTransportData[index]);
         }
 
         public void SetTransferStatus(in ushort index, in bool isStatus)

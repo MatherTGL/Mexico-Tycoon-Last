@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 634e784815e94251096849ce94d17f86, type: 3}
-  m_Name: BuildingFarmCocaLeavesConfig
+  m_Name: BuildingFarmTerrestrialConfig
   m_EditorClassIdentifier: 
-  _requiredRawMaterials: 01
-  _quantityRawMaterials:
+  l_requiredRawMaterials: 01
+  l_quantityRequiredRawMaterials:
   - 2
   _typeProductionResource: 0
   _productionPerformanceStart: 1

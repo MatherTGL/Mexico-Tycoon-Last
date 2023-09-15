@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _typeCurrentBuilding: 5
-  _typeConnectionBuildings: 01030004050206
+  _typeConnectBuildings: 00010203040506
   _freeConnectionCount: 5
 --- !u!58 &6478903786035401153
 CircleCollider2D:

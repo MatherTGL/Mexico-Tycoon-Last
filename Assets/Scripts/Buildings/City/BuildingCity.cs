@@ -37,6 +37,23 @@ namespace Building.City
                 configBuilding.populationStartMin, configBuilding.populationStartMax);
         }
 
+        private void SellResources()
+        {
+            foreach (var drug in d_amountResource.Keys.ToArray())
+            {
+                _citySellDrugs.Sell(d_amountResource[drug], _costPerKg[(int)drug]);
+                d_amountResource[drug] = 0;
+            }
+        }
+
+        private void InitArrays(in ConfigBuildingCityEditor configBuilding)
+        {
+            int amountTypeDrugs = Enum.GetValues(typeof(TypeProductionResources.TypeResource)).Length;
+
+            _costPerKg = new uint[amountTypeDrugs];
+            _costPerKg = configBuilding.costResourcesConfig.GetCostsSellResources();
+        }
+
         void IBuilding.ConstantUpdatingInfo()
         {
             _cityPopulationReproduction.PopulationReproduction(ref _population);
@@ -59,23 +76,6 @@ namespace Building.City
         {
             d_amountResource[typeResource] += quantityResource;
             return true;
-        }
-
-        private void SellResources()
-        {
-            foreach (var drug in d_amountResource.Keys.ToArray())
-            {
-                _citySellDrugs.Sell(d_amountResource[drug], _costPerKg[(int)drug]);
-                d_amountResource[drug] = 0;
-            }
-        }
-
-        private void InitArrays(in ConfigBuildingCityEditor configBuilding)
-        {
-            int amountTypeDrugs = Enum.GetValues(typeof(TypeProductionResources.TypeResource)).Length;
-
-            _costPerKg = new uint[amountTypeDrugs];
-            _costPerKg = configBuilding.costResourcesConfig.GetCostsSellResources();
         }
     }
 }

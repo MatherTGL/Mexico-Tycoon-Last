@@ -1,19 +1,32 @@
 using UnityEngine;
 using Transport.Reception;
-
+using Sirenix.OdinInspector;
+using Transport;
+using System.Collections.Generic;
 
 namespace Route.Builder
 {
     [RequireComponent(typeof(LineRenderer))]
+    [RequireComponent(typeof(EdgeCollider2D))]
+    [RequireComponent(typeof(RouteTransportControl))]
     public sealed class CreatorCurveRoad : MonoBehaviour, ICreatorCurveRoad
     {
         private const byte _indexPositionPointsFrom = 0, _indexPositionPointsTo = 1;
+
+        private const byte _maxPositionPoints = 2;
 
         [SerializeField]
         private LineRenderer _lineRenderer;
 
         [SerializeField]
+        private EdgeCollider2D _edgeCollider;
+
+        [ShowInInspector]
         private ITransportReception[] _positionPoints;
+
+        [SerializeField]
+        private TypeTransport.Type _typeRoute;
+        TypeTransport.Type ICreatorCurveRoad.typeRoute => _typeRoute;
 
         [SerializeField]
         private float _offsetCenterPoint;
@@ -28,7 +41,7 @@ namespace Route.Builder
         private byte _minLenghtLongRoute = 8;
 
         [SerializeField]
-        private float _biasDividerMin = 2, _biasDividerMax = 3, _biasDividerCurrent = 1.0f;
+        private float _biasDividerMin = 2.0f, _biasDividerMax = 3.0f, _biasDividerCurrent = 1.0f;
 
 
         private CreatorCurveRoad() { }
@@ -36,14 +49,19 @@ namespace Route.Builder
         private void DrawBizierCurve()
         {
             _lineRenderer = GetComponent<LineRenderer>();
+            _edgeCollider = GetComponent<EdgeCollider2D>();
+
             _lineRenderer.positionCount = _numberOfPoints;
+
             RandomBias();
             CalculatePoints();
         }
 
         private void CalculatePoints()
         {
-            float t; Vector3 positionPoint;
+            float t;
+            Vector3 positionPoint;
+            List<Vector2> l_colliderPoints = new List<Vector2>();
 
             for (byte i = 0; i < _numberOfPoints; i++)
             {
@@ -53,8 +71,11 @@ namespace Route.Builder
                 Vector3 p1 = _numbersParameters[3] * t * (_numbersParameters[4] - t) * FindCenterPoint();
                 Vector3 p2 = t * t * _positionPoints[1].GetPosition().position;
                 positionPoint = p0 + p1 + p2;
+
                 _lineRenderer.SetPosition(i, positionPoint);
+                l_colliderPoints.Add(positionPoint);
             }
+            _edgeCollider.SetPoints(l_colliderPoints);
         }
 
         private Vector3 FindCenterPoint()
@@ -66,7 +87,6 @@ namespace Route.Builder
                 + _positionPoints[_indexPositionPointsTo].GetPosition().position / 2);
 
             CalculateDirectionOfCurvature(ref centerPosition);
-
             return centerPosition;
         }
 
@@ -87,26 +107,6 @@ namespace Route.Builder
             }
         }
 
-        public void SetPositionPoints(ITransportReception firstPoint, ITransportReception secondPoint)
-        {
-            _positionPoints = new ITransportReception[2]; // Hardcode
-            _positionPoints[_indexPositionPointsFrom] = firstPoint;
-            _positionPoints[_indexPositionPointsTo] = secondPoint;
-
-            DrawBizierCurve();
-        }
-
-        public Vector3[] GetRoutePoints()
-        {
-            Vector3[] allRoutePoints = new Vector3[_numberOfPoints];
-
-            for (byte i = 0; i < _lineRenderer.positionCount; i++)
-                allRoutePoints[i] = _lineRenderer.GetPosition(i);
-
-            return allRoutePoints;
-        }
-
-        // Todo remove hardcode
         private float RandomBias()
         {
             Vector3 distancePointA = _positionPoints[_indexPositionPointsFrom].GetPosition().position;
@@ -118,8 +118,52 @@ namespace Route.Builder
                 return _biasDividerCurrent = Random.Range(_biasDividerMin * 0.7f, _biasDividerMin);
         }
 
-        public Vector3 GetRouteMainPoint() { return _positionPoints[_indexPositionPointsFrom].GetPosition().position; }
+        private void SetRouteType()
+        {
+            var firstObject = _positionPoints[_indexPositionPointsFrom].typeCurrentBuilding;
+            var secondObject = _positionPoints[_indexPositionPointsTo].typeCurrentBuilding;
 
-        public ITransportReception[] GetPointsConnectionRoute() { return _positionPoints; }
+            if (firstObject == Building.BuildingControl.TypeBuilding.Aerodrome &&
+                secondObject == Building.BuildingControl.TypeBuilding.Aerodrome)
+            {
+                _typeRoute = TypeTransport.Type.Air;
+            }
+            else if (firstObject == Building.BuildingControl.TypeBuilding.SeaPort &&
+                     secondObject == Building.BuildingControl.TypeBuilding.SeaPort)
+            {
+                _typeRoute = TypeTransport.Type.Marine;
+            }
+            else
+            {
+                _typeRoute = TypeTransport.Type.Ground;
+            }
+        }
+
+        public void SetPositionPoints(ITransportReception firstPoint, ITransportReception secondPoint)
+        {
+            _positionPoints = new ITransportReception[_maxPositionPoints];
+            _positionPoints[_indexPositionPointsFrom] = firstPoint;
+            _positionPoints[_indexPositionPointsTo] = secondPoint;
+
+            SetRouteType();
+            DrawBizierCurve();
+        }
+
+        Vector3[] ICreatorCurveRoad.GetRoutePoints()
+        {
+            Vector3[] allRoutePoints = new Vector3[_numberOfPoints];
+
+            for (byte i = 0; i < _lineRenderer.positionCount; i++)
+                allRoutePoints[i] = _lineRenderer.GetPosition(i);
+
+            return allRoutePoints;
+        }
+
+        Vector3 ICreatorCurveRoad.GetRouteMainPoint()
+        {
+            return _positionPoints[_indexPositionPointsFrom].GetPosition().position;
+        }
+
+        ITransportReception[] ICreatorCurveRoad.GetPointsConnectionRoute() { return _positionPoints; }
     }
 }

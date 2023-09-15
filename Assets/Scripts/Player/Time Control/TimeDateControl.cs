@@ -24,9 +24,14 @@ namespace TimeControl
 
         private TimeDateControl() { }
 
-        public void InitAwake()
+        void IBoot.InitAwake()
         {
             _timeAcceleration = new TimeAcceleration(_configTimeControl, _inputControl);
+        }
+
+        (Bootstrap.TypeLoadObject typeLoad, bool isSingle) IBoot.GetTypeLoad()
+        {
+            return (typeLoad: Bootstrap.TypeLoadObject.SuperImportant, isSingle: true);
         }
 
         private void Update()
@@ -44,10 +49,5 @@ namespace TimeControl
         }
 
         public bool GetStatePaused() => _isPaused;
-
-        public (Bootstrap.TypeLoadObject typeLoad, bool isSingle) GetTypeLoad()
-        {
-            return (typeLoad: Bootstrap.TypeLoadObject.SuperImportant, isSingle: true);
-        }
     }
 }

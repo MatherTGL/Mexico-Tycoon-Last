@@ -45,7 +45,7 @@ namespace Building
 
         private BuildingControl() { }
 
-        public void InitAwake()
+        void IBoot.InitAwake()
         {
             Find();
 
@@ -81,29 +81,13 @@ namespace Building
             void Invoke() => StartCoroutine(ConstantUpdating());
         }
 
-        public (Bootstrap.TypeLoadObject typeLoad, bool isSingle) GetTypeLoad()
-        {
-            return (Bootstrap.TypeLoadObject.SuperImportant, false);
-        }
-
-        float IBuildingRequestForTransport.RequestGetResource(in float transportCapacity,
-            in TypeProductionResources.TypeResource typeResource)
-        {
-            CheckIncomingDrugType(typeResource);
-            return _Ibuilding.GetResources(transportCapacity, typeResource);
-        }
-
-        bool IBuildingRequestForTransport.RequestUnloadResource(in float quantityResource,
-            in TypeProductionResources.TypeResource typeResource)
-        {
-            CheckIncomingDrugType(typeResource);
-            return _Ibuilding.SetResources(quantityResource, typeResource);
-        }
-
         private void CheckIncomingDrugType(in TypeProductionResources.TypeResource typeResource)
         {
-            if (_Ibuilding.d_amountResources.ContainsKey(typeResource) == false)
-                _Ibuilding.d_amountResources.Add(typeResource, 0);
+            if (_Ibuilding is not BuildingBorder)
+            {
+                if (_Ibuilding.d_amountResources.ContainsKey(typeResource) == false)
+                    _Ibuilding.d_amountResources.Add(typeResource, 0);
+            }
         }
 
         private void ChangeOwnerState(in bool isBuy)
@@ -135,6 +119,25 @@ namespace Building
             }
         }
 
+        float IBuildingRequestForTransport.RequestGetResource(in float transportCapacity,
+            in TypeProductionResources.TypeResource typeResource)
+        {
+            CheckIncomingDrugType(typeResource);
+            return _Ibuilding.GetResources(transportCapacity, typeResource);
+        }
+
+        bool IBuildingRequestForTransport.RequestUnloadResource(in float quantityResource,
+            in TypeProductionResources.TypeResource typeResource)
+        {
+            CheckIncomingDrugType(typeResource);
+            return _Ibuilding.SetResources(quantityResource, typeResource);
+        }
+
+        (Bootstrap.TypeLoadObject typeLoad, bool isSingle) IBoot.GetTypeLoad()
+        {
+            return (Bootstrap.TypeLoadObject.SuperImportant, false);
+        }
+
 
 #if UNITY_EDITOR
         [Button("Buy Building"), BoxGroup("Editor Control"), HorizontalGroup("Editor Control/Hor")]
@@ -152,6 +155,21 @@ namespace Building
         [Button("Deactivate"), BoxGroup("Editor Control"), HorizontalGroup("Editor Control/Hor2")]
         [DisableInEditorMode]
         private void SetDeactivateBuilding() => ChangeJobStatusBuilding(false);
+
+        #region Farm
+
+        [Button("Change Farm Type"), BoxGroup("Editor Control | Farm"), DisableInEditorMode]
+        [ShowIf("@_typeBuilding == TypeBuilding.Farm")]
+        private void ChangeFarmType(in ConfigBuildingFarmEditor.TypeFarm typeFarm)
+        {
+            if (_Ibuilding is IChangedFarmType)
+            {
+                IChangedFarmType IchangedType = (IChangedFarmType)_Ibuilding;
+                IchangedType.ChangeType(typeFarm);
+            }
+        }
+
+        #endregion
 #endif
     }
 }

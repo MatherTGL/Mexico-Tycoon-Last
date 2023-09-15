@@ -17,6 +17,21 @@ namespace Building.Border
 
         public BuildingBorderMarket(in ConfigBuildingBorderEditor config) => InitArrays(config);
 
+        private void InitArrays(in ConfigBuildingBorderEditor config)
+        {
+            int amountTypeDrugs = Enum.GetValues(typeof(TypeProductionResources.TypeResource)).Length;
+
+            _isSale = new bool[amountTypeDrugs];
+            _costBuyPerKg = new uint[amountTypeDrugs];
+            _costSellPerKg = new uint[amountTypeDrugs];
+
+            _costBuyPerKg = config.costResourcesConfig.GetCostsBuyResources();
+            _costSellPerKg = config.costResourcesConfig.GetCostsSellResources();
+
+            for (byte i = 0; i < _isSale.Length; i++)
+                _isSale[i] = true;
+        }
+
         bool IBuildingBorderMarket.CalculateBuyCost(in TypeProductionResources.TypeResource typeResource,
                                                     in float amount)
         {
@@ -36,21 +51,6 @@ namespace Building.Border
         {
             double salesProfit = amount * _costSellPerKg[(int)typeResource];
             DataControl.IdataPlayer.AddPlayerMoney(salesProfit);
-        }
-
-        private void InitArrays(in ConfigBuildingBorderEditor config)
-        {
-            int amountTypeDrugs = Enum.GetValues(typeof(TypeProductionResources.TypeResource)).Length;
-
-            _isSale = new bool[amountTypeDrugs];
-            _costBuyPerKg = new uint[amountTypeDrugs];
-            _costSellPerKg = new uint[amountTypeDrugs];
-
-            _costBuyPerKg = config.costResourcesConfig.GetCostsBuyResources();
-            _costSellPerKg = config.costResourcesConfig.GetCostsSellResources();
-
-            for (byte i = 0; i < _isSale.Length; i++)
-                _isSale[i] = true;
         }
     }
 }

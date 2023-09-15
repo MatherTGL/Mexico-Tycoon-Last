@@ -21,6 +21,8 @@ namespace Transport
 
         private float _productLoad;
 
+        private float _speed;
+
         private byte _indexCurrentRoutePoint;
 
         private bool _isFirstPosition = true;
@@ -37,26 +39,16 @@ namespace Transport
             _someObject = objectTransport;
 
             _ItransportInteractRoute.onLateUpdateAction += MovementTransport;
-
             InitDictionaryStates();
+
+            _speed = (_typeTransport.speed * (1.0f - _ItransportInteractRoute.impactOfObstaclesOnSpeed) / 100)
+                         * Time.deltaTime;
         }
 
         private void InitDictionaryStates()
         {
             for (byte i = 0; i != 2; i++)
                 d_loadAndUnloadStates.Add(i, new bool[2]);
-        }
-
-        public void Dispose()
-        {
-            _ItransportInteractRoute.onLateUpdateAction -= MovementTransport;
-            GC.SuppressFinalize(this);
-        }
-
-        public void MovementTransport()
-        {
-            CheckPosition();
-            Move(_indexCurrentRoutePoint);
         }
 
         private void CheckPosition()
@@ -99,7 +91,7 @@ namespace Transport
         {
             _someObject.transform.position = Vector3.MoveTowards(_someObject.transform.position,
                                                     _ItransportInteractRoute.routePoints[indexPositionRoute],
-                                                    _typeTransport.speed * Time.deltaTime);
+                                                    _speed);
         }
 
         private void RequestLoad(in byte indexStateLoad, in byte indexReception)
@@ -129,6 +121,18 @@ namespace Transport
                 return false;
         }
 
+        public void Dispose()
+        {
+            _ItransportInteractRoute.onLateUpdateAction -= MovementTransport;
+            GC.SuppressFinalize(this);
+        }
+
+        public void MovementTransport()
+        {
+            CheckPosition();
+            Move(_indexCurrentRoutePoint);
+        }
+
         public void SetTypeTransportingResource(in TypeProductionResources.TypeResource typeResource)
         {
             _typeCurrentTransportResource = typeResource;
@@ -136,7 +140,7 @@ namespace Transport
 
         public void ChangeRoute(in ITransportInteractRoute routeTransportControl)
         {
-            if (routeTransportControl is not null)
+            if (routeTransportControl != null)
             {
                 _ItransportInteractRoute = routeTransportControl;
                 _indexCurrentRoutePoint = 0;

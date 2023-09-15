@@ -100,8 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _typeCurrentBuilding: 2
-  _typeConnectionBuildings: 010502
-  _freeConnectionCount: 1
+  _typeConnectBuildings: 0105060304
+  _freeConnectionCount: 2
 --- !u!114 &3857491194580257993
 MonoBehaviour:
   m_ObjectHideFlags: 0

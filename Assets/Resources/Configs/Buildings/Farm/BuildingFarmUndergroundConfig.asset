@@ -9,14 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a8d0b08b4fa96adab0031c0114e8e44, type: 3}
-  m_Name: BuildingFabricConfig
+  m_Script: {fileID: 11500000, guid: 634e784815e94251096849ce94d17f86, type: 3}
+  m_Name: BuildingFarmUndergroundConfig
   m_EditorClassIdentifier: 
-  l_requiredRawMaterials: 00
+  l_requiredRawMaterials: 01
   l_quantityRequiredRawMaterials:
-  - 5
-  _typeProductionResource: 2
-  _productionPerformance: 1
-  _productConversionStep: 5
-  _maintenanceExpenses: 150
+  - 2
+  _typeProductionResource: 0
+  typeFarm: 1
+  _productionPerformanceStart: 3
   _localCapacityProduction: 20
+  _maintenanceExpenses: 200

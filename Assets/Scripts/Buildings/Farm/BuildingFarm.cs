@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using Resources;
 using Building.Additional;
 
-
 namespace Building.Farm
 {
-    public sealed class BuildingFarm : IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption
+    public sealed class BuildingFarm : IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption,
+    IChangedFarmType
     {
         private IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
 
@@ -37,13 +37,7 @@ namespace Building.Farm
 
         public BuildingFarm(in ConfigBuildingFarmEditor config)
         {
-            _productionPerformance = config.productionStartPerformance;
-            _typeProductionResource = config.typeProductionResource;
-            _localCapacityProduct = config.localCapacityProduction;
-            _config = config;
-
-            _maintenanceExpenses = _config.maintenanceExpenses;
-
+            LoadConfigData(config);
             AddTypesResources();
         }
 
@@ -54,6 +48,36 @@ namespace Building.Farm
             foreach (var typeDrug in _config.requiredRawMaterials)
                 if (d_amountResources.ContainsKey(typeDrug) == false)
                     d_amountResources.Add(typeDrug, 0);
+        }
+
+        private void LoadConfigData(in ConfigBuildingFarmEditor config)
+        {
+            _productionPerformance = config.productionStartPerformance;
+            _typeProductionResource = config.typeProductionResource;
+            _localCapacityProduct = config.localCapacityProduction;
+            _maintenanceExpenses = config.maintenanceExpenses;
+            _config = config;
+        }
+
+        private void Production()
+        {
+            if (d_amountResources[_typeProductionResource] < _localCapacityProduct)
+            {
+                foreach (var typeDrug in _config.requiredRawMaterials)
+                {
+                    for (ushort i = 0; i < _config.quantityRequiredRawMaterials.Count; i++)
+                        if (d_amountResources[typeDrug] < _config.quantityRequiredRawMaterials[i])
+                            return;
+
+                    d_amountResources[typeDrug] -= _config.quantityRequiredRawMaterials[0];
+                }
+                d_amountResources[_typeProductionResource] += _productionPerformance;
+            }
+        }
+
+        private void MonitorEnergyConsumption()
+        {
+            _IbuildingMonitorEnergy.CalculateConsumption(this);
         }
 
         void IBuilding.ConstantUpdatingInfo()
@@ -85,30 +109,16 @@ namespace Building.Farm
             return true;
         }
 
-        private void Production()
+        void IChangedFarmType.ChangeType(in ConfigBuildingFarmEditor.TypeFarm typeFarm)
         {
-            if (d_amountResources[_typeProductionResource] < _localCapacityProduct)
-            {
-                foreach (var typeDrug in _config.requiredRawMaterials)
-                {
-                    for (ushort i = 0; i < _config.quantityRawMaterials.Count; i++)
-                        if (d_amountResources[typeDrug] < _config.quantityRawMaterials[i])
-                            return;
-
-                    d_amountResources[typeDrug] -= _config.quantityRawMaterials[0];
-                }
-                d_amountResources[_typeProductionResource] += _productionPerformance;
-            }
+            foreach (var config in UnityEngine.Resources.FindObjectsOfTypeAll<ConfigBuildingFarmEditor>())
+                if (config.name.Contains(typeFarm.ToString()))
+                    _config = config;
         }
 
         public void Spending()
         {
             SpendingToObjects.SendNewExpense(_maintenanceExpenses);
-        }
-
-        private void MonitorEnergyConsumption()
-        {
-            _IbuildingMonitorEnergy.CalculateConsumption(this);
         }
     }
 }

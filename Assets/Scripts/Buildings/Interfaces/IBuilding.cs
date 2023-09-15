@@ -8,6 +8,7 @@ namespace Building
     {
         Dictionary<TypeProductionResources.TypeResource, float> d_amountResources { get; set; }
 
+
         void ConstantUpdatingInfo();
 
         float GetResources(in float transportCapacity, in TypeProductionResources.TypeResource typeResource);

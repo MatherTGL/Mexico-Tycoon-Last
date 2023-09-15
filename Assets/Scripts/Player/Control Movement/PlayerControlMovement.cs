@@ -45,7 +45,7 @@ namespace Player.Movement
 
         private PlayerControlMovement() { }
 
-        public void InitAwake() => DontDestroyOnLoad(gameObject);
+        void IBoot.InitAwake() => DontDestroyOnLoad(gameObject);
 
         private void LateUpdate() => PlayerTransformClamp();
 
@@ -101,7 +101,7 @@ namespace Player.Movement
             _directionMoveZ = distanceZoomSpeedZoom * _inputControl.axisMouseScrollWheel;
         }
 
-        public (Bootstrap.TypeLoadObject typeLoad, bool isSingle) GetTypeLoad()
+        (Bootstrap.TypeLoadObject typeLoad, bool isSingle) IBoot.GetTypeLoad()
         {
             return (typeLoad: Bootstrap.TypeLoadObject.SuperImportant, isSingle: true);
         }

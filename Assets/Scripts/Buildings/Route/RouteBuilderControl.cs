@@ -19,14 +19,14 @@ namespace Route.Builder
         public CreatorCurveRoad prefabRoute => _prefabRoute;
 
         [ShowInInspector, BoxGroup("Parameters")]
-        private ITransportReception[] _connectionPoints = new ITransportReception[2];
+        private ITransportReception[] _connectionPoints = new ITransportReception[_maxPointConnection];
 
 
         private RouteBuilderControl() { }
 
-        public void InitAwake() => _inputControl = FindObjectOfType<InputControl>();
+        void IBoot.InitAwake() => _inputControl = FindObjectOfType<InputControl>();
 
-        public (Bootstrap.TypeLoadObject typeLoad, bool isSingle) GetTypeLoad()
+        (Bootstrap.TypeLoadObject typeLoad, bool isSingle) IBoot.GetTypeLoad()
         {
             return (Bootstrap.TypeLoadObject.SuperImportant, true);
         }
@@ -41,7 +41,7 @@ namespace Route.Builder
             {
                 if (_connectionPoints.Length == _maxPointConnection)
                 {
-                    if (isConnect is true)
+                    if (isConnect == true)
                         _connectionPoints[1].ConnectionRequest(_connectionPoints[0]);
                     else
                         _connectionPoints[1].DisconnectRequest(_connectionPoints[0]);
