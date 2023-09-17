@@ -28,6 +28,7 @@ namespace Data.Player
 
         bool IDataPlayer.CheckAndSpendingPlayerMoney(in double neededSum, in bool isSpending)
         {
+            Debug.Log($"Player Current Amount Money: {_money}$");
             if (neededSum < _money && isSpending)
             {
                 _money -= neededSum;

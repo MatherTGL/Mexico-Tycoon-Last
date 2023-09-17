@@ -170,9 +170,7 @@ namespace Transport
         {
             try
             {
-                Destroy(_transportationDataStorage.DestroyTransport(_indexTransportInList).sprite);
-                _transportationDataStorage.DestroyTransport(_indexTransportInList).data.Dispose();
-                _transportationDataStorage.RemoveObjectFromList(_indexTransportInList);
+                Destroy(_transportationDataStorage.DestroyTransport(_indexTransportInList));
             }
             catch (Exception exception)
             {

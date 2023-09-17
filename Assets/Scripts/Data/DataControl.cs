@@ -4,7 +4,6 @@ using Data.Player;
 using Config.Data.Player;
 using Boot;
 
-
 namespace Data
 {
     internal sealed class DataControl : MonoBehaviour, IBoot

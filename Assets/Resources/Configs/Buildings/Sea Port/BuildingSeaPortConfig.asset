@@ -9,14 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 634e784815e94251096849ce94d17f86, type: 3}
-  m_Name: BuildingFarmUndergroundConfig
+  m_Script: {fileID: 11500000, guid: 4178023abb56c7a819774bc0dbaa2677, type: 3}
+  m_Name: BuildingSeaPortConfig
   m_EditorClassIdentifier: 
-  l_requiredRawMaterials: 01
-  l_quantityRequiredRawMaterials:
-  - 2
-  _typeProductionResource: 0
-  typeFarm: 1
-  _productionPerformanceStart: 3
   _localCapacityProduction: 0a0000000a0000000a0000000a000000
-  _maintenanceExpenses: 200

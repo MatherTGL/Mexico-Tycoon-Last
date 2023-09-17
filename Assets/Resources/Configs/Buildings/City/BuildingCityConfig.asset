@@ -17,3 +17,4 @@ MonoBehaviour:
   _populationChangeStepPercentMax: 0.02
   _populationStartMin: 0
   _populationStartMax: 0
+  _localCapacityProduction: 0a0000000a0000000a0000000a000000

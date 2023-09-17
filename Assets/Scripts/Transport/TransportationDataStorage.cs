@@ -37,9 +37,11 @@ namespace Transport
                 RemoveTransportationFromList(index);
         }
 
-        public (GameObject sprite, SelfTransport data) DestroyTransport(in ushort index)
+        public GameObject DestroyTransport(in ushort index)
         {
-            return (l_purchasedTransportSprite[index], l_purchasedTransportData[index]);
+            l_purchasedTransportData[index].Dispose();
+            RemoveObjectFromList(index);
+            return l_purchasedTransportSprite[index];
         }
 
         public void SetTransferStatus(in ushort index, in bool isStatus)

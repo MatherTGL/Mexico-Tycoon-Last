@@ -16,6 +16,7 @@ MonoBehaviour:
   l_quantityRequiredRawMaterials:
   - 2
   _typeProductionResource: 0
+  typeFarm: 0
   _productionPerformanceStart: 1
-  _localCapacityProduction: 10
+  _localCapacityProduction: 0a0000000a0000000a0000000a000000
   _maintenanceExpenses: 70

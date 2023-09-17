@@ -9,8 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c3d5d25e09dca1c386d4878c17d2b20, type: 3}
-  m_Name: BuildingAerodromeConfig
+  m_Script: {fileID: 11500000, guid: ac075ed4f95439d52bb6e9aad86c6ce8, type: 3}
+  m_Name: ConfigTypeTransportNavalVessel
   m_EditorClassIdentifier: 
-  _maintenanceExpenses: 200
-  _localCapacityProduction: 0a0000000a0000000a0000000a000000
+  _prefab: {fileID: 6291475073526262561, guid: efd4c69d0d657e29280093f8de63072f, type: 3}
+  _typeResource: 0
+  type: 2
+  _speed: 1.5
+  _capacity: 15
+  _maintenanceExpenses: 120
