@@ -17,11 +17,7 @@ namespace Building
         void InitDictionaryStockCapacity()
         {
             foreach (var resource in amountResources.Keys)
-            {
                 stockCapacity.Add(resource, localCapacityProduction[(int)amountResources[resource]]);
-                Debug.Log(stockCapacity[resource]);
-            }
-            Debug.Log(stockCapacity.Count);
         }
 
         void ConstantUpdatingInfo();

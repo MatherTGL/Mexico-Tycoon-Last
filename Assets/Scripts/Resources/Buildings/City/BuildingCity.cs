@@ -35,17 +35,13 @@ namespace Building.City
 
         private uint _population;
 
-        private byte _indexSelectedDrugType;
-
 
         public BuildingCity(in ScriptableObject config)
         {
             _config = (ConfigBuildingCityEditor)config;
-
             _cityPopulationReproduction = new(_config);
 
             InitArrays(_config);
-
             _population = (uint)UnityEngine.Random.Range(
                 _config.populationStartMin, _config.populationStartMax);
         }

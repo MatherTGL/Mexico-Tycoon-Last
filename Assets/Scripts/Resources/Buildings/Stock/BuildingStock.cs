@@ -9,6 +9,7 @@ namespace Building.Stock
     public sealed class BuildingStock : IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption
     {
         private IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
+        IBuildingMonitorEnergy IEnergyConsumption.IbuildingMonitorEnergy => _IbuildingMonitorEnergy;
 
         private ConfigBuildingStockEditor _config;
 
@@ -45,15 +46,10 @@ namespace Building.Stock
             _maintenanceExpenses = _config.maintenanceExpenses;
         }
 
-        private void MonitorEnergyConsumption()
-        {
-            _IbuildingMonitorEnergy.CalculateConsumption(this);
-        }
-
         void IBuilding.ConstantUpdatingInfo()
         {
             if (_isBuyed && _isWorked)
-                MonitorEnergyConsumption();
+                Debug.Log("Stock is work");
         }
     }
 }

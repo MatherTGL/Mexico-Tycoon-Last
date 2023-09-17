@@ -10,6 +10,7 @@ namespace Building.Farm
     IChangedFarmType
     {
         private IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
+        IBuildingMonitorEnergy IEnergyConsumption.IbuildingMonitorEnergy => _IbuildingMonitorEnergy;
 
         private ConfigBuildingFarmEditor _config;
 
@@ -47,7 +48,6 @@ namespace Building.Farm
         public BuildingFarm(in ScriptableObject config)
         {
             _config = (ConfigBuildingFarmEditor)config;
-
             LoadConfigData(_config);
         }
 
@@ -76,18 +76,10 @@ namespace Building.Farm
             }
         }
 
-        private void MonitorEnergyConsumption()
-        {
-            _IbuildingMonitorEnergy.CalculateConsumption(this);
-        }
-
         void IBuilding.ConstantUpdatingInfo()
         {
             if (_isWorked && _isBuyed)
-            {
                 Production();
-                MonitorEnergyConsumption();
-            }
         }
 
         void IChangedFarmType.ChangeType(in ConfigBuildingFarmEditor.TypeFarm typeFarm)

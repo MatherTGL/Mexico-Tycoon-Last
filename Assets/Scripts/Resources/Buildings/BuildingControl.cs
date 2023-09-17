@@ -28,6 +28,8 @@ namespace Building
 
         private ISpending _Ispending;
 
+        private IEnergyConsumption _IenergyConsumption;
+
         private IBuildingJobStatus _IbuildingJobStatus;
 
         private IBuildingPurchased _IbuildingPurchased;
@@ -145,12 +147,24 @@ namespace Building
                 _Ispending?.Spending();
         }
 
+        private void MonitorEnergy()
+        {
+            if (_Ibuilding is IEnergyConsumption)
+            {
+                if (_IenergyConsumption == null)
+                    _IenergyConsumption = (IEnergyConsumption)_Ibuilding;
+
+                _IenergyConsumption.MonitorEnergy(_IenergyConsumption);
+            }
+        }
+
         private IEnumerator ConstantUpdating()
         {
             while (true)
             {
                 _Ibuilding.ConstantUpdatingInfo();
                 UpdateSpendingBuildings();
+                MonitorEnergy();
                 yield return _coroutineTimeStep;
             }
         }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Building.Additional;
 using Config.Building;
@@ -10,6 +9,7 @@ namespace Building.Fabric
     public sealed class BuildingFabric : IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption
     {
         private IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
+        IBuildingMonitorEnergy IEnergyConsumption.IbuildingMonitorEnergy => _IbuildingMonitorEnergy;
 
         private ConfigBuildingFabricEditor _config;
 
@@ -75,18 +75,10 @@ namespace Building.Fabric
             }
         }
 
-        private void MonitorEnergyConsumption()
-        {
-            _IbuildingMonitorEnergy.CalculateConsumption(this);
-        }
-
         void IBuilding.ConstantUpdatingInfo()
         {
             if (_isBuyed && _isWorked)
-            {
                 Production();
-                MonitorEnergyConsumption();
-            }
         }
     }
 }
