@@ -25,7 +25,7 @@ namespace Config.Building
 
         public enum TypeFarm { Terrestrial, Underground }
 
-        [SerializeField, BoxGroup("Parameters"), EnumToggleButtons]
+        [SerializeField, BoxGroup("Parameters"), EnumPaging]
         public TypeFarm typeFarm;
 
         [SerializeField, BoxGroup("Parameters"), MinValue(1)]

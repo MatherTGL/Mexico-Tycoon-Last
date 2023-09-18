@@ -10,10 +10,10 @@ namespace Building.Aerodrome
     {
         private ConfigBuildingAerodromeEditor _config;
 
-        private Dictionary<TypeProductionResources.TypeResource, float> d_amountResources
-            = new Dictionary<TypeProductionResources.TypeResource, float>();
+        private Dictionary<TypeProductionResources.TypeResource, double> d_amountResources
+            = new Dictionary<TypeProductionResources.TypeResource, double>();
 
-        Dictionary<TypeProductionResources.TypeResource, float> IBuilding.amountResources
+        Dictionary<TypeProductionResources.TypeResource, double> IBuilding.amountResources
         {
             get => d_amountResources; set => d_amountResources = value;
         }

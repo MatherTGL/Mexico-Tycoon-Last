@@ -18,7 +18,7 @@ namespace Building.Border
         A placeholder for implementing an interface so that you don't have to add
         a separate interface. Should not and will not be used in code.
          */
-        Dictionary<TypeProductionResources.TypeResource, float> IBuilding.amountResources
+        Dictionary<TypeProductionResources.TypeResource, double> IBuilding.amountResources
         {
             get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException();
         }

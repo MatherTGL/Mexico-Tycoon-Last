@@ -10,7 +10,6 @@ namespace Building.Additional
         void MonitorEnergy(in IEnergyConsumption IenergyConsumption)
         {
             IbuildingMonitorEnergy.CalculateConsumption(IenergyConsumption);
-            Debug.Log("Monitor energy");
         }
     }
 }

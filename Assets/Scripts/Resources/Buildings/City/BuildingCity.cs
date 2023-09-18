@@ -11,13 +11,11 @@ namespace Building.City
     {
         private CityPopulationReproduction _cityPopulationReproduction;
 
-        private CitySellDrugs _citySellDrugs = new CitySellDrugs();
-
         private ConfigBuildingCityEditor _config;
 
-        private Dictionary<TypeProductionResources.TypeResource, float> d_amountResources = new Dictionary<TypeProductionResources.TypeResource, float>();
+        private Dictionary<TypeProductionResources.TypeResource, double> d_amountResources = new Dictionary<TypeProductionResources.TypeResource, double>();
 
-        Dictionary<TypeProductionResources.TypeResource, float> IBuilding.amountResources
+        Dictionary<TypeProductionResources.TypeResource, double> IBuilding.amountResources
         {
             get => d_amountResources; set => d_amountResources = value;
         }
@@ -50,8 +48,11 @@ namespace Building.City
         {
             foreach (var drug in d_amountResources.Keys.ToArray())
             {
-                _citySellDrugs.Sell(d_amountResources[drug], _costPerKg[(int)drug]);
+                double salesProfit = d_amountResources[drug] * _costPerKg[(int)drug];
+                d_amountResources[TypeProductionResources.TypeResource.DirtyMoney] += salesProfit;
+                Debug.Log(d_amountResources[TypeProductionResources.TypeResource.DirtyMoney]);
                 d_amountResources[drug] = 0;
+                // DataControl.IdataPlayer.AddPlayerMoney(salesProfit);
             }
         }
 

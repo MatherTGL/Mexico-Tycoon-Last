@@ -100,7 +100,7 @@ namespace Transport
             {
                 _productLoad = _ItransportInteractRoute.GetPointsReception()[indexReception]
                                 .RequestConnectionToLoadRes(_typeTransport.capacity, _typeCurrentTransportResource);
-                Debug.Log(_productLoad);
+                Debug.Log($"Car load: {_productLoad}");
             }
         }
 

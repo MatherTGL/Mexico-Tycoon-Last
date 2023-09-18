@@ -154,7 +154,11 @@ namespace Building
                 if (_IenergyConsumption == null)
                     _IenergyConsumption = (IEnergyConsumption)_Ibuilding;
 
-                _IenergyConsumption.MonitorEnergy(_IenergyConsumption);
+                if (_IbuildingJobStatus == null)
+                    _IbuildingJobStatus = (IBuildingJobStatus)_Ibuilding;
+
+                if (_IbuildingJobStatus.isWorked)
+                    _IenergyConsumption.MonitorEnergy(_IenergyConsumption);
             }
         }
 

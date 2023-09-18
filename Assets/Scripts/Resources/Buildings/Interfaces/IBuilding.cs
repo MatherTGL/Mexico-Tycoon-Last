@@ -7,7 +7,7 @@ namespace Building
 {
     public interface IBuilding
     {
-        Dictionary<TypeProductionResources.TypeResource, float> amountResources { get; set; }
+        Dictionary<TypeProductionResources.TypeResource, double> amountResources { get; set; }
 
         Dictionary<TypeProductionResources.TypeResource, uint> stockCapacity { get; set; }
 
@@ -25,6 +25,8 @@ namespace Building
         float GetResources(in float transportCapacity,
                            in TypeProductionResources.TypeResource typeResource)
         {
+            DebugSystem.Log(this, DebugSystem.SelectedColor.Green,
+                            $"Get TransportCapacity{transportCapacity}", "Transport");
             if (amountResources[typeResource] >= transportCapacity)
             {
                 amountResources[typeResource] -= transportCapacity;
