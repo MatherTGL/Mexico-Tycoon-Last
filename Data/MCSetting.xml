@@ -310,5 +310,12 @@
       <overrideLabel>true</overrideLabel>
       <label>Create Config/Buildings/SeaPort/Create New</label>
     </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>Assets/Create/Config/Buildings/City/Business/Create New</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>Create Config/Buildings/City/Business/Create New</label>
+    </MCItem>
   </projectItemList>
 </MCSetting>

@@ -23,8 +23,7 @@ namespace Transport.Reception
         private BuildingControl.TypeBuilding[] _typeConnectBuildings;
 
         [ShowInInspector, ReadOnly]
-        private Dictionary<ITransportReception, GameObject> d_infoRouteConnect
-            = new Dictionary<ITransportReception, GameObject>();
+        private Dictionary<ITransportReception, GameObject> d_infoRouteConnect = new();
 
         [SerializeField]
         private byte _freeConnectionCount;

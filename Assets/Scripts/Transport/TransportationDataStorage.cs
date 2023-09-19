@@ -6,11 +6,11 @@ namespace Transport
 {
     public sealed class TransportationDataStorage
     {
-        public List<GameObject> l_purchasedTransportSprite { get; } = new List<GameObject>();
+        public List<GameObject> l_purchasedTransportSprite { get; } = new();
 
-        public List<SelfTransport> l_purchasedTransportData { get; } = new List<SelfTransport>();
+        public List<SelfTransport> l_purchasedTransportData { get; } = new();
 
-        public List<bool> l_transportTransferStatus { get; set; } = new List<bool>();
+        public List<bool> l_transportTransferStatus { get; set; } = new();
 
 
         private void RemoveTransportationFromList(in ushort index)

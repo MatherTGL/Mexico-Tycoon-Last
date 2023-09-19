@@ -61,7 +61,7 @@ namespace Route.Builder
         {
             float t;
             Vector3 positionPoint;
-            List<Vector2> l_colliderPoints = new List<Vector2>();
+            List<Vector2> l_colliderPoints = new();
 
             for (byte i = 0; i < _numberOfPoints; i++)
             {

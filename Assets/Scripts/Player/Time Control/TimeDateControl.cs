@@ -26,7 +26,7 @@ namespace TimeControl
 
         void IBoot.InitAwake()
         {
-            _timeAcceleration = new TimeAcceleration(_configTimeControl, _inputControl);
+            _timeAcceleration = new(_configTimeControl, _inputControl);
         }
 
         (Bootstrap.TypeLoadObject typeLoad, bool isSingle) IBoot.GetTypeLoad()
