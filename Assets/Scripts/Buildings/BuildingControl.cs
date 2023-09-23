@@ -3,13 +3,18 @@ using Sirenix.OdinInspector;
 using Boot;
 using TimeControl;
 using System.Collections;
-using Building.City;
 using Config.Building;
 using Building.Farm;
 using Transport.Reception;
+using Resources;
+using Building.Additional;
+using Building.Border;
 using Building.Fabric;
-using DebugCustomSystem;
-
+using Building.City;
+using Building.Aerodrome;
+using Building.Stock;
+using Building.SeaPort;
+using Building.City.Business;
 
 namespace Building
 {
@@ -17,11 +22,21 @@ namespace Building
     [RequireComponent(typeof(CircleCollider2D))]
     public sealed class BuildingControl : MonoBehaviour, IBoot, IBuildingRequestForTransport
     {
+        [ShowInInspector, ReadOnly]
         private IBuilding _Ibuilding;
+
+        private ISpending _Ispending;
+
+        private IEnergyConsumption _IenergyConsumption;
+
+        private IBuildingJobStatus _IbuildingJobStatus;
+
+        private IBuildingPurchased _IbuildingPurchased;
+
+        private ICityBusiness _IcityBusiness;
 
         [SerializeField, Required, BoxGroup("Parameters"), HideLabel, PropertySpace(0, 5)]
         private ScriptableObject _configSO;
-        public ScriptableObject configSO => _configSO;
 
         private TimeDateControl _timeDateControl;
 
@@ -29,19 +44,16 @@ namespace Building
 
         public enum TypeBuilding : byte
         {
-            City, Fabric, Farm, Aerodrome, SeaPort, Stock
+            City, Fabric, Farm, Aerodrome, SeaPort, Stock, Border
         }
 
         [SerializeField, BoxGroup("Parameters"), EnumToggleButtons, HideLabel]
         private TypeBuilding _typeBuilding;
 
-        [SerializeField, BoxGroup("Parameters"), ToggleLeft, ReadOnly]
-        private bool _isBuyed;
-
 
         private BuildingControl() { }
 
-        public void InitAwake()
+        void IBoot.InitAwake()
         {
             Find();
 
@@ -55,47 +67,94 @@ namespace Building
             {
                 _coroutineTimeStep = new WaitForSeconds(_timeDateControl.GetCurrentTimeOneDay());
 
-                if (_configSO is not null)
-                {
-                    if (_typeBuilding is TypeBuilding.City)
-                        _Ibuilding = new BuildingCity((ConfigBuildingCityEditor)_configSO);
-                    else if (_typeBuilding is TypeBuilding.Farm)
-                        _Ibuilding = new BuildingFarm((ConfigBuildingFarmEditor)_configSO);
-                    else if (_typeBuilding is TypeBuilding.Fabric)
-                        _Ibuilding = new BuildingFabric((ConfigBuildingFabricEditor)_configSO);
-                }
+                if (_configSO != null)
+                    CreateInstance();
+
+                if (_Ibuilding is ISpending)
+                    _Ispending = (ISpending)_Ibuilding;
+
+                if (_Ibuilding is ICityBusiness)
+                    _IcityBusiness = (ICityBusiness)_Ibuilding;
+
+                Invoke();
+            }
+
+            void Invoke()
+            {
+                CreateDictionaryTypeDrugs();
+                StartCoroutine(ConstantUpdating());
             }
         }
 
-        public (Bootstrap.TypeLoadObject typeLoad, bool isSingle) GetTypeLoad()
+        private void CreateInstance()
         {
-            return (Bootstrap.TypeLoadObject.SuperImportant, false);
+            if (_typeBuilding is TypeBuilding.City)
+                _Ibuilding = new BuildingCity(_configSO);
+            else if (_typeBuilding is TypeBuilding.Farm)
+                _Ibuilding = new BuildingFarm(_configSO);
+            else if (_typeBuilding is TypeBuilding.Fabric)
+                _Ibuilding = new BuildingFabric(_configSO);
+            else if (_typeBuilding is TypeBuilding.Stock)
+                _Ibuilding = new BuildingStock(_configSO);
+            else if (_typeBuilding is TypeBuilding.Border)
+                _Ibuilding = new BuildingBorder(_configSO);
+            else if (_typeBuilding is TypeBuilding.Aerodrome)
+                _Ibuilding = new BuildingAerodrome(_configSO);
+            else if (_typeBuilding is TypeBuilding.SeaPort)
+                _Ibuilding = new BuildingSeaPort(_configSO);
         }
 
-        (bool inStock, float quantity) IBuildingRequestForTransport.RequestGetResource(in float transportCapacity)
+        private void CreateDictionaryTypeDrugs()
         {
-            Debug.Log($"пункт 3 {transportCapacity} / {_Ibuilding}");
-            if (_Ibuilding.GetResources(transportCapacity).confirm)
-                return (true, _Ibuilding.GetResources(transportCapacity).quantityAmount);
-            else
-                return (false, 0);
-        }
-
-        bool IBuildingRequestForTransport.RequestUnloadResource(in float quantityResource)
-        {
-            DebugSystem.Log(this, DebugSystem.SelectedColor.Green, "Отправлен запрос на склад", "Transport");
-            if (_Ibuilding.SetResources(quantityResource))
-                return true;
-            else
-                return false;
+            if (_Ibuilding is not BuildingBorder)
+                _Ibuilding.InitDictionaries();
         }
 
         private void ChangeOwnerState(in bool isBuy)
         {
-            if (isBuy == true && _isBuyed == false || isBuy == false && _isBuyed == true) _isBuyed = isBuy;
+            if (_Ibuilding is IBuildingPurchased)
+            {
+                _IbuildingPurchased = (IBuildingPurchased)_Ibuilding;
 
-            if (_isBuyed) StartCoroutine(ConstantUpdating());
-            else StopAllCoroutines();
+                if (isBuy) _IbuildingPurchased.Buy();
+                else _IbuildingPurchased.Sell();
+            }
+        }
+
+        private void ChangeJobStatusBuilding(in bool isState)
+        {
+            if (_Ibuilding is IBuildingJobStatus)
+            {
+                _IbuildingJobStatus = (IBuildingJobStatus)_Ibuilding;
+                _IbuildingJobStatus.ChangeJobStatus(isState);
+            }
+        }
+
+        private void ChangeFarmType(in ConfigBuildingFarmEditor.TypeFarm typeFarm)
+        {
+            if (_Ibuilding is IChangedFarmType)
+            {
+                IChangedFarmType IchangedType = (IChangedFarmType)_Ibuilding;
+                IchangedType.ChangeType(typeFarm);
+            }
+        }
+
+        private void UpdateSpendingBuildings()
+        {
+            if (_IbuildingJobStatus != null && _IbuildingJobStatus.isWorked)
+                _Ispending?.Spending();
+        }
+
+        private void MonitorEnergy()
+        {
+            if (_Ibuilding is IEnergyConsumption)
+            {
+                _IenergyConsumption ??= (IEnergyConsumption)_Ibuilding;
+                _IbuildingJobStatus ??= (IBuildingJobStatus)_Ibuilding;
+
+                if (_IbuildingJobStatus.isWorked)
+                    _IenergyConsumption.MonitorEnergy(_IenergyConsumption);
+            }
         }
 
         private IEnumerator ConstantUpdating()
@@ -103,8 +162,27 @@ namespace Building
             while (true)
             {
                 _Ibuilding.ConstantUpdatingInfo();
+                UpdateSpendingBuildings();
+                MonitorEnergy();
                 yield return _coroutineTimeStep;
             }
+        }
+
+        float IBuildingRequestForTransport.RequestGetResource(in float transportCapacity,
+            in TypeProductionResources.TypeResource typeResource)
+        {
+            return _Ibuilding.GetResources(transportCapacity, typeResource);
+        }
+
+        bool IBuildingRequestForTransport.RequestUnloadResource(in float quantityResource,
+            in TypeProductionResources.TypeResource typeResource)
+        {
+            return _Ibuilding.SetResources(quantityResource, typeResource);
+        }
+
+        (Bootstrap.TypeLoadObject typeLoad, bool isSingle) IBoot.GetTypeLoad()
+        {
+            return (Bootstrap.TypeLoadObject.SuperImportant, false);
         }
 
 
@@ -119,11 +197,40 @@ namespace Building
 
         [Button("Activate"), BoxGroup("Editor Control"), HorizontalGroup("Editor Control/Hor2")]
         [DisableInEditorMode]
-        private void SetActivateBuilding() => _Ibuilding.ChangeJobStatus(true);
+        private void SetActivateBuilding() => ChangeJobStatusBuilding(true);
 
         [Button("Deactivate"), BoxGroup("Editor Control"), HorizontalGroup("Editor Control/Hor2")]
         [DisableInEditorMode]
-        private void SetDeactivateBuilding() => _Ibuilding.ChangeJobStatus(false);
+        private void SetDeactivateBuilding() => ChangeJobStatusBuilding(false);
+
+        #region Farm
+
+        [Button("Change Farm Type"), BoxGroup("Editor Control | Farm"), DisableInEditorMode]
+        [ShowIf("@_typeBuilding == TypeBuilding.Farm")]
+        private void ChangeFarmTypeEditor(in ConfigBuildingFarmEditor.TypeFarm typeFarm)
+        {
+            ChangeFarmType(typeFarm);
+        }
+
+        #endregion
+
+        #region City-Business
+
+        [Button("Buy"), BoxGroup("Editor Control | City Business"), DisableInEditorMode]
+        [ShowIf("@_typeBuilding == TypeBuilding.City")]
+        private void BuyBusiness(in CityBusiness.TypeBusiness typeBusiness)
+        {
+            _IcityBusiness.BuyBusiness(typeBusiness);
+        }
+
+        [Button("Sell"), BoxGroup("Editor Control | City Business"), DisableInEditorMode]
+        [ShowIf("@_typeBuilding == TypeBuilding.City")]
+        private void SellBusiness(in ushort indexBusiness)
+        {
+            _IcityBusiness.SellBusiness(indexBusiness);
+        }
+
+        #endregion
 #endif
     }
 }

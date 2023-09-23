@@ -268,5 +268,54 @@
       <overrideLabel>true</overrideLabel>
       <label>Create Config/Buildings/Fabric/Create New</label>
     </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>Assets/Create/Config/Buildings/Stock/Create New</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>Create Config/Buildings/Stock/Create New</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>Assets/Create/Config/Data/Costs/Resources/Create New</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>Create Config/Data/Costs/Resources/Create New</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>Assets/Create/Config/Buildings/Border/Create New</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>Create Config/Buildings/Border/Create New</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>Assets/Create/Config/Buildings/Aero/Create New</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>Create Config/Buildings/Aero/Create New</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>Assets/Create/Config/Obstacle/Create new</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>Create Config/Obstacle/Create New</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>Assets/Create/Config/Buildings/SeaPort/Create New</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>Create Config/Buildings/SeaPort/Create New</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>Assets/Create/Config/Buildings/City/Business/Create New</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>Create Config/Buildings/City/Business/Create New</label>
+    </MCItem>
   </projectItemList>
 </MCSetting>

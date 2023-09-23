@@ -1,5 +1,6 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
+using Resources;
 
 
 namespace Transport
@@ -11,6 +12,18 @@ namespace Transport
         private GameObject _prefab;
         public GameObject prefab => _prefab;
 
+        [SerializeField]
+        private TypeProductionResources.TypeResource _typeResource;
+        public TypeProductionResources.TypeResource typeResource => _typeResource;
+
+        public enum Type : byte
+        {
+            Ground, Air, Marine
+        }
+
+        [EnumToggleButtons]
+        public Type type;
+
         [SerializeField, MinValue(0.5f)]
         private float _speed;
         public float speed => _speed;
@@ -18,5 +31,9 @@ namespace Transport
         [SerializeField, MinValue(1.0f)]
         private float _capacity;
         public float capacity => _capacity;
+
+        [SerializeField, MinValue(30)]
+        private ushort _maintenanceExpenses = 30;
+        public ushort maintenanceExpenses => _maintenanceExpenses;
     }
 }

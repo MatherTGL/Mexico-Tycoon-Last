@@ -4,9 +4,7 @@ namespace Resources
     {
         public enum TypeResource : byte
         {
-            CocaLeaves, Petrol
+            CocaLeaves, Petrol, Cocaine, DirtyMoney, Hemp
         }
-
-        public TypeResource typeResource;
     }
 }

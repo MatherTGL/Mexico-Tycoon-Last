@@ -10,10 +10,7 @@ namespace Route.Builder
 {
     public sealed class RouteBuilderControl : MonoBehaviour, IBoot
     {
-        private const byte _maxRoutePointConnection = 2;
-
-        [SerializeField, Required, BoxGroup("Parameters")]
-        private Camera _cameraPlayer;
+        private const byte _maxPointConnection = 2;
 
         private InputControl _inputControl;
 
@@ -21,19 +18,15 @@ namespace Route.Builder
         private CreatorCurveRoad _prefabRoute;
         public CreatorCurveRoad prefabRoute => _prefabRoute;
 
-        private Ray _ray;
-
-        private RaycastHit2D _hit2d;
-
         [ShowInInspector, BoxGroup("Parameters")]
-        private ITransportReception[] _connectionPoints = new ITransportReception[2];
+        private ITransportReception[] _connectionPoints = new ITransportReception[_maxPointConnection];
 
 
         private RouteBuilderControl() { }
 
-        public void InitAwake() => _inputControl = FindObjectOfType<InputControl>();
+        void IBoot.InitAwake() => _inputControl = FindObjectOfType<InputControl>();
 
-        public (Bootstrap.TypeLoadObject typeLoad, bool isSingle) GetTypeLoad()
+        (Bootstrap.TypeLoadObject typeLoad, bool isSingle) IBoot.GetTypeLoad()
         {
             return (Bootstrap.TypeLoadObject.SuperImportant, true);
         }
@@ -46,9 +39,9 @@ namespace Route.Builder
         {
             try
             {
-                if (_connectionPoints.Length == _maxRoutePointConnection)
+                if (_connectionPoints.Length == _maxPointConnection)
                 {
-                    if (isConnect is true)
+                    if (isConnect == true)
                         _connectionPoints[1].ConnectionRequest(_connectionPoints[0]);
                     else
                         _connectionPoints[1].DisconnectRequest(_connectionPoints[0]);
@@ -66,7 +59,7 @@ namespace Route.Builder
 #if UNITY_EDITOR
         [BoxGroup("Editor Testing"), PropertySpace(10), Button("New Route"), DisableInEditorMode]
         [HorizontalGroup("Editor Testing/Hor"), ShowIf("@_connectionPoints[0] != null && _connectionPoints[1] != null")]
-        private void CreateNewRoute() => SendRequestConnect();
+        private void CreateRoute() => SendRequestConnect();
 
         [BoxGroup("Editor Testing"), PropertySpace(10), Button("Destroy Route"), DisableInEditorMode]
         [HorizontalGroup("Editor Testing/Hor"), ShowIf("@_connectionPoints[0] != null && _connectionPoints[1] != null")]

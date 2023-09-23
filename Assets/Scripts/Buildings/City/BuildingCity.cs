@@ -1,51 +1,97 @@
-using UnityEngine;
+using Building.City.Business;
 using Config.Building;
-using System.Collections.Generic;
 using Resources;
-
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace Building.City
 {
-    public sealed class BuildingCity : IBuilding
+    public sealed class BuildingCity : IBuilding, ICityBusiness
     {
-        private ConfigBuildingCityEditor _configBuilding;
-
         private CityPopulationReproduction _cityPopulationReproduction;
+
+        private CityBusiness _cityBusiness = new();
+
+        private ConfigBuildingCityEditor _config;
+
+        private Dictionary<TypeProductionResources.TypeResource, double> d_amountResources = new();
+
+        Dictionary<TypeProductionResources.TypeResource, double> IBuilding.amountResources
+        {
+            get => d_amountResources; set => d_amountResources = value;
+        }
+
+        private Dictionary<TypeProductionResources.TypeResource, uint> d_stockCapacity = new();
+
+        Dictionary<TypeProductionResources.TypeResource, uint> IBuilding.stockCapacity
+        {
+            get => d_stockCapacity; set => d_stockCapacity = value;
+        }
+
+        uint[] IBuilding.localCapacityProduction => _config.localCapacityProduction;
+
+        private uint[] _costPerKg;
 
         private uint _population;
 
 
-        public BuildingCity(in ConfigBuildingCityEditor configBuilding)
+        public BuildingCity(in ScriptableObject config)
         {
-            _cityPopulationReproduction = new(configBuilding);
-            _configBuilding = configBuilding;
+            _config = (ConfigBuildingCityEditor)config;
+            _cityPopulationReproduction = new(_config);
 
-            _population = (uint)Random.Range(_configBuilding.populationStartMin, _configBuilding.populationStartMax);
+            InitArrays(_config);
+            _population = (uint)UnityEngine.Random.Range(
+                _config.populationStartMin, _config.populationStartMax);
         }
 
-        public void ConstantUpdatingInfo()
+        private void SellResources()
         {
-            _cityPopulationReproduction.PopulationReproduction(ref _population);
+            foreach (var drug in d_amountResources.Keys.ToArray())
+            {
+                if (drug != TypeProductionResources.TypeResource.DirtyMoney)
+                {
+                    double salesProfit = d_amountResources[drug] * _costPerKg[(int)drug];
+                    d_amountResources[TypeProductionResources.TypeResource.DirtyMoney] += salesProfit;
+                    d_amountResources[drug] = 0;
+                }
+            }
+            Debug.Log(d_amountResources[TypeProductionResources.TypeResource.DirtyMoney]);
+            ToLaunderMoney();
         }
 
-        void IBuilding.ChangeJobStatus(in bool isState)
+        private void InitArrays(in ConfigBuildingCityEditor configBuilding)
         {
-            throw new System.NotImplementedException();
+            int amountTypeDrugs = Enum.GetValues(typeof(TypeProductionResources.TypeResource)).Length;
+
+            _costPerKg = new uint[amountTypeDrugs];
+            _costPerKg = configBuilding.costResourcesConfig.GetCostsSellResources();
         }
 
         void IBuilding.ConstantUpdatingInfo()
         {
-            throw new System.NotImplementedException();
+            _cityPopulationReproduction.PopulationReproduction(ref _population);
+            SellResources();
         }
 
-        (bool confirm, float quantityAmount) IBuilding.GetResources(in float transportCapacity)
+        private void ToLaunderMoney()
         {
-            throw new System.NotImplementedException();
+            Debug.Log("Launder money BuildingCity enter");
+            _cityBusiness.ToLaunderMoney(d_amountResources[TypeProductionResources.TypeResource.DirtyMoney]);
+            d_amountResources[TypeProductionResources.TypeResource.DirtyMoney] = 0;
+            Debug.Log("Launder money BuildingCity end");
         }
 
-        bool IBuilding.SetResources(in float quantityResource)
+        void ICityBusiness.BuyBusiness(in CityBusiness.TypeBusiness typeBusiness)
         {
-            throw new System.NotImplementedException();
+            _cityBusiness.BuyBusiness(typeBusiness);
+        }
+
+        void ICityBusiness.SellBusiness(in ushort indexBusiness)
+        {
+            _cityBusiness.SellBusiness(indexBusiness);
         }
     }
 }

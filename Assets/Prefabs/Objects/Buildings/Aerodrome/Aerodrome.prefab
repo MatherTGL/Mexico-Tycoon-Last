@@ -19,7 +19,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5681343924117719057
 Transform:
   m_ObjectHideFlags: 0
@@ -100,8 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _typeCurrentBuilding: 3
-  _typeConnectionBuildings: 0501040300
-  _freeConnectionCount: 3
+  _typeConnectBuildings: 000103040506
+  _freeConnectionCount: 4
 --- !u!58 &3608176006120548697
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -149,7 +149,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2701d1e8054999fb196dfd083bc4e98b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _configSO: {fileID: 0}
+  _configSO: {fileID: 11400000, guid: 6585c107a682dc8cd8e3f136bd0b280e, type: 2}
   _typeBuilding: 3
-  _typeProductionResource: 0
-  _isBuyed: 0

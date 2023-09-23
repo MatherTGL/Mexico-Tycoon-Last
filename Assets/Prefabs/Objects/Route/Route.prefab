@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7178679870288806220}
   - component: {fileID: 2275065938947847526}
   - component: {fileID: 7534623058585701940}
+  - component: {fileID: 8707726434613106250}
   m_Layer: 0
   m_Name: Route
   m_TagString: Untagged
@@ -43,8 +44,8 @@ LineRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2426178587256659340}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
   m_MotionVectors: 0
@@ -149,7 +150,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lineRenderer: {fileID: 7178679870288806220}
-  _positionPoints: []
+  _edgeCollider: {fileID: 0}
+  _typeRoute: 0
   _offsetCenterPoint: 2.4532886
   _numbersParameters:
   - 0.83
@@ -158,8 +160,10 @@ MonoBehaviour:
   - 1.31
   - 1
   _numberOfPoints: 20
-  _biasDividerMin: 2
-  _biasDividerMax: 3
+  _minLenghtLongRoute: 8
+  _biasDividerMin: 3
+  _biasDividerMax: 4
+  _biasDividerCurrent: 1
 --- !u!114 &7534623058585701940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,8 +179,48 @@ MonoBehaviour:
   _allTypesTransport:
   - {fileID: 11400000, guid: 5f48212aa88614ba6930224594456bc5, type: 2}
   - {fileID: 11400000, guid: e8eccc81ae4b5820187698f12c8f0444, type: 2}
-  l_purchasedTransport: []
   _routePoints:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
+  _typeTransportingResource: 0
   _indexTypeTransport: 0
+  _indexTransportInList: 0
+--- !u!68 &8707726434613106250
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2426178587256659340}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points: []
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0

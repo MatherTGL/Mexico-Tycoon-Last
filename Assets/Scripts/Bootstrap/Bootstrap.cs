@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Sirenix.OdinInspector;
 
-
 namespace Boot
 {
     public sealed class Bootstrap : MonoBehaviour
@@ -18,7 +17,7 @@ namespace Boot
 
         private void Awake() => LoadToList();
 
-        private async ValueTask LoadToList()
+        private async void LoadToList()
         {
             IBoot[] bootObjects = GameObject.FindObjectsOfType<MonoBehaviour>()
                 .OfType<IBoot>().Where(item => ((MonoBehaviour)item).enabled)
@@ -46,7 +45,7 @@ namespace Boot
 
         private void StartInit()
         {
-            for (int i = 0; i < _bootObjectList.Count; i++)
+            for (ushort i = 0; i < _bootObjectList.Count; i++)
                 _bootObjectList[i].InitAwake();
         }
     }

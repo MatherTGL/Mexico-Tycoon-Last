@@ -15,37 +15,26 @@ namespace Data.Player
 
         private DataPlayer() { }
 
-        public void SetDataConfig(in ConfigDataPlayer configDataPlayer)
-        {
-            _money = configDataPlayer.startPlayerMoney;
-            _researchPoints = configDataPlayer.startPlayerResearchPoints;
-        }
-
         void IDataPlayer.AddPlayerMoney(in double amountMoney)
         {
             _money += amountMoney;
             Debug.Log($"Player Current Amount Money: {_money}$");
         }
 
-        void IDataPlayer.AddPlayerResearchPoints(in ushort amountResearchPoints) => _researchPoints += amountResearchPoints;
+        void IDataPlayer.AddPlayerResearchPoints(in ushort amountResearchPoints)
+        {
+            _researchPoints += amountResearchPoints;
+        }
 
         bool IDataPlayer.CheckAndSpendingPlayerMoney(in double neededSum, in bool isSpending)
         {
-            if (neededSum < _money)
+            Debug.Log($"Player Current Amount Money: {_money}$");
+            if (neededSum < _money && isSpending)
             {
-                if (isSpending)
-                {
-                    SpendingMoney(neededSum);
-                    return true;
-                }
-                else return false;
+                _money -= neededSum;
+                return true;
             }
             else return false;
-        }
-
-        private void SpendingMoney(double neededSum)
-        {
-            _money -= neededSum;
         }
 
         bool IDataPlayer.CheckAndSpendingPlayerResearchPoints(in ushort amount, in bool isSpending)
@@ -56,5 +45,11 @@ namespace Data.Player
         double IDataPlayer.GetPlayerMoney() => _money;
 
         ushort IDataPlayer.GetPlayerResearchPoints() => _researchPoints;
+
+        public void SetDataConfig(in ConfigDataPlayer configDataPlayer)
+        {
+            _money = configDataPlayer.startPlayerMoney;
+            _researchPoints = configDataPlayer.startPlayerResearchPoints;
+        }
     }
 }
