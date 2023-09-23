@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: BuildingStockConfig
   m_EditorClassIdentifier: 
   _maintenanceExpenses: 30
-  _localCapacityProduction: 1e0000001e0000001e0000001e000000
+  _localCapacityProduction: 1e0000001e0000001e0000001e0000001e000000

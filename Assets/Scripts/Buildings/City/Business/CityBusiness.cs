@@ -24,22 +24,25 @@ namespace Building.City.Business
 
         public void BuyBusiness(in TypeBusiness typeBusiness)
         {
+            LoadDataFromConfig(typeBusiness);
+
             if (typeBusiness == TypeBusiness.CarWash)
-            {
-                LoadDataFromConfig(typeBusiness);
                 l_purchasedBusinesses.Add(new CarWashBusiness());
-            }
+
             Debug.Log("Business buyed");
         }
 
         private void LoadDataFromConfig(TypeBusiness typeBusiness)
         {
             _config = UnityEngine.Resources.FindObjectsOfTypeAll<ConfigCityBusinessEditor>()
-                                              .Where(config => config.typeBusiness.Equals(typeBusiness))
-                                              .Single();
+                                            .Where(config => config.typeBusiness == typeBusiness)
+                                            .ToArray().Single();
+            Debug.Log(_config);
+            Debug.Log(_config.percentageMoneyCleared);
 
-            _percentageMoneyCleared = _config.percentageMoneyCleared;
-            Debug.Log("Config loaded");
+            if (_config != null)
+                _percentageMoneyCleared = _config.percentageMoneyCleared;
+            Debug.Log(_percentageMoneyCleared);
         }
 
         public void SellBusiness(in ushort indexBusiness)
@@ -51,8 +54,14 @@ namespace Building.City.Business
 
         public void ToLaunderMoney(in double amountDirtyMoney)
         {
+            Debug.Log("Launder money CityBusiness enter");
             for (byte i = 0; i < l_purchasedBusinesses.Count; i++)
+            {
+                Debug.Log("for launder money CityBusiness");
                 l_purchasedBusinesses[i].ToLaunderMoney(amountDirtyMoney);
+                Debug.Log("for launder money CityBusiness end");
+                // !!!!!!
+            }
         }
     }
 }

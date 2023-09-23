@@ -58,8 +58,10 @@ namespace Building.Farm
 
         private void Production()
         {
+            Debug.Log(d_amountResources[_typeProductionResource]);
+            Debug.Log(_config.localCapacityProduction[(int)_typeProductionResource]);
             if (d_amountResources[_typeProductionResource]
-                < _config.localCapacityProduction[(int)d_amountResources[_typeProductionResource]])
+                < _config.localCapacityProduction[(int)_typeProductionResource])
             {
                 foreach (var typeDrug in _config.requiredRawMaterials)
                 {

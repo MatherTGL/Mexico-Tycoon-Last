@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4178023abb56c7a819774bc0dbaa2677, type: 3}
   m_Name: BuildingSeaPortConfig
   m_EditorClassIdentifier: 
-  _localCapacityProduction: 0a0000000a0000000a0000000a000000
+  _localCapacityProduction: 0a0000000a0000000a0000000a0000000a000000

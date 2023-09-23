@@ -51,9 +51,12 @@ namespace Building.City
         {
             foreach (var drug in d_amountResources.Keys.ToArray())
             {
-                double salesProfit = d_amountResources[drug] * _costPerKg[(int)drug];
-                d_amountResources[TypeProductionResources.TypeResource.DirtyMoney] += salesProfit;
-                d_amountResources[drug] = 0;
+                if (drug != TypeProductionResources.TypeResource.DirtyMoney)
+                {
+                    double salesProfit = d_amountResources[drug] * _costPerKg[(int)drug];
+                    d_amountResources[TypeProductionResources.TypeResource.DirtyMoney] += salesProfit;
+                    d_amountResources[drug] = 0;
+                }
             }
             Debug.Log(d_amountResources[TypeProductionResources.TypeResource.DirtyMoney]);
             ToLaunderMoney();
@@ -75,8 +78,10 @@ namespace Building.City
 
         private void ToLaunderMoney()
         {
+            Debug.Log("Launder money BuildingCity enter");
             _cityBusiness.ToLaunderMoney(d_amountResources[TypeProductionResources.TypeResource.DirtyMoney]);
             d_amountResources[TypeProductionResources.TypeResource.DirtyMoney] = 0;
+            Debug.Log("Launder money BuildingCity end");
         }
 
         void ICityBusiness.BuyBusiness(in CityBusiness.TypeBusiness typeBusiness)
