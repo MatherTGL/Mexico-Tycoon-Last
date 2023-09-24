@@ -1685,6 +1685,10 @@ PrefabInstance:
       propertyPath: _freeConnectionCount
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3857491194580257993, guid: 88a5fc43c0f387de780139e5b7097210, type: 3}
+      propertyPath: _configSO
+      value: 
+      objectReference: {fileID: 11400000, guid: e465e6e61ae181825b81a7597f72c042, type: 2}
     - target: {fileID: 6084929944800534952, guid: 88a5fc43c0f387de780139e5b7097210, type: 3}
       propertyPath: m_Name
       value: Farm (2)
@@ -2111,10 +2115,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1748531236}
     m_Modifications:
-    - target: {fileID: 3857491194580257993, guid: 88a5fc43c0f387de780139e5b7097210, type: 3}
-      propertyPath: _configSO
-      value: 
-      objectReference: {fileID: 11400000, guid: e465e6e61ae181825b81a7597f72c042, type: 2}
     - target: {fileID: 6084929944800534952, guid: 88a5fc43c0f387de780139e5b7097210, type: 3}
       propertyPath: m_Name
       value: Farm

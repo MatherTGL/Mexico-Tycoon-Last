@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using DebugCustomSystem;
 using Resources;
-using UnityEngine;
 
 namespace Building
 {
@@ -33,13 +31,9 @@ namespace Building
         float GetResources(in float transportCapacity,
                            in TypeProductionResources.TypeResource typeResource)
         {
-            DebugSystem.Log(this, DebugSystem.SelectedColor.Green,
-                            $"Get TransportCapacity{transportCapacity}", "Transport");
             if (amountResources[typeResource] >= transportCapacity)
             {
                 amountResources[typeResource] -= transportCapacity;
-                DebugSystem.Log(this, DebugSystem.SelectedColor.Green,
-                                $"{amountResources[typeResource]}", "Building");
                 return transportCapacity;
             }
             else
@@ -49,20 +43,10 @@ namespace Building
         bool SetResources(in float quantityResource,
                           in TypeProductionResources.TypeResource typeResource)
         {
-            Debug.Log("Enter to SetRes");
             if (stockCapacity.ContainsKey(typeResource))
-            {
-                Debug.Log("SetRes ContainsKey is true");
                 if (amountResources[typeResource] < stockCapacity[typeResource])
-                {
-                    Debug.Log("amountResources[typeResource] < stockCapacity[typeResource] is true");
                     amountResources[typeResource] += quantityResource;
-                    Debug.Log($"{amountResources[typeResource]}");
-                    Debug.Log($"{quantityResource}");
-                }
-            }
-            DebugSystem.Log(this, DebugSystem.SelectedColor.Green,
-                                $"{amountResources[typeResource]}", "Building");
+
             return true;
         }
     }
