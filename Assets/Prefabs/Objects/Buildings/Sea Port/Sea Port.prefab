@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 6566521399812312715}
   - component: {fileID: 1390785296947638147}
   - component: {fileID: 241241215925402989}
-  - component: {fileID: 8044075363624823788}
   - component: {fileID: 5240722988134470757}
+  - component: {fileID: 11291393180800269}
   m_Layer: 0
   m_Name: Sea Port
   m_TagString: Untagged
@@ -102,41 +102,6 @@ MonoBehaviour:
   _typeCurrentBuilding: 4
   _typeConnectBuildings: 0304050601
   _freeConnectionCount: 3
---- !u!58 &8044075363624823788
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8097129847925388580}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 1
 --- !u!114 &5240722988134470757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,3 +116,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _configSO: {fileID: 11400000, guid: fb4d3c93151d9cecc8bbabaef8bfed18, type: 2}
   _typeBuilding: 4
+--- !u!65 &11291393180800269
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8097129847925388580}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 0.2}
+  m_Center: {x: 0, y: 0.21133333, z: 0}

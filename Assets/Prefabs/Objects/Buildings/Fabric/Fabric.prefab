@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5940570371365641601}
   - component: {fileID: 4492893730298065783}
   - component: {fileID: 3271838068002446579}
-  - component: {fileID: 6125957327999035982}
+  - component: {fileID: 6133981189342110750}
   m_Layer: 0
   m_Name: Fabric
   m_TagString: Untagged
@@ -116,15 +116,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _configSO: {fileID: 11400000, guid: fd99a65b323555d4a8d8b01a32b6b58b, type: 2}
   _typeBuilding: 1
---- !u!58 &6125957327999035982
-CircleCollider2D:
+--- !u!65 &6133981189342110750
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3980844778973059152}
-  m_Enabled: 1
-  m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -133,21 +131,9 @@ CircleCollider2D:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
   m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 0.2}
+  m_Center: {x: 0, y: 0.21133333, z: 0}

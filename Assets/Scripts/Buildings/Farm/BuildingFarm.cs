@@ -53,6 +53,10 @@ namespace Building.Farm
         public BuildingFarm(in ScriptableObject config, in IBuildingGetClimateZone IbuildingGetClimateZone)
         {
             _IbuildingGetClimateZone = IbuildingGetClimateZone;
+            Debug.Log(_IbuildingGetClimateZone);
+            Debug.Log(_IbuildingGetClimateZone.IclimateZoneControl);
+            Debug.Log(_IbuildingGetClimateZone.IclimateZoneControl.configClimateZone);
+            Debug.Log(_IbuildingGetClimateZone.IclimateZoneControl.configClimateZone.typeClimate);
             _config = (ConfigBuildingFarmEditor)config;
             LoadConfigData(_config);
         }

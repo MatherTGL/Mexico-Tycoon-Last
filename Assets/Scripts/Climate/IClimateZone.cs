@@ -1,10 +1,9 @@
-using UnityEngine;
 using Config.Climate;
 
 namespace Climate
 {
     public interface IClimateZone
     {
-        ConfigClimateZoneEditor configClimateZone { get; set; }
+        ConfigClimateZoneEditor configClimateZone { get; }
     }
 }

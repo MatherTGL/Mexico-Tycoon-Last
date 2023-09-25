@@ -9,14 +9,17 @@ namespace Climate
     {
         [SerializeField, Required]
         private ConfigClimateZoneEditor _configClimateZone;
-        ConfigClimateZoneEditor IClimateZone.configClimateZone { get => _configClimateZone; 
-                                                                 set => _configClimateZone = value; }
+        ConfigClimateZoneEditor IClimateZone.configClimateZone => _configClimateZone;
 
 
-        private void OnTriggerEnter2D(Collider2D other)
+        private void OnTriggerEnter(Collider other)
         {
             if (other.GetComponent<BuildingControl>())
+            {
+                Debug.Log($"{this}");
                 other.GetComponent<BuildingControl>().IclimateZoneControl = this;
+                Debug.Log(other.GetComponent<BuildingControl>().IclimateZoneControl);
+            }
         }
     }
 }

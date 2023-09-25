@@ -20,7 +20,7 @@ using Climate;
 namespace Building
 {
     [RequireComponent(typeof(Transport.Reception.TransportReception))]
-    [RequireComponent(typeof(CircleCollider2D))]
+    [RequireComponent(typeof(BoxCollider))]
     public sealed class BuildingControl : MonoBehaviour, IBoot, IBuildingRequestForTransport, IBuildingGetClimateZone
     {
         [ShowInInspector, ReadOnly]
@@ -37,8 +37,10 @@ namespace Building
         private ICityBusiness _IcityBusiness;
 
         private IClimateZone _IclimateZoneControl;
-        public IClimateZone IclimateZoneControl { get => _IclimateZoneControl; 
-                                                  set => _IclimateZoneControl = value; }
+        public IClimateZone IclimateZoneControl
+        {
+            get => _IclimateZoneControl; set => _IclimateZoneControl = value;
+        }
 
         [SerializeField, Required, BoxGroup("Parameters"), HideLabel, PropertySpace(0, 5)]
         private ScriptableObject _configSO;
