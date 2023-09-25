@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Resources;
 using Building.Additional;
 using UnityEngine;
+using Climate;
 
 namespace Building.Farm
 {
@@ -11,6 +12,8 @@ namespace Building.Farm
     {
         private readonly IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
         IBuildingMonitorEnergy IEnergyConsumption.IbuildingMonitorEnergy => _IbuildingMonitorEnergy;
+
+        private IBuildingGetClimateZone _IbuildingGetClimateZone;
 
         private ConfigBuildingFarmEditor _config;
 
@@ -47,8 +50,9 @@ namespace Building.Farm
         private bool _isCurrentlyInProduction;
 
 
-        public BuildingFarm(in ScriptableObject config)
+        public BuildingFarm(in ScriptableObject config, in IBuildingGetClimateZone IbuildingGetClimateZone)
         {
+            _IbuildingGetClimateZone = IbuildingGetClimateZone;
             _config = (ConfigBuildingFarmEditor)config;
             LoadConfigData(_config);
         }

@@ -15,12 +15,13 @@ using Building.Aerodrome;
 using Building.Stock;
 using Building.SeaPort;
 using Building.City.Business;
+using Climate;
 
 namespace Building
 {
     [RequireComponent(typeof(Transport.Reception.TransportReception))]
     [RequireComponent(typeof(CircleCollider2D))]
-    public sealed class BuildingControl : MonoBehaviour, IBoot, IBuildingRequestForTransport
+    public sealed class BuildingControl : MonoBehaviour, IBoot, IBuildingRequestForTransport, IBuildingGetClimateZone
     {
         [ShowInInspector, ReadOnly]
         private IBuilding _Ibuilding;
@@ -34,6 +35,10 @@ namespace Building
         private IBuildingPurchased _IbuildingPurchased;
 
         private ICityBusiness _IcityBusiness;
+
+        private IClimateZone _IclimateZoneControl;
+        public IClimateZone IclimateZoneControl { get => _IclimateZoneControl; 
+                                                  set => _IclimateZoneControl = value; }
 
         [SerializeField, Required, BoxGroup("Parameters"), HideLabel, PropertySpace(0, 5)]
         private ScriptableObject _configSO;
@@ -91,7 +96,7 @@ namespace Building
             if (_typeBuilding is TypeBuilding.City)
                 _Ibuilding = new BuildingCity(_configSO);
             else if (_typeBuilding is TypeBuilding.Farm)
-                _Ibuilding = new BuildingFarm(_configSO);
+                _Ibuilding = new BuildingFarm(_configSO, this);
             else if (_typeBuilding is TypeBuilding.Fabric)
                 _Ibuilding = new BuildingFabric(_configSO);
             else if (_typeBuilding is TypeBuilding.Stock)

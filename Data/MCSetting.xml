@@ -140,6 +140,27 @@
       <overrideLabel>true</overrideLabel>
       <label>Camera</label>
     </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>GameObject/3D Object/Cube</command>
+      <original>None</original>
+      <overrideLabel>false</overrideLabel>
+      <label>GameObject/3D Object/Cube</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>GameObject/3D Object/Sphere</command>
+      <original>None</original>
+      <overrideLabel>false</overrideLabel>
+      <label>GameObject/3D Object/Sphere</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command />
+      <original>None</original>
+      <overrideLabel>false</overrideLabel>
+      <label />
+    </MCItem>
   </hierarchyItemList>
   <projectItemList>
     <MCItem>
@@ -316,6 +337,13 @@
       <original>None</original>
       <overrideLabel>true</overrideLabel>
       <label>Create Config/Buildings/City/Business/Create New</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>Assets/Create/Config/Climate/Zone/Create New</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>Create Config/Climate/Zone/Create New</label>
     </MCItem>
   </projectItemList>
 </MCSetting>
