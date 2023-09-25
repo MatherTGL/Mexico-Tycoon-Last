@@ -1,7 +1,6 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-
 public sealed class InputControl : MonoBehaviour
 {
     [Title("Max Force Mouse Clamp", horizontalLine: false, subtitle: "Horizontal"), HideLabel]

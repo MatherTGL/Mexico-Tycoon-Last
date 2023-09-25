@@ -8,10 +8,10 @@ namespace Building.Stock
 {
     public sealed class BuildingStock : IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption
     {
-        private IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
+        private readonly IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
         IBuildingMonitorEnergy IEnergyConsumption.IbuildingMonitorEnergy => _IbuildingMonitorEnergy;
 
-        private ConfigBuildingStockEditor _config;
+        private readonly ConfigBuildingStockEditor _config;
 
         private Dictionary<TypeProductionResources.TypeResource, double> d_amountResources = new();
 

@@ -1,6 +1,5 @@
 using Data;
 
-
 namespace Building.Additional
 {
     public sealed class BuildingMonitorEnergy : IBuildingMonitorEnergy

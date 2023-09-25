@@ -8,7 +8,7 @@ namespace Building.Aerodrome
 {
     public sealed class BuildingAerodrome : IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending
     {
-        private ConfigBuildingAerodromeEditor _config;
+        private readonly ConfigBuildingAerodromeEditor _config;
 
         private Dictionary<TypeProductionResources.TypeResource, double> d_amountResources = new();
 

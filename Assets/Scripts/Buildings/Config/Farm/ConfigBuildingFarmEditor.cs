@@ -39,6 +39,10 @@ namespace Config.Building
         private double _maintenanceExpenses = 10;
         public double maintenanceExpenses => _maintenanceExpenses;
 
+        [SerializeField, BoxGroup("Parameters"), MinValue(1)]
+        private float _harvestRipeningTime;
+        public float harvestRipeningTime => _harvestRipeningTime;
+
 
 #if UNITY_EDITOR
         [Button("Add New"), BoxGroup("Raw Materials"), HorizontalGroup("Raw Materials/Hor")]

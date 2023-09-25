@@ -3,7 +3,6 @@ using Resources;
 using System;
 using Config.Building;
 
-
 namespace Building.Border
 {
     public sealed class BuildingBorderMarket : IBuildingBorderMarket

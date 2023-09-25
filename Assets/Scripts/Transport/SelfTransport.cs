@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using Resources;
 using UnityEngine;
 
-
 namespace Transport
 {
     public sealed class SelfTransport : IDisposable
     {
         private ITransportInteractRoute _ItransportInteractRoute;
 
-        private TypeTransport _typeTransport;
+        private readonly TypeTransport _typeTransport;
         public TypeTransport typeTransport => _typeTransport;
 
-        private GameObject _someObject;
+        private readonly GameObject _someObject;
 
         private Dictionary<byte, bool[]> d_loadAndUnloadStates = new Dictionary<byte, bool[]>();
 
@@ -21,7 +20,7 @@ namespace Transport
 
         private float _productLoad;
 
-        private float _speed;
+        private readonly float _speed;
 
         private byte _indexCurrentRoutePoint;
 
@@ -42,7 +41,7 @@ namespace Transport
             InitDictionaryStates();
 
             _speed = (_typeTransport.speed * (1.0f - _ItransportInteractRoute.impactOfObstaclesOnSpeed) / 100)
-                         * Time.deltaTime;
+                         * Time.fixedDeltaTime;
         }
 
         private void InitDictionaryStates()
@@ -100,7 +99,6 @@ namespace Transport
             {
                 _productLoad = _ItransportInteractRoute.GetPointsReception()[indexReception]
                                 .RequestConnectionToLoadRes(_typeTransport.capacity, _typeCurrentTransportResource);
-                Debug.Log($"Car load: {_productLoad}");
             }
         }
 

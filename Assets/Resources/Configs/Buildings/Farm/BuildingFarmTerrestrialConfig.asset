@@ -20,3 +20,4 @@ MonoBehaviour:
   _productionPerformanceStart: 1
   _localCapacityProduction: 0a0000000a0000000a0000000a0000000a000000
   _maintenanceExpenses: 70
+  _harvestRipeningTime: 4

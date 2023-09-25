@@ -1,14 +1,13 @@
 using Config.Time;
 using UnityEngine;
 
-
 namespace TimeControl.Acceleration
 {
     public sealed class TimeAcceleration
     {
-        private ConfigTimeControlEditor _configTimeControlEditor;
+        private readonly ConfigTimeControlEditor _configTimeControlEditor;
 
-        private InputControl _inputControl;
+        private readonly InputControl _inputControl;
 
 
         public TimeAcceleration(in ConfigTimeControlEditor configTimeControl,

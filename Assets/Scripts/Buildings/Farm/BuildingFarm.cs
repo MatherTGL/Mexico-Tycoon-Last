@@ -9,7 +9,7 @@ namespace Building.Farm
     public sealed class BuildingFarm : IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption,
     IChangedFarmType
     {
-        private IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
+        private readonly IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
         IBuildingMonitorEnergy IEnergyConsumption.IbuildingMonitorEnergy => _IbuildingMonitorEnergy;
 
         private ConfigBuildingFarmEditor _config;
@@ -33,6 +33,8 @@ namespace Building.Farm
 
         private ushort _productionPerformance;
 
+        private float _currentPercentageOfMaturity;
+
         private double _maintenanceExpenses;
         double ISpending.maintenanceExpenses => _maintenanceExpenses;
 
@@ -41,6 +43,8 @@ namespace Building.Farm
 
         private bool _isBuyed;
         bool IBuildingPurchased.isBuyed { get => _isBuyed; set => _isBuyed = value; }
+
+        private bool _isCurrentlyInProduction;
 
 
         public BuildingFarm(in ScriptableObject config)
@@ -58,22 +62,35 @@ namespace Building.Farm
 
         private void Production()
         {
-            Debug.Log(d_amountResources[_typeProductionResource]);
-            Debug.Log(_config.localCapacityProduction[(int)_typeProductionResource]);
             if (d_amountResources[_typeProductionResource]
                 < _config.localCapacityProduction[(int)_typeProductionResource])
             {
-                foreach (var typeDrug in _config.requiredRawMaterials)
-                {
-                    for (ushort i = 0; i < _config.quantityRequiredRawMaterials.Count; i++)
-                        if (d_amountResources[typeDrug] < _config.quantityRequiredRawMaterials[i])
-                            return;
+                if (_isCurrentlyInProduction == false && CheckQuantityRequiredRawMaterials() == false)
+                    return;
 
-                    d_amountResources[typeDrug] -= _config.quantityRequiredRawMaterials[0];
+                _isCurrentlyInProduction = true;
+
+                if (_currentPercentageOfMaturity < _config.harvestRipeningTime)
+                    _currentPercentageOfMaturity++;
+                else
+                {
+                    d_amountResources[_typeProductionResource] += _productionPerformance;
+                    _currentPercentageOfMaturity = 0;
+                    _isCurrentlyInProduction = false;
                 }
-                d_amountResources[_typeProductionResource] += _productionPerformance;
-                Debug.Log(d_amountResources[_typeProductionResource]);
             }
+        }
+
+        private bool CheckQuantityRequiredRawMaterials()
+        {
+            foreach (var typeDrug in _config.requiredRawMaterials)
+            {
+                for (ushort i = 0; i < _config.quantityRequiredRawMaterials.Count; i++)
+                    if (d_amountResources[typeDrug] < _config.quantityRequiredRawMaterials[i])
+                        return false;
+                d_amountResources[typeDrug] -= _config.quantityRequiredRawMaterials[0];
+            }
+            return true;
         }
 
         void IBuilding.ConstantUpdatingInfo()
@@ -87,7 +104,6 @@ namespace Building.Farm
             foreach (var config in UnityEngine.Resources.FindObjectsOfTypeAll<ConfigBuildingFarmEditor>())
                 if (config.name.Contains(typeFarm.ToString()))
                     _config = config;
-            Debug.Log(_config);
         }
     }
 }

@@ -1,14 +1,13 @@
 using Config.Building;
 using UnityEngine;
 
-
 namespace Building.City
 {
     public sealed class CityPopulationReproduction
     {
         private const float _mathematicalDivisor = 100;
 
-        private ConfigBuildingCityEditor _configBuilding;
+        private readonly ConfigBuildingCityEditor _configBuilding;
 
 
         public CityPopulationReproduction(in ConfigBuildingCityEditor configBuilding)

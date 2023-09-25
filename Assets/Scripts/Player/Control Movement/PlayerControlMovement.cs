@@ -4,7 +4,6 @@ using Config.Player;
 using TimeControl;
 using Boot;
 
-
 namespace Player.Movement
 {
     [RequireComponent(typeof(Rigidbody))]

@@ -2,7 +2,6 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using Config.Obstacle;
 
-
 namespace Obstacle
 {
     public sealed class NaturalObstacleControl : MonoBehaviour, IObstacle

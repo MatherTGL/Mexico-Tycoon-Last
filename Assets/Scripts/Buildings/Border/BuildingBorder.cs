@@ -7,10 +7,9 @@ namespace Building.Border
 {
     public sealed class BuildingBorder : IBuilding
     {
-        private IBuildingBorderMarket _IbuildingBorderMarket;
+        private readonly IBuildingBorderMarket _IbuildingBorderMarket;
 
-        private ConfigBuildingBorderEditor _config;
-
+        private readonly ConfigBuildingBorderEditor _config;
 
         #region (Not used!)
 

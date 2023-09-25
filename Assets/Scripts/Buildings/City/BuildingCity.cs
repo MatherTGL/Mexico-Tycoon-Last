@@ -10,11 +10,11 @@ namespace Building.City
 {
     public sealed class BuildingCity : IBuilding, ICityBusiness
     {
-        private CityPopulationReproduction _cityPopulationReproduction;
+        private readonly CityPopulationReproduction _cityPopulationReproduction;
 
-        private CityBusiness _cityBusiness = new();
+        private readonly CityBusiness _cityBusiness = new();
 
-        private ConfigBuildingCityEditor _config;
+        private readonly ConfigBuildingCityEditor _config;
 
         private Dictionary<TypeProductionResources.TypeResource, double> d_amountResources = new();
 
@@ -58,7 +58,6 @@ namespace Building.City
                     d_amountResources[drug] = 0;
                 }
             }
-            Debug.Log(d_amountResources[TypeProductionResources.TypeResource.DirtyMoney]);
             ToLaunderMoney();
         }
 
@@ -78,10 +77,8 @@ namespace Building.City
 
         private void ToLaunderMoney()
         {
-            Debug.Log("Launder money BuildingCity enter");
             _cityBusiness.ToLaunderMoney(d_amountResources[TypeProductionResources.TypeResource.DirtyMoney]);
             d_amountResources[TypeProductionResources.TypeResource.DirtyMoney] = 0;
-            Debug.Log("Launder money BuildingCity end");
         }
 
         void ICityBusiness.BuyBusiness(in CityBusiness.TypeBusiness typeBusiness)

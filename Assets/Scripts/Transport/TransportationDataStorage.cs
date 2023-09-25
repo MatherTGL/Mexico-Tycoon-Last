@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-
 namespace Transport
 {
     public sealed class TransportationDataStorage

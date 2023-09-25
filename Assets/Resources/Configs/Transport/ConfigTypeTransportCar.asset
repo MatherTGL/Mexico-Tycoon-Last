@@ -15,6 +15,6 @@ MonoBehaviour:
   _prefab: {fileID: 6291475073526262561, guid: efd4c69d0d657e29280093f8de63072f, type: 3}
   _typeResource: 0
   type: 0
-  _speed: 50
+  _speed: 500
   _capacity: 2
   _maintenanceExpenses: 30

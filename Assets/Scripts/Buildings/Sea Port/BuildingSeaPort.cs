@@ -7,7 +7,7 @@ namespace Building.SeaPort
 {
     public sealed class BuildingSeaPort : IBuilding
     {
-        private ConfigBuildingSeaPortEditor _config;
+        private readonly ConfigBuildingSeaPortEditor _config;
 
         private Dictionary<TypeProductionResources.TypeResource, double> d_amountResources = new();
 
@@ -29,7 +29,6 @@ namespace Building.SeaPort
         public BuildingSeaPort(in ScriptableObject config)
         {
             _config = (ConfigBuildingSeaPortEditor)config;
-            Debug.Log("Sea Port success init");
         }
 
         void IBuilding.ConstantUpdatingInfo()
