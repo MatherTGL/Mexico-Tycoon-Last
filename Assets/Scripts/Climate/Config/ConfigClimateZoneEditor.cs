@@ -6,7 +6,7 @@ namespace Config.Climate
     [CreateAssetMenu(fileName = "ClimateZoneConfig", menuName = "Config/Climate/Zone/Create New", order = 50)]
     public sealed class ConfigClimateZoneEditor : ScriptableObject
     {
-        public enum TypeClimate
+        public enum TypeClimate : byte
         {
             Polar, Subpolar, Temperate, Subtropical, Tropical, Equatorials
         }

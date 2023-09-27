@@ -14,20 +14,20 @@ namespace Climate
         ConfigClimateZoneEditor IClimateZone.configClimateZone => _configClimateZone;
 
 
-        void IBoot.InitAwake() => TriggerEnterObjects();
+        void IBoot.InitAwake() => FindObjectsInArea();
 
         (Bootstrap.TypeLoadObject typeLoad, bool isSingle) IBoot.GetTypeLoad()
         {
-            return (Bootstrap.TypeLoadObject.SimpleImportant, false);
+            return (Bootstrap.TypeLoadObject.SuperImportant, false);
         }
 
-        private void TriggerEnterObjects()
+        private void FindObjectsInArea()
         {
             var collidersBuildings = Physics.OverlapBox(
                 transform.position, GetComponent<BoxCollider>().size, Quaternion.identity)
                 .Where(item => item.GetComponent<BuildingControl>()).ToArray();
 
-            for (int i = 0; i < collidersBuildings.Length; i++)
+            for (ushort i = 0; i < collidersBuildings.Length; i++)
                 collidersBuildings[i].GetComponent<BuildingControl>().SetClimateZone(this);
         }
     }

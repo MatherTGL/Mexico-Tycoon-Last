@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace Building.Additional
 {
     public interface ISpending
@@ -10,7 +8,6 @@ namespace Building.Additional
         void Spending()
         {
             SpendingToObjects.SendNewExpense(maintenanceExpenses);
-            Debug.Log("spending");
         }
     }
 }

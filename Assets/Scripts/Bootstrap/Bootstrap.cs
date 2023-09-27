@@ -17,14 +17,13 @@ namespace Boot
 
         private void Awake() => LoadToList();
 
-        private async void LoadToList()
+        private void LoadToList()
         {
             IBoot[] bootObjects = GameObject.FindObjectsOfType<MonoBehaviour>()
                 .OfType<IBoot>().Where(item => ((MonoBehaviour)item).enabled)
                 .Distinct().ToArray<IBoot>();
 
-            await Task.Run(() => { SortingObjectsList(ref bootObjects); });
-            StartInit();
+            SortingObjectsList(ref bootObjects);
         }
 
         private void SortingObjectsList(ref IBoot[] bootObjects)
@@ -41,12 +40,14 @@ namespace Boot
                         && !item.GetTypeLoad().isSingle));
             }
             Array.Clear(bootObjects, 0, bootObjects.Length);
+            StartInit();
         }
 
         private void StartInit()
         {
             for (ushort i = 0; i < _bootObjectList.Count; i++)
                 _bootObjectList[i].InitAwake();
+            Debug.Log("Init successfully completed");
         }
     }
 }
