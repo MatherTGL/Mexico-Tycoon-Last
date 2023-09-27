@@ -2,6 +2,6 @@ namespace Climate
 {
     public interface IUsesClimateInfo
     {
-        IClimateZone IclimateZone { get; set; }
+        void SetClimateZone(in IClimateZone IclimateZone);
     }
 }

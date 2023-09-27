@@ -18,7 +18,7 @@ namespace Climate
 
         (Bootstrap.TypeLoadObject typeLoad, bool isSingle) IBoot.GetTypeLoad()
         {
-            return (Bootstrap.TypeLoadObject.SuperImportant, false);
+            return (Bootstrap.TypeLoadObject.MediumImportant, false);
         }
 
         private void FindObjectsInArea()

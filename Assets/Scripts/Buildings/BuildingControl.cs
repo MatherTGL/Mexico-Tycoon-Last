@@ -183,7 +183,7 @@ namespace Building
 
         (Bootstrap.TypeLoadObject typeLoad, bool isSingle) IBoot.GetTypeLoad()
         {
-            return (Bootstrap.TypeLoadObject.MediumImportant, false);
+            return (Bootstrap.TypeLoadObject.SuperImportant, false);
         }
 
         public void SetClimateZone(in IClimateZone IclimateZone)
@@ -191,7 +191,7 @@ namespace Building
             if (_Ibuilding is IUsesClimateInfo)
             {
                 IUsesClimateInfo IusesClimateInfo = (IUsesClimateInfo)_Ibuilding;
-                IusesClimateInfo.IclimateZone = IclimateZone;
+                IusesClimateInfo.SetClimateZone(IclimateZone);
             }
         }
 

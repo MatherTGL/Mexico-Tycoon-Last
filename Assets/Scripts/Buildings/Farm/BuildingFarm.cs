@@ -13,11 +13,7 @@ namespace Building.Farm
         private readonly IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
         IBuildingMonitorEnergy IEnergyConsumption.IbuildingMonitorEnergy => _IbuildingMonitorEnergy;
 
-        private IClimateZone _IclimateZoneControl;
-        IClimateZone IUsesClimateInfo.IclimateZone
-        {
-            get => _IclimateZoneControl; set => _IclimateZoneControl = value;
-        }
+        private IClimateZone _IclimateZone;
 
         private ConfigBuildingFarmEditor _config;
 
@@ -111,6 +107,18 @@ namespace Building.Farm
             foreach (var config in UnityEngine.Resources.FindObjectsOfTypeAll<ConfigBuildingFarmEditor>())
                 if (config.name.Contains(typeFarm.ToString()))
                     _config = config;
+        }
+
+        void IUsesClimateInfo.SetClimateZone(in IClimateZone IclimateZone)
+        {
+            _IclimateZone = IclimateZone;
+            CalculateImpactClimateZones();
+        }
+
+        private void CalculateImpactClimateZones()
+        {
+            _maintenanceExpenses += _maintenanceExpenses * _IclimateZone
+                .configClimateZone.percentageImpactCostMaintenance;
         }
     }
 }

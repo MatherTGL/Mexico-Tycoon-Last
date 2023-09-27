@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Sirenix.OdinInspector;
 
 namespace Boot
@@ -47,7 +46,6 @@ namespace Boot
         {
             for (ushort i = 0; i < _bootObjectList.Count; i++)
                 _bootObjectList[i].InitAwake();
-            Debug.Log("Init successfully completed");
         }
     }
 }

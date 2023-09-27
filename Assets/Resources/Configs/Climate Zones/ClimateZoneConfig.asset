@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b18543841fb0ba4b8c504cf9ad540df, type: 3}
   m_Name: ClimateZoneConfig
   m_EditorClassIdentifier: 
-  _percentageImpactCostMaintenance: 0.03
+  _typeClimate: 0
+  _percentageImpactCostMaintenance: 0.1
