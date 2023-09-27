@@ -21,6 +21,9 @@ namespace Route.Builder
         [ShowInInspector, BoxGroup("Parameters")]
         private ITransportReception[] _connectionPoints = new ITransportReception[_maxPointConnection];
 
+        [SerializeField, MinValue(10), MaxValue(200)]
+        private ushort _maxLengthRoute = 20;
+
 
         private RouteBuilderControl() { }
 
@@ -39,7 +42,7 @@ namespace Route.Builder
         {
             try
             {
-                if (_connectionPoints.Length == _maxPointConnection)
+                if (_connectionPoints.Length == _maxPointConnection && CheckRouteLength())
                 {
                     if (isConnect == true)
                         _connectionPoints[1].ConnectionRequest(_connectionPoints[0]);
@@ -52,6 +55,17 @@ namespace Route.Builder
             {
                 DebugSystem.Log(ex, DebugSystem.SelectedColor.Red, "Exception", "Пролизошла ошибка: ");
             }
+        }
+
+        private bool CheckRouteLength()
+        {
+            float length = Vector2.Distance(_connectionPoints[0].GetPosition().position,
+                                            _connectionPoints[1].GetPosition().position);
+
+            if (Mathf.RoundToInt(length) < _maxLengthRoute)
+                return true;
+            else
+                return false;
         }
 
 
