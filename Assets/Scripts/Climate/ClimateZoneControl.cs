@@ -2,24 +2,33 @@ using UnityEngine;
 using Config.Climate;
 using Building;
 using Sirenix.OdinInspector;
+using Boot;
+using System.Linq;
 
 namespace Climate
 {
-    public sealed class ClimateZoneControl : MonoBehaviour, IClimateZone
+    public sealed class ClimateZoneControl : MonoBehaviour, IClimateZone, IBoot
     {
         [SerializeField, Required]
         private ConfigClimateZoneEditor _configClimateZone;
         ConfigClimateZoneEditor IClimateZone.configClimateZone => _configClimateZone;
 
 
-        private void OnTriggerEnter(Collider other)
+        void IBoot.InitAwake() => TriggerEnterObjects();
+
+        (Bootstrap.TypeLoadObject typeLoad, bool isSingle) IBoot.GetTypeLoad()
         {
-            if (other.GetComponent<BuildingControl>())
-            {
-                Debug.Log($"{this}");
-                other.GetComponent<BuildingControl>().IclimateZoneControl = this;
-                Debug.Log(other.GetComponent<BuildingControl>().IclimateZoneControl);
-            }
+            return (Bootstrap.TypeLoadObject.SimpleImportant, false);
+        }
+
+        private void TriggerEnterObjects()
+        {
+            var collidersBuildings = Physics.OverlapBox(
+                transform.position, GetComponent<BoxCollider>().size, Quaternion.identity)
+                .Where(item => item.GetComponent<BuildingControl>()).ToArray();
+
+            for (int i = 0; i < collidersBuildings.Length; i++)
+                collidersBuildings[i].GetComponent<BuildingControl>().SetClimateZone(this);
         }
     }
 }

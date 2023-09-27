@@ -8,12 +8,16 @@ using Climate;
 namespace Building.Farm
 {
     public sealed class BuildingFarm : IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption,
-    IChangedFarmType
+    IChangedFarmType, IUsesClimateInfo
     {
         private readonly IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
         IBuildingMonitorEnergy IEnergyConsumption.IbuildingMonitorEnergy => _IbuildingMonitorEnergy;
 
-        private IBuildingGetClimateZone _IbuildingGetClimateZone;
+        private IClimateZone _IclimateZoneControl;
+        IClimateZone IUsesClimateInfo.IclimateZone
+        {
+            get => _IclimateZoneControl; set => _IclimateZoneControl = value;
+        }
 
         private ConfigBuildingFarmEditor _config;
 
@@ -50,13 +54,8 @@ namespace Building.Farm
         private bool _isCurrentlyInProduction;
 
 
-        public BuildingFarm(in ScriptableObject config, in IBuildingGetClimateZone IbuildingGetClimateZone)
+        public BuildingFarm(in ScriptableObject config)
         {
-            _IbuildingGetClimateZone = IbuildingGetClimateZone;
-            Debug.Log(_IbuildingGetClimateZone);
-            Debug.Log(_IbuildingGetClimateZone.IclimateZoneControl);
-            Debug.Log(_IbuildingGetClimateZone.IclimateZoneControl.configClimateZone);
-            Debug.Log(_IbuildingGetClimateZone.IclimateZoneControl.configClimateZone.typeClimate);
             _config = (ConfigBuildingFarmEditor)config;
             LoadConfigData(_config);
         }
