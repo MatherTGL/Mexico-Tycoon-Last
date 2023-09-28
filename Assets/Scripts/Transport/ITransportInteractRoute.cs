@@ -7,7 +7,9 @@ namespace Transport
 {
     public interface ITransportInteractRoute
     {
-        event Action onLateUpdateAction;
+        event Action lateUpdated;
+
+        event Action updatedTimeStep;
 
         ITransportReception[] GetPointsReception();
 

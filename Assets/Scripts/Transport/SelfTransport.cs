@@ -20,13 +20,17 @@ namespace Transport
 
         private float _productLoad;
 
-        private readonly float _speed;
+        private float _speed;
+
+        private float _currentFuelQuantity;
 
         private byte _indexCurrentRoutePoint;
 
         private bool _isFirstPosition = true;
 
-        private bool _isWaitingReception = false;
+        private bool _isWaitingReception;
+
+        private bool _isVehiclesAreRefueling;
 
 
         public SelfTransport(in TypeTransport typeTransport,
@@ -37,17 +41,29 @@ namespace Transport
             _ItransportInteractRoute = routeTransportControl;
             _someObject = objectTransport;
 
-            _ItransportInteractRoute.onLateUpdateAction += MovementTransport;
+            SubscribeToEvents();
             InitDictionaryStates();
-
-            _speed = (_typeTransport.speed * (1.0f - _ItransportInteractRoute.impactOfObstaclesOnSpeed) / 100)
-                         * Time.fixedDeltaTime;
+            SetAdditionalCharacteristics();
         }
 
         private void InitDictionaryStates()
         {
             for (byte i = 0; i != 2; i++)
                 d_loadAndUnloadStates.Add(i, new bool[2]);
+        }
+
+        private void SetAdditionalCharacteristics()
+        {
+            _speed = (_typeTransport.speed * (1.0f - _ItransportInteractRoute.impactOfObstaclesOnSpeed) / 100)
+                         * Time.fixedDeltaTime;
+
+            _currentFuelQuantity = _typeTransport.maxFuelLoad;
+        }
+
+        private void SubscribeToEvents()
+        {
+            _ItransportInteractRoute.lateUpdated += MovementTransport;
+            _ItransportInteractRoute.updatedTimeStep += FuelConsumption;
         }
 
         private void CheckPosition()
@@ -120,16 +136,46 @@ namespace Transport
                 return false;
         }
 
-        public void Dispose()
+        private void MovementTransport()
         {
-            _ItransportInteractRoute.onLateUpdateAction -= MovementTransport;
-            GC.SuppressFinalize(this);
+            if (IsFuelAvailable())
+            {
+                CheckPosition();
+                Move(_indexCurrentRoutePoint);
+            }
         }
 
-        public void MovementTransport()
+        private void FuelConsumption()
         {
-            CheckPosition();
-            Move(_indexCurrentRoutePoint);
+            if (IsFuelAvailable())
+                _currentFuelQuantity -= _typeTransport.fuelConsumptionInTimeStep;
+            else
+                RefuelTransportation();
+        }
+
+        private bool IsFuelAvailable()
+        {
+            if (_currentFuelQuantity > 0 && !_isVehiclesAreRefueling)
+                return true;
+            else
+                return false;
+        }
+
+        private void RefuelTransportation()
+        {
+            _isVehiclesAreRefueling = true;
+            _currentFuelQuantity = 0;
+
+            for (int liter = 0; liter < _typeTransport.maxFuelLoad; liter++)
+                _currentFuelQuantity += 1.0f;
+
+            _isVehiclesAreRefueling = false;
+        }
+
+        public void Dispose()
+        {
+            _ItransportInteractRoute.lateUpdated -= MovementTransport;
+            GC.SuppressFinalize(this);
         }
 
         public void SetTypeTransportingResource(in TypeProductionResources.TypeResource typeResource)

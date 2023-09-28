@@ -35,5 +35,13 @@ namespace Transport
         [SerializeField, MinValue(30)]
         private ushort _maintenanceExpenses = 30;
         public ushort maintenanceExpenses => _maintenanceExpenses;
+
+        [SerializeField, MinValue(50.0f)]
+        private float _maxFuelLoad = 50.0f;
+        public float maxFuelLoad => _maxFuelLoad;
+
+        [SerializeField, MinValue(1.0f)]
+        private float _fuelConsumptionInTimeStep = 1.0f;
+        public float fuelConsumptionInTimeStep => _fuelConsumptionInTimeStep;
     }
 }

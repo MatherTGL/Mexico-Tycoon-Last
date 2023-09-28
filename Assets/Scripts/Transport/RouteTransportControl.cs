@@ -34,11 +34,18 @@ namespace Transport
         private Vector3[] _routePoints;
         public Vector3[] routePoints => _routePoints;
 
-        private event Action _onLateUpdateAction;
-        event Action ITransportInteractRoute.onLateUpdateAction
+        private event Action _lateUpdated;
+        event Action ITransportInteractRoute.lateUpdated
         {
-            add { _onLateUpdateAction += value; }
-            remove { _onLateUpdateAction -= value; }
+            add => _lateUpdated += value; 
+            remove => _lateUpdated -= value; 
+        }
+
+        private event Action _updatedTimeStep;
+        event Action ITransportInteractRoute.updatedTimeStep
+        {
+            add => _updatedTimeStep += value;
+            remove => _updatedTimeStep -= value;
         }
 
         private float _impactOfObstaclesOnSpeed;
@@ -50,7 +57,7 @@ namespace Transport
         private void OnEnable()
         {
             FindAndCreateComponents();
-            StartCoroutine(CalculateExenses());
+            StartCoroutine(UpdateTimeStepCoroutine());
 
             void FindAndCreateComponents()
             {
@@ -62,9 +69,9 @@ namespace Transport
 
         private void OnDisable() => StopAllCoroutines();
 
-        private void LateUpdate() => _onLateUpdateAction?.Invoke();
+        private void LateUpdate() => _lateUpdated?.Invoke();
 
-        private void MaintenanceExenses()
+        private void CalculateMaintenanceExenses()
         {
             double finalMaintenanceExenses = 0;
 
@@ -77,11 +84,12 @@ namespace Transport
             SpendingToObjects.SendNewExpense(finalMaintenanceExenses);
         }
 
-        private IEnumerator CalculateExenses()
+        private IEnumerator UpdateTimeStepCoroutine()
         {
             while (true)
             {
-                MaintenanceExenses();
+                CalculateMaintenanceExenses();
+                _updatedTimeStep?.Invoke();
                 yield return _coroutineTimeStep;
             }
         }
