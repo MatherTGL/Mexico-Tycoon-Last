@@ -21,7 +21,7 @@ namespace Route.Builder
         [ShowInInspector, BoxGroup("Parameters")]
         private ITransportReception[] _connectionPoints = new ITransportReception[_maxPointConnection];
 
-        [SerializeField, MinValue(10), MaxValue(200)]
+        [SerializeField, MinValue(10), MaxValue(200), BoxGroup("Parameters")]
         private ushort _maxLengthRoute = 20;
 
 

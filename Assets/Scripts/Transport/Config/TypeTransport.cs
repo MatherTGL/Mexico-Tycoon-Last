@@ -22,7 +22,8 @@ namespace Transport
         }
 
         [EnumToggleButtons]
-        public Type type;
+        private Type _type;
+        public Type type => _type;
 
         [SerializeField, MinValue(0.5f)]
         private float _speed;
@@ -40,8 +41,20 @@ namespace Transport
         private float _maxFuelLoad = 50.0f;
         public float maxFuelLoad => _maxFuelLoad;
 
+        [SerializeField, MinValue(1.0f), MaxValue("@_maxFuelConsumptionInTimeStep")]
+        private float _minFuelConsumptionInTimeStep = 1.0f;
+        public float minFuelConsumptionInTimeStep => _minFuelConsumptionInTimeStep;
+
+        [SerializeField, MinValue("@_minFuelConsumptionInTimeStep")]
+        private float _maxFuelConsumptionInTimeStep = 2.0f;
+        public float maxFuelConsumptionInTimeStep => _maxFuelConsumptionInTimeStep;
+
         [SerializeField, MinValue(1.0f)]
-        private float _fuelConsumptionInTimeStep = 1.0f;
-        public float fuelConsumptionInTimeStep => _fuelConsumptionInTimeStep;
+        private float _fillingFuelRatePerTimeStep = 1.0f;
+        public float fillingFuelRatePerTimeStep => _fillingFuelRatePerTimeStep;
+
+        [SerializeField, MinValue(0.1f)]
+        private float _fuelCostPerLiter = 0.2f;
+        public float fuelCostPerLiter => _fuelCostPerLiter;
     }
 }

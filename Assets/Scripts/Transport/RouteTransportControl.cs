@@ -144,7 +144,7 @@ namespace Transport
 
 
 #if UNITY_EDITOR
-        [SerializeField]
+        [SerializeField, EnumPaging]
         private TypeProductionResources.TypeResource _typeTransportingResource;
 
         [SerializeField]

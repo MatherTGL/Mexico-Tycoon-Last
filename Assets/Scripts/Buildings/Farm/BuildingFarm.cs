@@ -65,6 +65,7 @@ namespace Building.Farm
 
         private void Production()
         {
+            Debug.Log($"Production farm: {d_amountResources[_typeProductionResource]}");
             if (d_amountResources[_typeProductionResource]
                 < _config.localCapacityProduction[(int)_typeProductionResource])
             {

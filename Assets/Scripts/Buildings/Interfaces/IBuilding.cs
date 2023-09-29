@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Resources;
+using UnityEngine;
 
 namespace Building
 {
@@ -31,6 +32,7 @@ namespace Building
         float GetResources(in float transportCapacity,
                            in TypeProductionResources.TypeResource typeResource)
         {
+            Debug.Log($"GetRes: {amountResources[typeResource]}");
             if (amountResources[typeResource] >= transportCapacity)
             {
                 amountResources[typeResource] -= transportCapacity;
@@ -43,6 +45,7 @@ namespace Building
         bool SetResources(in float quantityResource,
                           in TypeProductionResources.TypeResource typeResource)
         {
+            Debug.Log($"SetRes: {amountResources[typeResource]}");
             if (stockCapacity.ContainsKey(typeResource))
                 if (amountResources[typeResource] < stockCapacity[typeResource])
                     amountResources[typeResource] += quantityResource;

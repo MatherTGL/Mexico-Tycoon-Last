@@ -2563,10 +2563,6 @@ PrefabInstance:
       propertyPath: _cameraPlayer
       value: 
       objectReference: {fileID: 885697613}
-    - target: {fileID: 4379861757078235531, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
-      propertyPath: _maxLengthRoute
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 8688798508615415646, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Data;
 using Resources;
 using UnityEngine;
 
@@ -148,9 +149,14 @@ namespace Transport
         private void FuelConsumption()
         {
             if (IsFuelAvailable())
-                _currentFuelQuantity -= _typeTransport.fuelConsumptionInTimeStep;
+            {
+                _currentFuelQuantity -= UnityEngine.Random.Range(
+                    _typeTransport.minFuelConsumptionInTimeStep, _typeTransport.maxFuelConsumptionInTimeStep);
+            }
             else
+            {
                 RefuelTransportation();
+            }
         }
 
         private bool IsFuelAvailable()
@@ -166,10 +172,17 @@ namespace Transport
             _isVehiclesAreRefueling = true;
             _currentFuelQuantity = 0;
 
-            for (int liter = 0; liter < _typeTransport.maxFuelLoad; liter++)
-                _currentFuelQuantity += 1.0f;
+            if (BuyFuel())
+                for (ushort liter = 0; liter < _typeTransport.maxFuelLoad; liter++)
+                    _currentFuelQuantity += _typeTransport.fillingFuelRatePerTimeStep;
 
             _isVehiclesAreRefueling = false;
+        }
+
+        private bool BuyFuel()
+        {
+            double totalCost = Mathf.RoundToInt(_typeTransport.fuelCostPerLiter * _typeTransport.maxFuelLoad);
+            return DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(totalCost, true);
         }
 
         public void Dispose()

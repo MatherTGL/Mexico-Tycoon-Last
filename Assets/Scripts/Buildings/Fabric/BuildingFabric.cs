@@ -58,6 +58,7 @@ namespace Building.Fabric
 
         private void Production()
         {
+            Debug.Log($"Production fabric: {d_amountResources[_typeProductionResource]}");
             if (d_amountResources[_typeProductionResource]
                 < _config.localCapacityProduction[(int)d_amountResources[_typeProductionResource]])
             {

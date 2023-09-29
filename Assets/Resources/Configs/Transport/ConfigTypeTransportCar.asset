@@ -18,3 +18,5 @@ MonoBehaviour:
   _speed: 500
   _capacity: 2
   _maintenanceExpenses: 30
+  _maxFuelLoad: 50
+  _fuelConsumptionInTimeStep: 5
