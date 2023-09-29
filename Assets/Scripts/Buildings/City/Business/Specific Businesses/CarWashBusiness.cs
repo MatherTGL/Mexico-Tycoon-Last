@@ -13,6 +13,11 @@ namespace Business
                 return false;
         }
 
+        void IBusiness.MaintenanceConsumption(in ConfigCityBusinessEditor config)
+        {
+            DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(config.maintenanceCost, true);
+        }
+
         void IBusiness.SellBusiness(in double costSell)
         {
             DataControl.IdataPlayer.AddPlayerMoney(costSell);

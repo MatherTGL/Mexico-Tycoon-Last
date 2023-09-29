@@ -30,6 +30,14 @@ namespace Building.City
             get => d_stockCapacity; set => d_stockCapacity = value;
         }
 
+        private event Action _updatedTimeStep;
+
+        event Action ICityBusiness.updatedTimeStep
+        {
+            add => _updatedTimeStep += value;
+            remove => _updatedTimeStep -= value;
+        }
+
         uint[] IBuilding.localCapacityProduction => _config.localCapacityProduction;
 
         private uint[] _costPerKg;
@@ -41,11 +49,26 @@ namespace Building.City
         {
             _config = (ConfigBuildingCityEditor)config;
             _cityPopulationReproduction = new(_config);
-            _cityBusiness = new();
+            _cityBusiness = new(this);
 
             InitArrays(_config);
             _population = (uint)UnityEngine.Random.Range(
                 _config.populationStartMin, _config.populationStartMax);
+        }
+
+        private void InitArrays(in ConfigBuildingCityEditor configBuilding)
+        {
+            int amountTypeDrugs = Enum.GetValues(typeof(TypeProductionResources.TypeResource)).Length;
+
+            _costPerKg = new uint[amountTypeDrugs];
+            _costPerKg = configBuilding.costResourcesConfig.GetCostsSellResources();
+        }
+
+        void IBuilding.ConstantUpdatingInfo()
+        {
+            _updatedTimeStep?.Invoke();
+            _cityPopulationReproduction.PopulationReproduction(ref _population);
+            SellResources();
         }
 
         private void SellResources()
@@ -60,20 +83,6 @@ namespace Building.City
                 }
             }
             ToLaunderMoney();
-        }
-
-        private void InitArrays(in ConfigBuildingCityEditor configBuilding)
-        {
-            int amountTypeDrugs = Enum.GetValues(typeof(TypeProductionResources.TypeResource)).Length;
-
-            _costPerKg = new uint[amountTypeDrugs];
-            _costPerKg = configBuilding.costResourcesConfig.GetCostsSellResources();
-        }
-
-        void IBuilding.ConstantUpdatingInfo()
-        {
-            _cityPopulationReproduction.PopulationReproduction(ref _population);
-            SellResources();
         }
 
         private void ToLaunderMoney()

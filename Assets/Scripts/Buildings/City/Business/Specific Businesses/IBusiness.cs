@@ -9,5 +9,7 @@ namespace Business
         void SellBusiness(in double costSell);
 
         void ToLaunderMoney(in double amountDirtyMoney, in ConfigCityBusinessEditor config);
+
+        void MaintenanceConsumption(in ConfigCityBusinessEditor config);
     }
 }

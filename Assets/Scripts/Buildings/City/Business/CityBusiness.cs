@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using Business;
 using System.Linq;
 using Config.Building.Business;
+using Data;
+using UnityEngine;
 
 namespace Building.City.Business
 {
@@ -18,6 +20,11 @@ namespace Building.City.Business
 
         private double _costSell;
 
+
+        public CityBusiness(in ICityBusiness IcityBusiness)
+        {
+            IcityBusiness.updatedTimeStep += ConstantUpdatingInfo;
+        }
 
         public void BuyBusiness(in TypeBusiness typeBusiness)
         {
@@ -56,6 +63,14 @@ namespace Building.City.Business
         {
             for (byte i = 0; i < l_purchasedBusinesses.Count; i++)
                 l_purchasedBusinesses[i].ToLaunderMoney(amountDirtyMoney, _config);
+        }
+
+        private void ConstantUpdatingInfo() => MaintenanceConsumption();
+
+        private void MaintenanceConsumption()
+        {
+            for (byte i = 0; i < l_purchasedBusinesses.Count; i++)
+                l_purchasedBusinesses[i].MaintenanceConsumption(_config);
         }
     }
 }

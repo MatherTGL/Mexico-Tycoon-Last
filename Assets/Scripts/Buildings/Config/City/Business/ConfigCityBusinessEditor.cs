@@ -18,5 +18,9 @@ namespace Config.Building.Business
         [SerializeField, MinValue(0)]
         private double _costPurchase;
         public double costPurchase => _costPurchase;
+
+        [SerializeField, MinValue(10)]
+        private double _maintenanceCost = 10;
+        public double maintenanceCost => _maintenanceCost; 
     }
 }
