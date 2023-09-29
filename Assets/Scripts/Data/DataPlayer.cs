@@ -30,6 +30,7 @@ namespace Data.Player
             if (neededSum < _money && isSpending)
             {
                 _money -= neededSum;
+                Debug.Log(_money);
                 return true;
             }
             else return false;

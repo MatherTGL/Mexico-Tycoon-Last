@@ -14,5 +14,9 @@ namespace Config.Building.Business
         [SerializeField]
         private float _percentageMoneyCleared = 0.6f;
         public float percentageMoneyCleared => _percentageMoneyCleared;
+
+        [SerializeField, MinValue(0)]
+        private double _costPurchase;
+        public double costPurchase => _costPurchase;
     }
 }

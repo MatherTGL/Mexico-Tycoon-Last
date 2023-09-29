@@ -155,9 +155,7 @@ namespace Transport
 
         private void ChangeSpeed()
         {
-            //? Change every time step or faster 
             _currentSpeed = UnityEngine.Random.Range(_minSpeed, _maxSpeed);
-            Debug.Log($"{_currentSpeed} / {_minSpeed} / {_maxSpeed}");
         }
 
         private void FuelConsumption()

@@ -1,7 +1,13 @@
+using Config.Building.Business;
+
 namespace Business
 {
     public interface IBusiness
     {
-        void ToLaunderMoney(in double amountDirtyMoney, in float percentageMoneyCleared);
+        bool BuyBusiness(in ConfigCityBusinessEditor config);
+
+        void SellBusiness();
+
+        void ToLaunderMoney(in double amountDirtyMoney, in ConfigCityBusinessEditor config);
     }
 }
