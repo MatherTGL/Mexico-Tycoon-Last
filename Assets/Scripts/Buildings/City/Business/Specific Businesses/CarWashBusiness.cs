@@ -13,9 +13,9 @@ namespace Business
                 return false;
         }
 
-        void IBusiness.SellBusiness()
+        void IBusiness.SellBusiness(in double costSell)
         {
-            throw new System.NotImplementedException();
+            DataControl.IdataPlayer.AddPlayerMoney(costSell);
         }
 
         void IBusiness.ToLaunderMoney(in double amountDirtyMoney, in ConfigCityBusinessEditor config)

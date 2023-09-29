@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Business;
 using System.Linq;
 using Config.Building.Business;
-using UnityEngine;
 
 namespace Building.City.Business
 {
@@ -16,6 +15,8 @@ namespace Building.City.Business
         {
             CarWash
         }
+
+        private double _costSell;
 
 
         public void BuyBusiness(in TypeBusiness typeBusiness)
@@ -34,12 +35,21 @@ namespace Building.City.Business
         {
             _config = UnityEngine.Resources.FindObjectsOfTypeAll<ConfigCityBusinessEditor>()
                         .Where(config => config.typeBusiness == typeBusiness)?.ElementAt(0);
+            InitAdditionalParameters();
+        }
+
+        private void InitAdditionalParameters()
+        {
+            _costSell = _config.costPurchase / 2;
         }
 
         public void SellBusiness(in ushort indexBusiness)
         {
             if (l_purchasedBusinesses.IsNotEmpty(indexBusiness))
+            {
+                l_purchasedBusinesses.ElementAt(indexBusiness).SellBusiness(_costSell);
                 l_purchasedBusinesses.RemoveAt(indexBusiness);
+            }
         }
 
         public void ToLaunderMoney(in double amountDirtyMoney)

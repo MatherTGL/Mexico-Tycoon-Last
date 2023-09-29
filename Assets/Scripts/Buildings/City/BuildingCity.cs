@@ -12,7 +12,7 @@ namespace Building.City
     {
         private readonly CityPopulationReproduction _cityPopulationReproduction;
 
-        private readonly CityBusiness _cityBusiness = new();
+        private readonly CityBusiness _cityBusiness;
 
         private readonly ConfigBuildingCityEditor _config;
 
@@ -41,6 +41,7 @@ namespace Building.City
         {
             _config = (ConfigBuildingCityEditor)config;
             _cityPopulationReproduction = new(_config);
+            _cityBusiness = new();
 
             InitArrays(_config);
             _population = (uint)UnityEngine.Random.Range(

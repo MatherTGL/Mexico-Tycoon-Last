@@ -6,7 +6,7 @@ namespace Business
     {
         bool BuyBusiness(in ConfigCityBusinessEditor config);
 
-        void SellBusiness();
+        void SellBusiness(in double costSell);
 
         void ToLaunderMoney(in double amountDirtyMoney, in ConfigCityBusinessEditor config);
     }
