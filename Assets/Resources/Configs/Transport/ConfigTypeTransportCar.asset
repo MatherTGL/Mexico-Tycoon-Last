@@ -23,3 +23,4 @@ MonoBehaviour:
   _maxFuelConsumptionInTimeStep: 2
   _fillingFuelRatePerTimeStep: 1
   _fuelCostPerLiter: 0.2
+  _costPurchase: 500

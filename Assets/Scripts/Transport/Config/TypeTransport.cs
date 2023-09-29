@@ -59,5 +59,9 @@ namespace Transport
         [SerializeField, MinValue(0.1f)]
         private float _fuelCostPerLiter = 0.2f;
         public float fuelCostPerLiter => _fuelCostPerLiter;
+
+        [SerializeField, MinValue(10)]
+        private double _costPurchase;
+        public double costPurchase => _costPurchase;
     }
 }

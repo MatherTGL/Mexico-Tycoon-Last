@@ -9,6 +9,7 @@ using Building.Additional;
 using TimeControl;
 using System.Collections;
 using Obstacle;
+using Data;
 
 namespace Transport
 {
@@ -37,8 +38,8 @@ namespace Transport
         private event Action _lateUpdated;
         event Action ITransportInteractRoute.lateUpdated
         {
-            add => _lateUpdated += value; 
-            remove => _lateUpdated -= value; 
+            add => _lateUpdated += value;
+            remove => _lateUpdated -= value;
         }
 
         private event Action _updatedTimeStep;
@@ -154,23 +155,27 @@ namespace Transport
         [Button("Buy Transport"), HorizontalGroup("Hor")]
         private void BuyTransport()
         {
-            if (CheckRulesBuyingTransport(_indexTypeTransport) == false)
-                return;
+            if (DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(
+                _allTypesTransport[_indexTypeTransport].costPurchase, true))
+            {
+                if (CheckRulesBuyingTransport(_indexTypeTransport) == false)
+                    return;
 
-            if (_routePoints[0] == Vector3.zero)
-                _routePoints = _IcreatorCurveRoad.GetRoutePoints();
+                if (_routePoints[0] == Vector3.zero)
+                    _routePoints = _IcreatorCurveRoad.GetRoutePoints();
 
-            GameObject newTransport = Instantiate(
-                _allTypesTransport[_indexTypeTransport].prefab,
-                _IcreatorCurveRoad.GetRouteMainPoint(),
-                Quaternion.identity
-            );
+                GameObject newTransport = Instantiate(
+                    _allTypesTransport[_indexTypeTransport].prefab,
+                    _IcreatorCurveRoad.GetRouteMainPoint(),
+                    Quaternion.identity
+                );
 
-            SelfTransport selfTransportObject = new(
-                _allTypesTransport[_indexTypeTransport], this, newTransport);
+                SelfTransport selfTransportObject = new(
+                    _allTypesTransport[_indexTypeTransport], this, newTransport);
 
-            _transportationDataStorage.AddObject(newTransport, selfTransportObject);
-            UpdateTypeTransportingResource(_transportationDataStorage.l_purchasedTransportData.Count - 1);
+                _transportationDataStorage.AddObject(newTransport, selfTransportObject);
+                UpdateTypeTransportingResource(_transportationDataStorage.l_purchasedTransportData.Count - 1);
+            }
         }
 
         [Button("Sell Transport"), HorizontalGroup("Hor")]
@@ -178,13 +183,16 @@ namespace Transport
         {
             try
             {
+                DataControl.IdataPlayer.AddPlayerMoney(
+                    _transportationDataStorage.l_purchasedTransportData[_indexTransportInList]
+                    .typeTransport.costPurchase);
                 Destroy(_transportationDataStorage.DestroyTransport(_indexTransportInList));
             }
             catch (Exception exception)
             {
                 DebugSystem.Log(exception, DebugSystem.SelectedColor.Red, "Exception", "Произошла ошибка: ");
             }
-        }
+         }
 
         [Button("Load|Unload States")]
         private void ChangeLoadUnloadStates(in byte indexReception, in byte indexTypeState, in bool isState)
