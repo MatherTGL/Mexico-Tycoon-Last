@@ -2,7 +2,6 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using Resources;
 
-
 namespace Transport
 {
     [CreateAssetMenu(fileName = "ConfigTypeTransport", menuName = "Config/Transport/Create New", order = 50)]
@@ -26,8 +25,12 @@ namespace Transport
         public Type type => _type;
 
         [SerializeField, MinValue(0.5f)]
-        private float _speed;
-        public float speed => _speed;
+        private float _maxSpeed;
+        public float maxSpeed => _maxSpeed;
+
+        [SerializeField, Tooltip("Percentage of maximum minimum speed from max speed")]
+        private float _minSpeedPercentageMaxSpeed = 0.9f;
+        public float minSpeedPercentageMaxSpeed => _minSpeedPercentageMaxSpeed; 
 
         [SerializeField, MinValue(1.0f)]
         private float _capacity;

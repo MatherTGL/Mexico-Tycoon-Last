@@ -8,6 +8,8 @@ namespace Transport
 {
     public sealed class SelfTransport : IDisposable
     {
+        private const float _fullSpeedPercentage = 1.0f;
+
         private ITransportInteractRoute _ItransportInteractRoute;
 
         private readonly TypeTransport _typeTransport;
@@ -21,7 +23,9 @@ namespace Transport
 
         private float _productLoad;
 
-        private float _speed;
+        private float _maxSpeed, _minSpeed;
+
+        private float _currentSpeed;
 
         private float _currentFuelQuantity;
 
@@ -55,9 +59,11 @@ namespace Transport
 
         private void SetAdditionalCharacteristics()
         {
-            _speed = (_typeTransport.speed * (1.0f - _ItransportInteractRoute.impactOfObstaclesOnSpeed) / 100)
-                         * Time.fixedDeltaTime;
+            float availableSpeedAfterImpact = (_fullSpeedPercentage
+                - _ItransportInteractRoute.impactOfObstaclesOnSpeed) / 100;
 
+            _maxSpeed = _typeTransport.maxSpeed * availableSpeedAfterImpact * Time.fixedDeltaTime;
+            _minSpeed = _maxSpeed * _typeTransport.minSpeedPercentageMaxSpeed;
             _currentFuelQuantity = _typeTransport.maxFuelLoad;
         }
 
@@ -65,6 +71,7 @@ namespace Transport
         {
             _ItransportInteractRoute.lateUpdated += MovementTransport;
             _ItransportInteractRoute.updatedTimeStep += FuelConsumption;
+            _ItransportInteractRoute.updatedTimeStep += ChangeSpeed;
         }
 
         private void CheckPosition()
@@ -107,7 +114,7 @@ namespace Transport
         {
             _someObject.transform.position = Vector3.MoveTowards(_someObject.transform.position,
                                                     _ItransportInteractRoute.routePoints[indexPositionRoute],
-                                                    _speed);
+                                                    _currentSpeed);
         }
 
         private void RequestLoad(in byte indexStateLoad, in byte indexReception)
@@ -144,6 +151,13 @@ namespace Transport
                 CheckPosition();
                 Move(_indexCurrentRoutePoint);
             }
+        }
+
+        private void ChangeSpeed()
+        {
+            //? Change every time step or faster 
+            _currentSpeed = UnityEngine.Random.Range(_minSpeed, _maxSpeed);
+            Debug.Log($"{_currentSpeed} / {_minSpeed} / {_maxSpeed}");
         }
 
         private void FuelConsumption()

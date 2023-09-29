@@ -14,9 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefab: {fileID: 6291475073526262561, guid: efd4c69d0d657e29280093f8de63072f, type: 3}
   _typeResource: 0
-  type: 0
-  _speed: 500
+  _maxSpeed: 500
+  _minSpeedPercentageMaxSpeed: 0.7
   _capacity: 2
   _maintenanceExpenses: 30
   _maxFuelLoad: 50
-  _fuelConsumptionInTimeStep: 5
+  _minFuelConsumptionInTimeStep: 1
+  _maxFuelConsumptionInTimeStep: 2
+  _fillingFuelRatePerTimeStep: 1
+  _fuelCostPerLiter: 0.2
