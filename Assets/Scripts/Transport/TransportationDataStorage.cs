@@ -14,6 +14,7 @@ namespace Transport
 
         private void RemoveTransportationFromList(in ushort index)
         {
+            l_purchasedTransportData[index].Dispose();
             l_purchasedTransportData.RemoveAt(index);
             l_transportTransferStatus.RemoveAt(index);
             l_purchasedTransportSprite.RemoveAt(index);
@@ -40,7 +41,6 @@ namespace Transport
         public GameObject DestroyTransport(in ushort index)
         {
             GameObject spriteObject = l_purchasedTransportSprite[index]; 
-            l_purchasedTransportData[index].Dispose();
             RemoveObjectsFromList(index);
             return spriteObject;
         }
