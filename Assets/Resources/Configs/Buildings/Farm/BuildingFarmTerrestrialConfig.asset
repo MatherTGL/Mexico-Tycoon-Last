@@ -19,5 +19,7 @@ MonoBehaviour:
   typeFarm: 0
   _productionPerformanceStart: 1
   _localCapacityProduction: 0a0000000a0000000a0000000a0000000a000000
-  _maintenanceExpenses: 70
+  _currentMaintenanceExpenses: 160
+  _maintenanceExpenses: 140
+  _maintenanceExpensesOnSecurity: 20
   _harvestRipeningTime: 4

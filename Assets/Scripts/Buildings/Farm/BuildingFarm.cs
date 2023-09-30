@@ -4,16 +4,19 @@ using Resources;
 using Building.Additional;
 using UnityEngine;
 using Climate;
+using Expense;
 
 namespace Building.Farm
 {
     public sealed class BuildingFarm : IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption,
-    IChangedFarmType, IUsesClimateInfo
+    IChangedFarmType, IUsesClimateInfo, IUsesExpensesManagement
     {
         private readonly IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
         IBuildingMonitorEnergy IEnergyConsumption.IbuildingMonitorEnergy => _IbuildingMonitorEnergy;
 
         private IClimateZone _IclimateZone;
+
+        private IExpensesManagement _IexpensesManagement;
 
         private ConfigBuildingFarmEditor _config;
 
@@ -60,14 +63,16 @@ namespace Building.Farm
         {
             _productionPerformance = config.productionStartPerformance;
             _typeProductionResource = config.typeProductionResource;
-            _maintenanceExpenses = config.maintenanceExpenses;
+            _maintenanceExpenses = config.currentMaintenanceExpenses;
+            //!_maintenanceExpenses += config.maintenanceExpensesOnSecurity;
         }
 
         private void Production()
         {
             Debug.Log($"Production farm: {d_amountResources[_typeProductionResource]}");
-            if (d_amountResources[_typeProductionResource]
-                < _config.localCapacityProduction[(int)_typeProductionResource])
+            double localCapacity = _config.localCapacityProduction[(int)_typeProductionResource];
+
+            if (d_amountResources[_typeProductionResource] < localCapacity)
             {
                 if (_isCurrentlyInProduction == false && CheckQuantityRequiredRawMaterials() == false)
                     return;
@@ -75,7 +80,9 @@ namespace Building.Farm
                 _isCurrentlyInProduction = true;
 
                 if (_currentPercentageOfMaturity < _config.harvestRipeningTime)
+                {
                     _currentPercentageOfMaturity++;
+                }
                 else
                 {
                     d_amountResources[_typeProductionResource] += _productionPerformance;
@@ -97,6 +104,12 @@ namespace Building.Farm
             return true;
         }
 
+        private void CalculateImpactClimateZones()
+        {
+            _maintenanceExpenses += _maintenanceExpenses * _IclimateZone
+                .configClimateZone.percentageImpactCostMaintenance;
+        }
+
         void IBuilding.ConstantUpdatingInfo()
         {
             if (_isWorked && _isBuyed)
@@ -116,10 +129,16 @@ namespace Building.Farm
             CalculateImpactClimateZones();
         }
 
-        private void CalculateImpactClimateZones()
+        void IUsesExpensesManagement.LoadExpensesManagement(in IExpensesManagement IexpensesManagement)
         {
-            _maintenanceExpenses += _maintenanceExpenses * _IclimateZone
-                .configClimateZone.percentageImpactCostMaintenance;
+            _IexpensesManagement = IexpensesManagement;
+            _IexpensesManagement.Registration(this, ExpenseManagementControl.Type.Building);
+        }
+
+        void IUsesExpensesManagement.SetMaintenanceExpensesOnSecurity(in double addNumber)
+        {
+            if ((_maintenanceExpenses + addNumber) > 0)
+                _maintenanceExpenses += addNumber;
         }
     }
 }

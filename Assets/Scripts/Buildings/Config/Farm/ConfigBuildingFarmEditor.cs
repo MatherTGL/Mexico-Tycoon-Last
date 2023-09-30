@@ -35,9 +35,15 @@ namespace Config.Building
         private uint[] _localCapacityProduction;
         public uint[] localCapacityProduction => _localCapacityProduction;
 
+        [SerializeField, BoxGroup("Parameters"), MinValue(0), ReadOnly]
+        private double _currentMaintenanceExpenses = 0;
+        public double currentMaintenanceExpenses => _currentMaintenanceExpenses;
+
         [SerializeField, BoxGroup("Parameters"), MinValue(10)]
         private double _maintenanceExpenses = 10;
-        public double maintenanceExpenses => _maintenanceExpenses;
+
+        [SerializeField, BoxGroup("Parameters"), MinValue(10)]
+        private double _maintenanceExpensesOnSecurity = 10;
 
         [SerializeField, BoxGroup("Parameters"), MinValue(1)]
         private float _harvestRipeningTime;
@@ -45,6 +51,11 @@ namespace Config.Building
 
 
 #if UNITY_EDITOR
+        private void OnValidate()
+        {
+            _currentMaintenanceExpenses = _maintenanceExpenses + _maintenanceExpensesOnSecurity;
+        }
+
         [Button("Add New"), BoxGroup("Raw Materials"), HorizontalGroup("Raw Materials/Hor")]
         private void AddNewRawMaterial(in TypeProductionResources.TypeResource typeResource,
                                        in float quantityRawMaterial = 1)

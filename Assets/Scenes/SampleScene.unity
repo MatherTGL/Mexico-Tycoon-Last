@@ -464,12 +464,12 @@ MonoBehaviour:
   - _gameObject: {fileID: 792225210}
     _prefab: Assets/Plugins/Graphy - Ultimate Stats Monitor/Prefab/Internal/ADVANCED
       - Module.prefab
-  - _gameObject: {fileID: 885697612}
-    _prefab: Assets/Prefabs/Player/Player Camera.prefab
   - _gameObject: {fileID: 1671305017}
     _prefab: Assets/Prefabs/HierarchyScene/Bootstrap/Boot.prefab
   - _gameObject: {fileID: 600642875}
     _prefab: Assets/Prefabs/HierarchyScene/Data/Data.prefab
+  - _gameObject: {fileID: 885697612}
+    _prefab: Assets/Prefabs/Player/Player Camera.prefab
   - _gameObject: {fileID: 1587977339}
     _prefab: Assets/Prefabs/Objects/Obstacle/Mountain.prefab
   - _gameObject: {fileID: 1630252147}
@@ -947,11 +947,6 @@ PrefabInstance:
 --- !u!1 &885697612 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4375912937434679830, guid: c00373ece0d50ffd1aec08aa9999744d, type: 3}
-  m_PrefabInstance: {fileID: 885697611}
-  m_PrefabAsset: {fileID: 0}
---- !u!20 &885697613 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 4375912937434679829, guid: c00373ece0d50ffd1aec08aa9999744d, type: 3}
   m_PrefabInstance: {fileID: 885697611}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &924062923
@@ -2559,10 +2554,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4379861757078235531, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
-      propertyPath: _cameraPlayer
-      value: 
-      objectReference: {fileID: 885697613}
     - target: {fileID: 8688798508615415646, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2617,8 +2608,8 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 104697554}
-  - {fileID: 885697611}
   - {fileID: 8688798509155970735}
+  - {fileID: 885697611}
   - {fileID: 1083132076}
   - {fileID: 253992074}
   - {fileID: 552808341}

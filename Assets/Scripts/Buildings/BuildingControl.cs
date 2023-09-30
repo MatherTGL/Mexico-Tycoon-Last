@@ -16,6 +16,7 @@ using Building.Stock;
 using Building.SeaPort;
 using Building.City.Business;
 using Climate;
+using Expense;
 
 namespace Building
 {
@@ -82,8 +83,21 @@ namespace Building
 
             void Invoke()
             {
+                ConnectExpensesManagementControl();
                 CreateDictionaryTypeDrugs();
                 StartCoroutine(ConstantUpdating());
+            }
+        }
+
+        private void ConnectExpensesManagementControl()
+        {
+            if (_Ibuilding is IUsesExpensesManagement)
+            {
+                IExpensesManagement IexpensesManagement = FindObjectOfType<ExpenseManagementControl>();
+                IUsesExpensesManagement IusesExpensesManagement = (IUsesExpensesManagement)_Ibuilding;
+
+                if (IexpensesManagement != null)
+                    IusesExpensesManagement.LoadExpensesManagement(IexpensesManagement);
             }
         }
 

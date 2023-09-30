@@ -11,7 +11,7 @@ namespace Boot
         public enum TypeLoadObject { SuperImportant, MediumImportant, SimpleImportant }
 
         [ShowInInspector, ReadOnly, BoxGroup("Parameters")]
-        private List<IBoot> _bootObjectList = new List<IBoot>();
+        private List<IBoot> l_bootObject = new List<IBoot>();
 
 
         private void Awake() => LoadToList();
@@ -31,11 +31,11 @@ namespace Boot
             {
                 if (typeLoad is TypeLoadObject.SuperImportant)
                 {
-                    _bootObjectList.AddRange(bootObjects.Where(item => item.GetTypeLoad().typeLoad.Equals(typeLoad)
+                    l_bootObject.AddRange(bootObjects.Where(item => item.GetTypeLoad().typeLoad.Equals(typeLoad)
                         && item.GetTypeLoad().isSingle));
                 }
 
-                _bootObjectList.AddRange(bootObjects.Where(item => item.GetTypeLoad().typeLoad.Equals(typeLoad)
+                l_bootObject.AddRange(bootObjects.Where(item => item.GetTypeLoad().typeLoad.Equals(typeLoad)
                         && !item.GetTypeLoad().isSingle));
             }
             Array.Clear(bootObjects, 0, bootObjects.Length);
@@ -44,8 +44,8 @@ namespace Boot
 
         private void StartInit()
         {
-            for (ushort i = 0; i < _bootObjectList.Count; i++)
-                _bootObjectList[i].InitAwake();
+            for (ushort i = 0; i < l_bootObject.Count; i++)
+                l_bootObject[i].InitAwake();
         }
     }
 }
