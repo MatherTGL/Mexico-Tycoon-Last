@@ -8,8 +8,6 @@ namespace Expense
     {
         public enum TypeExpenses { General, Water, Security }
 
-        private TypeExpenses _typeExpenses;
-
         private Dictionary<TypeExpenses, IAreasExpenditure> d_IareasExpenditure = new();
 
         private double _allExpenses;
@@ -18,23 +16,21 @@ namespace Expense
         void IObjectsExpensesImplementation.ChangeExpenses(in double addNumber, in TypeExpenses typeExpenses,
                                                            in AddOrReduceNumber addOrReduceNumber)
         {
-            _typeExpenses = typeExpenses;
-
-            if (d_IareasExpenditure.ContainsKey(_typeExpenses) == false)
+            if (d_IareasExpenditure.ContainsKey(typeExpenses) == false)
             {
                 IAreasExpenditure areasExpenditure;
 
-                if (_typeExpenses is TypeExpenses.Water)
+                if (typeExpenses is TypeExpenses.Water)
                     areasExpenditure = new ExpensesOnWater();
-                else if (_typeExpenses is TypeExpenses.Security)
+                else if (typeExpenses is TypeExpenses.Security)
                     areasExpenditure = new ExpensesOnSecurity();
                 else
                     return;
 
-                d_IareasExpenditure.Add(_typeExpenses, areasExpenditure);
+                d_IareasExpenditure.Add(typeExpenses, areasExpenditure);
             }
 
-            d_IareasExpenditure[_typeExpenses].ChangeExpenses(addNumber, addOrReduceNumber);
+            d_IareasExpenditure[typeExpenses].ChangeExpenses(addNumber, addOrReduceNumber);
             _allExpenses += addNumber;
         }
 
