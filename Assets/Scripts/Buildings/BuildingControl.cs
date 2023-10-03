@@ -17,6 +17,10 @@ using Building.SeaPort;
 using Building.City.Business;
 using Climate;
 using Expense;
+using static Boot.Bootstrap;
+using System;
+using System.Reflection;
+using System.Linq;
 
 namespace Building
 {
@@ -195,9 +199,9 @@ namespace Building
             return _Ibuilding.SetResources(quantityResource, typeResource);
         }
 
-        (Bootstrap.TypeLoadObject typeLoad, bool isSingle) IBoot.GetTypeLoad()
+        (TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
         {
-            return (Bootstrap.TypeLoadObject.SuperImportant, false);
+            return (TypeLoadObject.SuperImportant, TypeSingleOrLotsOf.LotsOf);
         }
 
         public void SetClimateZone(in IClimateZone IclimateZone)

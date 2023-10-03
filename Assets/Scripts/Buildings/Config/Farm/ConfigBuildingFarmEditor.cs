@@ -44,6 +44,11 @@ namespace Config.Building
 
         [SerializeField, BoxGroup("Parameters"), MinValue(10)]
         private double _maintenanceExpensesOnSecurity = 10;
+        public double maintenanceExpensesOnSecurity => _maintenanceExpensesOnSecurity;
+
+        [SerializeField, BoxGroup("Parameters"), MinValue(10)]
+        private double _maintenanceExpensesOnWater = 10;
+        public double maintenanceExpensesOnWater => _maintenanceExpensesOnWater;
 
         [SerializeField, BoxGroup("Parameters"), MinValue(1)]
         private float _harvestRipeningTime;
@@ -53,7 +58,12 @@ namespace Config.Building
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            _currentMaintenanceExpenses = _maintenanceExpenses + _maintenanceExpensesOnSecurity;
+            double[] arrayMaintenanceExpenses = {
+                _maintenanceExpenses,
+                _maintenanceExpensesOnSecurity,
+                _maintenanceExpensesOnWater
+            };
+            _currentMaintenanceExpenses = arrayMaintenanceExpenses.Sum();
         }
 
         [Button("Add New"), BoxGroup("Raw Materials"), HorizontalGroup("Raw Materials/Hor")]

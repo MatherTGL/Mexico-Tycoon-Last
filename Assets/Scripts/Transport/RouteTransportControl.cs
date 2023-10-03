@@ -10,6 +10,7 @@ using TimeControl;
 using System.Collections;
 using Obstacle;
 using Data;
+using static Data.Player.DataPlayer;
 
 namespace Transport
 {
@@ -156,7 +157,7 @@ namespace Transport
         private void BuyTransport()
         {
             if (DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(
-                _allTypesTransport[_indexTypeTransport].costPurchase, true))
+                _allTypesTransport[_indexTypeTransport].costPurchase, SpendAndCheckMoneyState.Spend))
             {
                 if (CheckRulesBuyingTransport(_indexTypeTransport) == false)
                     return;

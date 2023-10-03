@@ -10,6 +10,8 @@ namespace Boot
     {
         public enum TypeLoadObject { SuperImportant, MediumImportant, SimpleImportant }
 
+        public enum TypeSingleOrLotsOf { Single, LotsOf }
+
         [ShowInInspector, ReadOnly, BoxGroup("Parameters")]
         private List<IBoot> l_bootObject = new List<IBoot>();
 
@@ -18,7 +20,7 @@ namespace Boot
 
         private void LoadToList()
         {
-            IBoot[] bootObjects = GameObject.FindObjectsOfType<MonoBehaviour>()
+            IBoot[] bootObjects = FindObjectsOfType<MonoBehaviour>()
                 .OfType<IBoot>().Where(item => ((MonoBehaviour)item).enabled)
                 .Distinct().ToArray<IBoot>();
 
@@ -32,11 +34,11 @@ namespace Boot
                 if (typeLoad is TypeLoadObject.SuperImportant)
                 {
                     l_bootObject.AddRange(bootObjects.Where(item => item.GetTypeLoad().typeLoad.Equals(typeLoad)
-                        && item.GetTypeLoad().isSingle));
+                        && item.GetTypeLoad().singleOrLotsOf is TypeSingleOrLotsOf.Single));
                 }
 
                 l_bootObject.AddRange(bootObjects.Where(item => item.GetTypeLoad().typeLoad.Equals(typeLoad)
-                        && !item.GetTypeLoad().isSingle));
+                        && item.GetTypeLoad().singleOrLotsOf is TypeSingleOrLotsOf.LotsOf));
             }
             Array.Clear(bootObjects, 0, bootObjects.Length);
             StartInit();

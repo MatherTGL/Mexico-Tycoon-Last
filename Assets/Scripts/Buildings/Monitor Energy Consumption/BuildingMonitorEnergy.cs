@@ -1,4 +1,5 @@
 using Data;
+using static Data.Player.DataPlayer;
 
 namespace Building.Additional
 {
@@ -6,7 +7,7 @@ namespace Building.Additional
     {
         void IBuildingMonitorEnergy.CalculateConsumption(in IEnergyConsumption IenergyConsumption)
         {
-            DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(20, true);
+            DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(20, SpendAndCheckMoneyState.Spend);
         }
     }
 }

@@ -1,5 +1,6 @@
 using Config.Building.Business;
 using Data;
+using static Data.Player.DataPlayer;
 
 namespace Business
 {
@@ -7,7 +8,7 @@ namespace Business
     {
         bool IBusiness.BuyBusiness(in ConfigCityBusinessEditor config)
         {
-            if (DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(config.costPurchase, true))
+            if (DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(config.costPurchase, SpendAndCheckMoneyState.Spend))
                 return true;
             else
                 return false;
@@ -15,7 +16,7 @@ namespace Business
 
         void IBusiness.MaintenanceConsumption(in ConfigCityBusinessEditor config)
         {
-            DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(config.maintenanceCost, true);
+            DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(config.maintenanceCost, SpendAndCheckMoneyState.Spend);
         }
 
         void IBusiness.SellBusiness(in double costSell)

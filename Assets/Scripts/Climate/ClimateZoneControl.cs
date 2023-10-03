@@ -4,6 +4,7 @@ using Building;
 using Sirenix.OdinInspector;
 using Boot;
 using System.Linq;
+using static Boot.Bootstrap;
 
 namespace Climate
 {
@@ -16,9 +17,9 @@ namespace Climate
 
         void IBoot.InitAwake() => FindObjectsInArea();
 
-        (Bootstrap.TypeLoadObject typeLoad, bool isSingle) IBoot.GetTypeLoad()
+        (TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
         {
-            return (Bootstrap.TypeLoadObject.MediumImportant, false);
+            return (TypeLoadObject.MediumImportant, TypeSingleOrLotsOf.LotsOf);
         }
 
         private void FindObjectsInArea()

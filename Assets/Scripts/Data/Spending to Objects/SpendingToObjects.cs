@@ -1,5 +1,5 @@
 using Data;
-
+using static Data.Player.DataPlayer;
 
 namespace Building.Additional
 {
@@ -7,7 +7,7 @@ namespace Building.Additional
     {
         public static void SendNewExpense(in double amount)
         {
-            DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(amount, true);
+            DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(amount, SpendAndCheckMoneyState.Spend);
         }
     }
 }

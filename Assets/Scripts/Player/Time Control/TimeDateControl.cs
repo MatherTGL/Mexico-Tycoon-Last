@@ -3,6 +3,7 @@ using Sirenix.OdinInspector;
 using Config.Time;
 using Boot;
 using TimeControl.Acceleration;
+using static Boot.Bootstrap;
 
 
 namespace TimeControl
@@ -29,9 +30,9 @@ namespace TimeControl
             _timeAcceleration = new(_configTimeControl, _inputControl);
         }
 
-        (Bootstrap.TypeLoadObject typeLoad, bool isSingle) IBoot.GetTypeLoad()
+        (TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
         {
-            return (typeLoad: Bootstrap.TypeLoadObject.SuperImportant, isSingle: true);
+            return (typeLoad: Bootstrap.TypeLoadObject.SuperImportant, TypeSingleOrLotsOf.Single);
         }
 
         private void Update()

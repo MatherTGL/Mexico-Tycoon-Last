@@ -3,6 +3,7 @@ using Sirenix.OdinInspector;
 using Data.Player;
 using Config.Data.Player;
 using Boot;
+using static Boot.Bootstrap;
 
 namespace Data
 {
@@ -24,9 +25,9 @@ namespace Data
             _IDataPlayer.SetDataConfig(_configDataPlayer);
         }
 
-        (Bootstrap.TypeLoadObject typeLoad, bool isSingle) IBoot.GetTypeLoad()
+        (TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
         {
-            return (typeLoad: Bootstrap.TypeLoadObject.SuperImportant, isSingle: true);
+            return (typeLoad: Bootstrap.TypeLoadObject.SuperImportant, TypeSingleOrLotsOf.Single);
         }
     }
 }

@@ -6,6 +6,7 @@ using Sirenix.OdinInspector;
 using System.Linq;
 using Building;
 using Resources;
+using static Boot.Bootstrap;
 
 namespace Transport.Reception
 {
@@ -59,9 +60,9 @@ namespace Transport.Reception
             return _buildingRequest.RequestUnloadResource(quantityForUnloading, typeResource);
         }
 
-        (Bootstrap.TypeLoadObject typeLoad, bool isSingle) IBoot.GetTypeLoad()
+        (TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
         {
-            return (Bootstrap.TypeLoadObject.MediumImportant, false);
+            return (TypeLoadObject.MediumImportant, TypeSingleOrLotsOf.LotsOf);
         }
 
         public void AddConnectionToDictionary(in ITransportReception fromObject, in GameObject createdRouteObject)

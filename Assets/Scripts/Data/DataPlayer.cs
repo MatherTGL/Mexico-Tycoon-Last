@@ -8,6 +8,8 @@ namespace Data.Player
         private static readonly DataPlayer _instance = new DataPlayer();
         public static DataPlayer GetInstance => _instance;
 
+        public enum SpendAndCheckMoneyState { Check, Spend }
+
         private static double _money;
         private static ushort _researchPoints;
 
@@ -25,9 +27,9 @@ namespace Data.Player
             _researchPoints += amountResearchPoints;
         }
 
-        bool IDataPlayer.CheckAndSpendingPlayerMoney(in double neededSum, in bool isSpending)
+        bool IDataPlayer.CheckAndSpendingPlayerMoney(in double neededSum, in SpendAndCheckMoneyState state)
         {
-            if (neededSum < _money && isSpending)
+            if (neededSum < _money && state == SpendAndCheckMoneyState.Spend)
             {
                 _money -= neededSum;
                 Debug.Log(_money);
@@ -36,7 +38,7 @@ namespace Data.Player
             else return false;
         }
 
-        bool IDataPlayer.CheckAndSpendingPlayerResearchPoints(in ushort amount, in bool isSpending)
+        bool IDataPlayer.CheckAndSpendingPlayerResearchPoints(in ushort amount, in SpendAndCheckMoneyState state)
         {
             throw new System.NotImplementedException();
         }

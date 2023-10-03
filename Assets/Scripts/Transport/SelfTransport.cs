@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Data;
 using Resources;
 using UnityEngine;
+using static Data.Player.DataPlayer;
 
 namespace Transport
 {
@@ -194,7 +195,7 @@ namespace Transport
         private bool BuyFuel()
         {
             double totalCost = Mathf.RoundToInt(_typeTransport.fuelCostPerLiter * _typeTransport.maxFuelLoad);
-            return DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(totalCost, true);
+            return DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(totalCost, SpendAndCheckMoneyState.Spend);
         }
 
         public void Dispose()

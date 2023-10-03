@@ -4,6 +4,7 @@ using Sirenix.OdinInspector;
 using Boot;
 using Transport.Reception;
 using DebugCustomSystem;
+using static Boot.Bootstrap;
 
 
 namespace Route.Builder
@@ -29,16 +30,16 @@ namespace Route.Builder
 
         void IBoot.InitAwake() => _inputControl = FindObjectOfType<InputControl>();
 
-        (Bootstrap.TypeLoadObject typeLoad, bool isSingle) IBoot.GetTypeLoad()
+        (TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
         {
-            return (Bootstrap.TypeLoadObject.SuperImportant, true);
+            return (TypeLoadObject.SuperImportant, TypeSingleOrLotsOf.Single);
         }
 
         private void SendRequestConnect() => SendingRequest(true);
 
         private void SendRequestDisconnect() => SendingRequest(false);
 
-        private void SendingRequest(in bool isConnect)
+        private void SendingRequest(in bool isConnect) //!
         {
             try
             {

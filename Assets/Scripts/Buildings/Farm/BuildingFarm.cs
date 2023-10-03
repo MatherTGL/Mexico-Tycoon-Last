@@ -16,7 +16,7 @@ namespace Building.Farm
 
         private IClimateZone _IclimateZone;
 
-        private IExpensesManagement _IexpensesManagement;
+        private IObjectsExpensesImplementation _IobjectsExpensesImplementation;
 
         private ConfigBuildingFarmEditor _config;
 
@@ -41,8 +41,7 @@ namespace Building.Farm
 
         private float _currentPercentageOfMaturity;
 
-        private double _maintenanceExpenses;
-        double ISpending.maintenanceExpenses => _maintenanceExpenses;
+        double ISpending.maintenanceExpenses => _IobjectsExpensesImplementation.GetAllExpenses();
 
         private bool _isWorked;
         bool IBuildingJobStatus.isWorked { get => _isWorked; set => _isWorked = value; }
@@ -63,8 +62,6 @@ namespace Building.Farm
         {
             _productionPerformance = config.productionStartPerformance;
             _typeProductionResource = config.typeProductionResource;
-            _maintenanceExpenses = config.currentMaintenanceExpenses;
-            //!_maintenanceExpenses += config.maintenanceExpensesOnSecurity;
         }
 
         private void Production()
@@ -106,8 +103,12 @@ namespace Building.Farm
 
         private void CalculateImpactClimateZones()
         {
-            _maintenanceExpenses += _maintenanceExpenses * _IclimateZone
+            double addingNumber = _IobjectsExpensesImplementation.GetAllExpenses() * _IclimateZone
                 .configClimateZone.percentageImpactCostMaintenance;
+
+            _IobjectsExpensesImplementation.ChangeExpenses(addingNumber, 
+            ExpensesBuildings.TypeExpenses.General, 
+            ExpenseManagementControl.AddOrReduceNumber.Add);
         }
 
         void IBuilding.ConstantUpdatingInfo()
@@ -131,14 +132,10 @@ namespace Building.Farm
 
         void IUsesExpensesManagement.LoadExpensesManagement(in IExpensesManagement IexpensesManagement)
         {
-            _IexpensesManagement = IexpensesManagement;
-            _IexpensesManagement.Registration(this, ExpenseManagementControl.Type.Building);
-        }
+            _IobjectsExpensesImplementation = IexpensesManagement.Registration(
+                this, ExpenseManagementControl.Type.Building);
 
-        void IUsesExpensesManagement.SetMaintenanceExpensesOnSecurity(in double addNumber)
-        {
-            if ((_maintenanceExpenses + addNumber) > 0)
-                _maintenanceExpenses += addNumber;
+            _IobjectsExpensesImplementation.SetAllExpensesInStart(_config.currentMaintenanceExpenses);
         }
     }
 }

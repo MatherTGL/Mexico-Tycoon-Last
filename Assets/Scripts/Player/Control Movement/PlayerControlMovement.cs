@@ -3,6 +3,7 @@ using Sirenix.OdinInspector;
 using Config.Player;
 using TimeControl;
 using Boot;
+using static Boot.Bootstrap;
 
 namespace Player.Movement
 {
@@ -100,9 +101,9 @@ namespace Player.Movement
             _directionMoveZ = distanceZoomSpeedZoom * _inputControl.axisMouseScrollWheel;
         }
 
-        (Bootstrap.TypeLoadObject typeLoad, bool isSingle) IBoot.GetTypeLoad()
+        (TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
         {
-            return (typeLoad: Bootstrap.TypeLoadObject.SuperImportant, isSingle: true);
+            return (typeLoad: Bootstrap.TypeLoadObject.SuperImportant, TypeSingleOrLotsOf.Single);
         }
     }
 }

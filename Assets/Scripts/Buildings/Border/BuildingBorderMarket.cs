@@ -2,6 +2,7 @@ using Data;
 using Resources;
 using System;
 using Config.Building;
+using static Data.Player.DataPlayer;
 
 namespace Building.Border
 {
@@ -39,7 +40,7 @@ namespace Building.Border
 
             if (_isSale[_indexTypeDrug])
             {
-                DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(productPurchaseCost, true);
+                DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(productPurchaseCost, SpendAndCheckMoneyState.Spend);
                 return true;
             }
             else { return false; }

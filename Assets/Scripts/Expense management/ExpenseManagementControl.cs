@@ -1,17 +1,16 @@
-using System;
 using System.Collections.Generic;
 using Boot;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using static Boot.Bootstrap;
 
 namespace Expense
 {
     public sealed class ExpenseManagementControl : MonoBehaviour, IBoot, IExpensesManagement
     {
-        public enum Type
-        {
-            Building, Transport
-        }
+        public enum AddOrReduceNumber { Add, Reduce }
+
+        public enum Type { Building, Transport }
 
         [ShowInInspector, ReadOnly]
         private List<IUsesExpensesManagement> l_usesExpensesObjects = new();
@@ -27,28 +26,33 @@ namespace Expense
             Debug.Log("helllooo");
         }
 
-        (Bootstrap.TypeLoadObject typeLoad, bool isSingle) IBoot.GetTypeLoad()
+        (TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
         {
-            return (Bootstrap.TypeLoadObject.SuperImportant, true);
+            return (TypeLoadObject.SuperImportant, TypeSingleOrLotsOf.Single);
         }
 
-        void IExpensesManagement.Registration(in IUsesExpensesManagement IusesExpensesManagement, in Type typeObject)
+        IObjectsExpensesImplementation IExpensesManagement.Registration(in IUsesExpensesManagement IusesExpensesManagement, in Type typeObject)
         {
             l_usesExpensesObjects.Add(IusesExpensesManagement);
-            CheckTypeAndCreateComponent(typeObject);
+            return CheckTypeAndCreateComponent(typeObject);
         }
 
-        private void CheckTypeAndCreateComponent(in Type typeObject)
+        private IObjectsExpensesImplementation CheckTypeAndCreateComponent(in Type typeObject)
         {
             if (typeObject == Type.Building)
-                l_objectsExpensesImplementation.Add(new ExpensesBuildings());
+            {
+                IObjectsExpensesImplementation objectExpenses = new ExpensesBuildings();
+                l_objectsExpensesImplementation.Add(objectExpenses);
+                return objectExpenses;
+            }
+            else return null;
         }
 
-        [Button("Expenses Security"), DisableInEditorMode, Tooltip("Change Maintenance Expenses On Security")]
-        private void ChangeMaintenanceExpensesOnSecurity(in double addNumber, in ushort index)
+        [Button("Add Expenses"), DisableInEditorMode]
+        private void AddExpensesOnBuildings(in double addNumber, in ushort index,
+                                            in ExpensesBuildings.TypeExpenses typeExpenses)
         {
-            l_objectsExpensesImplementation[index]?.ChangeMaintenance(addNumber);
-            l_usesExpensesObjects[index]?.SetMaintenanceExpensesOnSecurity(addNumber);
+            l_objectsExpensesImplementation[index]?.ChangeExpenses(addNumber, typeExpenses, AddOrReduceNumber.Add);
         }
     }
 }

@@ -7,13 +7,13 @@ namespace Data.Player
     {
         void SetDataConfig(in ConfigDataPlayer configDataPlayer);
 
-        bool CheckAndSpendingPlayerMoney(in double amount, in bool isSpending);
+        bool CheckAndSpendingPlayerMoney(in double amount, in DataPlayer.SpendAndCheckMoneyState state);
 
         void AddPlayerMoney(in double amount);
 
         double GetPlayerMoney();
 
-        bool CheckAndSpendingPlayerResearchPoints(in ushort amount, in bool isSpending);
+        bool CheckAndSpendingPlayerResearchPoints(in ushort amount, in DataPlayer.SpendAndCheckMoneyState state);
 
         void AddPlayerResearchPoints(in ushort amount);
 
