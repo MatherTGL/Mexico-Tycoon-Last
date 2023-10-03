@@ -22,10 +22,12 @@ namespace Expense
 
             if (d_IareasExpenditure.ContainsKey(_typeExpenses) == false)
             {
-                IAreasExpenditure areasExpenditure = null;
+                IAreasExpenditure areasExpenditure;
 
                 if (_typeExpenses is TypeExpenses.Water)
                     areasExpenditure = new ExpensesOnWater();
+                else if (_typeExpenses is TypeExpenses.Security)
+                    areasExpenditure = new ExpensesOnSecurity();
                 else
                     return;
 

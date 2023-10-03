@@ -3,7 +3,7 @@ using static Expense.ExpenseManagementControl;
 
 namespace Expense.Areas
 {
-    public sealed class ExpensesOnWater : IAreasExpenditure
+    public sealed class ExpensesOnSecurity : IAreasExpenditure
     {
         private double _expenses;
 
