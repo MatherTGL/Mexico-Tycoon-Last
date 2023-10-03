@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Expense.Areas;
-using UnityEngine;
 using static Expense.ExpenseManagementControl;
 
 namespace Expense
@@ -14,29 +13,25 @@ namespace Expense
         private double _allExpenses;
 
 
-        public ExpensesBuildings()
-        {
-            //* load default value to _maintenanceExpensesOnSecurity
-            Debug.Log("Init ExpensesBuildings");
-        }
-
-        void IObjectsExpensesImplementation.ChangeExpenses(in double addNumber, in TypeExpenses typeExpenses, 
+        void IObjectsExpensesImplementation.ChangeExpenses(in double addNumber, in TypeExpenses typeExpenses,
                                                            in AddOrReduceNumber addOrReduceNumber)
         {
-            //! refactoring
-            if (typeExpenses == TypeExpenses.Water)
+            TypeExpenses typeExpensesEnum = typeExpenses;
+
+            if (d_IareasExpenditure.ContainsKey(typeExpensesEnum) == false)
             {
-                if (d_IareasExpenditure.ContainsKey(TypeExpenses.Water))
-                {
-                    d_IareasExpenditure[TypeExpenses.Water].ChangeExpenses(addNumber, addOrReduceNumber);
-                }
+                IAreasExpenditure areasExpenditure = null;
+
+                if (typeExpensesEnum is TypeExpenses.Water)
+                    areasExpenditure = new ExpensesOnWater();
                 else
-                {
-                    d_IareasExpenditure.Add(TypeExpenses.Water, new ExpensesOnWater());
-                }
-                _allExpenses++;
+                    return;
+
+                d_IareasExpenditure.Add(typeExpensesEnum, areasExpenditure);
             }
-            //CheckAndAddMaintenanceExpenses(ref addNumber, )
+
+            d_IareasExpenditure[typeExpensesEnum].ChangeExpenses(addNumber, addOrReduceNumber);
+            _allExpenses += addNumber;
         }
 
         void IObjectsExpensesImplementation.SetAllExpensesInStart(in double generalExpensesInConfig)

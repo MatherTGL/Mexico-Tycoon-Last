@@ -48,6 +48,8 @@ namespace Expense
             else return null;
         }
 
+
+#if UNITY_EDITOR
         [Button("Add Expenses"), DisableInEditorMode]
         private void AddExpensesOnBuildings(in double addNumber, in ushort index,
                                             in ExpensesBuildings.TypeExpenses typeExpenses)
@@ -55,4 +57,5 @@ namespace Expense
             l_objectsExpensesImplementation[index]?.ChangeExpenses(addNumber, typeExpenses, AddOrReduceNumber.Add);
         }
     }
+#endif
 }
