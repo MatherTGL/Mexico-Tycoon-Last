@@ -8,9 +8,9 @@ namespace Expense
 {
     public sealed class ExpenseManagementControl : MonoBehaviour, IBoot, IExpensesManagement
     {
-        public enum AddOrReduceNumber { Add, Reduce }
+        public enum AddOrReduceNumber : byte { Add, Reduce }
 
-        public enum Type { Building, Transport }
+        public enum Type : byte { Building, Transport }
 
         [ShowInInspector, ReadOnly]
         private List<IUsesExpensesManagement> l_usesExpensesObjects = new();

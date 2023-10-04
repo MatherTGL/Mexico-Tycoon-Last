@@ -6,7 +6,7 @@ namespace Expense
 {
     public sealed class ExpensesBuildings : IObjectsExpensesImplementation
     {
-        public enum TypeExpenses { General, Water, Security }
+        public enum TypeExpenses : byte { General, Water, Security }
 
         private Dictionary<TypeExpenses, IAreasExpenditure> d_IareasExpenditure = new();
 
