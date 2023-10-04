@@ -1,7 +1,17 @@
+using Config.Expenses;
+
 namespace Expense
 {
     public interface IUsesExpensesManagement
     {
-        void LoadExpensesManagement(in IExpensesManagement IexpensesManagement);
+        IObjectsExpensesImplementation IobjectsExpensesImplementation { get; set; }
+
+
+        void LoadExpensesManagement(in IExpensesManagement IexpensesManagement, 
+                                    in ConfigExpensesManagementEditor configExpenses)
+        {
+            IobjectsExpensesImplementation = IexpensesManagement.Registration(
+                this, ExpenseManagementControl.Type.Building, configExpenses);
+        }
     }
 }

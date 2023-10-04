@@ -1,15 +1,23 @@
 using System.Collections.Generic;
 using Building.Additional;
 using Config.Building;
+using Expense;
 using Resources;
 using UnityEngine;
 
 namespace Building.Fabric
 {
-    public sealed class BuildingFabric : IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption
+    public sealed class BuildingFabric : IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption, IUsesExpensesManagement
     {
         private IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
         IBuildingMonitorEnergy IEnergyConsumption.IbuildingMonitorEnergy => _IbuildingMonitorEnergy;
+
+        private IObjectsExpensesImplementation _IobjectsExpensesImplementation;
+        IObjectsExpensesImplementation ISpending.IobjectsExpensesImplementation => _IobjectsExpensesImplementation;
+        IObjectsExpensesImplementation IUsesExpensesManagement.IobjectsExpensesImplementation
+        {
+            get => _IobjectsExpensesImplementation; set => _IobjectsExpensesImplementation = value;
+        }
 
         private ConfigBuildingFabricEditor _config;
 
@@ -33,9 +41,6 @@ namespace Building.Fabric
 
         private ushort _productionPerformance;
 
-        private double _maintenanceExpenses;
-        double ISpending.maintenanceExpenses => _maintenanceExpenses;
-
         private bool _isWorked;
         bool IBuildingJobStatus.isWorked { get => _isWorked; set => _isWorked = value; }
 
@@ -53,7 +58,6 @@ namespace Building.Fabric
         {
             _typeProductionResource = TypeProductionResources.TypeResource.Cocaine;
             _productionPerformance = config.productionPerformance;
-            _maintenanceExpenses = config.maintenanceExpenses;
         }
 
         private void Production()

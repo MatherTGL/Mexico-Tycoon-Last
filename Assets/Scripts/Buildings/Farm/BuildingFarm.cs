@@ -17,6 +17,11 @@ namespace Building.Farm
         private IClimateZone _IclimateZone;
 
         private IObjectsExpensesImplementation _IobjectsExpensesImplementation;
+        IObjectsExpensesImplementation ISpending.IobjectsExpensesImplementation => _IobjectsExpensesImplementation;
+        IObjectsExpensesImplementation IUsesExpensesManagement.IobjectsExpensesImplementation
+        {
+            get => _IobjectsExpensesImplementation; set => _IobjectsExpensesImplementation = value;
+        }
 
         private ConfigBuildingFarmEditor _config;
 
@@ -40,8 +45,6 @@ namespace Building.Farm
         private ushort _productionPerformance;
 
         private float _currentPercentageOfMaturity;
-
-        double ISpending.maintenanceExpenses => _IobjectsExpensesImplementation.GetAllExpenses();
 
         private bool _isWorked;
         bool IBuildingJobStatus.isWorked { get => _isWorked; set => _isWorked = value; }
@@ -106,8 +109,8 @@ namespace Building.Farm
             double addingNumber = _IobjectsExpensesImplementation.GetAllExpenses() * _IclimateZone
                 .configClimateZone.percentageImpactCostMaintenance;
 
-            _IobjectsExpensesImplementation.ChangeExpenses(addingNumber, 
-            ExpensesBuildings.TypeExpenses.General, 
+            _IobjectsExpensesImplementation.ChangeExpenses(addingNumber,
+            ExpensesBuildings.TypeExpenses.General,
             ExpenseManagementControl.AddOrReduceNumber.Add);
         }
 
@@ -128,14 +131,6 @@ namespace Building.Farm
         {
             _IclimateZone = IclimateZone;
             CalculateImpactClimateZones();
-        }
-
-        void IUsesExpensesManagement.LoadExpensesManagement(in IExpensesManagement IexpensesManagement)
-        {
-            _IobjectsExpensesImplementation = IexpensesManagement.Registration(
-                this, ExpenseManagementControl.Type.Building);
-
-            _IobjectsExpensesImplementation.SetAllExpensesInStart(_config.currentMaintenanceExpenses);
         }
     }
 }

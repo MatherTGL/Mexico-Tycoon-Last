@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea177537b2b8bf59c8e90a246873b6a4, type: 3}
+  m_Name: ConfigExpensesManagementFabric
+  m_EditorClassIdentifier: 
+  _allExpenses: 130
+  _expensesOnWater: 20
+  _expensesOnSecurity: 10

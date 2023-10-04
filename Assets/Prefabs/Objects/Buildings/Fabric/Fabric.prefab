@@ -114,6 +114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2701d1e8054999fb196dfd083bc4e98b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _configExpenses: {fileID: 11400000, guid: a7a00ff616efb5ed78abe881a666d743, type: 2}
   _configSO: {fileID: 11400000, guid: fd99a65b323555d4a8d8b01a32b6b58b, type: 2}
   _typeBuilding: 1
 --- !u!65 &6133981189342110750

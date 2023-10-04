@@ -3,13 +3,21 @@ using System.Collections.Generic;
 using Config.Building;
 using Building.Additional;
 using UnityEngine;
+using Expense;
 
 namespace Building.Stock
 {
-    public sealed class BuildingStock : IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption
+    public sealed class BuildingStock : IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption, IUsesExpensesManagement
     {
         private readonly IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
         IBuildingMonitorEnergy IEnergyConsumption.IbuildingMonitorEnergy => _IbuildingMonitorEnergy;
+
+        private IObjectsExpensesImplementation _IobjectsExpensesImplementation;
+        IObjectsExpensesImplementation ISpending.IobjectsExpensesImplementation => _IobjectsExpensesImplementation;
+        IObjectsExpensesImplementation IUsesExpensesManagement.IobjectsExpensesImplementation
+        {
+            get => _IobjectsExpensesImplementation; set => _IobjectsExpensesImplementation = value;
+        }
 
         private readonly ConfigBuildingStockEditor _config;
 
@@ -29,9 +37,6 @@ namespace Building.Stock
 
         uint[] IBuilding.localCapacityProduction => _config.localCapacityProduction;
 
-        private double _maintenanceExpenses;
-        double ISpending.maintenanceExpenses => _maintenanceExpenses;
-
         private bool _isWorked;
         bool IBuildingJobStatus.isWorked { get => _isWorked; set => _isWorked = value; }
 
@@ -42,7 +47,6 @@ namespace Building.Stock
         public BuildingStock(in ScriptableObject config)
         {
             _config = (ConfigBuildingStockEditor)config;
-            _maintenanceExpenses = _config.maintenanceExpenses;
         }
 
         void IBuilding.ConstantUpdatingInfo()

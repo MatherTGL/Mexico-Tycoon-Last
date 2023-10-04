@@ -345,5 +345,12 @@
       <overrideLabel>true</overrideLabel>
       <label>Create Config/Climate/Zone/Create New</label>
     </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>Assets/Create/Config/Expenses/Create New</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>Create Config/Expenses/Create New</label>
+    </MCItem>
   </projectItemList>
 </MCSetting>

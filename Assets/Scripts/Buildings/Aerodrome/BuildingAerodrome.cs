@@ -3,11 +3,19 @@ using Building.Additional;
 using Config.Building;
 using UnityEngine;
 using System.Collections.Generic;
+using Expense;
 
 namespace Building.Aerodrome
 {
-    public sealed class BuildingAerodrome : IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending
+    public sealed class BuildingAerodrome : IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IUsesExpensesManagement
     {
+        private IObjectsExpensesImplementation _IobjectsExpensesImplementation;
+        IObjectsExpensesImplementation ISpending.IobjectsExpensesImplementation => _IobjectsExpensesImplementation;
+        IObjectsExpensesImplementation IUsesExpensesManagement.IobjectsExpensesImplementation
+        {
+            get => _IobjectsExpensesImplementation; set => _IobjectsExpensesImplementation = value;
+        }
+
         private readonly ConfigBuildingAerodromeEditor _config;
 
         private Dictionary<TypeProductionResources.TypeResource, double> d_amountResources = new();
@@ -25,9 +33,6 @@ namespace Building.Aerodrome
 
         uint[] IBuilding.localCapacityProduction => _config.localCapacityProduction;
 
-        private double _maintenanceExpenses;
-        double ISpending.maintenanceExpenses => _maintenanceExpenses;
-
         private bool _isBuyed;
         bool IBuildingPurchased.isBuyed { get => _isBuyed; set => _isBuyed = value; }
 
@@ -38,7 +43,6 @@ namespace Building.Aerodrome
         public BuildingAerodrome(in ScriptableObject config)
         {
             _config = (ConfigBuildingAerodromeEditor)config;
-            _maintenanceExpenses = _config.maintenanceExpenses;
         }
 
         void IBuilding.ConstantUpdatingInfo()

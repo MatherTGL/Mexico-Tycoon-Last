@@ -18,13 +18,12 @@ using Building.City.Business;
 using Climate;
 using Expense;
 using static Boot.Bootstrap;
+using Config.Expenses;
 using System;
-using System.Reflection;
-using System.Linq;
 
 namespace Building
 {
-    [RequireComponent(typeof(Transport.Reception.TransportReception))]
+    [RequireComponent(typeof(TransportReception))]
     [RequireComponent(typeof(BoxCollider))]
     public sealed class BuildingControl : MonoBehaviour, IBoot, IBuildingRequestForTransport
     {
@@ -40,9 +39,13 @@ namespace Building
         private IBuildingPurchased _IbuildingPurchased;
 
         private ICityBusiness _IcityBusiness;
+        
+        //TODO: remove to main config (variable: _configSO)
+        [SerializeField, Required, BoxGroup("Parameters"), HideLabel]
+        private ConfigExpensesManagementEditor _configExpenses; 
 
         [SerializeField, Required, BoxGroup("Parameters"), HideLabel, PropertySpace(0, 5)]
-        private ScriptableObject _configSO;
+        private ScriptableObject _configSO; //TODO: make general config
 
         private TimeDateControl _timeDateControl;
 
@@ -100,8 +103,11 @@ namespace Building
                 IExpensesManagement IexpensesManagement = FindObjectOfType<ExpenseManagementControl>();
                 IUsesExpensesManagement IusesExpensesManagement = (IUsesExpensesManagement)_Ibuilding;
 
-                if (IexpensesManagement != null)
-                    IusesExpensesManagement.LoadExpensesManagement(IexpensesManagement);
+                //TODO: remove ConfigExpenses to the shared config and pass from there
+                if (IexpensesManagement != null && _configExpenses != null)
+                    IusesExpensesManagement.LoadExpensesManagement(IexpensesManagement, _configExpenses);
+                else
+                    throw new NullReferenceException();
             }
         }
 

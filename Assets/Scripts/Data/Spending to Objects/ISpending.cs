@@ -1,13 +1,20 @@
+using Expense;
+
 namespace Building.Additional
 {
     public interface ISpending
     {
-        double maintenanceExpenses { get; }
+        IObjectsExpensesImplementation IobjectsExpensesImplementation { get; }
 
+
+        double GetExpenses()
+        {
+            return IobjectsExpensesImplementation.GetAllExpenses();
+        }
 
         void Spending()
         {
-            SpendingToObjects.SendNewExpense(maintenanceExpenses);
+            SpendingToObjects.SendNewExpense(GetExpenses());
         }
     }
 }
