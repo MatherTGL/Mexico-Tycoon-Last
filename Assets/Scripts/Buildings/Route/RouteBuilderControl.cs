@@ -34,6 +34,8 @@ namespace Route.Builder
         [Tooltip("total cost = _costRoute * (Mathf.Abs distance) between objects")]
         private double _costRoute = 100;
 
+        private float _routeLength;
+
 
         private RouteBuilderControl() { }
 
@@ -52,11 +54,11 @@ namespace Route.Builder
         {
             try
             {
-                if (BuyRoute() == false)
-                    return;
-
                 if (_connectionPoints.Length == _maxPointConnection && CheckRouteLength())
                 {
+                    if (BuyRoute() == false)
+                        return;
+
                     if (typeConnect is TypeConnect.Connect)
                         _connectionPoints[1].ConnectionRequest(_connectionPoints[0]);
                     else
@@ -72,18 +74,17 @@ namespace Route.Builder
 
         private bool BuyRoute()
         {
-            Vector2 directionCoonectionPoints = _connectionPoints[0].GetPosition().position
-                                                    - _connectionPoints[1].GetPosition().position;
-            double totalCostRoute = _costRoute * Mathf.Abs(directionCoonectionPoints.x + directionCoonectionPoints.y);
+            double totalCostRoute = _costRoute * Mathf.Abs(_routeLength);
+            Debug.Log($"{totalCostRoute} / {_routeLength}");
             return DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(totalCostRoute, SpendAndCheckMoneyState.Spend);
         }
 
         private bool CheckRouteLength()
         {
-            float length = Vector2.Distance(_connectionPoints[0].GetPosition().position,
+            _routeLength = Vector2.Distance(_connectionPoints[0].GetPosition().position,
                                             _connectionPoints[1].GetPosition().position);
 
-            if (Mathf.RoundToInt(length) < _maxLengthRoute)
+            if (Mathf.RoundToInt(_routeLength ) < _maxLengthRoute)
                 return true;
             else
                 return false;
