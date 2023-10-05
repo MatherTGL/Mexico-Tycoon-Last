@@ -106,11 +106,11 @@ namespace Building.Farm
 
         private void CalculateImpactClimateZones()
         {
-            double addingNumber = _IobjectsExpensesImplementation.GetAllExpenses() * _IclimateZone
+            double addingNumber = _IobjectsExpensesImplementation.GetTotalExpenses() * _IclimateZone
                 .configClimateZone.percentageImpactCostMaintenance;
 
             _IobjectsExpensesImplementation.ChangeExpenses(addingNumber,
-            ExpensesBuildings.TypeExpenses.General,
+            ExpensesBuildings.TypeExpenses.Production,
             ExpenseManagementControl.AddOrReduceNumber.Add);
         }
 

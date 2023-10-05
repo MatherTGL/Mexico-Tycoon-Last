@@ -9,7 +9,7 @@ namespace Building.Additional
 
         double GetExpenses()
         {
-            return IobjectsExpensesImplementation.GetAllExpenses();
+            return IobjectsExpensesImplementation.GetTotalExpenses();
         }
 
         void Spending()

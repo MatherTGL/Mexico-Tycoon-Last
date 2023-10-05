@@ -5,7 +5,7 @@ namespace Expense
 {
     public interface IObjectsExpensesImplementation
     {
-        double GetAllExpenses();
+        double GetTotalExpenses();
 
         void ChangeExpenses(in double addNumber, in TypeExpenses typeExpenses, in AddOrReduceNumber addOrReduceNumber);
     }

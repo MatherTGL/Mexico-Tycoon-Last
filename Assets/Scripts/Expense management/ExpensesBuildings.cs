@@ -10,17 +10,14 @@ namespace Expense
     {
         private ConfigExpensesManagementEditor _configExpensesManagement;
 
-        public enum TypeExpenses : byte { General, Water, Security }
+        public enum TypeExpenses : byte { Production, Water, Security }
 
         private Dictionary<TypeExpenses, IAreasExpenditure> d_IareasExpenditure = new();
-
-        private double _allExpenses;
 
 
         public ExpensesBuildings(in ConfigExpensesManagementEditor config)
         {
             _configExpensesManagement = config;
-            _allExpenses = config.allExpenses;
         }
 
         void IObjectsExpensesImplementation.ChangeExpenses(in double addNumber, in TypeExpenses typeExpenses,
@@ -35,21 +32,22 @@ namespace Expense
                 else if (typeExpenses is TypeExpenses.Security)
                     areasExpenditure = new ExpensesOnSecurity(_configExpensesManagement);
                 else
-                    return;
+                    areasExpenditure = new ExpensesOnProduction(_configExpensesManagement);
 
                 d_IareasExpenditure.Add(typeExpenses, areasExpenditure);
             }
 
-            if ((_allExpenses + addNumber) > 0)
-            {
-                d_IareasExpenditure[typeExpenses].ChangeExpenses(addNumber, addOrReduceNumber);
-                _allExpenses += addNumber;;
-            }
+            d_IareasExpenditure[typeExpenses].ChangeExpenses(addNumber, addOrReduceNumber);
         }
 
-        double IObjectsExpensesImplementation.GetAllExpenses()
+        double IObjectsExpensesImplementation.GetTotalExpenses()
         {
-            return _allExpenses;
+            double totalExpenses = 0;
+            foreach (var item in d_IareasExpenditure.Values)
+                totalExpenses += item.expenses;
+
+            Debug.Log(totalExpenses);
+            return totalExpenses;
         }
     }
 }

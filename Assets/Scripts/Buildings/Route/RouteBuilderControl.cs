@@ -75,7 +75,6 @@ namespace Route.Builder
         private bool BuyRoute()
         {
             double totalCostRoute = _costRoute * Mathf.Abs(_routeLength);
-            Debug.Log($"{totalCostRoute} / {_routeLength}");
             return DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(totalCostRoute, SpendAndCheckMoneyState.Spend);
         }
 

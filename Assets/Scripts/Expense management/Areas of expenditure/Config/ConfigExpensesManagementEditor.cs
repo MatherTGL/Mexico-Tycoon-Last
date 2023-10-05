@@ -1,5 +1,4 @@
 using UnityEngine;
-using Sirenix.OdinInspector;
 
 namespace Config.Expenses
 {
@@ -7,8 +6,8 @@ namespace Config.Expenses
     public sealed class ConfigExpensesManagementEditor : ScriptableObject
     {
         [SerializeField]
-        private double _allExpenses;
-        public double allExpenses => _allExpenses;
+        private double _expensesOnProduction;
+        public double expensesOnProduction => _expensesOnProduction;
 
         [SerializeField]
         private double _expensesOnWater;
