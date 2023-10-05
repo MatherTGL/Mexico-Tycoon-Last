@@ -5,25 +5,34 @@ using Boot;
 using Transport.Reception;
 using DebugCustomSystem;
 using static Boot.Bootstrap;
+using Data;
+using static Data.Player.DataPlayer;
+using Unity.VisualScripting.Dependencies.Sqlite;
 
 
 namespace Route.Builder
 {
     public sealed class RouteBuilderControl : MonoBehaviour, IBoot
     {
+        private enum TypeConnect : byte { Connect, Disconnect }
+
         private const byte _maxPointConnection = 2;
 
         private InputControl _inputControl;
 
         [SerializeField, Required, BoxGroup("Parameters")]
-        private CreatorCurveRoad _prefabRoute;
-        public CreatorCurveRoad prefabRoute => _prefabRoute;
+        private CreatorCurveRoadControl _prefabRoute;
+        public CreatorCurveRoadControl prefabRoute => _prefabRoute;
 
         [ShowInInspector, BoxGroup("Parameters")]
         private ITransportReception[] _connectionPoints = new ITransportReception[_maxPointConnection];
 
         [SerializeField, MinValue(10), MaxValue(250), BoxGroup("Parameters")]
         private byte _maxLengthRoute = 20;
+
+        [SerializeField, MinValue(100), BoxGroup("Parameters")]
+        [Tooltip("total cost = _costRoute * (Mathf.Abs distance) between objects")]
+        private double _costRoute = 100;
 
 
         private RouteBuilderControl() { }
@@ -35,17 +44,20 @@ namespace Route.Builder
             return (TypeLoadObject.SuperImportant, TypeSingleOrLotsOf.Single);
         }
 
-        private void SendRequestConnect() => SendingRequest(true);
+        private void SendRequestConnect() => SendingRequest(TypeConnect.Connect);
 
-        private void SendRequestDisconnect() => SendingRequest(false);
+        private void SendRequestDisconnect() => SendingRequest(TypeConnect.Disconnect);
 
-        private void SendingRequest(in bool isConnect) //!
+        private void SendingRequest(in TypeConnect typeConnect)
         {
             try
             {
+                if (BuyRoute() == false)
+                    return;
+
                 if (_connectionPoints.Length == _maxPointConnection && CheckRouteLength())
                 {
-                    if (isConnect == true)
+                    if (typeConnect is TypeConnect.Connect)
                         _connectionPoints[1].ConnectionRequest(_connectionPoints[0]);
                     else
                         _connectionPoints[1].DisconnectRequest(_connectionPoints[0]);
@@ -56,6 +68,14 @@ namespace Route.Builder
             {
                 DebugSystem.Log(ex, DebugSystem.SelectedColor.Red, "Exception", "Пролизошла ошибка: ");
             }
+        }
+
+        private bool BuyRoute()
+        {
+            Vector2 directionCoonectionPoints = _connectionPoints[0].GetPosition().position
+                                                    - _connectionPoints[1].GetPosition().position;
+            double totalCostRoute = _costRoute * Mathf.Abs(directionCoonectionPoints.x + directionCoonectionPoints.y);
+            return DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(totalCostRoute, SpendAndCheckMoneyState.Spend);
         }
 
         private bool CheckRouteLength()

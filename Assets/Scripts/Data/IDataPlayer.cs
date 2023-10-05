@@ -1,6 +1,5 @@
 using Config.Data.Player;
 
-
 namespace Data.Player
 {
     public interface IDataPlayer

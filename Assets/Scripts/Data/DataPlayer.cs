@@ -29,7 +29,7 @@ namespace Data.Player
 
         bool IDataPlayer.CheckAndSpendingPlayerMoney(in double neededSum, in SpendAndCheckMoneyState state)
         {
-            if (neededSum < _money && state == SpendAndCheckMoneyState.Spend)
+            if ((_money - neededSum) > 0 && state == SpendAndCheckMoneyState.Spend)
             {
                 _money -= neededSum;
                 Debug.Log(_money);

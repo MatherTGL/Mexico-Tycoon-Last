@@ -14,7 +14,7 @@ using static Data.Player.DataPlayer;
 
 namespace Transport
 {
-    [RequireComponent(typeof(CreatorCurveRoad))]
+    [RequireComponent(typeof(CreatorCurveRoadControl))]
     internal sealed class RouteTransportControl : MonoBehaviour, ITransportInteractRoute, IReRouteTransportation
     {
         [ShowInInspector]
@@ -75,15 +75,15 @@ namespace Transport
 
         private void CalculateMaintenanceExenses()
         {
-            double finalMaintenanceExenses = 0;
+            double totalMaintenanceExenses = 0;
 
             for (ushort i = 0; i < _transportationDataStorage.l_purchasedTransportData.Count; i++)
             {
-                finalMaintenanceExenses += _transportationDataStorage.l_purchasedTransportData[i]
+                totalMaintenanceExenses += _transportationDataStorage.l_purchasedTransportData[i]
                                            .typeTransport.maintenanceExpenses;
             }
 
-            SpendingToObjects.SendNewExpense(finalMaintenanceExenses);
+            SpendingToObjects.SendNewExpense(totalMaintenanceExenses);
         }
 
         private IEnumerator UpdateTimeStepCoroutine()

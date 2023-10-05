@@ -40,10 +40,10 @@ namespace Transport.Reception
 
         private void BuildRoute(in ITransportReception secondObject)
         {
-            CreatorCurveRoad createdRoute = Instantiate(_routeBuilderControl.prefabRoute, Vector3.zero,
-                                                        Quaternion.identity);
-            createdRoute.SetPositionPoints(secondObject, this);
+            CreatorCurveRoadControl createdRoute = Instantiate(_routeBuilderControl.prefabRoute,
+                Vector3.zero, Quaternion.identity);
 
+            createdRoute.SetPositionPoints(secondObject, this);
             AddConnectionToDictionary(secondObject, createdRoute.gameObject);
             secondObject.AddConnectionToDictionary(this, createdRoute.gameObject);
         }

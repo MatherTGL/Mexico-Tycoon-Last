@@ -90,6 +90,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefabRoute: {fileID: 2275065938947847526, guid: 155303cd3751c9aca99047527dd41186, type: 3}
   _maxLengthRoute: 40
+  _costRoute: 100
 --- !u!1 &8688798508615415647
 GameObject:
   m_ObjectHideFlags: 0
