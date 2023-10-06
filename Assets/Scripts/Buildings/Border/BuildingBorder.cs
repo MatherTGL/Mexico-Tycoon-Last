@@ -33,7 +33,7 @@ namespace Building.Border
 
         public BuildingBorder(in ScriptableObject config)
         {
-            _config = (ConfigBuildingBorderEditor)config;
+            _config = config as ConfigBuildingBorderEditor;
             _IbuildingBorderMarket = new BuildingBorderMarket(_config);
         }
 
@@ -59,9 +59,11 @@ namespace Building.Border
             else { return false; }
         }
 
+        #region not_used
         void IBuilding.InitDictionaries()
         {
             throw new System.NotImplementedException();
         }
+        #endregion
     }
 }

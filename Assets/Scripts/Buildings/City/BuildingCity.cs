@@ -47,7 +47,7 @@ namespace Building.City
 
         public BuildingCity(in ScriptableObject config)
         {
-            _config = (ConfigBuildingCityEditor)config;
+            _config = config as ConfigBuildingCityEditor;
             _cityPopulationReproduction = new(_config);
             _cityBusiness = new(this);
 

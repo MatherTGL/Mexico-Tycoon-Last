@@ -57,7 +57,7 @@ namespace Building.Farm
 
         public BuildingFarm(in ScriptableObject config)
         {
-            _config = (ConfigBuildingFarmEditor)config;
+            _config = config as ConfigBuildingFarmEditor;
             LoadConfigData(_config);
         }
 

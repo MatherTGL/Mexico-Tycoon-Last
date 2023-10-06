@@ -32,7 +32,7 @@ namespace TimeControl
 
         (TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
         {
-            return (typeLoad: Bootstrap.TypeLoadObject.SuperImportant, TypeSingleOrLotsOf.Single);
+            return (typeLoad: TypeLoadObject.SuperImportant, TypeSingleOrLotsOf.Single);
         }
 
         private void Update()

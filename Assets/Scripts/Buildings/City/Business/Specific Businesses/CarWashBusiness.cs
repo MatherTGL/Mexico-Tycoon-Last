@@ -8,7 +8,8 @@ namespace Business
     {
         bool IBusiness.BuyBusiness(in ConfigCityBusinessEditor config)
         {
-            if (DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(config.costPurchase, SpendAndCheckMoneyState.Spend))
+            if (DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(config.costPurchase, 
+                                                                    SpendAndCheckMoneyState.Spend))
                 return true;
             else
                 return false;
@@ -16,7 +17,8 @@ namespace Business
 
         void IBusiness.MaintenanceConsumption(in ConfigCityBusinessEditor config)
         {
-            DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(config.maintenanceCost, SpendAndCheckMoneyState.Spend);
+            DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(config.maintenanceCost, 
+                                                                SpendAndCheckMoneyState.Spend);
         }
 
         void IBusiness.SellBusiness(in double costSell)
@@ -26,7 +28,7 @@ namespace Business
 
         void IBusiness.ToLaunderMoney(in double amountDirtyMoney, in ConfigCityBusinessEditor config)
         {
-            var clearedMoney = amountDirtyMoney * config.percentageMoneyCleared;
+            double clearedMoney = amountDirtyMoney * config.percentageMoneyCleared;
             DataControl.IdataPlayer.AddPlayerMoney(clearedMoney);
         }
     }

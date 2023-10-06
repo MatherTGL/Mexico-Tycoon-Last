@@ -110,6 +110,7 @@ namespace Route.Builder
 
         private void SetRouteType()
         {
+            //TODO: refactoring
             var firstObject = _positionPoints[_indexPositionPointsFrom].typeCurrentBuilding;
             var secondObject = _positionPoints[_indexPositionPointsTo].typeCurrentBuilding;
 

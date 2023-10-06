@@ -58,15 +58,11 @@ namespace Transport
 
         private void OnEnable()
         {
-            FindAndCreateComponents();
-            StartCoroutine(UpdateTimeStepCoroutine());
+            _IcreatorCurveRoad ??= GetComponent<ICreatorCurveRoad>();
+            _timeDateControl ??= FindObjectOfType<TimeDateControl>();
+            _coroutineTimeStep ??= new WaitForSeconds(_timeDateControl.GetCurrentTimeOneDay());
 
-            void FindAndCreateComponents()
-            {
-                _IcreatorCurveRoad ??= GetComponent<ICreatorCurveRoad>();
-                _timeDateControl ??= FindObjectOfType<TimeDateControl>();
-                _coroutineTimeStep ??= new WaitForSeconds(_timeDateControl.GetCurrentTimeOneDay());
-            }
+            StartCoroutine(UpdateTimeStepCoroutine());
         }
 
         private void OnDisable() => StopAllCoroutines();
@@ -116,11 +112,10 @@ namespace Transport
 
         private void OnTriggerEnter2D(Collider2D collisionObject)
         {
-            if (collisionObject.GetComponent(typeof(IObstacle)))
-            {
-                IObstacle obstacle = (IObstacle)collisionObject.GetComponent(typeof(IObstacle));
+            IObstacle obstacle = collisionObject.GetComponent(typeof(IObstacle)) as IObstacle;
+
+            if (obstacle != null)
                 _impactOfObstaclesOnSpeed += obstacle.config.percentageImpactSpeed;
-            }
         }
 
         ITransportReception[] ITransportInteractRoute.GetPointsReception()
@@ -193,7 +188,7 @@ namespace Transport
             {
                 DebugSystem.Log(exception, DebugSystem.SelectedColor.Red, "Exception", "Произошла ошибка: ");
             }
-         }
+        }
 
         [Button("Load|Unload States")]
         private void ChangeLoadUnloadStates(in byte indexReception, in byte indexTypeState, in bool isState)

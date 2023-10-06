@@ -50,7 +50,7 @@ namespace Building.Fabric
 
         public BuildingFabric(in ScriptableObject config)
         {
-            _config = (ConfigBuildingFabricEditor)config;
+            _config = config as ConfigBuildingFabricEditor;
             LoadConfigData(_config);
         }
 

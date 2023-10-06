@@ -29,19 +29,28 @@ namespace Boot
 
         private void SortingObjectsList(ref IBoot[] bootObjects)
         {
-            foreach (var typeLoad in Enum.GetValues(typeof(TypeLoadObject)))
+            foreach (TypeLoadObject typeLoad in Enum.GetValues(typeof(TypeLoadObject)))
             {
-                if (typeLoad is TypeLoadObject.SuperImportant)
-                {
-                    l_bootObject.AddRange(bootObjects.Where(item => item.GetTypeLoad().typeLoad.Equals(typeLoad)
-                        && item.GetTypeLoad().singleOrLotsOf is TypeSingleOrLotsOf.Single));
-                }
-
-                l_bootObject.AddRange(bootObjects.Where(item => item.GetTypeLoad().typeLoad.Equals(typeLoad)
-                        && item.GetTypeLoad().singleOrLotsOf is TypeSingleOrLotsOf.LotsOf));
+                LoadSingleSuperImportant(typeLoad, bootObjects);
+                LoadAllMultiplyObjects(typeLoad, bootObjects);
             }
             Array.Clear(bootObjects, 0, bootObjects.Length);
             StartInit();
+        }
+
+        private void LoadSingleSuperImportant(TypeLoadObject typeLoad, in IBoot[] bootObjects)
+        {
+            if (typeLoad is TypeLoadObject.SuperImportant)
+            {
+                l_bootObject.AddRange(bootObjects.Where(item => item.GetTypeLoad().typeLoad.Equals(typeLoad)
+                    && item.GetTypeLoad().singleOrLotsOf is TypeSingleOrLotsOf.Single));
+            }
+        }
+
+        private void LoadAllMultiplyObjects(TypeLoadObject typeLoad, in IBoot[] bootObjects)
+        {
+            l_bootObject.AddRange(bootObjects.Where(item => item.GetTypeLoad().typeLoad.Equals(typeLoad)
+                        && item.GetTypeLoad().singleOrLotsOf is TypeSingleOrLotsOf.LotsOf));
         }
 
         private void StartInit()

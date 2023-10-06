@@ -39,10 +39,10 @@ namespace Building
         private IBuildingPurchased _IbuildingPurchased;
 
         private ICityBusiness _IcityBusiness;
-        
+
         //TODO: remove to main config (variable: _configSO)
         [SerializeField, Required, BoxGroup("Parameters"), HideLabel]
-        private ConfigExpensesManagementEditor _configExpenses; 
+        private ConfigExpensesManagementEditor _configExpenses;
 
         [SerializeField, Required, BoxGroup("Parameters"), HideLabel, PropertySpace(0, 5), DisableInPlayMode]
         private ScriptableObject _configSO; //TODO: make general config
@@ -64,44 +64,26 @@ namespace Building
 
         void IBoot.InitAwake()
         {
-            Find();
+            _timeDateControl = FindObjectOfType<TimeDateControl>();
+            _coroutineTimeStep = new WaitForSeconds(_timeDateControl.GetCurrentTimeOneDay());
 
-            void Find()
-            {
-                _timeDateControl = FindObjectOfType<TimeDateControl>();
-                Create();
-            }
+            if (_configSO != null)
+                CreateInstance();
 
-            void Create()
-            {
-                _coroutineTimeStep = new WaitForSeconds(_timeDateControl.GetCurrentTimeOneDay());
+            _Ispending = _Ibuilding as ISpending;
+            _IcityBusiness = _Ibuilding as ICityBusiness;
 
-                if (_configSO != null)
-                    CreateInstance();
-
-                if (_Ibuilding is ISpending)
-                    _Ispending = (ISpending)_Ibuilding;
-
-                if (_Ibuilding is ICityBusiness)
-                    _IcityBusiness = (ICityBusiness)_Ibuilding;
-
-                Invoke();
-            }
-
-            void Invoke()
-            {
-                ConnectExpensesManagementControl();
-                CreateDictionaryTypeDrugs();
-                StartCoroutine(ConstantUpdating());
-            }
+            ConnectExpensesManagementControl();
+            CreateDictionaryTypeDrugs();
+            StartCoroutine(ConstantUpdating());
         }
 
         private void ConnectExpensesManagementControl()
         {
-            if (_Ibuilding is IUsesExpensesManagement)
+            if (_Ibuilding is IUsesExpensesManagement expensesManagement)
             {
+                IUsesExpensesManagement IusesExpensesManagement = expensesManagement;
                 IExpensesManagement IexpensesManagement = FindObjectOfType<ExpenseManagementControl>();
-                IUsesExpensesManagement IusesExpensesManagement = (IUsesExpensesManagement)_Ibuilding;
 
                 //TODO: remove ConfigExpenses to the shared config and pass from there
                 if (IexpensesManagement != null && _configExpenses != null)
@@ -137,31 +119,22 @@ namespace Building
 
         private void ChangeOwnerState(in bool isBuy)
         {
-            if (_Ibuilding is IBuildingPurchased)
-            {
-                _IbuildingPurchased = (IBuildingPurchased)_Ibuilding;
+            _IbuildingPurchased = _Ibuilding as IBuildingPurchased;
 
-                if (isBuy) _IbuildingPurchased.Buy();
-                else _IbuildingPurchased.Sell();
-            }
+            if (isBuy) _IbuildingPurchased?.Buy();
+            else _IbuildingPurchased?.Sell();
         }
 
         private void ChangeJobStatusBuilding(in bool isState)
         {
-            if (_Ibuilding is IBuildingJobStatus)
-            {
-                _IbuildingJobStatus = (IBuildingJobStatus)_Ibuilding;
-                _IbuildingJobStatus.ChangeJobStatus(isState);
-            }
+            _IbuildingJobStatus = _Ibuilding as IBuildingJobStatus;
+            _IbuildingJobStatus?.ChangeJobStatus(isState);
         }
 
         private void ChangeFarmType(in ConfigBuildingFarmEditor.TypeFarm typeFarm)
         {
-            if (_Ibuilding is IChangedFarmType)
-            {
-                IChangedFarmType IchangedType = (IChangedFarmType)_Ibuilding;
-                IchangedType.ChangeType(typeFarm);
-            }
+            IChangedFarmType IchangedType = _Ibuilding as IChangedFarmType;
+            IchangedType?.ChangeType(typeFarm);
         }
 
         private void UpdateSpendingBuildings()
@@ -172,14 +145,11 @@ namespace Building
 
         private void MonitorEnergy()
         {
-            if (_Ibuilding is IEnergyConsumption)
-            {
-                _IenergyConsumption ??= (IEnergyConsumption)_Ibuilding;
-                _IbuildingJobStatus ??= (IBuildingJobStatus)_Ibuilding;
+            _IenergyConsumption ??= _Ibuilding as IEnergyConsumption;
+            _IbuildingJobStatus ??= _Ibuilding as IBuildingJobStatus;
 
-                if (_IbuildingJobStatus.isWorked)
-                    _IenergyConsumption.MonitorEnergy(_IenergyConsumption);
-            }
+            if (_IbuildingJobStatus != null && _IbuildingJobStatus.isWorked)
+                _IenergyConsumption.MonitorEnergy(_IenergyConsumption);
         }
 
         private IEnumerator ConstantUpdating()
@@ -212,11 +182,8 @@ namespace Building
 
         public void SetClimateZone(in IClimateZone IclimateZone)
         {
-            if (_Ibuilding is IUsesClimateInfo)
-            {
-                IUsesClimateInfo IusesClimateInfo = (IUsesClimateInfo)_Ibuilding;
-                IusesClimateInfo.SetClimateZone(IclimateZone);
-            }
+            IUsesClimateInfo IusesClimateInfo = _Ibuilding as IUsesClimateInfo;
+            IusesClimateInfo?.SetClimateZone(IclimateZone);
         }
 
 

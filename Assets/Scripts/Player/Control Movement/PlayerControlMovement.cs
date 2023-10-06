@@ -103,7 +103,7 @@ namespace Player.Movement
 
         (TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
         {
-            return (typeLoad: Bootstrap.TypeLoadObject.SuperImportant, TypeSingleOrLotsOf.Single);
+            return (typeLoad: TypeLoadObject.SuperImportant, TypeSingleOrLotsOf.Single);
         }
     }
 }

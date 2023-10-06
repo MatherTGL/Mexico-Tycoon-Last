@@ -42,7 +42,7 @@ namespace Building.Aerodrome
 
         public BuildingAerodrome(in ScriptableObject config)
         {
-            _config = (ConfigBuildingAerodromeEditor)config;
+            _config = config as ConfigBuildingAerodromeEditor;
         }
 
         void IBuilding.ConstantUpdatingInfo()
