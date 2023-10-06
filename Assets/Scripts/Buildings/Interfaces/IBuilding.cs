@@ -46,8 +46,9 @@ namespace Building
                           in TypeProductionResources.TypeResource typeResource)
         {
             Debug.Log($"SetRes: {amountResources[typeResource]}");
-            if (stockCapacity.ContainsKey(typeResource))
-                if (amountResources[typeResource] < stockCapacity[typeResource])
+
+            if (stockCapacity.TryGetValue(typeResource, out uint capacity))
+                if (amountResources[typeResource] < capacity)
                     amountResources[typeResource] += quantityResource;
 
             return true;
