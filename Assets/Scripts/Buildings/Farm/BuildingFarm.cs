@@ -123,7 +123,7 @@ namespace Building.Farm
         void IChangedFarmType.ChangeType(in ConfigBuildingFarmEditor.TypeFarm typeFarm)
         {
             foreach (var config in UnityEngine.Resources.FindObjectsOfTypeAll<ConfigBuildingFarmEditor>())
-                if (config.name.Contains(typeFarm.ToString()))
+                if (config.typeFarm == typeFarm)
                     _config = config;
         }
 

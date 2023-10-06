@@ -7,7 +7,7 @@ namespace Transport
     {
         public List<GameObject> l_purchasedTransportSprite { get; } = new();
 
-        public List<SelfTransport> l_purchasedTransportData { get; } = new();
+        public List<Transportation> l_purchasedTransportData { get; } = new();
 
         public List<bool> l_transportTransferStatus { get; set; } = new();
 
@@ -25,7 +25,7 @@ namespace Transport
             RemoveTransportationFromList(index);
         }
 
-        public void AddObject(in GameObject objectSprite, in SelfTransport objectData)
+        public void AddObject(in GameObject objectSprite, in Transportation objectData)
         {
             l_purchasedTransportSprite.Add(objectSprite);
             l_purchasedTransportData.Add(objectData);

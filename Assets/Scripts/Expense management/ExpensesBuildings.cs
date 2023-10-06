@@ -46,7 +46,6 @@ namespace Expense
             foreach (var item in d_IareasExpenditure.Values)
                 totalExpenses += item.expenses;
 
-            Debug.Log(totalExpenses);
             return totalExpenses;
         }
     }

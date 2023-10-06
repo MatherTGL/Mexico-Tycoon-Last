@@ -171,7 +171,7 @@ namespace Transport
                     Quaternion.identity
                 );
 
-                SelfTransport selfTransportObject = new(
+                Transportation selfTransportObject = new(
                     _allTypesTransport[_indexTypeTransport], this, newTransport);
 
                 _transportationDataStorage.AddObject(newTransport, selfTransportObject);

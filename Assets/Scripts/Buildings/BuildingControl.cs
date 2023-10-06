@@ -44,7 +44,7 @@ namespace Building
         [SerializeField, Required, BoxGroup("Parameters"), HideLabel]
         private ConfigExpensesManagementEditor _configExpenses; 
 
-        [SerializeField, Required, BoxGroup("Parameters"), HideLabel, PropertySpace(0, 5)]
+        [SerializeField, Required, BoxGroup("Parameters"), HideLabel, PropertySpace(0, 5), DisableInPlayMode]
         private ScriptableObject _configSO; //TODO: make general config
 
         private TimeDateControl _timeDateControl;

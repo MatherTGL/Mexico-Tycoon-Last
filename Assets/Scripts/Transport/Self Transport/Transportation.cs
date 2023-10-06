@@ -1,17 +1,21 @@
 using System;
 using System.Collections.Generic;
-using Data;
 using Resources;
+using Transport.Breakdowns;
+using Transport.Fuel;
 using UnityEngine;
-using static Data.Player.DataPlayer;
 
 namespace Transport
 {
-    public sealed class SelfTransport : IDisposable
+    public sealed class Transportation : IDisposable
     {
         private const float _fullSpeedPercentage = 1.0f;
 
         private ITransportInteractRoute _ItransportInteractRoute;
+
+        private TransportationFuel _transportationFuel;
+
+        private TransportationBreakdowns _transportationBreakdowns;
 
         private readonly TypeTransport _typeTransport;
         public TypeTransport typeTransport => _typeTransport;
@@ -28,24 +32,23 @@ namespace Transport
 
         private float _currentSpeed;
 
-        private float _currentFuelQuantity;
-
         private byte _indexCurrentRoutePoint;
 
         private bool _isFirstPosition = true;
 
         private bool _isWaitingReception;
 
-        private bool _isVehiclesAreRefueling;
 
-
-        public SelfTransport(in TypeTransport typeTransport,
+        public Transportation(in TypeTransport typeTransport,
                              in ITransportInteractRoute routeTransportControl,
                              in GameObject objectTransport)
         {
             _typeTransport = typeTransport;
             _ItransportInteractRoute = routeTransportControl;
             _someObject = objectTransport;
+
+            _transportationFuel = new TransportationFuel(_typeTransport);
+            _transportationBreakdowns = new TransportationBreakdowns();
 
             SubscribeToEvents();
             InitDictionaryStates();
@@ -65,41 +68,29 @@ namespace Transport
 
             _maxSpeed = _typeTransport.maxSpeed * availableSpeedAfterImpact * Time.fixedDeltaTime;
             _minSpeed = _maxSpeed * _typeTransport.minSpeedPercentageMaxSpeed;
-            _currentFuelQuantity = _typeTransport.maxFuelLoad;
         }
 
         private void SubscribeToEvents()
         {
             _ItransportInteractRoute.lateUpdated += MovementTransport;
-            _ItransportInteractRoute.updatedTimeStep += FuelConsumption;
             _ItransportInteractRoute.updatedTimeStep += ChangeSpeed;
+            _ItransportInteractRoute.updatedTimeStep += _transportationFuel.FuelConsumption;
         }
 
         private void CheckPosition()
         {
-            if (_isFirstPosition) FirstPosition();
-            else LastPosition();
-
-            void FirstPosition()
+            //TODO: refactoring
+            if (_someObject.transform.position == _ItransportInteractRoute.routePoints[_indexCurrentRoutePoint])
             {
-                if (_someObject.transform.position == _ItransportInteractRoute.routePoints[_indexCurrentRoutePoint])
-                {
-                    if (_indexCurrentRoutePoint < _ItransportInteractRoute.routePoints.Length - 1)
-                        _indexCurrentRoutePoint++;
-                    else if (_indexCurrentRoutePoint == _ItransportInteractRoute.routePoints.Length - 1)
-                        SendRequestsAndCheckWaitingCar(indexReception: 1, isFirstPosition: false);
-                }
-            }
+                if (_indexCurrentRoutePoint == 0)
+                    SendRequestsAndCheckWaitingCar(indexReception: 0, isFirstPosition: true);
+                else if (_indexCurrentRoutePoint == _ItransportInteractRoute.routePoints.Length - 1)
+                    SendRequestsAndCheckWaitingCar(indexReception: 1, isFirstPosition: false);
 
-            void LastPosition()
-            {
-                if (_someObject.transform.position == _ItransportInteractRoute.routePoints[_indexCurrentRoutePoint])
-                {
-                    if (_indexCurrentRoutePoint > 0)
-                        _indexCurrentRoutePoint--;
-                    else if (_indexCurrentRoutePoint == 0)
-                        SendRequestsAndCheckWaitingCar(indexReception: 0, isFirstPosition: true);
-                }
+                if (_isFirstPosition && _indexCurrentRoutePoint < _ItransportInteractRoute.routePoints.Length - 1)
+                    _indexCurrentRoutePoint++;
+                else if (_indexCurrentRoutePoint > 0)
+                    _indexCurrentRoutePoint--;
             }
 
             void SendRequestsAndCheckWaitingCar(in byte indexReception, in bool isFirstPosition)
@@ -107,7 +98,8 @@ namespace Transport
                 RequestLoad(indexStateLoad: 0, indexReception: indexReception);
                 RequestUnload(indexStateLoad: 1, indexReception: indexReception);
 
-                if (WaitLoadOrUnload()) _isFirstPosition = isFirstPosition;
+                if (WaitLoadOrUnload())
+                    _isFirstPosition = isFirstPosition;
             }
         }
 
@@ -120,7 +112,7 @@ namespace Transport
 
         private void RequestLoad(in byte indexStateLoad, in byte indexReception)
         {
-            if (d_loadAndUnloadStates[indexReception][indexStateLoad])
+            if (d_loadAndUnloadStates[indexReception][indexStateLoad] && _productLoad == 0)
             {
                 _productLoad = _ItransportInteractRoute.GetPointsReception()[indexReception]
                                 .RequestConnectionToLoadRes(_typeTransport.capacity, _typeCurrentTransportResource);
@@ -147,7 +139,7 @@ namespace Transport
 
         private void MovementTransport()
         {
-            if (IsFuelAvailable())
+            if (_transportationFuel.IsFuelAvailable())
             {
                 CheckPosition();
                 Move(_indexCurrentRoutePoint);
@@ -157,45 +149,6 @@ namespace Transport
         private void ChangeSpeed()
         {
             _currentSpeed = UnityEngine.Random.Range(_minSpeed, _maxSpeed);
-        }
-
-        private void FuelConsumption()
-        {
-            if (IsFuelAvailable())
-            {
-                _currentFuelQuantity -= UnityEngine.Random.Range(
-                    _typeTransport.minFuelConsumptionInTimeStep, _typeTransport.maxFuelConsumptionInTimeStep);
-            }
-            else
-            {
-                RefuelTransportation();
-            }
-        }
-
-        private bool IsFuelAvailable()
-        {
-            if (_currentFuelQuantity > 0 && !_isVehiclesAreRefueling)
-                return true;
-            else
-                return false;
-        }
-
-        private void RefuelTransportation()
-        {
-            _isVehiclesAreRefueling = true;
-            _currentFuelQuantity = 0;
-
-            if (BuyFuel())
-                for (ushort liter = 0; liter < _typeTransport.maxFuelLoad; liter++)
-                    _currentFuelQuantity += _typeTransport.fillingFuelRatePerTimeStep;
-
-            _isVehiclesAreRefueling = false;
-        }
-
-        private bool BuyFuel()
-        {
-            double totalCost = Mathf.RoundToInt(_typeTransport.fuelCostPerLiter * _typeTransport.maxFuelLoad);
-            return DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(totalCost, SpendAndCheckMoneyState.Spend);
         }
 
         public void Dispose()
