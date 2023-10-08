@@ -64,6 +64,10 @@ namespace Transport
         private double _costPurchase;
         public double costPurchase => _costPurchase;
 
+        [SerializeField, MinValue(10)]
+        private double _repairCost = 10;
+        public double repairCost => _repairCost;
+
         [SerializeField, ReadOnly]
         private byte _minStrength;
         public byte minStrength => _minStrength;
@@ -76,8 +80,8 @@ namespace Transport
         private byte _damageInflicted = 10;
         public byte damageInflicted => _damageInflicted;
 
-        [SerializeField, MinValue(0.01f)]
-        private float _speedOfRepairPerTimeStep = 0.1f;
-        public float speedOfRepairPerTimeStep => _speedOfRepairPerTimeStep;
+        [SerializeField, MinValue(1)]
+        private byte _speedOfRepairPerTimeStep = 1;
+        public byte speedOfRepairPerTimeStep => _speedOfRepairPerTimeStep;
     }
 }

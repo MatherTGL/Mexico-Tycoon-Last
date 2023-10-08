@@ -1,4 +1,6 @@
+using Data;
 using UnityEngine;
+using static Data.Player.DataPlayer;
 
 namespace Transport.Breakdowns
 {
@@ -6,7 +8,7 @@ namespace Transport.Breakdowns
     {
         private TypeTransport _typeTransport;
 
-        private float _currentStrength;
+        private ushort _currentStrength;
 
         private bool _isRepairs;
 
@@ -28,16 +30,19 @@ namespace Transport.Breakdowns
 
         public bool IsNotInRepair() => !_isRepairs;
 
-        private void Repair()
+        public void Repair()
         {
-            _currentStrength = 0f;
             _isRepairs = true;
+            _currentStrength += _typeTransport.speedOfRepairPerTimeStep;
 
-            for (ushort i = 0; i < _typeTransport.maxStrength; i += 1)
-                _currentStrength += _typeTransport.speedOfRepairPerTimeStep;
+            if (_currentStrength >= _typeTransport.maxStrength)
+            {
+                DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(_typeTransport.repairCost, 
+                                                                    SpendAndCheckMoneyState.Spend);
 
-            Debug.Log($"repair: {_currentStrength}");
-            _isRepairs = false;
+                _currentStrength = _typeTransport.maxStrength;
+                _isRepairs = false;
+            }
         }
     }
 }

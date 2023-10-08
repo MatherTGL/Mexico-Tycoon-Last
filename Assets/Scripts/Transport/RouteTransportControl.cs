@@ -214,7 +214,8 @@ namespace Transport
         [Button("Re-route Transportation"), Tooltip("Re-route the selected vehicle")]
         private void ReRouteTransportation()
         {
-            ushort[] indexesForCleanup = _IreRouteTransportation?.SendTransportTransferRequest(_transportationDataStorage);
+            ushort[] indexesForCleanup = 
+                _IreRouteTransportation?.SendTransportTransferRequest(_transportationDataStorage);
 
             for (ushort i = 0; i < _transportationDataStorage.l_purchasedTransportData.Count; i++)
             {
@@ -229,6 +230,12 @@ namespace Transport
         private void SetNewStatusTransferTransportation(in ushort index, in bool isStatus)
         {
             _transportationDataStorage.SetTransferStatus(index, isStatus);
+        }
+
+        [Button("Send Transport Repair")]
+        private void SendVehicleForRepair()
+        {
+            _transportationDataStorage.l_purchasedTransportData[_indexTransportInList].SendVehicleForRepair();
         }
 #endif
     }

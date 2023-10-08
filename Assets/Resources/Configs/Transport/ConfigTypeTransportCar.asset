@@ -27,4 +27,4 @@ MonoBehaviour:
   _minStrength: 0
   _maxStrength: 100
   _damageInflicted: 30
-  _speedOfRepair: 1
+  _speedOfRepairPerTimeStep: 1

@@ -173,6 +173,11 @@ namespace Transport
             }
         }
 
+        public void SendVehicleForRepair()
+        {
+            _transportationBreakdowns.Repair();
+        }
+
 
 #if UNITY_EDITOR
         public void ChangeLoadUnloadStates(in byte indexReception, in byte indexLoadOrUnload, in bool isState)
