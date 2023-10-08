@@ -48,7 +48,7 @@ namespace Transport
             _someObject = objectTransport;
 
             _transportationFuel = new TransportationFuel(_typeTransport);
-            _transportationBreakdowns = new TransportationBreakdowns();
+            _transportationBreakdowns = new TransportationBreakdowns(_typeTransport);
 
             SubscribeToEvents();
             InitDictionaryStates();
@@ -75,6 +75,7 @@ namespace Transport
             _ItransportInteractRoute.lateUpdated += MovementTransport;
             _ItransportInteractRoute.updatedTimeStep += ChangeSpeed;
             _ItransportInteractRoute.updatedTimeStep += _transportationFuel.FuelConsumption;
+            _ItransportInteractRoute.updatedTimeStep += _transportationBreakdowns.DamageVehicles;
         }
 
         private void CheckPosition()
@@ -139,7 +140,7 @@ namespace Transport
 
         private void MovementTransport()
         {
-            if (_transportationFuel.IsFuelAvailable())
+            if (_transportationFuel.IsFuelAvailable() && _transportationBreakdowns.IsNotInRepair())
             {
                 CheckPosition();
                 Move(_indexCurrentRoutePoint);

@@ -1,11 +1,12 @@
 using Config.Expenses;
+using static Expense.ExpensesEnumTypes;
 
 namespace Expense
 {
     public interface IExpensesManagement
     {
         IObjectsExpensesImplementation Registration(in IUsesExpensesManagement IusesExpensesManagement,
-                                                    in ExpenseManagementControl.Type type,
+                                                    in ExpensesTypeObject type,
                                                     in ConfigExpensesManagementEditor configExpenses);
     }
 }

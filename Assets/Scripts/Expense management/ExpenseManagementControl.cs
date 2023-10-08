@@ -4,15 +4,12 @@ using Config.Expenses;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using static Boot.Bootstrap;
+using static Expense.ExpensesEnumTypes;
 
 namespace Expense
 {
     public sealed class ExpenseManagementControl : MonoBehaviour, IBoot, IExpensesManagement
     {
-        public enum AddOrReduceNumber : byte { Add, Reduce }
-
-        public enum Type : byte { Building, Transport }
-
         [ShowInInspector, ReadOnly]
         private List<IUsesExpensesManagement> l_usesExpensesObjects = new();
 
@@ -33,7 +30,7 @@ namespace Expense
         }
 
         IObjectsExpensesImplementation IExpensesManagement.Registration(
-            in IUsesExpensesManagement IusesExpensesManagement, in Type typeObject, 
+            in IUsesExpensesManagement IusesExpensesManagement, in ExpensesTypeObject typeObject,
             in ConfigExpensesManagementEditor configExpenses) //TODO: refactoring
         {
             l_usesExpensesObjects.Add(IusesExpensesManagement);
@@ -41,9 +38,9 @@ namespace Expense
         }
 
         private IObjectsExpensesImplementation CheckTypeAndCreateComponent(
-            in Type typeObject, in ConfigExpensesManagementEditor configExpenses)
+            in ExpensesTypeObject typeObject, in ConfigExpensesManagementEditor configExpenses)
         {
-            if (typeObject == Type.Building)
+            if (typeObject == ExpensesTypeObject.Building)
             {
                 IObjectsExpensesImplementation objectExpenses = new ExpensesBuildings(configExpenses);
                 l_objectsExpensesImplementation.Add(objectExpenses);
@@ -56,9 +53,16 @@ namespace Expense
 #if UNITY_EDITOR
         [Button("Add Expenses"), DisableInEditorMode]
         private void AddExpensesOnBuildings(in double addNumber, in ushort index,
-                                            in ExpensesBuildings.TypeExpenses typeExpenses)
+                                            in AreaExpenditureType typeExpenses)
         {
-            l_objectsExpensesImplementation[index]?.ChangeExpenses(addNumber, typeExpenses, AddOrReduceNumber.Add);
+            l_objectsExpensesImplementation[index]?.ChangeExpenses(addNumber, typeExpenses, isAdd: true);
+        }
+
+        [Button("Reduce Expenses"), DisableInEditorMode]
+        private void ReduceExpensesOnBuildings(in double addNumber, in ushort index,
+                                               in AreaExpenditureType typeExpenses)
+        {
+            l_objectsExpensesImplementation[index]?.ChangeExpenses(addNumber, typeExpenses, isAdd: false);
         }
     }
 #endif

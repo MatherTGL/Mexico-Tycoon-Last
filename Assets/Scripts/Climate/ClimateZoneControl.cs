@@ -15,6 +15,8 @@ namespace Climate
         ConfigClimateZoneEditor IClimateZone.configClimateZone => _configClimateZone;
 
 
+        private ClimateZoneControl() { }
+
         void IBoot.InitAwake() => FindObjectsInArea();
 
         (TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()

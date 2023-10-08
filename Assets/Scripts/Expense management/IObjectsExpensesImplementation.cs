@@ -1,5 +1,4 @@
-using static Expense.ExpenseManagementControl;
-using static Expense.ExpensesBuildings;
+using static Expense.ExpensesEnumTypes;
 
 namespace Expense
 {
@@ -7,6 +6,6 @@ namespace Expense
     {
         double GetTotalExpenses();
 
-        void ChangeExpenses(in double addNumber, in TypeExpenses typeExpenses, in AddOrReduceNumber addOrReduceNumber);
+        void ChangeExpenses(in double addNumber, in AreaExpenditureType typeExpenses, in bool isAdd);
     }
 }

@@ -67,6 +67,8 @@ public sealed class InputControl : MonoBehaviour
     public float axisMouseY => _axisMouseY;
 
 
+    private InputControl() { }
+
     private void Update()
     {
         AxisMovement();

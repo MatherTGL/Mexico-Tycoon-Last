@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using Config.Expenses;
 using Expense.Areas;
-using UnityEngine;
-using static Expense.ExpenseManagementControl;
+using static Expense.ExpensesEnumTypes;
 
 namespace Expense
 {
@@ -10,9 +9,7 @@ namespace Expense
     {
         private ConfigExpensesManagementEditor _configExpensesManagement;
 
-        public enum TypeExpenses : byte { Production, Water, Security }
-
-        private Dictionary<TypeExpenses, IAreasExpenditure> d_IareasExpenditure = new();
+        private Dictionary<AreaExpenditureType, IAreasExpenditure> d_IareasExpenditure = new();
 
 
         public ExpensesBuildings(in ConfigExpensesManagementEditor config)
@@ -20,16 +17,16 @@ namespace Expense
             _configExpensesManagement = config;
         }
 
-        void IObjectsExpensesImplementation.ChangeExpenses(in double addNumber, in TypeExpenses typeExpenses,
-                                                           in AddOrReduceNumber addOrReduceNumber)
+        void IObjectsExpensesImplementation.ChangeExpenses(in double addNumber, in AreaExpenditureType typeExpenses,
+                                                           in bool isAdd)
         {
             if (d_IareasExpenditure.ContainsKey(typeExpenses) == false)
             {
                 IAreasExpenditure areasExpenditure;
 
-                if (typeExpenses is TypeExpenses.Water)
+                if (typeExpenses is AreaExpenditureType.Water)
                     areasExpenditure = new ExpensesOnWater(_configExpensesManagement);
-                else if (typeExpenses is TypeExpenses.Security)
+                else if (typeExpenses is AreaExpenditureType.Security)
                     areasExpenditure = new ExpensesOnSecurity(_configExpensesManagement);
                 else
                     areasExpenditure = new ExpensesOnProduction(_configExpensesManagement);
@@ -37,7 +34,7 @@ namespace Expense
                 d_IareasExpenditure.Add(typeExpenses, areasExpenditure);
             }
 
-            d_IareasExpenditure[typeExpenses].ChangeExpenses(addNumber, addOrReduceNumber);
+            d_IareasExpenditure[typeExpenses].ChangeExpenses(addNumber, isAdd);
         }
 
         double IObjectsExpensesImplementation.GetTotalExpenses()

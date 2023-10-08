@@ -5,18 +5,17 @@ using Building.Additional;
 using UnityEngine;
 using Climate;
 using Expense;
+using static Expense.ExpensesEnumTypes;
 
 namespace Building.Farm
 {
-    public sealed class BuildingFarm : IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption,
-    IChangedFarmType, IUsesClimateInfo, IUsesExpensesManagement
+    public sealed class BuildingFarm : AbstractBuilding, IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption, IChangedFarmType, IUsesClimateInfo, IUsesExpensesManagement
     {
         private readonly IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
         IBuildingMonitorEnergy IEnergyConsumption.IbuildingMonitorEnergy => _IbuildingMonitorEnergy;
 
         private IClimateZone _IclimateZone;
 
-        private IObjectsExpensesImplementation _IobjectsExpensesImplementation;
         IObjectsExpensesImplementation ISpending.IobjectsExpensesImplementation => _IobjectsExpensesImplementation;
         IObjectsExpensesImplementation IUsesExpensesManagement.IobjectsExpensesImplementation
         {
@@ -25,13 +24,10 @@ namespace Building.Farm
 
         private ConfigBuildingFarmEditor _config;
 
-        private Dictionary<TypeProductionResources.TypeResource, double> d_amountResources = new();
         Dictionary<TypeProductionResources.TypeResource, double> IBuilding.amountResources
         {
             get => d_amountResources; set => d_amountResources = value;
         }
-
-        private Dictionary<TypeProductionResources.TypeResource, uint> d_stockCapacity = new();
 
         Dictionary<TypeProductionResources.TypeResource, uint> IBuilding.stockCapacity
         {
@@ -46,10 +42,8 @@ namespace Building.Farm
 
         private float _currentPercentageOfMaturity;
 
-        private bool _isWorked;
         bool IBuildingJobStatus.isWorked { get => _isWorked; set => _isWorked = value; }
 
-        private bool _isBuyed;
         bool IBuildingPurchased.isBuyed { get => _isBuyed; set => _isBuyed = value; }
 
         private bool _isCurrentlyInProduction;
@@ -109,9 +103,8 @@ namespace Building.Farm
             double addingNumber = _IobjectsExpensesImplementation.GetTotalExpenses() * _IclimateZone
                 .configClimateZone.percentageImpactCostMaintenance;
 
-            _IobjectsExpensesImplementation.ChangeExpenses(addingNumber,
-            ExpensesBuildings.TypeExpenses.Production,
-            ExpenseManagementControl.AddOrReduceNumber.Add);
+            _IobjectsExpensesImplementation.ChangeExpenses(addingNumber, AreaExpenditureType.Production,
+                                                           isAdd: true);
         }
 
         void IBuilding.ConstantUpdatingInfo()

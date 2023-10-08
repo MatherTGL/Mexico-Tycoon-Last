@@ -1,4 +1,5 @@
 using Config.Expenses;
+using static Expense.ExpensesEnumTypes;
 
 namespace Expense
 {
@@ -11,7 +12,7 @@ namespace Expense
                                     in ConfigExpensesManagementEditor configExpenses)
         {
             IobjectsExpensesImplementation = IexpensesManagement.Registration(
-                this, ExpenseManagementControl.Type.Building, configExpenses);
+                this, ExpensesTypeObject.Building, configExpenses);
         }
     }
 }

@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Building.City
 {
-    public sealed class BuildingCity : IBuilding, ICityBusiness
+    public sealed class BuildingCity : AbstractBuilding, IBuilding, ICityBusiness
     {
         private readonly CityPopulationReproduction _cityPopulationReproduction;
 
@@ -16,14 +16,10 @@ namespace Building.City
 
         private readonly ConfigBuildingCityEditor _config;
 
-        private Dictionary<TypeProductionResources.TypeResource, double> d_amountResources = new();
-
         Dictionary<TypeProductionResources.TypeResource, double> IBuilding.amountResources
         {
             get => d_amountResources; set => d_amountResources = value;
         }
-
-        private Dictionary<TypeProductionResources.TypeResource, uint> d_stockCapacity = new();
 
         Dictionary<TypeProductionResources.TypeResource, uint> IBuilding.stockCapacity
         {

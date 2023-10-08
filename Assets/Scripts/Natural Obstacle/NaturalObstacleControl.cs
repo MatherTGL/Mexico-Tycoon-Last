@@ -9,5 +9,8 @@ namespace Obstacle
         [SerializeField, Required]
         private ConfigObstacleEditor _config;
         ConfigObstacleEditor IObstacle.config => _config;
+
+
+        private NaturalObstacleControl() { }
     }
 }

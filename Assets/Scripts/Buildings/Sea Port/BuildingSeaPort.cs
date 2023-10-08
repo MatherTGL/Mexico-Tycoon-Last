@@ -5,18 +5,14 @@ using UnityEngine;
 
 namespace Building.SeaPort
 {
-    public sealed class BuildingSeaPort : IBuilding
+    public sealed class BuildingSeaPort : AbstractBuilding, IBuilding
     {
         private readonly ConfigBuildingSeaPortEditor _config;
-
-        private Dictionary<TypeProductionResources.TypeResource, double> d_amountResources = new();
 
         Dictionary<TypeProductionResources.TypeResource, double> IBuilding.amountResources
         {
             get => d_amountResources; set => d_amountResources = value;
         }
-
-        private Dictionary<TypeProductionResources.TypeResource, uint> d_stockCapacity = new();
 
         Dictionary<TypeProductionResources.TypeResource, uint> IBuilding.stockCapacity
         {

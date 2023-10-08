@@ -1,13 +1,12 @@
-using Building;
 using Resources;
 using UnityEngine;
-
+using static Building.BuildingEnumType;
 
 namespace Transport.Reception
 {
     public interface ITransportReception
     {
-        BuildingControl.TypeBuilding typeCurrentBuilding { get; }
+        TypeBuilding typeCurrentBuilding { get; }
 
         void ConnectionRequest(in ITransportReception fromObject);
         bool ConfirmRequest(in ITransportReception fromObject);
@@ -21,7 +20,7 @@ namespace Transport.Reception
             in TypeProductionResources.TypeResource typeResource);
 
         Transform GetPosition();
-        BuildingControl.TypeBuilding GetTypeBuilding();
+        TypeBuilding GetTypeBuilding();
 
         void AddConnectionToDictionary(in ITransportReception fromObject, in GameObject createdRouteObject);
     }

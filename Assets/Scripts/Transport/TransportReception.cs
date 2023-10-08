@@ -7,6 +7,7 @@ using System.Linq;
 using Building;
 using Resources;
 using static Boot.Bootstrap;
+using static Building.BuildingEnumType;
 
 namespace Transport.Reception
 {
@@ -17,11 +18,11 @@ namespace Transport.Reception
         private RouteBuilderControl _routeBuilderControl;
 
         [SerializeField]
-        private BuildingControl.TypeBuilding _typeCurrentBuilding;
-        BuildingControl.TypeBuilding ITransportReception.typeCurrentBuilding => _typeCurrentBuilding;
+        private TypeBuilding _typeCurrentBuilding;
+        TypeBuilding ITransportReception.typeCurrentBuilding => _typeCurrentBuilding;
 
         [SerializeField]
-        private BuildingControl.TypeBuilding[] _typeConnectBuildings;
+        private TypeBuilding[] _typeConnectBuildings;
 
         [ShowInInspector, ReadOnly]
         private Dictionary<ITransportReception, GameObject> d_infoRouteConnect = new();
@@ -111,6 +112,6 @@ namespace Transport.Reception
 
         public Transform GetPosition() { return this.transform; }
 
-        public BuildingControl.TypeBuilding GetTypeBuilding() { return _typeCurrentBuilding; }
+        public TypeBuilding GetTypeBuilding() { return _typeCurrentBuilding; }
     }
 }

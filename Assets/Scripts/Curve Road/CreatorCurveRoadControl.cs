@@ -2,6 +2,7 @@ using UnityEngine;
 using Transport.Reception;
 using Sirenix.OdinInspector;
 using Transport;
+using static Building.BuildingEnumType;
 
 namespace Route.Builder
 {
@@ -114,13 +115,11 @@ namespace Route.Builder
             var firstObject = _positionPoints[_indexPositionPointsFrom].typeCurrentBuilding;
             var secondObject = _positionPoints[_indexPositionPointsTo].typeCurrentBuilding;
 
-            if (firstObject == Building.BuildingControl.TypeBuilding.Aerodrome &&
-                secondObject == Building.BuildingControl.TypeBuilding.Aerodrome)
+            if (firstObject == TypeBuilding.Aerodrome && secondObject == TypeBuilding.Aerodrome)
             {
                 _typeRoute = TypeTransport.Type.Air;
             }
-            else if (firstObject == Building.BuildingControl.TypeBuilding.SeaPort &&
-                     secondObject == Building.BuildingControl.TypeBuilding.SeaPort)
+            else if (firstObject == TypeBuilding.SeaPort && secondObject == TypeBuilding.SeaPort)
             {
                 _typeRoute = TypeTransport.Type.Marine;
             }

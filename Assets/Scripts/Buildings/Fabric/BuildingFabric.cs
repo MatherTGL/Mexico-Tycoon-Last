@@ -7,12 +7,11 @@ using UnityEngine;
 
 namespace Building.Fabric
 {
-    public sealed class BuildingFabric : IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption, IUsesExpensesManagement
+    public sealed class BuildingFabric : AbstractBuilding, IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption, IUsesExpensesManagement
     {
         private IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
         IBuildingMonitorEnergy IEnergyConsumption.IbuildingMonitorEnergy => _IbuildingMonitorEnergy;
 
-        private IObjectsExpensesImplementation _IobjectsExpensesImplementation;
         IObjectsExpensesImplementation ISpending.IobjectsExpensesImplementation => _IobjectsExpensesImplementation;
         IObjectsExpensesImplementation IUsesExpensesManagement.IobjectsExpensesImplementation
         {
@@ -21,14 +20,10 @@ namespace Building.Fabric
 
         private ConfigBuildingFabricEditor _config;
 
-        private Dictionary<TypeProductionResources.TypeResource, double> d_amountResources = new();
-
         Dictionary<TypeProductionResources.TypeResource, double> IBuilding.amountResources
         {
             get => d_amountResources; set => d_amountResources = value;
         }
-
-        private Dictionary<TypeProductionResources.TypeResource, uint> d_stockCapacity = new();
 
         Dictionary<TypeProductionResources.TypeResource, uint> IBuilding.stockCapacity
         {
@@ -41,10 +36,8 @@ namespace Building.Fabric
 
         private ushort _productionPerformance;
 
-        private bool _isWorked;
         bool IBuildingJobStatus.isWorked { get => _isWorked; set => _isWorked = value; }
 
-        private bool _isBuyed;
         bool IBuildingPurchased.isBuyed { get => _isBuyed; set => _isBuyed = value; }
 
 

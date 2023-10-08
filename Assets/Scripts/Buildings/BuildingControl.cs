@@ -20,6 +20,7 @@ using Expense;
 using static Boot.Bootstrap;
 using Config.Expenses;
 using System;
+using static Building.BuildingEnumType;
 
 namespace Building
 {
@@ -50,11 +51,6 @@ namespace Building
         private TimeDateControl _timeDateControl;
 
         private WaitForSeconds _coroutineTimeStep;
-
-        public enum TypeBuilding : byte
-        {
-            City, Fabric, Farm, Aerodrome, SeaPort, Stock, Border
-        }
 
         [SerializeField, BoxGroup("Parameters"), EnumToggleButtons, HideLabel]
         private TypeBuilding _typeBuilding;

@@ -1,5 +1,4 @@
 using UnityEngine;
-using static Expense.ExpenseManagementControl;
 
 namespace Expense.Areas
 {
@@ -10,10 +9,10 @@ namespace Expense.Areas
         int percentageQuality { get; protected set; }
 
 
-        void ChangeExpenses(in double expenses, in AddOrReduceNumber addOrReduceType)
+        void ChangeExpenses(in double expenses, in bool isAdd)
         {
             //TODO: refactoring
-            if (addOrReduceType is AddOrReduceNumber.Add)
+            if (isAdd == true)
                 this.expenses += expenses;
             else if ((this.expenses - expenses) > 0)
                 this.expenses -= expenses;

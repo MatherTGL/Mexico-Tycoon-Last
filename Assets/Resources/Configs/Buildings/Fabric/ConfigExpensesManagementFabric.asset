@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea177537b2b8bf59c8e90a246873b6a4, type: 3}
   m_Name: ConfigExpensesManagementFabric
   m_EditorClassIdentifier: 
-  _allExpenses: 130
+  _expensesOnProduction: 120
   _expensesOnWater: 20
   _expensesOnSecurity: 10
