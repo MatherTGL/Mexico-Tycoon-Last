@@ -40,7 +40,7 @@ namespace Transport
 
         public GameObject DestroyTransport(in ushort index)
         {
-            GameObject spriteObject = l_purchasedTransportSprite[index]; 
+            GameObject spriteObject = l_purchasedTransportSprite[index];
             RemoveObjectsFromList(index);
             return spriteObject;
         }
@@ -48,6 +48,11 @@ namespace Transport
         public void SetTransferStatus(in ushort index, in bool isStatus)
         {
             l_transportTransferStatus[index] = isStatus;
+        }
+
+        public void ReplaceTransportation(in ushort index, in TypeTransport typeTransport)
+        {
+            l_purchasedTransportData[index].SendRequestReplaceTypeTransport(typeTransport);
         }
     }
 }

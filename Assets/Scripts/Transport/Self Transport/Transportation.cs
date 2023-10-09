@@ -17,14 +17,18 @@ namespace Transport
 
         private TransportationBreakdowns _transportationBreakdowns;
 
-        private readonly TypeTransport _typeTransport;
+        private TypeTransport _typeTransport;
         public TypeTransport typeTransport => _typeTransport;
+
+        private TypeTransport _futureConfigTypeTransport;
 
         private readonly GameObject _someObject;
 
         private Dictionary<byte, bool[]> d_loadAndUnloadStates = new Dictionary<byte, bool[]>();
 
         private TypeProductionResources.TypeResource _typeCurrentTransportResource;
+
+        private event Action<bool> _isInStartedPosition;
 
         private float _productLoad;
 
@@ -38,17 +42,19 @@ namespace Transport
 
         private bool _isWaitingReception;
 
+        private bool _isRequestTransportationRepairIsMade;
+
 
         public Transportation(in TypeTransport typeTransport,
                              in ITransportInteractRoute routeTransportControl,
                              in GameObject objectTransport)
         {
-            _typeTransport = typeTransport;
+            this._typeTransport = typeTransport;
             _ItransportInteractRoute = routeTransportControl;
             _someObject = objectTransport;
 
-            _transportationFuel = new TransportationFuel(_typeTransport);
-            _transportationBreakdowns = new TransportationBreakdowns(_typeTransport);
+            _transportationFuel = new TransportationFuel(this._typeTransport);
+            _transportationBreakdowns = new TransportationBreakdowns(this._typeTransport);
 
             SubscribeToEvents();
             InitDictionaryStates();
@@ -72,6 +78,7 @@ namespace Transport
 
         private void SubscribeToEvents()
         {
+            _isInStartedPosition += SendRequestFromPosition;
             _ItransportInteractRoute.lateUpdated += MovementTransport;
             _ItransportInteractRoute.updatedTimeStep += ChangeSpeed;
             _ItransportInteractRoute.updatedTimeStep += _transportationFuel.FuelConsumption;
@@ -84,24 +91,32 @@ namespace Transport
             if (_someObject.transform.position == _ItransportInteractRoute.routePoints[_indexCurrentRoutePoint])
             {
                 if (_indexCurrentRoutePoint == 0)
-                    SendRequestsAndCheckWaitingCar(indexReception: 0, isFirstPosition: true);
+                    _isInStartedPosition.Invoke(true);
                 else if (_indexCurrentRoutePoint == _ItransportInteractRoute.routePoints.Length - 1)
-                    SendRequestsAndCheckWaitingCar(indexReception: 1, isFirstPosition: false);
+                    _isInStartedPosition.Invoke(false);
 
                 if (_isFirstPosition && _indexCurrentRoutePoint < _ItransportInteractRoute.routePoints.Length - 1)
                     _indexCurrentRoutePoint++;
                 else if (_indexCurrentRoutePoint > 0)
                     _indexCurrentRoutePoint--;
             }
+        }
 
-            void SendRequestsAndCheckWaitingCar(in byte indexReception, in bool isFirstPosition)
-            {
-                RequestLoad(indexStateLoad: 0, indexReception: indexReception);
-                RequestUnload(indexStateLoad: 1, indexReception: indexReception);
+        private void SendRequestFromPosition(bool isStartedPosition)
+        {
+            if (isStartedPosition)
+                SendRequestsAndCheckWaitingCar(indexReception: 0, isFirstPosition: true);
+            else
+                SendRequestsAndCheckWaitingCar(indexReception: 1, isFirstPosition: false);
+        }
 
-                if (WaitLoadOrUnload())
-                    _isFirstPosition = isFirstPosition;
-            }
+        private void SendRequestsAndCheckWaitingCar(in byte indexReception, in bool isFirstPosition)
+        {
+            RequestLoad(indexStateLoad: 0, indexReception: indexReception);
+            RequestUnload(indexStateLoad: 1, indexReception: indexReception);
+
+            if (WaitLoadOrUnload())
+                _isFirstPosition = isFirstPosition;
         }
 
         private void Move(in byte indexPositionRoute)
@@ -176,6 +191,28 @@ namespace Transport
         public void SendVehicleForRepair()
         {
             _transportationBreakdowns.Repair();
+        }
+
+        public void SendRequestReplaceTypeTransport(in TypeTransport typeTransport)
+        {
+            if (_typeTransport != typeTransport && !_isRequestTransportationRepairIsMade)
+            {
+                _futureConfigTypeTransport = typeTransport;
+                _isInStartedPosition += ReplaceTypeTransport;
+                _isRequestTransportationRepairIsMade = true;
+            }
+        }
+
+        private void ReplaceTypeTransport(bool isStartedPosition)
+        {
+            if (isStartedPosition)
+            {
+                _typeTransport = _futureConfigTypeTransport;
+                Debug.Log(_typeTransport);
+                _isInStartedPosition -= ReplaceTypeTransport;
+                _isRequestTransportationRepairIsMade = false;
+                Debug.Log("The transportation swap was a success");
+            }
         }
 
 

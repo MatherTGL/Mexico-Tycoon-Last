@@ -10,23 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac075ed4f95439d52bb6e9aad86c6ce8, type: 3}
-  m_Name: ConfigTypeTransportAircraft
+  m_Name: ConfigTypeTransportCar 1
   m_EditorClassIdentifier: 
   _prefab: {fileID: 6291475073526262561, guid: efd4c69d0d657e29280093f8de63072f, type: 3}
   _typeResource: 0
-  _type: 1
-  _maxSpeed: 2
-  _minSpeedPercentageMaxSpeed: 0.9
-  _capacity: 5
-  _maintenanceExpenses: 80
+  _maxSpeed: 500
+  _minSpeedPercentageMaxSpeed: 0.7
+  _capacity: 4
+  _maintenanceExpenses: 30
   _maxFuelLoad: 50
   _minFuelConsumptionInTimeStep: 1
   _maxFuelConsumptionInTimeStep: 2
   _fillingFuelRatePerTimeStep: 1
   _fuelCostPerLiter: 0.2
-  _costPurchase: 12.29
+  _costPurchase: 500
   _repairCost: 10
   _minStrength: 0
   _maxStrength: 100
-  _damageInflicted: 10
+  _damageInflicted: 1
   _speedOfRepairPerTimeStep: 1

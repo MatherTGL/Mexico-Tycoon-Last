@@ -177,6 +177,7 @@ MonoBehaviour:
   _allTypesTransport:
   - {fileID: 11400000, guid: 5f48212aa88614ba6930224594456bc5, type: 2}
   - {fileID: 11400000, guid: e8eccc81ae4b5820187698f12c8f0444, type: 2}
+  - {fileID: 11400000, guid: b8cfca0e64d70fef288ac3903190ab95, type: 2}
   _routePoints:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}

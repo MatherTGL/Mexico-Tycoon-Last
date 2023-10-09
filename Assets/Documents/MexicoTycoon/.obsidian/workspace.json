@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "6bb844baf1d91920",
+        "id": "b22d8b64dfb02dc7",
         "type": "tabs",
         "children": [
           {
-            "id": "7f4bde9b183c5b97",
+            "id": "c614bfd36dfaf846",
             "type": "leaf",
             "state": {
               "type": "diagram-edit",
@@ -145,11 +145,12 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "7f4bde9b183c5b97",
+  "active": "c614bfd36dfaf846",
   "lastOpenFiles": [
+    "Untitled 1.canvas",
+    "Untitled Diagram.svg",
     "Untitled Diagram 1.svg.meta",
     "Untitled Diagram 1.svg",
-    "Untitled Diagram.svg",
     "Untitled.canvas",
     "Untitled 1.md",
     "Untitled.md"

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefab: {fileID: 6291475073526262561, guid: efd4c69d0d657e29280093f8de63072f, type: 3}
   _typeResource: 0
+  _type: 2
   _maxSpeed: 2.18
   _minSpeedPercentageMaxSpeed: 0.9
   _capacity: 15
@@ -24,3 +25,8 @@ MonoBehaviour:
   _fillingFuelRatePerTimeStep: 1
   _fuelCostPerLiter: 0.2
   _costPurchase: 12.11
+  _repairCost: 10
+  _minStrength: 0
+  _maxStrength: 100
+  _damageInflicted: 10
+  _speedOfRepairPerTimeStep: 1

@@ -24,7 +24,8 @@ MonoBehaviour:
   _fillingFuelRatePerTimeStep: 1
   _fuelCostPerLiter: 0.2
   _costPurchase: 500
+  _repairCost: 10
   _minStrength: 0
   _maxStrength: 100
-  _damageInflicted: 30
+  _damageInflicted: 1
   _speedOfRepairPerTimeStep: 1

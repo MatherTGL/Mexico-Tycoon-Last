@@ -203,7 +203,6 @@ namespace Building
         #region Farm
 
         [Button("Change Farm Type"), BoxGroup("Editor Control | Farm"), DisableInEditorMode]
-        [ShowIf("@_typeBuilding == TypeBuilding.Farm")]
         private void ChangeFarmTypeEditor(in ConfigBuildingFarmEditor.TypeFarm typeFarm)
         {
             ChangeFarmType(typeFarm);
@@ -214,14 +213,12 @@ namespace Building
         #region City-Business
 
         [Button("Buy"), BoxGroup("Editor Control | City Business"), DisableInEditorMode]
-        [ShowIf("@_typeBuilding == TypeBuilding.City")]
         private void BuyBusiness(in CityBusiness.TypeBusiness typeBusiness)
         {
             _IcityBusiness.BuyBusiness(typeBusiness);
         }
 
         [Button("Sell"), BoxGroup("Editor Control | City Business"), DisableInEditorMode]
-        [ShowIf("@_typeBuilding == TypeBuilding.City")]
         private void SellBusiness(in ushort indexBusiness)
         {
             _IcityBusiness.SellBusiness(indexBusiness);

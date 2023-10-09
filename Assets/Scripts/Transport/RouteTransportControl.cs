@@ -27,6 +27,10 @@ namespace Transport
 
         private TimeDateControl _timeDateControl;
 
+        private GameObject _newSpriteTransportation;
+
+        private Transportation _newDataTransportation;
+
         [SerializeField]
         private TypeTransport[] _allTypesTransport;
 
@@ -139,6 +143,18 @@ namespace Transport
             return foundObjectsForRerouting;
         }
 
+        private void CreateTransportation()
+        {
+            _newSpriteTransportation = Instantiate(
+                    _allTypesTransport[_indexTypeTransport].prefab,
+                    _IcreatorCurveRoad.GetRouteMainPoint(),
+                    Quaternion.identity
+            );
+
+            _newDataTransportation = new(
+                _allTypesTransport[_indexTypeTransport], this, _newSpriteTransportation);
+        }
+
 
 #if UNITY_EDITOR
         [SerializeField, EnumPaging]
@@ -160,16 +176,9 @@ namespace Transport
                 if (_routePoints[0] == Vector3.zero)
                     _routePoints = _IcreatorCurveRoad.GetRoutePoints();
 
-                GameObject newTransport = Instantiate(
-                    _allTypesTransport[_indexTypeTransport].prefab,
-                    _IcreatorCurveRoad.GetRouteMainPoint(),
-                    Quaternion.identity
-                );
+                CreateTransportation();
 
-                Transportation selfTransportObject = new(
-                    _allTypesTransport[_indexTypeTransport], this, newTransport);
-
-                _transportationDataStorage.AddObject(newTransport, selfTransportObject);
+                _transportationDataStorage.AddObject(_newSpriteTransportation, _newDataTransportation);
                 UpdateTypeTransportingResource(_transportationDataStorage.l_purchasedTransportData.Count - 1);
             }
         }
@@ -214,7 +223,7 @@ namespace Transport
         [Button("Re-route Transportation"), Tooltip("Re-route the selected vehicle")]
         private void ReRouteTransportation()
         {
-            ushort[] indexesForCleanup = 
+            ushort[] indexesForCleanup =
                 _IreRouteTransportation?.SendTransportTransferRequest(_transportationDataStorage);
 
             for (ushort i = 0; i < _transportationDataStorage.l_purchasedTransportData.Count; i++)
@@ -236,6 +245,17 @@ namespace Transport
         private void SendVehicleForRepair()
         {
             _transportationDataStorage.l_purchasedTransportData[_indexTransportInList].SendVehicleForRepair();
+        }
+
+        [Button("Change Transportation")]
+        private void ChangeTransportation()
+        {
+            if (CheckRulesBuyingTransport(_indexTypeTransport))
+            {
+                Debug.Log("Replacement is possible");
+                _transportationDataStorage.ReplaceTransportation(_indexTransportInList,
+                                                             _allTypesTransport[_indexTypeTransport]);
+            }
         }
 #endif
     }

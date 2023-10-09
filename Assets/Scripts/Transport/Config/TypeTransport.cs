@@ -20,7 +20,7 @@ namespace Transport
             Ground, Air, Marine
         }
 
-        [EnumToggleButtons]
+        [SerializeField, EnumToggleButtons]
         private Type _type;
         public Type type => _type;
 
@@ -76,7 +76,7 @@ namespace Transport
         private ushort _maxStrength = 100;
         public ushort maxStrength => _maxStrength;
 
-        [SerializeField, MinValue(10)]
+        [SerializeField, MinValue(1)]
         private byte _damageInflicted = 10;
         public byte damageInflicted => _damageInflicted;
 
