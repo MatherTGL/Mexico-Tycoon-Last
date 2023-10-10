@@ -4,7 +4,6 @@ using Boot;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using System.Linq;
-using Building;
 using Resources;
 using static Boot.Bootstrap;
 using static Building.BuildingEnumType;
@@ -13,7 +12,8 @@ namespace Transport.Reception
 {
     public sealed class TransportReception : MonoBehaviour, ITransportReception, IBoot
     {
-        private IBuildingRequestForTransport _buildingRequest;
+        private IBuildingRequestForTransport _IbuildingRequest;
+        IBuildingRequestForTransport ITransportReception.IbuildingRequest => _IbuildingRequest;
 
         private RouteBuilderControl _routeBuilderControl;
 
@@ -36,29 +36,43 @@ namespace Transport.Reception
         void IBoot.InitAwake()
         {
             _routeBuilderControl = FindObjectOfType<RouteBuilderControl>();
-            _buildingRequest = GetComponent<IBuildingRequestForTransport>();
+            _IbuildingRequest = GetComponent<IBuildingRequestForTransport>();
         }
 
         private void BuildRoute(in ITransportReception secondObject)
         {
-            CreatorCurveRoadControl createdRoute = Instantiate(_routeBuilderControl.prefabRoute,
+            if (IsBuildingsWerePurchased(secondObject))
+            {
+                CreatorCurveRoadControl createdRoute = Instantiate(_routeBuilderControl.prefabRoute,
                 Vector3.zero, Quaternion.identity);
 
-            createdRoute.SetPositionPoints(secondObject, this);
-            AddConnectionToDictionary(secondObject, createdRoute.gameObject);
-            secondObject.AddConnectionToDictionary(this, createdRoute.gameObject);
+                createdRoute.SetPositionPoints(secondObject, this);
+                AddConnectionToDictionary(secondObject, createdRoute.gameObject);
+                secondObject.AddConnectionToDictionary(this, createdRoute.gameObject);
+            }
+        }
+
+        private bool IsBuildingsWerePurchased(in ITransportReception secondObject)
+        {
+            var firstBuildingBuyed = _IbuildingRequest.IbuildingPurchased?.isBuyed;
+            var secondBuildingBuyed = secondObject.IbuildingRequest.IbuildingPurchased?.isBuyed;
+
+            if (firstBuildingBuyed is null or true & secondBuildingBuyed is null or true)
+                return true;
+            else
+                return false;
         }
 
         float ITransportReception.RequestConnectionToLoadRes(in float transportCapacity,
                                                              in TypeProductionResources.TypeResource typeResource)
         {
-            return _buildingRequest.RequestGetResource(transportCapacity, typeResource);
+            return _IbuildingRequest.RequestGetResource(transportCapacity, typeResource);
         }
 
         bool ITransportReception.RequestConnectionToUnloadRes(in float quantityForUnloading,
                                                               in TypeProductionResources.TypeResource typeResource)
         {
-            return _buildingRequest.RequestUnloadResource(quantityForUnloading, typeResource);
+            return _IbuildingRequest.RequestUnloadResource(quantityForUnloading, typeResource);
         }
 
         (TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()

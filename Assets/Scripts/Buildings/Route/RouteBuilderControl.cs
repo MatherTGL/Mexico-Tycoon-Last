@@ -7,8 +7,6 @@ using DebugCustomSystem;
 using static Boot.Bootstrap;
 using Data;
 using static Data.Player.DataPlayer;
-using Unity.VisualScripting.Dependencies.Sqlite;
-
 
 namespace Route.Builder
 {
@@ -64,11 +62,14 @@ namespace Route.Builder
                     else
                         _connectionPoints[1].DisconnectRequest(_connectionPoints[0]);
                 }
-                Array.Clear(_connectionPoints, 0, _connectionPoints.Length);
             }
             catch (Exception ex)
             {
                 DebugSystem.Log(ex, DebugSystem.SelectedColor.Red, "Exception", "Пролизошла ошибка: ");
+            }
+            finally
+            {
+                Array.Clear(_connectionPoints, 0, _connectionPoints.Length);
             }
         }
 
@@ -83,7 +84,7 @@ namespace Route.Builder
             _routeLength = Vector2.Distance(_connectionPoints[0].GetPosition().position,
                                             _connectionPoints[1].GetPosition().position);
 
-            if (Mathf.RoundToInt(_routeLength ) < _maxLengthRoute)
+            if (Mathf.RoundToInt(_routeLength) < _maxLengthRoute)
                 return true;
             else
                 return false;

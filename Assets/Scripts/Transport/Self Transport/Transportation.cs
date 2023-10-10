@@ -208,10 +208,8 @@ namespace Transport
             if (isStartedPosition)
             {
                 _typeTransport = _futureConfigTypeTransport;
-                Debug.Log(_typeTransport);
                 _isInStartedPosition -= ReplaceTypeTransport;
                 _isRequestTransportationRepairIsMade = false;
-                Debug.Log("The transportation swap was a success");
             }
         }
 

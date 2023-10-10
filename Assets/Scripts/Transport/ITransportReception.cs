@@ -6,6 +6,8 @@ namespace Transport.Reception
 {
     public interface ITransportReception
     {
+        IBuildingRequestForTransport IbuildingRequest { get; }
+
         TypeBuilding typeCurrentBuilding { get; }
 
         void ConnectionRequest(in ITransportReception fromObject);

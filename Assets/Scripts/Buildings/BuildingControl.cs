@@ -38,10 +38,10 @@ namespace Building
         private IBuildingJobStatus _IbuildingJobStatus;
 
         private IBuildingPurchased _IbuildingPurchased;
+        IBuildingPurchased IBuildingRequestForTransport.IbuildingPurchased => _IbuildingPurchased;
 
         private ICityBusiness _IcityBusiness;
 
-        //TODO: remove to main config (variable: _configSO)
         [SerializeField, Required, BoxGroup("Parameters"), HideLabel]
         private ConfigExpensesManagementEditor _configExpenses;
 
@@ -68,6 +68,7 @@ namespace Building
 
             _Ispending = _Ibuilding as ISpending;
             _IcityBusiness = _Ibuilding as ICityBusiness;
+            _IbuildingPurchased = _Ibuilding as IBuildingPurchased;
 
             ConnectExpensesManagementControl();
             CreateDictionaryTypeDrugs();
@@ -81,7 +82,6 @@ namespace Building
                 IUsesExpensesManagement IusesExpensesManagement = expensesManagement;
                 IExpensesManagement IexpensesManagement = FindObjectOfType<ExpenseManagementControl>();
 
-                //TODO: remove ConfigExpenses to the shared config and pass from there
                 if (IexpensesManagement != null && _configExpenses != null)
                     IusesExpensesManagement.LoadExpensesManagement(IexpensesManagement, _configExpenses);
                 else
@@ -115,8 +115,6 @@ namespace Building
 
         private void ChangeOwnerState(in bool isBuy)
         {
-            _IbuildingPurchased = _Ibuilding as IBuildingPurchased;
-
             if (isBuy) _IbuildingPurchased?.Buy();
             else _IbuildingPurchased?.Sell();
         }
