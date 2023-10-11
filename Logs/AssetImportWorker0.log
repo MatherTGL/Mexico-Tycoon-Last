@@ -1,0 +1,671 @@
+Unity Editor version:    2022.3.10f1 (ff3792e53c62)
+Branch:                  2022.3/staging
+Build type:              Release
+Batch mode:              YES
+System name:             Linux
+Distro version:          #1 ZEN SMP PREEMPT_DYNAMIC Sat, 23 Sep 2023 22:54:46 +0000
+Kernel version:          6.5.5-zen1-1-zen
+Architecture:            x86_64
+Available memory:        15908 MB
+Using pre-set license
+Pro License: YES
+Desktop is 2880 x 1024 @ 60 Hz
+Initialize udev device monitor.
+
+COMMAND LINE ARGUMENTS:
+Unity
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+/home/black/GitHub/Mexico-Tycoon-Last
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+40953
+Successfully changed project path to: /home/black/GitHub/Mexico-Tycoon-Last
+/home/black/GitHub/Mexico-Tycoon-Last
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Player connection [139700286264064] Host "[IP] 10.0.0.100 [Port] 0 [Flags] 2 [Guid] 813062150 [EditorId] 813062150 [Version] 1048832 [Id] LinuxEditor(16,10.0.0.100) [Debug] 1 [PackageName] LinuxEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+
+Player connection [139700286264064] Host "[IP] 10.0.0.100 [Port] 0 [Flags] 2 [Guid] 813062150 [EditorId] 813062150 [Version] 1048832 [Id] LinuxEditor(16,10.0.0.100) [Debug] 1 [PackageName] LinuxEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+
+[Physics::Module] Initialized MultithreadedJobDispatcher with 3 workers.
+Refreshing native plugins compatible for Editor in 20.75 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2022.3.10f1 (ff3792e53c62)
+[Subsystems] Discovering subsystems at path /home/black/Unity/Hub/Editor/2022.3.10f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path /home/black/GitHub/Mexico-Tycoon-Last/Assets
+GLX Extensions: GLX_ARB_context_flush_control GLX_ARB_create_context GLX_ARB_create_context_no_error GLX_ARB_create_context_profile GLX_ARB_create_context_robustness GLX_ARB_fbconfig_float GLX_ARB_framebuffer_sRGB GLX_ARB_get_proc_address GLX_ARB_multisample GLX_EXT_buffer_age GLX_EXT_create_context_es2_profile GLX_EXT_create_context_es_profile GLX_EXT_fbconfig_packed_float GLX_EXT_framebuffer_sRGB GLX_EXT_no_config_context GLX_EXT_swap_control GLX_EXT_swap_control_tear GLX_EXT_texture_from_pixmap GLX_EXT_visual_info GLX_EXT_visual_rating GLX_MESA_copy_sub_buffer GLX_MESA_query_renderer GLX_MESA_swap_control GLX_OML_swap_method GLX_OML_sync_control GLX_SGIS_multisample GLX_SGIX_fbconfig GLX_SGIX_pbuffer GLX_SGIX_visual_select_group GLX_SGI_make_current_read GLX_SGI_video_sync 
+Renderer: Mesa Intel(R) HD Graphics 3000 (SNB GT2)
+Vendor:   Intel
+Version:  3.3 (Core Profile) Mesa 23.1.8-arch1.1
+GLES:     0
+ GL_3DFX_texture_compression_FXT1 GL_AMD_conservative_depth GL_AMD_draw_buffers_blend GL_AMD_performance_monitor GL_AMD_pinned_memory GL_AMD_seamless_cubemap_per_texture GL_AMD_shader_trinary_minmax GL_AMD_texture_texture4 GL_AMD_vertex_shader_layer GL_AMD_vertex_shader_viewport_index GL_ANGLE_texture_compression_dxt3 GL_ANGLE_texture_compression_dxt5 GL_ARB_ES2_compatibility GL_ARB_ES3_compatibility GL_ARB_arrays_of_arrays GL_ARB_base_instance GL_ARB_blend_func_extended GL_ARB_buffer_storage GL_ARB_clear_buffer_object GL_ARB_clear_texture GL_ARB_clip_control GL_ARB_compressed_texture_pixel_storage GL_ARB_conditional_render_inverted GL_ARB_conservative_depth GL_ARB_copy_buffer GL_ARB_copy_image GL_ARB_cull_distance GL_ARB_debug_output GL_ARB_depth_buffer_float GL_ARB_depth_clamp GL_ARB_direct_state_access GL_ARB_draw_buffers GL_ARB_draw_buffers_blend GL_ARB_draw_elements_base_vertex GL_ARB_draw_instanced GL_ARB_enhanced_layouts GL_ARB_explicit_attrib_location GL_ARB_explicit_uniform_location GL_ARB_fragment_
+coord_conventions GL_ARB_fragment_layer_viewport GL_ARB_fragment_shader GL_ARB_framebuffer_object GL_ARB_framebuffer_sRGB GL_ARB_get_program_binary GL_ARB_get_texture_sub_image GL_ARB_half_float_pixel GL_ARB_half_float_vertex GL_ARB_instanced_arrays GL_ARB_internalformat_query GL_ARB_internalformat_query2 GL_ARB_invalidate_subdata GL_ARB_map_buffer_alignment GL_ARB_map_buffer_range GL_ARB_multi_bind GL_ARB_occlusion_query2 GL_ARB_parallel_shader_compile GL_ARB_pipeline_statistics_query GL_ARB_pixel_buffer_object GL_ARB_point_sprite GL_ARB_polygon_offset_clamp GL_ARB_program_interface_query GL_ARB_provoking_vertex GL_ARB_robustness GL_ARB_sample_shading GL_ARB_sampler_objects GL_ARB_seamless_cube_map GL_ARB_seamless_cubemap_per_texture GL_ARB_separate_shader_objects GL_ARB_shader_bit_encoding GL_ARB_shader_draw_parameters GL_ARB_shader_group_vote GL_ARB_shader_objects GL_ARB_shader_subroutine GL_ARB_shader_texture_lod GL_ARB_shader_viewport_layer_array GL_ARB_shading_language_420pack GL_ARB_shading_language_i
+nclude GL_ARB_shading_language_packing GL_ARB_sync GL_ARB_texture_barrier GL_ARB_texture_buffer_object GL_ARB_texture_buffer_object_rgb32 GL_ARB_texture_buffer_range GL_ARB_texture_compression_bptc GL_ARB_texture_compression_rgtc GL_ARB_texture_cube_map_array GL_ARB_texture_filter_anisotropic GL_ARB_texture_float GL_ARB_texture_gather GL_ARB_texture_mirror_clamp_to_edge GL_ARB_texture_multisample GL_ARB_texture_non_power_of_two GL_ARB_texture_query_levels GL_ARB_texture_query_lod GL_ARB_texture_rectangle GL_ARB_texture_rg GL_ARB_texture_rgb10_a2ui GL_ARB_texture_storage GL_ARB_texture_storage_multisample GL_ARB_texture_swizzle GL_ARB_timer_query GL_ARB_transform_feedback2 GL_ARB_transform_feedback_instanced GL_ARB_transform_feedback_overflow_query GL_ARB_uniform_buffer_object GL_ARB_vertex_array_bgra GL_ARB_vertex_array_object GL_ARB_vertex_attrib_binding GL_ARB_vertex_buffer_object GL_ARB_vertex_shader GL_ARB_vertex_type_10f_11f_11f_rev GL_ARB_vertex_type_2_10_10_10_rev GL_ARB_viewport_array GL_ATI_blend_eq
+uation_separate GL_ATI_texture_float GL_EXT_EGL_image_storage GL_EXT_EGL_sync GL_EXT_abgr GL_EXT_blend_equation_separate GL_EXT_debug_label GL_EXT_demote_to_helper_invocation GL_EXT_draw_buffers2 GL_EXT_draw_instanced GL_EXT_framebuffer_blit GL_EXT_framebuffer_multisample GL_EXT_framebuffer_multisample_blit_scaled GL_EXT_framebuffer_object GL_EXT_framebuffer_sRGB GL_EXT_packed_depth_stencil GL_EXT_packed_float GL_EXT_pixel_buffer_object GL_EXT_polygon_offset_clamp GL_EXT_provoking_vertex GL_EXT_semaphore GL_EXT_semaphore_fd GL_EXT_shader_framebuffer_fetch_non_coherent GL_EXT_shader_integer_mix GL_EXT_texture_array GL_EXT_texture_compression_dxt1 GL_EXT_texture_compression_rgtc GL_EXT_texture_compression_s3tc GL_EXT_texture_filter_anisotropic GL_EXT_texture_integer GL_EXT_texture_sRGB GL_EXT_texture_sRGB_R8 GL_EXT_texture_sRGB_decode GL_EXT_texture_shadow_lod GL_EXT_texture_shared_exponent GL_EXT_texture_snorm GL_EXT_texture_swizzle GL_EXT_timer_query GL_EXT_transform_feedback GL_EXT_vertex_array_bgra GL_IBM_
+multimode_draw_arrays GL_INTEL_blackhole_render GL_INTEL_performance_query GL_KHR_blend_equation_advanced GL_KHR_context_flush_control GL_KHR_debug GL_KHR_no_error GL_KHR_parallel_shader_compile GL_KHR_texture_compression_astc_ldr GL_KHR_texture_compression_astc_sliced_3d GL_MESA_pack_invert GL_MESA_shader_integer_functions GL_MESA_texture_signed_rgba GL_NV_conditional_render GL_NV_copy_image GL_NV_depth_clamp GL_NV_packed_depth_stencil GL_NV_texture_barrier GL_OES_EGL_image GL_S3_s3tc
+OPENGL LOG: Creating OpenGL 3.3 graphics device ; Context level  <OpenGL 3.3> ; Context handle -2041856144
+Initialize mono
+Mono path[0] = '/home/black/Unity/Hub/Editor/2022.3.10f1/Editor/Data/Managed'
+Mono path[1] = '/home/black/Unity/Hub/Editor/2022.3.10f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-linux'
+Mono config path = '/home/black/Unity/Hub/Editor/2022.3.10f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56685
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: /home/black/Unity/Hub/Editor/2022.3.10f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
+Register platform support module: /home/black/Unity/Hub/Editor/2022.3.10f1/Editor/Data/PlaybackEngines/LinuxStandaloneSupport/UnityEditor.LinuxStandalone.Extensions.dll
+Registered in 0.047546 seconds.
+- Loaded All Assemblies, in  1.328 seconds
+Native extension for LinuxStandalone target not found
+[usbmuxd] Start listen thread
+[usbmuxd] Listen thread started
+Native extension for iOS target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.039 seconds
+Domain Reload Profiling: 2365ms
+	BeginReloadAssembly (311ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (0ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (2ms)
+	RebuildCommonClasses (147ms)
+	RebuildNativeTypeToScriptingClass (34ms)
+	initialDomainReloadingComplete (317ms)
+	LoadAllAssembliesAndSetupDomain (515ms)
+		LoadAssemblies (309ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (507ms)
+			TypeCache.Refresh (505ms)
+				TypeCache.ScanAssembly (457ms)
+			ScanForSourceGeneratedMonoScriptInfo (1ms)
+			ResolveRequiredComponents (1ms)
+	FinalizeReload (1041ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (830ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (164ms)
+			SetLoadedEditorAssemblies (22ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (9ms)
+			ProcessInitializeOnLoadAttributes (474ms)
+			ProcessInitializeOnLoadMethodAttributes (161ms)
+			AfterProcessingInitializeOnLoad (0ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (0ms)
+========================================================================
+Worker process is ready to serve import requests
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory is not a mono symbol file
+- Loaded All Assemblies, in  2.054 seconds
+Refreshing native plugins compatible for Editor in 7.79 ms, found 1 plugins.
+Native extension for LinuxStandalone target not found
+Native extension for iOS target not found
+Package Manager log level set to [2]
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Launched and connected shader compiler UnityShaderCompiler after 0.02 seconds
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  3.732 seconds
+Domain Reload Profiling: 5778ms
+	BeginReloadAssembly (362ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (23ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (61ms)
+	RebuildCommonClasses (116ms)
+	RebuildNativeTypeToScriptingClass (27ms)
+	initialDomainReloadingComplete (149ms)
+	LoadAllAssembliesAndSetupDomain (1391ms)
+		LoadAssemblies (727ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (808ms)
+			TypeCache.Refresh (693ms)
+				TypeCache.ScanAssembly (642ms)
+			ScanForSourceGeneratedMonoScriptInfo (97ms)
+			ResolveRequiredComponents (17ms)
+	FinalizeReload (3733ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (3205ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (104ms)
+			SetLoadedEditorAssemblies (11ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (207ms)
+			ProcessInitializeOnLoadAttributes (1633ms)
+			ProcessInitializeOnLoadMethodAttributes (1239ms)
+			AfterProcessingInitializeOnLoad (11ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (9ms)
+Refreshing native plugins compatible for Editor in 9.00 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 5370 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 87 unused Assets / (423.6 KB). Loaded Objects now: 5885.
+Memory consumption went from 175.7 MB to 175.3 MB.
+Total: 57.176112 ms (FindLiveObjects: 0.671164 ms CreateObjectMapping: 0.360854 ms MarkObjects: 55.556667 ms  DeleteObjects: 0.583739 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:scripting/monoscript/fileName/DynamicArray.cs: ec0bbc24403a197d75b294e49f326b59 -> e31f8fb0c891e8a0f4b8f3b9be6577d5
+  custom:scripting/monoscript/fileName/SelectionDetailsFactory.cs: d9499fbfc4b1d518acfaf953042bf666 -> 
+  custom:scripting/monoscript/fileName/Hotkey.cs: 6bebf3c19d865600700d06aca759c483 -> 
+  custom:scripting/monoscript/fileName/MarkerData.cs: a50f37be7bf76938578cd34f49b4dcbe -> 
+  custom:scripting/monoscript/fileName/UnityObjectsMemoryInEditorBreakdownModelBuilder.cs: 5da9c628c20ec47115860c462bffd4c4 -> 
+  custom:scripting/monoscript/fileName/OpenSnapshotsManager.cs: 52dfd7935d8795aadd67d6d2864084d2 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:scripting/monoscript/fileName/UnityObjectsModelBuilder.cs: 9a9445edcc560b1105bfddfbebd8eabb -> 
+  custom:scripting/monoscript/fileName/IFileReader.cs: 27e3606b867fee0a286a593f4f294d75 -> 
+  custom:scripting/monoscript/fileName/OpenSnapshotsWindow.cs: 01aa51f20a6e89407e2fec231de7182f -> 
+  custom:scripting/monoscript/fileName/MeshBuilder.cs: 31fee05c889b3998e3f8bcea6b25613e -> 
+  custom:scripting/monoscript/fileName/ThreadSelection.cs: eaf9c4276b4aea47dbe197da83cb6df7 -> 
+  custom:scripting/monoscript/fileName/TopMarkers.cs: c398089724306de3c1bb2affe0971671 -> 
+  custom:scripting/monoscript/fileName/MetaDataHelpers.cs: 00e7aa7c458a9d47f56a00d4d5eff03d -> 
+  custom:scripting/monoscript/fileName/ObjectData.cs: 3c6adcf486d0c190516733f777f07188 -> 
+  custom:scripting/monoscript/fileName/ZoomArea.cs: 024c8d443d286b8090652a766d648d18 -> 
+  custom:scripting/monoscript/fileName/MarkerColumnFilter.cs: b0bc9299d70d3e7f7e0d88ccc55c245a -> 
+  custom:scripting/monoscript/fileName/PlatformsHelper.cs: 5a7809c9a2e48648929073ac2db9cb6d -> 
+  custom:scripting/monoscript/fileName/MemoryProfilerSettings.cs: d4af3956f21dd48fa669f4654f571d14 -> 
+  custom:scripting/monoscript/fileName/UnsafeDataUtility.cs: 97246d5b6a7d0428614775c312dd53a2 -> 
+  custom:scripting/monoscript/fileName/DetailFormatter.cs: d6d1946ffceb5da99dd6cf5f403878de -> 
+  custom:scripting/monoscript/fileName/MultiColumnHeaderWithTruncateTypeName.cs: e6f30cceebe3b7f211ade59ee4b9b501 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:scripting/monoscript/fileName/ToolbarDropDownButton.cs: 3082c7a3456125e57b805a543e345642 -> 
+  custom:scripting/monoscript/fileName/ThreadData.cs: 8ff87c07bd8d1c0545b9d60aa79e1131 -> 
+  custom:scripting/monoscript/fileName/NativeArrayAlgorithms.cs: 6b644df68d49586f335567dff1f0b82a -> 
+  custom:scripting/monoscript/fileName/FrameTimeGraph.cs: dc8a7d22624e41ef1d1696466c4dd33e -> 
+  custom:scripting/monoscript/fileName/ProfileAnalysis.cs: b4c217c15c80792f80e0bfffd6e3ac98 -> 
+  custom:scripting/monoscript/fileName/DeltaBarCell.cs: f6f5cbba067aee8accacc018cc68e110 -> 
+  custom:scripting/monoscript/fileName/ProfilerWindowInterface.cs: 9c6bb5178a5ef3d507c4dfa736352478 -> 
+  custom:scripting/monoscript/fileName/ITextFilter.cs: a5985b9b33e28d3d518c8a4a326da812 -> 
+  custom:scripting/monoscript/fileName/FrameTime.cs: 885fbd25713db34fbb3c40bd9a45471d -> 
+  custom:scripting/monoscript/fileName/AllTrackedMemoryModel.cs: cc355c1da84e84e665c59728739459f9 -> 
+  custom:scripting/monoscript/fileName/ProgressBarDisplay.cs: cec35433fb52c6ffa2c3fc517fc4fba7 -> 
+  custom:scripting/monoscript/fileName/EditorUtilityCompatibilityHelper.cs: 62f3850b4c1c02e79eb484d3795c6294 -> 
+  custom:scripting/monoscript/fileName/DataFormatter.cs: 0694de2a953f4cbbacc5c7a372d0c05e -> 
+  custom:scripting/monoscript/fileName/Columns.cs: d072b426aeb72b5c444e226e86b53be2 -> 
+  custom:scripting/monoscript/fileName/AllSystemMemoryBreakdownModel.cs: 6cfe785298b03de69d1f91e0ebd8b98a -> 
+  custom:scripting/monoscript/fileName/MemoryProfilerModuleViewController.cs: 95456b8f5501afa9d0cb401925805610 -> 
+  custom:scripting/monoscript/fileName/Units.cs: 37c4edb88e9b56be5f2707f3667ee057 -> 
+  custom:scripting/monoscript/fileName/ProfilerColors.cs: 079e904785992720749a77837038c521 -> 
+  custom:scripting/monoscript/fileName/MetadataInjector.cs: c1c70860950d7faae653d633c4efe5be -> 
+  custom:scripting/monoscript/fileName/UnityObjectsComparisonModel.cs: c48766e5203596a6df99481e109374cc -> 
+  custom:scripting/monoscript/fileName/ProfileDataView.cs: 3cd45ce34032e5e8688703f8bf813b4d -> 
+  custom:scripting/monoscript/fileName/BackgroundPattern.cs: 8fd03d456274ed496ca9bb42a96a64d1 -> 
+  custom:scripting/monoscript/fileName/MemoryBreakdownModel.cs: 5e35ba4bab66cf6ceda9337d601a55fe -> 
+  custom:scripting/monoscript/fileName/MatchesTextFilter.cs: bcb042d3a74ee01dd02bf4f8edeed72e -> 
+  custom:scripting/monoscript/fileName/MemoryProfilerModuleBridge.cs: d291ae24751beadc228f19735f41b694 -> 
+  custom:scripting/monoscript/fileName/TabBarController.cs: e26ce678859b45f8250a0ae7d2666707 -> 
+  custom:scripting/monoscript/fileName/VMTools.cs: 9f942ea17d4029801400f817d7f22314 -> 
+  custom:scripting/monoscript/fileName/DeviceMemoryBreakdownViewController.cs: 65d97cb130945bf0746c110d13cf273a -> 
+  custom:scripting/monoscript/fileName/ProgressBar.cs: 03e8e1c12f2f51e4947bdf231c1dbd96 -> 
+  custom:scripting/monoscript/fileName/TreeComparisonBuilder.cs: e35473db10a6df7c28d14d69c500e6c8 -> 
+  custom:scripting/monoscript/fileName/ContainsTextFilter.cs: ce14ed3f8bba3fb58ae0b759ab8b00c3 -> 
+  custom:scripting/monoscript/fileName/UnityObjectsMemoryBreakdownModelBuilder.cs: c92dc67dc49969ebbd02ea39430a31e6 -> 
+  custom:scripting/monoscript/fileName/ProfileAnalyzer.cs: 8ba64f3bc8ab165d7e4d09d304e7457a -> 
+  custom:CustomObjectIndexerAttribute: 306bfa6df2d96854e1ebb52f3ddacab7 -> 
+  custom:scripting/monoscript/fileName/MemoryBreakdownBarViewController.cs: ff6861596c1e524e461ca8a42308a694 -> 
+  custom:scripting/monoscript/fileName/EditorWindowCoroutineExtension.cs: 8c612763925b943c64e54855c759cc9e -> 
+  custom:scripting/monoscript/fileName/TreeModelUtility.cs: 1aeaea7e67c4d8de5a08f942b08b4a38 -> 
+  custom:scripting/monoscript/fileName/Icons.cs: 5cbcc599b1f0fe48c2ee493b021dcc79 -> abf089f96620a0dfa1fac77a06c6c48e
+  custom:scripting/monoscript/fileName/EditorWaitForSeconds.cs: 136f9181567622a0dc32613566fb6f9c -> 
+  custom:scripting/monoscript/fileName/Ribbon.cs: 29c2eb009f50fa8a8c04e34d226a33ee -> 
+  custom:scripting/monoscript/fileName/ComparisonTableModel.cs: 50e9875147cb717f50ded402021bce6f -> 
+  custom:scripting/monoscript/fileName/UnityObjectsComparisonModelBuilder.cs: 5554d02923cfb90d6abba2f058a34d9a -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/TimingOptions.cs: 4e4ef74df318c66225faed819764d8dd -> 
+  custom:scripting/monoscript/fileName/PatternBuilder.cs: eab13e1f7fa7abb14eed831fb54da896 -> 
+  custom:scripting/monoscript/fileName/SelectedItemDetailsPanel.cs: 2b6abfe5bdd3c28f0c856a385ba8e0f7 -> 
+  custom:scripting/monoscript/fileName/AllTrackedMemoryDescriptionCell.cs: cd32baa88728a74c1a065597f52923e4 -> 
+  custom:scripting/monoscript/fileName/PathsToRootDetailView.cs: 0010feef412adb7556f85353e0e54c77 -> 
+  custom:scripting/monoscript/fileName/UIState.cs: 38dbaed1bac20465b11e0503bff58a5f -> 
+  custom:scripting/monoscript/fileName/UnifiedUnityObjectInfo.cs: 80acea6195442f9e7e2cadd9e944ac5c -> 
+  custom:scripting/monoscript/fileName/EditorAssetFinderUtility.cs: 0cca1bde4e542a890349d56d3a277868 -> 
+  custom:scripting/monoscript/fileName/DeviceMemoryBreakdownBarViewController.cs: f3132f3d9bcfa00023e91bcc324f834c -> 
+  custom:scripting/monoscript/fileName/Diagnostics.cs: 79bad3305d849d7ee685af511039a8d5 -> 
+  custom:scripting/monoscript/fileName/PathsToRootUtil.cs: 059bcae15195e9c1b825ad6658ee445e -> 
+  custom:scripting/monoscript/fileName/ProfileAnalyzerExportWindow.cs: 7347d17e2c162ef5469f90c3126ccd4f -> 
+  custom:scripting/monoscript/fileName/ManagedMemoryBreakdownModelBuilder.cs: 6c914be04404f451993481e27600bde7 -> 
+  custom:scripting/monoscript/fileName/MemoryProfilerAnalytics.cs: 070fe968baacad96287a40716eedfb6c -> 
+  custom:scripting/monoscript/fileName/IComparableItemData.cs: 4f5a82e037a61e1dcc5bb951f0c2b9d1 -> 
+  custom:scripting/monoscript/fileName/PlayerConnectionCompatibilityHelper.cs: 635008d39c2e825d40ef435ebb858eec -> 
+  custom:scripting/monoscript/fileName/SnapshotFileData.cs: e8e4e95acc5ea0a5d97e366023839484 -> 
+  custom:scripting/monoscript/fileName/SizeDataFormatter.cs: a329be1854e8f94aebca52b653a4a07d -> 
+  custom:scripting/monoscript/fileName/DeviceMemoryBreakdownModel.cs: 6cf7e821b40d869eb6589309dbdcb713 -> 
+  custom:scripting/monoscript/fileName/TopMarkerList.cs: e7939d6b769aac1796b31fc152db2083 -> 
+  custom:scripting/monoscript/fileName/SnapshotsWindow.cs: 6fba1b72bf4c3f5e6e4b57cf74c3efe7 -> 
+  custom:scripting/monoscript/fileName/ComparisonViewController.cs: 7eb4c27de6d6770166139d44d5194c21 -> 
+  custom:scripting/monoscript/fileName/ViewControllerUtility.cs: 5b52e9a16ae00d9e6eba78f8037de79b -> 
+  custom:scripting/monoscript/fileName/ObjectDataFormatter.cs: b4282bbbd36935f157e21943d70ccd1c -> 
+  custom:scripting/monoscript/fileName/ManagedObjectInspector.cs: 43c441648bb7e1bf810818902b88a0bb -> 
+  custom:scripting/monoscript/fileName/EnumerationStatus.cs: 71a8b334ae81fba85c1d1e652a2432f1 -> 
+  custom:scripting/monoscript/fileName/AllSystemMemoryBreakdownModelBuilder.cs: e7064739d54df78fe96f7e561019d85a -> 
+  custom:scripting/monoscript/fileName/ObjectOrTypeLabel.cs: 3e4dde6752f0a49be56d3a32f3a4c1fc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/ProfileAnalyzerWindow.cs: 8e9da3f3eadf6dd74dbc436f89238f9a -> 
+  custom:scripting/monoscript/fileName/AllTrackedMemoryBreakdownViewController.cs: 0910a1dee854014ac1a291c168d3ee3a -> 
+  custom:scripting/monoscript/fileName/ActivityIndicator.cs: 249b3f6d45aab2924f1f499f5b97d6e1 -> 
+  custom:scripting/monoscript/fileName/IMemoryBreakdownViewController.cs: 5cf463e7bfd8511c2b3e48029cf6795d -> 
+  custom:scripting/monoscript/fileName/IReader.cs: 4f885daa21ea1a7f87bd2184b2ab1f78 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:scripting/monoscript/fileName/SplitterStateEx.cs: ec43e26f06f7ae5df389ff4b56579d95 -> 
+  custom:scripting/monoscript/fileName/SnapshotListItem.cs: 3798181bb2fe3c864612ca73a3e5f980 -> 
+  custom:scripting/monoscript/fileName/MemoryBreakdownLegendViewController.cs: ae1f322f6c27285d9f3e4b0b75e73e05 -> 
+  custom:scripting/monoscript/fileName/AllTrackedMemoryComparisonViewController.cs: 20c7c5fba4680914c3bcb0160254b8f3 -> 
+  custom:scripting/monoscript/fileName/NoDataViewController.cs: 71abd3ab2e674dde165e2520f617ed02 -> 
+  custom:scripting/monoscript/fileName/ThreadFrameTime.cs: b32414077ba1156b92be237a86516c63 -> 
+  custom:scripting/monoscript/fileName/MemoryProfilerWindowContent.cs: 9ab47d8e6176480220549dd04c1411bd -> 
+  custom:scripting/monoscript/fileName/IconUtility.cs: 634ca03792879e0c625dd1dfdda634b5 -> cdc93398ac64b91386dd312e41d20f9f
+  custom:scripting/monoscript/fileName/SelectedItemDetailsForTypesAndObjects.cs: cee952715156de9eea2eb41a888aaa89 -> 
+  custom:scripting/monoscript/fileName/ViewController.cs: dcabd967327f8f64b76a445b41bc4539 -> 
+  custom:scripting/monoscript/fileName/ProfileTable.cs: ff870476f056144c344468b8b3819bf5 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:scripting/monoscript/fileName/DropDownButton.cs: 26a7aeab1378384e6983ea72b303dc06 -> 
+  custom:scripting/monoscript/fileName/Block.cs: df12457a6cf5a2cc04d95dbe05379ece -> 
+  custom:scripting/monoscript/fileName/CachedSnapshot.cs: 6c9a54177365fa79e04d822eb62b376f -> 
+  custom:AudioImporter_EditorPlatform: 2f0ff77a95e0ac474e3e8eeba4e2f7cb -> 
+  custom:scripting/monoscript/fileName/MemorySampleSelection.cs: cc33310312bb0b197da4739e8f95ad43 -> 
+  custom:scripting/monoscript/fileName/AllTrackedMemoryComparisonTableModelBuilder.cs: 6c8a6f32aee712c05d577a4537979b64 -> 
+  custom:scripting/monoscript/fileName/AllSystemMemoryBreakdownViewController.cs: 0e963044c279880d33e050f5aba0336f -> 
+  custom:scripting/monoscript/fileName/PathsToRootDetailViewItem.cs: d1552b1c18571633473797eed0b7bc00 -> 
+  custom:scripting/monoscript/fileName/Styles.cs: 8868cdb4bbc85ea63b8f6d57cb90a919 -> 1728aa377394bacc23133c7e998f0fa5
+  custom:scripting/monoscript/fileName/UnityObjectsTableViewController.cs: 8b9393392591c3e3363ca7227317c8cb -> 
+  custom:scripting/monoscript/fileName/SnapshotCollection.cs: 16ab21b2265125173acb70925ae90c8e -> 
+  custom:scripting/monoscript/fileName/Entry.cs: 09bea23bd1d5693ef5fc3fd68a0f04b2 -> 
+  custom:scripting/monoscript/fileName/MemoryBreakdownModelBuilderBase.cs: 42791de9aef67cb63fc9943634e95489 -> 
+  custom:scripting/monoscript/fileName/StringExtensions.cs: 0525f2f83d06dd8322bce9bdf02dc7ef -> 6ec0be846eed81ad06d6bccd834b2236
+  custom:scripting/monoscript/fileName/RibbonButton.cs: cb3fa848fabeb08dd5b6b1c672e24713 -> 
+  custom:scripting/monoscript/fileName/UnsupportedSnapshotVersionException.cs: 36f7285e7d91193d59976871da627e09 -> 
+  custom:scripting/monoscript/fileName/MemoryUsageDial.cs: a52dbb894fd085eaec5f44b8c43b42e6 -> 
+  custom:scripting/monoscript/fileName/ComparisonTable.cs: e499de797c2097833af04c1a95766fe1 -> 
+  custom:scripting/monoscript/fileName/DeviceMemoryBreakdownModelBuilder.cs: 8428b5c9d5741fb7280759d7c0cb76b5 -> 
+  custom:scripting/monoscript/fileName/WorkbenchSplitter.cs: 80f2bc5495ac2a3fe5843067c18b7101 -> 
+  custom:scripting/monoscript/fileName/UnityObjectsModel.cs: 6ee983feaaac7f0bbafa9741b1efbf07 -> 
+  custom:scripting/monoscript/fileName/UnityObjectsDescriptionCell.cs: 21db1deaace0830da87c4f292b11abe0 -> 
+  custom:scripting/monoscript/fileName/EditorCoroutineUtility.cs: 8120324be4f28417c9962bc3a65d04a0 -> 
+  custom:scripting/monoscript/fileName/DepthSliceUI.cs: 6b2e2f88d858a2d43305dcaf1304f591 -> 
+  custom:scripting/monoscript/fileName/SnapshotIssuesModel.cs: 8c03d4761bc7bbe6ab54d5aa86abde2b -> 
+  custom:scripting/monoscript/fileName/EditorGUICompatibilityHelper.cs: 351928010be3c0fc8e7cba29289fa933 -> 
+  custom:scripting/monoscript/fileName/DepthSliceDropdown.cs: 7a66e1cd77d2b97fb7180e99a82000ca -> 
+  custom:scripting/monoscript/fileName/TreeModel.cs: 90647cc400823b41df847a6cbfc29026 -> 
+  custom:scripting/monoscript/fileName/AllProcessMemoryBreakdownModelBuilder.cs: 54dcf5744abfe78d0df851ae3e39d11f -> 
+  custom:scripting/monoscript/fileName/DetailedSizeBar.cs: a1c8fffe2038511e789172fabbc7441e -> 
+  custom:scripting/monoscript/fileName/EnumExtensions.cs: 63de0c10b66e16f277948838b882f77e -> 872fcb89b813d64606e680211dede528
+  custom:scripting/monoscript/fileName/FeatureUnavailableViewController.cs: cd959eddd803d1d25da405e7528404dd -> 
+  custom:scripting/monoscript/fileName/ManagedDataCrawler.cs: eebaeb3d895650bc200f6709e037a212 -> 
+  custom:scripting/monoscript/fileName/MemoryProfilerModuleOverride.cs: 25201d4c71e5c0b047531e9cd37359dd -> 
+  custom:scripting/monoscript/fileName/BoxAndWhiskerPlot.cs: 58e3bb2ab1bcd42111f0aa2805c4436a -> 
+  custom:scripting/monoscript/fileName/CaptureControlUI.cs: c0cbfa1b17a2bfdba3de0d9ab1a37d75 -> 
+  custom:scripting/monoscript/fileName/UIElementsHelper.cs: edceaa716baa35e9ad38e4e51a9c83b6 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:scripting/monoscript/fileName/SnapshotIssuesViewController.cs: 187661cc28a0514481cd21f9850115ad -> 
+  custom:scripting/monoscript/fileName/SummaryViewController.cs: e32477ab0e9b6225a3d440242c0ce3a1 -> 
+  custom:scripting/monoscript/fileName/FormatDataTypes.cs: 660519df8ea6c42846f8ed899c2f36f1 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/Draw2D.cs: 2be2ddbe492e154a034a61a0025c7210 -> 
+  custom:scripting/monoscript/fileName/ManagedObjectInspectorItem.cs: d40e62465969b598a504e833c0f05242 -> 
+  custom:scripting/monoscript/fileName/DetailViewController.cs: 2c1a905d6fdfff6fefc387650358f0d2 -> 
+  custom:scripting/monoscript/fileName/DeviceMemoryBreakdownInEditorModelBuilder.cs: 549d5e473cab0a16b595d2577de661dc -> 
+  custom:scripting/monoscript/fileName/AllProcessMemoryInEditorBreakdownModelBuilder.cs: d42be3db77a7a4b8c10b83ef790801af -> 
+  custom:scripting/monoscript/fileName/AllTrackedMemoryModelBuilder.cs: bd0cd51b3a25f0a72a6570c299da96f7 -> 
+  custom:scripting/monoscript/fileName/FileReader.cs: bfb4931ce43afe5d3625c0a6304f40fe -> 
+  custom:scripting/monoscript/fileName/FrameSummary.cs: 7b22ecdfefb39ecd745d6da098f5b550 -> 
+  custom:scripting/monoscript/fileName/EditorCoroutine.cs: ecfde58f5f2276c57435e977dfe7f74c -> 
+  custom:scripting/monoscript/fileName/ThreadSelectionWindow.cs: b0e4079b65f6485aa888f40e2c180d53 -> 
+  custom:scripting/monoscript/fileName/CountDeltaCell.cs: 4061b61606fa21a09b8082b6eea31726 -> 
+  custom:scripting/monoscript/fileName/AllTrackedMemoryTableViewController.cs: 03ab35171eef494dfa67f703c2d50592 -> 
+  custom:scripting/monoscript/fileName/Histogram.cs: be36b9750dae7300a72c2311cfbac411 -> 
+  custom:scripting/monoscript/fileName/UnityObjectsComparisonViewController.cs: c13f407f250aa8ceb14f31916a224b81 -> 
+  custom:scripting/monoscript/fileName/DataSourceFromAPI.cs: 0ecf0b5b4a9207402e80b603ad9a119c -> 
+  custom:scripting/monoscript/fileName/GenericReadOperation.cs: a25f3b314687a2bdc5d6432354c77025 -> 
+  custom:scripting/monoscript/fileName/ReadCommandBufferUtils.cs: 3c4a6d1443dc238debbc6ba8b0a9d1d4 -> 
+  custom:scripting/monoscript/fileName/ProfileData.cs: e561ac1c86946e731706eee2b8dc7bc7 -> 
+  custom:scripting/monoscript/fileName/MarkerPairing.cs: dee4dc465546da0edd7b026a84274a58 -> 
+  custom:scripting/monoscript/fileName/DynamicBlockArray.cs: e3ee4eac043311bb00853be8b6e288e2 -> 
+  custom:scripting/monoscript/fileName/Analytics.cs: 85ee1b69e4b41a6b6f0ce882c73ee039 -> 35b243c8c09c91fed45c07b92c9862de
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/ViewPane.cs: e13234d7428caad52017a1ee3337a806 -> 
+  custom:scripting/monoscript/fileName/Range.cs: 22bd6b37a576445fe1aec9c831c4c17c -> 6403016406936a29c1e23f7a5897e397
+  custom:scripting/monoscript/fileName/LowLevelFileReader.cs: d7218648e95ea8ce16ec1c7a631ad40e -> 
+  custom:scripting/monoscript/fileName/ObjectDataTypeFormatter.cs: 9b72c376351c38dbfc7c3e422e99efe7 -> 
+  custom:scripting/monoscript/fileName/ThreadIdentifier.cs: 0bd2d4a427ab94d96647103ab2dc7c84 -> 
+  custom:scripting/monoscript/fileName/AnalysisTabBarController.cs: d551d13fd81970ced5b14ef262352559 -> 
+  custom:scripting/monoscript/fileName/SnapshotIssuesModelBuilder.cs: c95f0dd4a96c4a0f86fb3d3a6c7046d8 -> 
+  custom:scripting/monoscript/fileName/MemoryProfilerWindow.cs: aa58e88c903fcdef00fc10b4ddfcd3aa -> 
+  custom:scripting/monoscript/fileName/UnityObjectsBreakdownViewController.cs: 72119a00d327bcc7b66639771e3fc2e1 -> 
+  custom:scripting/monoscript/fileName/InfoBox.cs: 91d488751b5ec0d860d5156a5b2802d6 -> 
+  custom:scripting/monoscript/fileName/History.cs: 79c06da2a2de114dff6678580a5aec4e -> 
+  custom:scripting/monoscript/fileName/ActivityIndicatorOverlay.cs: 646bc98d40490e69b022cf48f65c4325 -> 
+  custom:scripting/monoscript/fileName/MemoryBreakdownViewController.cs: 848549883d3e380796afab2dea3631d8 -> 
+  custom:scripting/monoscript/fileName/BreakdownViewController.cs: 2f933c8788044801fcd40617a56fbac3 -> 
+  custom:scripting/monoscript/fileName/BlockList.cs: 90647cc400823b41df847a6cbfc29026 -> 
+  custom:scripting/monoscript/fileName/AsyncWorker.cs: 90647cc400823b41df847a6cbfc29026 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 30358.098260 seconds.
+  path: Assets/Prefabs/Objects/Route/Route.prefab
+  artifactKey: Guid(155303cd3751c9aca99047527dd41186) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Objects/Route/Route.prefab using Guid(155303cd3751c9aca99047527dd41186) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5408c1d9856a9844f7e6a1c3eb973be2') in 0.214778 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 16
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory is not a mono symbol file
+- Loaded All Assemblies, in  1.366 seconds
+Refreshing native plugins compatible for Editor in 6.80 ms, found 1 plugins.
+Native extension for LinuxStandalone target not found
+Native extension for iOS target not found
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  4.338 seconds
+Domain Reload Profiling: 5697ms
+	BeginReloadAssembly (321ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (27ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (115ms)
+	RebuildCommonClasses (104ms)
+	RebuildNativeTypeToScriptingClass (29ms)
+	initialDomainReloadingComplete (159ms)
+	LoadAllAssembliesAndSetupDomain (743ms)
+		LoadAssemblies (759ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (101ms)
+			TypeCache.Refresh (29ms)
+				TypeCache.ScanAssembly (6ms)
+			ScanForSourceGeneratedMonoScriptInfo (55ms)
+			ResolveRequiredComponents (17ms)
+	FinalizeReload (4340ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (3115ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (105ms)
+			SetLoadedEditorAssemblies (16ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (202ms)
+			ProcessInitializeOnLoadAttributes (1442ms)
+			ProcessInitializeOnLoadMethodAttributes (1338ms)
+			AfterProcessingInitializeOnLoad (11ms)
+			EditorAssembliesLoaded (1ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (29ms)
+Refreshing native plugins compatible for Editor in 8.39 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 5390 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 58 unused Assets / (422.7 KB). Loaded Objects now: 5943.
+Memory consumption went from 173.1 MB to 172.7 MB.
+Total: 60.322123 ms (FindLiveObjects: 0.578784 ms CreateObjectMapping: 0.523751 ms MarkObjects: 58.774656 ms  DeleteObjects: 0.441423 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:scripting/monoscript/fileName/DynamicArray.cs: ec0bbc24403a197d75b294e49f326b59 -> e31f8fb0c891e8a0f4b8f3b9be6577d5
+  custom:scripting/monoscript/fileName/SelectionDetailsFactory.cs: d9499fbfc4b1d518acfaf953042bf666 -> 
+  custom:scripting/monoscript/fileName/Hotkey.cs: 6bebf3c19d865600700d06aca759c483 -> 
+  custom:scripting/monoscript/fileName/UnityObjectsMemoryInEditorBreakdownModelBuilder.cs: 5da9c628c20ec47115860c462bffd4c4 -> 
+  custom:scripting/monoscript/fileName/OpenSnapshotsManager.cs: 52dfd7935d8795aadd67d6d2864084d2 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:scripting/monoscript/fileName/UnityObjectsModelBuilder.cs: 9a9445edcc560b1105bfddfbebd8eabb -> 
+  custom:scripting/monoscript/fileName/IFileReader.cs: 27e3606b867fee0a286a593f4f294d75 -> 
+  custom:scripting/monoscript/fileName/OpenSnapshotsWindow.cs: 01aa51f20a6e89407e2fec231de7182f -> 
+  custom:scripting/monoscript/fileName/MeshBuilder.cs: 31fee05c889b3998e3f8bcea6b25613e -> 
+  custom:scripting/monoscript/fileName/MetaDataHelpers.cs: 00e7aa7c458a9d47f56a00d4d5eff03d -> 
+  custom:scripting/monoscript/fileName/ObjectData.cs: 3c6adcf486d0c190516733f777f07188 -> 
+  custom:scripting/monoscript/fileName/ZoomArea.cs: 024c8d443d286b8090652a766d648d18 -> 
+  custom:scripting/monoscript/fileName/PlatformsHelper.cs: 5a7809c9a2e48648929073ac2db9cb6d -> 
+  custom:scripting/monoscript/fileName/MemoryProfilerSettings.cs: d4af3956f21dd48fa669f4654f571d14 -> 
+  custom:scripting/monoscript/fileName/UnsafeDataUtility.cs: 97246d5b6a7d0428614775c312dd53a2 -> 
+  custom:scripting/monoscript/fileName/DetailFormatter.cs: d6d1946ffceb5da99dd6cf5f403878de -> 
+  custom:scripting/monoscript/fileName/MultiColumnHeaderWithTruncateTypeName.cs: e6f30cceebe3b7f211ade59ee4b9b501 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:scripting/monoscript/fileName/ToolbarDropDownButton.cs: 3082c7a3456125e57b805a543e345642 -> 
+  custom:scripting/monoscript/fileName/NativeArrayAlgorithms.cs: 6b644df68d49586f335567dff1f0b82a -> 
+  custom:scripting/monoscript/fileName/DeltaBarCell.cs: f6f5cbba067aee8accacc018cc68e110 -> 
+  custom:scripting/monoscript/fileName/ITextFilter.cs: a5985b9b33e28d3d518c8a4a326da812 -> 
+  custom:scripting/monoscript/fileName/AllTrackedMemoryModel.cs: cc355c1da84e84e665c59728739459f9 -> 
+  custom:scripting/monoscript/fileName/EditorUtilityCompatibilityHelper.cs: 62f3850b4c1c02e79eb484d3795c6294 -> 
+  custom:scripting/monoscript/fileName/DataFormatter.cs: 0694de2a953f4cbbacc5c7a372d0c05e -> 
+  custom:scripting/monoscript/fileName/AllSystemMemoryBreakdownModel.cs: 6cfe785298b03de69d1f91e0ebd8b98a -> 
+  custom:scripting/monoscript/fileName/MemoryProfilerModuleViewController.cs: 95456b8f5501afa9d0cb401925805610 -> 
+  custom:scripting/monoscript/fileName/ProfilerColors.cs: 079e904785992720749a77837038c521 -> 
+  custom:scripting/monoscript/fileName/MetadataInjector.cs: c1c70860950d7faae653d633c4efe5be -> 
+  custom:scripting/monoscript/fileName/UnityObjectsComparisonModel.cs: c48766e5203596a6df99481e109374cc -> 
+  custom:scripting/monoscript/fileName/BackgroundPattern.cs: 8fd03d456274ed496ca9bb42a96a64d1 -> 
+  custom:scripting/monoscript/fileName/MemoryBreakdownModel.cs: 5e35ba4bab66cf6ceda9337d601a55fe -> 
+  custom:scripting/monoscript/fileName/MatchesTextFilter.cs: bcb042d3a74ee01dd02bf4f8edeed72e -> 
+  custom:scripting/monoscript/fileName/MemoryProfilerModuleBridge.cs: d291ae24751beadc228f19735f41b694 -> 
+  custom:scripting/monoscript/fileName/TabBarController.cs: e26ce678859b45f8250a0ae7d2666707 -> 
+  custom:scripting/monoscript/fileName/VMTools.cs: 9f942ea17d4029801400f817d7f22314 -> 
+  custom:scripting/monoscript/fileName/DeviceMemoryBreakdownViewController.cs: 65d97cb130945bf0746c110d13cf273a -> 
+  custom:scripting/monoscript/fileName/ProgressBar.cs: 03e8e1c12f2f51e4947bdf231c1dbd96 -> 
+  custom:scripting/monoscript/fileName/TreeComparisonBuilder.cs: e35473db10a6df7c28d14d69c500e6c8 -> 
+  custom:scripting/monoscript/fileName/ContainsTextFilter.cs: ce14ed3f8bba3fb58ae0b759ab8b00c3 -> 
+  custom:scripting/monoscript/fileName/UnityObjectsMemoryBreakdownModelBuilder.cs: c92dc67dc49969ebbd02ea39430a31e6 -> 
+  custom:CustomObjectIndexerAttribute: 306bfa6df2d96854e1ebb52f3ddacab7 -> 
+  custom:scripting/monoscript/fileName/MemoryBreakdownBarViewController.cs: ff6861596c1e524e461ca8a42308a694 -> 
+  custom:scripting/monoscript/fileName/EditorWindowCoroutineExtension.cs: 8c612763925b943c64e54855c759cc9e -> 
+  custom:scripting/monoscript/fileName/TreeModelUtility.cs: 1aeaea7e67c4d8de5a08f942b08b4a38 -> 
+  custom:scripting/monoscript/fileName/Icons.cs: 5cbcc599b1f0fe48c2ee493b021dcc79 -> abf089f96620a0dfa1fac77a06c6c48e
+  custom:scripting/monoscript/fileName/EditorWaitForSeconds.cs: 136f9181567622a0dc32613566fb6f9c -> 
+  custom:scripting/monoscript/fileName/Ribbon.cs: 29c2eb009f50fa8a8c04e34d226a33ee -> 
+  custom:scripting/monoscript/fileName/ComparisonTableModel.cs: 50e9875147cb717f50ded402021bce6f -> 
+  custom:scripting/monoscript/fileName/UnityObjectsComparisonModelBuilder.cs: 5554d02923cfb90d6abba2f058a34d9a -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/PatternBuilder.cs: eab13e1f7fa7abb14eed831fb54da896 -> 
+  custom:scripting/monoscript/fileName/SelectedItemDetailsPanel.cs: 2b6abfe5bdd3c28f0c856a385ba8e0f7 -> 
+  custom:scripting/monoscript/fileName/AllTrackedMemoryDescriptionCell.cs: cd32baa88728a74c1a065597f52923e4 -> 
+  custom:scripting/monoscript/fileName/PathsToRootDetailView.cs: 0010feef412adb7556f85353e0e54c77 -> 
+  custom:scripting/monoscript/fileName/UIState.cs: 38dbaed1bac20465b11e0503bff58a5f -> 
+  custom:scripting/monoscript/fileName/UnifiedUnityObjectInfo.cs: 80acea6195442f9e7e2cadd9e944ac5c -> 
+  custom:scripting/monoscript/fileName/EditorAssetFinderUtility.cs: 0cca1bde4e542a890349d56d3a277868 -> 
+  custom:scripting/monoscript/fileName/DeviceMemoryBreakdownBarViewController.cs: f3132f3d9bcfa00023e91bcc324f834c -> 
+  custom:scripting/monoscript/fileName/Diagnostics.cs: 79bad3305d849d7ee685af511039a8d5 -> 
+  custom:scripting/monoscript/fileName/PathsToRootUtil.cs: 059bcae15195e9c1b825ad6658ee445e -> 
+  custom:scripting/monoscript/fileName/ManagedMemoryBreakdownModelBuilder.cs: 6c914be04404f451993481e27600bde7 -> 
+  custom:scripting/monoscript/fileName/MemoryProfilerAnalytics.cs: 070fe968baacad96287a40716eedfb6c -> 
+  custom:scripting/monoscript/fileName/IComparableItemData.cs: 4f5a82e037a61e1dcc5bb951f0c2b9d1 -> 
+  custom:scripting/monoscript/fileName/PlayerConnectionCompatibilityHelper.cs: 635008d39c2e825d40ef435ebb858eec -> 
+  custom:scripting/monoscript/fileName/SnapshotFileData.cs: e8e4e95acc5ea0a5d97e366023839484 -> 
+  custom:scripting/monoscript/fileName/SizeDataFormatter.cs: a329be1854e8f94aebca52b653a4a07d -> 
+  custom:scripting/monoscript/fileName/DeviceMemoryBreakdownModel.cs: 6cf7e821b40d869eb6589309dbdcb713 -> 
+  custom:scripting/monoscript/fileName/SnapshotsWindow.cs: 6fba1b72bf4c3f5e6e4b57cf74c3efe7 -> 
+  custom:scripting/monoscript/fileName/ComparisonViewController.cs: 7eb4c27de6d6770166139d44d5194c21 -> 
+  custom:scripting/monoscript/fileName/ViewControllerUtility.cs: 5b52e9a16ae00d9e6eba78f8037de79b -> 
+  custom:scripting/monoscript/fileName/ObjectDataFormatter.cs: b4282bbbd36935f157e21943d70ccd1c -> 
+  custom:scripting/monoscript/fileName/ManagedObjectInspector.cs: 43c441648bb7e1bf810818902b88a0bb -> 
+  custom:scripting/monoscript/fileName/EnumerationStatus.cs: 71a8b334ae81fba85c1d1e652a2432f1 -> 
+  custom:scripting/monoscript/fileName/AllSystemMemoryBreakdownModelBuilder.cs: e7064739d54df78fe96f7e561019d85a -> 
+  custom:scripting/monoscript/fileName/ObjectOrTypeLabel.cs: 3e4dde6752f0a49be56d3a32f3a4c1fc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/AllTrackedMemoryBreakdownViewController.cs: 0910a1dee854014ac1a291c168d3ee3a -> 
+  custom:scripting/monoscript/fileName/ActivityIndicator.cs: 249b3f6d45aab2924f1f499f5b97d6e1 -> 
+  custom:scripting/monoscript/fileName/IMemoryBreakdownViewController.cs: 5cf463e7bfd8511c2b3e48029cf6795d -> 
+  custom:scripting/monoscript/fileName/IReader.cs: 4f885daa21ea1a7f87bd2184b2ab1f78 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:scripting/monoscript/fileName/SplitterStateEx.cs: ec43e26f06f7ae5df389ff4b56579d95 -> 
+  custom:scripting/monoscript/fileName/SnapshotListItem.cs: 3798181bb2fe3c864612ca73a3e5f980 -> 
+  custom:scripting/monoscript/fileName/MemoryBreakdownLegendViewController.cs: ae1f322f6c27285d9f3e4b0b75e73e05 -> 
+  custom:scripting/monoscript/fileName/AllTrackedMemoryComparisonViewController.cs: 20c7c5fba4680914c3bcb0160254b8f3 -> 
+  custom:scripting/monoscript/fileName/NoDataViewController.cs: 71abd3ab2e674dde165e2520f617ed02 -> 
+  custom:scripting/monoscript/fileName/MemoryProfilerWindowContent.cs: 9ab47d8e6176480220549dd04c1411bd -> 
+  custom:scripting/monoscript/fileName/IconUtility.cs: 634ca03792879e0c625dd1dfdda634b5 -> cdc93398ac64b91386dd312e41d20f9f
+  custom:scripting/monoscript/fileName/SelectedItemDetailsForTypesAndObjects.cs: cee952715156de9eea2eb41a888aaa89 -> 
+  custom:scripting/monoscript/fileName/ViewController.cs: dcabd967327f8f64b76a445b41bc4539 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:scripting/monoscript/fileName/DropDownButton.cs: 26a7aeab1378384e6983ea72b303dc06 -> 
+  custom:scripting/monoscript/fileName/Block.cs: df12457a6cf5a2cc04d95dbe05379ece -> 
+  custom:scripting/monoscript/fileName/CachedSnapshot.cs: 6c9a54177365fa79e04d822eb62b376f -> 
+  custom:AudioImporter_EditorPlatform: 2f0ff77a95e0ac474e3e8eeba4e2f7cb -> 
+  custom:scripting/monoscript/fileName/MemorySampleSelection.cs: cc33310312bb0b197da4739e8f95ad43 -> 
+  custom:scripting/monoscript/fileName/AllTrackedMemoryComparisonTableModelBuilder.cs: 6c8a6f32aee712c05d577a4537979b64 -> 
+  custom:scripting/monoscript/fileName/AllSystemMemoryBreakdownViewController.cs: 0e963044c279880d33e050f5aba0336f -> 
+  custom:scripting/monoscript/fileName/PathsToRootDetailViewItem.cs: d1552b1c18571633473797eed0b7bc00 -> 
+  custom:scripting/monoscript/fileName/Styles.cs: 8868cdb4bbc85ea63b8f6d57cb90a919 -> 1728aa377394bacc23133c7e998f0fa5
+  custom:scripting/monoscript/fileName/UnityObjectsTableViewController.cs: 8b9393392591c3e3363ca7227317c8cb -> 
+  custom:scripting/monoscript/fileName/SnapshotCollection.cs: 16ab21b2265125173acb70925ae90c8e -> 
+  custom:scripting/monoscript/fileName/Entry.cs: 09bea23bd1d5693ef5fc3fd68a0f04b2 -> 
+  custom:scripting/monoscript/fileName/MemoryBreakdownModelBuilderBase.cs: 42791de9aef67cb63fc9943634e95489 -> 
+  custom:scripting/monoscript/fileName/StringExtensions.cs: 0525f2f83d06dd8322bce9bdf02dc7ef -> 6ec0be846eed81ad06d6bccd834b2236
+  custom:scripting/monoscript/fileName/RibbonButton.cs: cb3fa848fabeb08dd5b6b1c672e24713 -> 
+  custom:scripting/monoscript/fileName/UnsupportedSnapshotVersionException.cs: 36f7285e7d91193d59976871da627e09 -> 
+  custom:scripting/monoscript/fileName/MemoryUsageDial.cs: a52dbb894fd085eaec5f44b8c43b42e6 -> 
+  custom:scripting/monoscript/fileName/DeviceMemoryBreakdownModelBuilder.cs: 8428b5c9d5741fb7280759d7c0cb76b5 -> 
+  custom:scripting/monoscript/fileName/WorkbenchSplitter.cs: 80f2bc5495ac2a3fe5843067c18b7101 -> 
+  custom:scripting/monoscript/fileName/UnityObjectsModel.cs: 6ee983feaaac7f0bbafa9741b1efbf07 -> 
+  custom:scripting/monoscript/fileName/UnityObjectsDescriptionCell.cs: 21db1deaace0830da87c4f292b11abe0 -> 
+  custom:scripting/monoscript/fileName/EditorCoroutineUtility.cs: 8120324be4f28417c9962bc3a65d04a0 -> 
+  custom:scripting/monoscript/fileName/SnapshotIssuesModel.cs: 8c03d4761bc7bbe6ab54d5aa86abde2b -> 
+  custom:scripting/monoscript/fileName/EditorGUICompatibilityHelper.cs: 351928010be3c0fc8e7cba29289fa933 -> 
+  custom:scripting/monoscript/fileName/TreeModel.cs: 90647cc400823b41df847a6cbfc29026 -> 
+  custom:scripting/monoscript/fileName/AllProcessMemoryBreakdownModelBuilder.cs: 54dcf5744abfe78d0df851ae3e39d11f -> 
+  custom:scripting/monoscript/fileName/DetailedSizeBar.cs: a1c8fffe2038511e789172fabbc7441e -> 
+  custom:scripting/monoscript/fileName/EnumExtensions.cs: 63de0c10b66e16f277948838b882f77e -> 872fcb89b813d64606e680211dede528
+  custom:scripting/monoscript/fileName/FeatureUnavailableViewController.cs: cd959eddd803d1d25da405e7528404dd -> 
+  custom:scripting/monoscript/fileName/ManagedDataCrawler.cs: eebaeb3d895650bc200f6709e037a212 -> 
+  custom:scripting/monoscript/fileName/MemoryProfilerModuleOverride.cs: 25201d4c71e5c0b047531e9cd37359dd -> 
+  custom:scripting/monoscript/fileName/CaptureControlUI.cs: c0cbfa1b17a2bfdba3de0d9ab1a37d75 -> 
+  custom:scripting/monoscript/fileName/UIElementsHelper.cs: edceaa716baa35e9ad38e4e51a9c83b6 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:scripting/monoscript/fileName/SnapshotIssuesViewController.cs: 187661cc28a0514481cd21f9850115ad -> 
+  custom:scripting/monoscript/fileName/SummaryViewController.cs: e32477ab0e9b6225a3d440242c0ce3a1 -> 
+  custom:scripting/monoscript/fileName/FormatDataTypes.cs: 660519df8ea6c42846f8ed899c2f36f1 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/ManagedObjectInspectorItem.cs: d40e62465969b598a504e833c0f05242 -> 
+  custom:scripting/monoscript/fileName/DetailViewController.cs: 2c1a905d6fdfff6fefc387650358f0d2 -> 
+  custom:scripting/monoscript/fileName/DeviceMemoryBreakdownInEditorModelBuilder.cs: 549d5e473cab0a16b595d2577de661dc -> 
+  custom:scripting/monoscript/fileName/AllProcessMemoryInEditorBreakdownModelBuilder.cs: d42be3db77a7a4b8c10b83ef790801af -> 
+  custom:scripting/monoscript/fileName/AllTrackedMemoryModelBuilder.cs: bd0cd51b3a25f0a72a6570c299da96f7 -> 
+  custom:scripting/monoscript/fileName/FileReader.cs: bfb4931ce43afe5d3625c0a6304f40fe -> 
+  custom:scripting/monoscript/fileName/EditorCoroutine.cs: ecfde58f5f2276c57435e977dfe7f74c -> 
+  custom:scripting/monoscript/fileName/CountDeltaCell.cs: 4061b61606fa21a09b8082b6eea31726 -> 
+  custom:scripting/monoscript/fileName/AllTrackedMemoryTableViewController.cs: 03ab35171eef494dfa67f703c2d50592 -> 
+  custom:scripting/monoscript/fileName/UnityObjectsComparisonViewController.cs: c13f407f250aa8ceb14f31916a224b81 -> 
+  custom:scripting/monoscript/fileName/DataSourceFromAPI.cs: 0ecf0b5b4a9207402e80b603ad9a119c -> 
+  custom:scripting/monoscript/fileName/GenericReadOperation.cs: a25f3b314687a2bdc5d6432354c77025 -> 
+  custom:scripting/monoscript/fileName/ReadCommandBufferUtils.cs: 3c4a6d1443dc238debbc6ba8b0a9d1d4 -> 
+  custom:scripting/monoscript/fileName/DynamicBlockArray.cs: e3ee4eac043311bb00853be8b6e288e2 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/ViewPane.cs: e13234d7428caad52017a1ee3337a806 -> 
+  custom:scripting/monoscript/fileName/Range.cs: 22bd6b37a576445fe1aec9c831c4c17c -> 6403016406936a29c1e23f7a5897e397
+  custom:scripting/monoscript/fileName/LowLevelFileReader.cs: d7218648e95ea8ce16ec1c7a631ad40e -> 
+  custom:scripting/monoscript/fileName/ObjectDataTypeFormatter.cs: 9b72c376351c38dbfc7c3e422e99efe7 -> 
+  custom:scripting/monoscript/fileName/AnalysisTabBarController.cs: d551d13fd81970ced5b14ef262352559 -> 
+  custom:scripting/monoscript/fileName/SnapshotIssuesModelBuilder.cs: c95f0dd4a96c4a0f86fb3d3a6c7046d8 -> 
+  custom:scripting/monoscript/fileName/MemoryProfilerWindow.cs: aa58e88c903fcdef00fc10b4ddfcd3aa -> 
+  custom:scripting/monoscript/fileName/UnityObjectsBreakdownViewController.cs: 72119a00d327bcc7b66639771e3fc2e1 -> 
+  custom:scripting/monoscript/fileName/InfoBox.cs: 91d488751b5ec0d860d5156a5b2802d6 -> 
+  custom:scripting/monoscript/fileName/History.cs: 79c06da2a2de114dff6678580a5aec4e -> 
+  custom:scripting/monoscript/fileName/ActivityIndicatorOverlay.cs: 646bc98d40490e69b022cf48f65c4325 -> 
+  custom:scripting/monoscript/fileName/MemoryBreakdownViewController.cs: 848549883d3e380796afab2dea3631d8 -> 
+  custom:scripting/monoscript/fileName/BreakdownViewController.cs: 2f933c8788044801fcd40617a56fbac3 -> 
+  custom:scripting/monoscript/fileName/BlockList.cs: 90647cc400823b41df847a6cbfc29026 -> 
+  custom:scripting/monoscript/fileName/AsyncWorker.cs: 90647cc400823b41df847a6cbfc29026 -> 
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory is not a mono symbol file
+- Loaded All Assemblies, in  2.146 seconds
+Refreshing native plugins compatible for Editor in 13.94 ms, found 1 plugins.
+Native extension for LinuxStandalone target not found
+Native extension for iOS target not found
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  6.986 seconds
+Domain Reload Profiling: 9122ms
+	BeginReloadAssembly (540ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (45ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (173ms)
+	RebuildCommonClasses (175ms)
+	RebuildNativeTypeToScriptingClass (51ms)
+	initialDomainReloadingComplete (141ms)
+	LoadAllAssembliesAndSetupDomain (1229ms)
+		LoadAssemblies (1108ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (319ms)
+			TypeCache.Refresh (98ms)
+				TypeCache.ScanAssembly (54ms)
+			ScanForSourceGeneratedMonoScriptInfo (164ms)
+			ResolveRequiredComponents (55ms)
+	FinalizeReload (6987ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (4778ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (208ms)
+			SetLoadedEditorAssemblies (54ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (488ms)
+			ProcessInitializeOnLoadAttributes (2327ms)
+			ProcessInitializeOnLoadMethodAttributes (1688ms)
+			AfterProcessingInitializeOnLoad (11ms)
+			EditorAssembliesLoaded (1ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (23ms)
+Refreshing native plugins compatible for Editor in 8.99 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 5546 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 59 unused Assets / (463.7 KB). Loaded Objects now: 6100.
+Memory consumption went from 177.6 MB to 177.2 MB.
+Total: 50.406535 ms (FindLiveObjects: 0.595847 ms CreateObjectMapping: 0.334331 ms MarkObjects: 49.036064 ms  DeleteObjects: 0.436926 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:CustomObjectIndexerAttribute: 306bfa6df2d96854e1ebb52f3ddacab7 -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/PatternBuilder.cs: eab13e1f7fa7abb14eed831fb54da896 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:AudioImporter_EditorPlatform: 2f0ff77a95e0ac474e3e8eeba4e2f7cb -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
