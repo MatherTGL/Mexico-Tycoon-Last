@@ -6,6 +6,7 @@ namespace Transport.Reception
     public interface IBuildingRequestForTransport
     {
         IBuildingPurchased IbuildingPurchased { get; }
+        IBuildingJobStatus IbuildingJobStatus { get; }
 
 
         float RequestGetResource(in float transportCapacity, in TypeProductionResources.TypeResource typeResource);

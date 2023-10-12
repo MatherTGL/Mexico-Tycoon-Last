@@ -7,38 +7,30 @@ using UnityEngine;
 
 namespace Transport
 {
-    public sealed class Transportation : IDisposable
+    //TODO: refactoring
+    public sealed class Transportation : ITransportation, IDisposable
     {
-        private const float _fullSpeedPercentage = 1.0f;
-
         private ITransportInteractRoute _ItransportInteractRoute;
+        ITransportInteractRoute ITransportation.ItransportInteractRoute => _ItransportInteractRoute;
 
         private TransportationFuel _transportationFuel;
+        TransportationFuel ITransportation.transportationFuel => _transportationFuel;
 
         private TransportationBreakdowns _transportationBreakdowns;
+        TransportationBreakdowns ITransportation.transportationBreakdowns => _transportationBreakdowns;
+
+        private TransportationMovement _transportationMovement;
 
         private TypeTransport _typeTransport;
         public TypeTransport typeTransport => _typeTransport;
 
         private TypeTransport _futureConfigTypeTransport;
 
-        private readonly GameObject _someObject;
-
         private Dictionary<byte, bool[]> d_loadAndUnloadStates = new Dictionary<byte, bool[]>();
 
         private TypeProductionResources.TypeResource _typeCurrentTransportResource;
 
-        private event Action<bool> _isInStartedPosition;
-
         private float _productLoad;
-
-        private float _maxSpeed, _minSpeed;
-
-        private float _currentSpeed;
-
-        private byte _indexCurrentRoutePoint;
-
-        private bool _isFirstPosition = true;
 
         private bool _isWaitingReception;
 
@@ -49,16 +41,15 @@ namespace Transport
                              in ITransportInteractRoute routeTransportControl,
                              in GameObject objectTransport)
         {
-            this._typeTransport = typeTransport;
+            _typeTransport = typeTransport;
             _ItransportInteractRoute = routeTransportControl;
-            _someObject = objectTransport;
 
-            _transportationFuel = new TransportationFuel(this._typeTransport);
-            _transportationBreakdowns = new TransportationBreakdowns(this._typeTransport);
+            _transportationFuel = new(_typeTransport);
+            _transportationBreakdowns = new(_typeTransport);
+            _transportationMovement = new(this, objectTransport);
 
             SubscribeToEvents();
             InitDictionaryStates();
-            SetAdditionalCharacteristics();
         }
 
         private void InitDictionaryStates()
@@ -67,39 +58,13 @@ namespace Transport
                 d_loadAndUnloadStates.Add(i, new bool[2]);
         }
 
-        private void SetAdditionalCharacteristics()
-        {
-            float availableSpeedAfterImpact = (_fullSpeedPercentage
-                - _ItransportInteractRoute.impactOfObstaclesOnSpeed) / 100;
-
-            _maxSpeed = _typeTransport.maxSpeed * availableSpeedAfterImpact * Time.fixedDeltaTime;
-            _minSpeed = _maxSpeed * _typeTransport.minSpeedPercentageMaxSpeed;
-        }
-
         private void SubscribeToEvents()
         {
-            _isInStartedPosition += SendRequestFromPosition;
-            _ItransportInteractRoute.lateUpdated += MovementTransport;
-            _ItransportInteractRoute.updatedTimeStep += ChangeSpeed;
+            _transportationMovement.isInStartedPosition += SendRequestFromPosition;
+            _ItransportInteractRoute.lateUpdated += _transportationMovement.MovementTransport;
+            _ItransportInteractRoute.updatedTimeStep += _transportationMovement.ChangeSpeed;
             _ItransportInteractRoute.updatedTimeStep += _transportationFuel.FuelConsumption;
             _ItransportInteractRoute.updatedTimeStep += _transportationBreakdowns.DamageVehicles;
-        }
-
-        private void CheckPosition()
-        {
-            //TODO: refactoring
-            if (_someObject.transform.position == _ItransportInteractRoute.routePoints[_indexCurrentRoutePoint])
-            {
-                if (_indexCurrentRoutePoint == 0)
-                    _isInStartedPosition.Invoke(true);
-                else if (_indexCurrentRoutePoint == _ItransportInteractRoute.routePoints.Length - 1)
-                    _isInStartedPosition.Invoke(false);
-
-                if (_isFirstPosition && _indexCurrentRoutePoint < _ItransportInteractRoute.routePoints.Length - 1)
-                    _indexCurrentRoutePoint++;
-                else if (_indexCurrentRoutePoint > 0)
-                    _indexCurrentRoutePoint--;
-            }
         }
 
         private void SendRequestFromPosition(bool isStartedPosition)
@@ -116,14 +81,7 @@ namespace Transport
             RequestUnload(indexStateLoad: 1, indexReception: indexReception);
 
             if (WaitLoadOrUnload())
-                _isFirstPosition = isFirstPosition;
-        }
-
-        private void Move(in byte indexPositionRoute)
-        {
-            _someObject.transform.position = Vector3.MoveTowards(_someObject.transform.position,
-                                                    _ItransportInteractRoute.routePoints[indexPositionRoute],
-                                                    _currentSpeed);
+                _transportationMovement.isFirstPosition = isFirstPosition;
         }
 
         private void RequestLoad(in byte indexStateLoad, in byte indexReception)
@@ -153,23 +111,9 @@ namespace Transport
                 return false;
         }
 
-        private void MovementTransport()
-        {
-            if (_transportationFuel.IsFuelAvailable() && _transportationBreakdowns.IsNotInRepair())
-            {
-                CheckPosition();
-                Move(_indexCurrentRoutePoint);
-            }
-        }
-
-        private void ChangeSpeed()
-        {
-            _currentSpeed = UnityEngine.Random.Range(_minSpeed, _maxSpeed);
-        }
-
         public void Dispose()
         {
-            _ItransportInteractRoute.lateUpdated -= MovementTransport;
+            _ItransportInteractRoute.lateUpdated -= _transportationMovement.MovementTransport;
             GC.SuppressFinalize(this);
         }
 
@@ -178,13 +122,14 @@ namespace Transport
             _typeCurrentTransportResource = typeResource;
         }
 
+        //TODO: Finish it
         public void ChangeRoute(in ITransportInteractRoute routeTransportControl)
         {
             if (routeTransportControl != null)
             {
                 _ItransportInteractRoute = routeTransportControl;
-                _indexCurrentRoutePoint = 0;
-                _someObject.transform.position = _ItransportInteractRoute.routePoints[0];
+                //?_indexCurrentRoutePoint = 0;
+                //?_someObject.transform.position = _ItransportInteractRoute.routePoints[0];
             }
         }
 
@@ -198,7 +143,7 @@ namespace Transport
             if (_typeTransport != typeTransport && !_isRequestTransportationRepairIsMade)
             {
                 _futureConfigTypeTransport = typeTransport;
-                _isInStartedPosition += ReplaceTypeTransport;
+                _transportationMovement.isInStartedPosition += ReplaceTypeTransport;
                 _isRequestTransportationRepairIsMade = true;
             }
         }
@@ -208,7 +153,7 @@ namespace Transport
             if (isStartedPosition)
             {
                 _typeTransport = _futureConfigTypeTransport;
-                _isInStartedPosition -= ReplaceTypeTransport;
+                _transportationMovement.isInStartedPosition -= ReplaceTypeTransport;
                 _isRequestTransportationRepairIsMade = false;
             }
         }

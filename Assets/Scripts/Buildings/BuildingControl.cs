@@ -36,6 +36,7 @@ namespace Building
         private IEnergyConsumption _IenergyConsumption;
 
         private IBuildingJobStatus _IbuildingJobStatus;
+        IBuildingJobStatus IBuildingRequestForTransport.IbuildingJobStatus => _IbuildingJobStatus;
 
         private IBuildingPurchased _IbuildingPurchased;
         IBuildingPurchased IBuildingRequestForTransport.IbuildingPurchased => _IbuildingPurchased;

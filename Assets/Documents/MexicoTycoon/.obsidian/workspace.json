@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "b22d8b64dfb02dc7",
+        "id": "bd952c4a6cbd58a4",
         "type": "tabs",
         "children": [
           {
-            "id": "c614bfd36dfaf846",
+            "id": "d1a4a10c5d92f1c8",
             "type": "leaf",
             "state": {
               "type": "diagram-edit",
               "state": {
-                "file": "Untitled Diagram.svg"
+                "file": "Untitled Diagram 2.svg"
               }
             }
           }
@@ -52,18 +52,9 @@
               "type": "bookmarks",
               "state": {}
             }
-          },
-          {
-            "id": "2b8298d36bb83b95",
-            "type": "leaf",
-            "state": {
-              "type": "file-explorer",
-              "state": {
-                "sortOrder": "alphabetical"
-              }
-            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -84,7 +75,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Untitled Diagram.svg",
+                "file": "Untitled Diagram 2.svg",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -101,7 +92,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Untitled Diagram.svg",
+                "file": "Untitled Diagram 2.svg",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -124,7 +115,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Untitled Diagram.svg"
+                "file": "Untitled Diagram 2.svg"
               }
             }
           }
@@ -145,10 +136,11 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "c614bfd36dfaf846",
+  "active": "d1a4a10c5d92f1c8",
   "lastOpenFiles": [
-    "Untitled 1.canvas",
+    "Untitled Diagram 2.svg",
     "Untitled Diagram.svg",
+    "Untitled 1.canvas",
     "Untitled Diagram 1.svg.meta",
     "Untitled Diagram 1.svg",
     "Untitled.canvas",
