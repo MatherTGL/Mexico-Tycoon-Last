@@ -48,21 +48,23 @@ namespace Transport
         //TODO: Refactoring
         private void CheckPosition()
         {
-            if (_someObject.transform.position == _Itransportation.ItransportInteractRoute
-                                                                  .routePoints[_indexCurrentRoutePoint])
+            var currentRoutePoint = _Itransportation.ItransportInteractRoute.routePoints[_indexCurrentRoutePoint];
+            var lastRoutePoint = _Itransportation.ItransportInteractRoute.routePoints.Length - 1;
+            
+            if (_someObject.transform.position == currentRoutePoint)
             {
                 if (_indexCurrentRoutePoint == 0)
                 {
                     if (CheckBuildingWorkingAndInvokeAction(true) == false)
                         return;
                 }
-                else if (_indexCurrentRoutePoint == _Itransportation.ItransportInteractRoute.routePoints.Length - 1)
+                else if (_indexCurrentRoutePoint == lastRoutePoint)
                 {
                     if (CheckBuildingWorkingAndInvokeAction(false) == false)
                         return;
                 }
 
-                if (_isFirstPosition && _indexCurrentRoutePoint < _Itransportation.ItransportInteractRoute.routePoints.Length - 1)
+                if (_isFirstPosition && _indexCurrentRoutePoint < lastRoutePoint)
                     _indexCurrentRoutePoint++;
                 else if (_indexCurrentRoutePoint > 0)
                     _indexCurrentRoutePoint--;

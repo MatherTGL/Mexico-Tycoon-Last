@@ -1,7 +1,6 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-
 namespace Config.Data.Player
 {
     [CreateAssetMenu(fileName = "ConfigDataPlayerDefault", menuName = "Config/Data/Data Player/Create New", order = 50)]

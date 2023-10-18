@@ -6,20 +6,24 @@ using UnityEngine;
 using Climate;
 using Expense;
 using static Expense.ExpensesEnumTypes;
+using System;
+using Building.Hire;
 
 namespace Building.Farm
 {
-    public sealed class BuildingFarm : AbstractBuilding, IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption, IChangedFarmType, IUsesClimateInfo, IUsesExpensesManagement
+    public sealed class BuildingFarm : AbstractBuilding, IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption, IChangedFarmType, IUsesClimateInfo, IUsesExpensesManagement, IHiring
     {
         private readonly IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
         IBuildingMonitorEnergy IEnergyConsumption.IbuildingMonitorEnergy => _IbuildingMonitorEnergy;
 
         private IClimateZone _IclimateZone;
 
-        IObjectsExpensesImplementation ISpending.IobjectsExpensesImplementation => _IobjectsExpensesImplementation;
+        private Lazy<Hiring> _hiring = new Lazy<Hiring>();
+
+        IObjectsExpensesImplementation ISpending.IobjectsExpensesImplementation => IobjectsExpensesImplementation;
         IObjectsExpensesImplementation IUsesExpensesManagement.IobjectsExpensesImplementation
         {
-            get => _IobjectsExpensesImplementation; set => _IobjectsExpensesImplementation = value;
+            get => IobjectsExpensesImplementation; set => IobjectsExpensesImplementation = value;
         }
 
         private ConfigBuildingFarmEditor _config;
@@ -42,9 +46,9 @@ namespace Building.Farm
 
         private float _currentPercentageOfMaturity;
 
-        bool IBuildingJobStatus.isWorked { get => _isWorked; set => _isWorked = value; }
+        bool IBuildingJobStatus.isWorked { get => isWorked; set => isWorked = value; }
 
-        bool IBuildingPurchased.isBuyed { get => _isBuyed; set => _isBuyed = value; }
+        bool IBuildingPurchased.isBuyed { get => isBuyed; set => isBuyed = value; }
 
         private bool _isCurrentlyInProduction;
 
@@ -100,16 +104,16 @@ namespace Building.Farm
 
         private void CalculateImpactClimateZones()
         {
-            double addingNumber = _IobjectsExpensesImplementation.GetTotalExpenses() * _IclimateZone
+            double addingNumber = IobjectsExpensesImplementation.GetTotalExpenses() * _IclimateZone
                 .configClimateZone.percentageImpactCostMaintenance;
 
-            _IobjectsExpensesImplementation.ChangeExpenses(addingNumber, AreaExpenditureType.Production,
+            IobjectsExpensesImplementation.ChangeExpenses(addingNumber, AreaExpenditureType.Production,
                                                            isAdd: true);
         }
 
         void IBuilding.ConstantUpdatingInfo()
         {
-            if (_isWorked && _isBuyed)
+            if (isWorked && isBuyed)
                 Production();
         }
 
@@ -125,5 +129,12 @@ namespace Building.Farm
             _IclimateZone = IclimateZone;
             CalculateImpactClimateZones();
         }
+
+        //? move to into interface
+        void IHiring.Hire(in byte indexEmployee) => _hiring.Value.Hire(indexEmployee);
+
+        void IHiring.Firing(in byte indexEmployee) => _hiring.Value.Firing(indexEmployee);
+
+        void IHiring.ConstantUpdatingInfo() => _hiring.Value.ConstantUpdatingInfo();
     }
 }

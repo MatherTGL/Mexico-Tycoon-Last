@@ -9,10 +9,10 @@ namespace Building.Aerodrome
 {
     public sealed class BuildingAerodrome : AbstractBuilding, IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IUsesExpensesManagement
     {
-        IObjectsExpensesImplementation ISpending.IobjectsExpensesImplementation => _IobjectsExpensesImplementation;
+        IObjectsExpensesImplementation ISpending.IobjectsExpensesImplementation => IobjectsExpensesImplementation;
         IObjectsExpensesImplementation IUsesExpensesManagement.IobjectsExpensesImplementation
         {
-            get => _IobjectsExpensesImplementation; set => _IobjectsExpensesImplementation = value;
+            get => IobjectsExpensesImplementation; set => IobjectsExpensesImplementation = value;
         }
 
         private readonly ConfigBuildingAerodromeEditor _config;
@@ -29,9 +29,9 @@ namespace Building.Aerodrome
 
         uint[] IBuilding.localCapacityProduction => _config.localCapacityProduction;
 
-        bool IBuildingPurchased.isBuyed { get => _isBuyed; set => _isBuyed = value; }
+        bool IBuildingPurchased.isBuyed { get => isBuyed; set => isBuyed = value; }
 
-        bool IBuildingJobStatus.isWorked { get => _isWorked; set => _isWorked = value; }
+        bool IBuildingJobStatus.isWorked { get => isWorked; set => isWorked = value; }
 
 
         public BuildingAerodrome(in ScriptableObject config)
@@ -41,7 +41,7 @@ namespace Building.Aerodrome
 
         void IBuilding.ConstantUpdatingInfo()
         {
-            if (_isBuyed && _isWorked)
+            if (isBuyed && isWorked)
             {
                 Debug.Log("Aerodrome is work");
             }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2316839680321300401}
   - component: {fileID: 939326796670054273}
   - component: {fileID: 4534772281560338706}
+  - component: {fileID: 3941252194975778862}
   m_Layer: 0
   m_Name: City
   m_TagString: Untagged
@@ -99,9 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1de3b6054c16dee2baab53a2cdd17e99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _typeCurrentBuilding: 0
-  _typeConnectBuildings: 0001030405
-  _freeConnectionCount: 4
+  _configReception: {fileID: 11400000, guid: a2513e031caa8435cb7b3ec918d641e8, type: 2}
 --- !u!114 &939326796670054273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,6 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2701d1e8054999fb196dfd083bc4e98b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _configExpenses: {fileID: 0}
   _configSO: {fileID: 11400000, guid: 254879e43cd24a04e9ca0c029b8c7bda, type: 2}
   _typeBuilding: 0
 --- !u!65 &4534772281560338706
@@ -137,3 +137,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3941252194975778862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 527205609335899112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77190a8afa5968dacb7ece87a3d2ca45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

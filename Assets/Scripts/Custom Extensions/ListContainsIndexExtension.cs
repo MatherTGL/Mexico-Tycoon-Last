@@ -4,10 +4,9 @@ public static class ListContainsIndexExtension
 {
     public static bool IsNotEmpty<T>(this List<T> list, in int index)
     {
-        if (list.Count != 0)
-            if (list.Count - 1 <= index)
-                return true;
-
-        return false;
+        if (list.Count != 0 && list.Count - 1 !> index)
+            return true;
+        else
+            return false;
     }
 }

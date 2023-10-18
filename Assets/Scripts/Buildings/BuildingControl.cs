@@ -21,11 +21,13 @@ using static Boot.Bootstrap;
 using Config.Expenses;
 using System;
 using static Building.BuildingEnumType;
+using Building.Hire;
 
 namespace Building
 {
     [RequireComponent(typeof(TransportReception))]
     [RequireComponent(typeof(BoxCollider))]
+    [RequireComponent(typeof(HireEmployeeView))]
     public sealed class BuildingControl : MonoBehaviour, IBoot, IBuildingRequestForTransport
     {
         [ShowInInspector, ReadOnly]
@@ -44,10 +46,10 @@ namespace Building
         private ICityBusiness _IcityBusiness;
 
         [SerializeField, Required, BoxGroup("Parameters"), HideLabel]
-        private ConfigExpensesManagementEditor _configExpenses;
+        private ConfigExpensesManagementEditor _configExpenses; //TODO: load from resources
 
         [SerializeField, Required, BoxGroup("Parameters"), HideLabel, PropertySpace(0, 5), DisableInPlayMode]
-        private ScriptableObject _configSO; //TODO: make general config
+        private ScriptableObject _configSO; //TODO: load from resources
 
         private TimeDateControl _timeDateControl;
 
@@ -70,6 +72,7 @@ namespace Building
             _Ispending = _Ibuilding as ISpending;
             _IcityBusiness = _Ibuilding as ICityBusiness;
             _IbuildingPurchased = _Ibuilding as IBuildingPurchased;
+            GetComponent<HireEmployeeView>().Init(_Ibuilding);
 
             ConnectExpensesManagementControl();
             CreateDictionaryTypeDrugs();
@@ -181,6 +184,7 @@ namespace Building
             IusesClimateInfo?.SetClimateZone(IclimateZone);
         }
 
+//TODO: move all to view class
 
 #if UNITY_EDITOR
         [Button("Buy Building"), BoxGroup("Editor Control"), HorizontalGroup("Editor Control/Hor")]

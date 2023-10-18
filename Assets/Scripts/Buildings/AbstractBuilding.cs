@@ -6,14 +6,14 @@ namespace Building
 {
     public abstract class AbstractBuilding
     {
-        protected IObjectsExpensesImplementation _IobjectsExpensesImplementation { get; set; }
+        protected IObjectsExpensesImplementation IobjectsExpensesImplementation;
 
-        protected Dictionary<TypeProductionResources.TypeResource, double> d_amountResources { get; set; } = new();
+        protected Dictionary<TypeProductionResources.TypeResource, double> d_amountResources = new();
 
-        protected Dictionary<TypeProductionResources.TypeResource, uint> d_stockCapacity { get; set; } = new();
+        protected Dictionary<TypeProductionResources.TypeResource, uint> d_stockCapacity = new();
 
-        protected bool _isWorked { get; set; }
+        protected bool isWorked;
 
-        protected bool _isBuyed { get; set; }
+        protected bool isBuyed;
     }
 }

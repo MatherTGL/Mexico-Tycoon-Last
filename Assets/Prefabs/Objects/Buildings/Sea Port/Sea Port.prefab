@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 241241215925402989}
   - component: {fileID: 5240722988134470757}
   - component: {fileID: 11291393180800269}
+  - component: {fileID: 1963699010797727088}
   m_Layer: 0
   m_Name: Sea Port
   m_TagString: Untagged
@@ -99,9 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1de3b6054c16dee2baab53a2cdd17e99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _typeCurrentBuilding: 4
-  _typeConnectBuildings: 0304050601
-  _freeConnectionCount: 3
+  _configReception: {fileID: 11400000, guid: 1a0fe540e44a9f83bb12bb8e63fd58d3, type: 2}
 --- !u!114 &5240722988134470757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,6 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2701d1e8054999fb196dfd083bc4e98b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _configExpenses: {fileID: 0}
   _configSO: {fileID: 11400000, guid: fb4d3c93151d9cecc8bbabaef8bfed18, type: 2}
   _typeBuilding: 4
 --- !u!65 &11291393180800269
@@ -137,3 +137,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 0.2}
   m_Center: {x: 0, y: 0.21133333, z: 0}
+--- !u!114 &1963699010797727088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8097129847925388580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77190a8afa5968dacb7ece87a3d2ca45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

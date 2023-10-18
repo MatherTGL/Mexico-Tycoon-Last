@@ -12,10 +12,10 @@ namespace Building.Fabric
         private IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
         IBuildingMonitorEnergy IEnergyConsumption.IbuildingMonitorEnergy => _IbuildingMonitorEnergy;
 
-        IObjectsExpensesImplementation ISpending.IobjectsExpensesImplementation => _IobjectsExpensesImplementation;
+        IObjectsExpensesImplementation ISpending.IobjectsExpensesImplementation => IobjectsExpensesImplementation;
         IObjectsExpensesImplementation IUsesExpensesManagement.IobjectsExpensesImplementation
         {
-            get => _IobjectsExpensesImplementation; set => _IobjectsExpensesImplementation = value;
+            get => IobjectsExpensesImplementation; set => IobjectsExpensesImplementation = value;
         }
 
         private ConfigBuildingFabricEditor _config;
@@ -36,9 +36,9 @@ namespace Building.Fabric
 
         private ushort _productionPerformance;
 
-        bool IBuildingJobStatus.isWorked { get => _isWorked; set => _isWorked = value; }
+        bool IBuildingJobStatus.isWorked { get => isWorked; set => isWorked = value; }
 
-        bool IBuildingPurchased.isBuyed { get => _isBuyed; set => _isBuyed = value; }
+        bool IBuildingPurchased.isBuyed { get => isBuyed; set => isBuyed = value; }
 
 
         public BuildingFabric(in ScriptableObject config)
@@ -74,7 +74,7 @@ namespace Building.Fabric
 
         void IBuilding.ConstantUpdatingInfo()
         {
-            if (_isBuyed && _isWorked)
+            if (isBuyed && isWorked)
                 Production();
         }
     }

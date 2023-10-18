@@ -52,6 +52,16 @@
               "type": "bookmarks",
               "state": {}
             }
+          },
+          {
+            "id": "48360d879f32b435",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
           }
         ],
         "currentTab": 1

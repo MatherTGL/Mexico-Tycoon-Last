@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 733097914352946188}
   - component: {fileID: 6795591148511223084}
   - component: {fileID: 5340949952551566468}
+  - component: {fileID: 2761248517246640910}
   m_Layer: 0
   m_Name: Border post
   m_TagString: Untagged
@@ -99,9 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1de3b6054c16dee2baab53a2cdd17e99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _typeCurrentBuilding: 6
-  _typeConnectBuildings: 0201030405
-  _freeConnectionCount: 4
+  _configReception: {fileID: 11400000, guid: 6226f670c50d879f49102e75edf0ce0b, type: 2}
 --- !u!114 &6795591148511223084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,6 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2701d1e8054999fb196dfd083bc4e98b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _configExpenses: {fileID: 0}
   _configSO: {fileID: 11400000, guid: c905cbe9ffd8cc70489f63e65ed6bd9e, type: 2}
   _typeBuilding: 6
 --- !u!65 &5340949952551566468
@@ -137,3 +137,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 0.2}
   m_Center: {x: 0, y: 0.21133333, z: 0}
+--- !u!114 &2761248517246640910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5726612401650142149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77190a8afa5968dacb7ece87a3d2ca45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

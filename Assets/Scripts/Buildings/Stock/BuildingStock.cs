@@ -12,10 +12,10 @@ namespace Building.Stock
         private readonly IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
         IBuildingMonitorEnergy IEnergyConsumption.IbuildingMonitorEnergy => _IbuildingMonitorEnergy;
 
-        IObjectsExpensesImplementation ISpending.IobjectsExpensesImplementation => _IobjectsExpensesImplementation;
+        IObjectsExpensesImplementation ISpending.IobjectsExpensesImplementation => IobjectsExpensesImplementation;
         IObjectsExpensesImplementation IUsesExpensesManagement.IobjectsExpensesImplementation
         {
-            get => _IobjectsExpensesImplementation; set => _IobjectsExpensesImplementation = value;
+            get => IobjectsExpensesImplementation; set => IobjectsExpensesImplementation = value;
         }
 
         private readonly ConfigBuildingStockEditor _config;
@@ -32,9 +32,9 @@ namespace Building.Stock
 
         uint[] IBuilding.localCapacityProduction => _config.localCapacityProduction;
 
-        bool IBuildingJobStatus.isWorked { get => _isWorked; set => _isWorked = value; }
+        bool IBuildingJobStatus.isWorked { get => isWorked; set => isWorked = value; }
 
-        bool IBuildingPurchased.isBuyed { get => _isBuyed; set => _isBuyed = value; }
+        bool IBuildingPurchased.isBuyed { get => isBuyed; set => isBuyed = value; }
 
 
         public BuildingStock(in ScriptableObject config)
@@ -44,7 +44,7 @@ namespace Building.Stock
 
         void IBuilding.ConstantUpdatingInfo()
         {
-            if (_isBuyed && _isWorked)
+            if (isBuyed && isWorked)
                 Debug.Log("Stock is work");
         }
     }

@@ -7,6 +7,7 @@ using System.Linq;
 using Resources;
 using static Boot.Bootstrap;
 using static Building.BuildingEnumType;
+using Config.Transport.Reception;
 
 namespace Transport.Reception
 {
@@ -15,19 +16,15 @@ namespace Transport.Reception
         private IBuildingRequestForTransport _IbuildingRequest;
         IBuildingRequestForTransport ITransportReception.IbuildingRequest => _IbuildingRequest;
 
+        [SerializeField, Required, HideLabel]
+        private ConfigTransportReceptionEditor _configReception;
+
         private RouteBuilderControl _routeBuilderControl;
 
-        [SerializeField]
-        private TypeBuilding _typeCurrentBuilding;
-        TypeBuilding ITransportReception.typeCurrentBuilding => _typeCurrentBuilding;
+        TypeBuilding ITransportReception.typeCurrentBuilding => _configReception.typeCurrentBuilding;
 
-        [SerializeField]
-        private TypeBuilding[] _typeConnectBuildings;
-
-        [ShowInInspector, ReadOnly]
         private Dictionary<ITransportReception, GameObject> d_infoRouteConnect = new();
 
-        [SerializeField]
         private byte _freeConnectionCount;
 
 
@@ -37,6 +34,8 @@ namespace Transport.Reception
         {
             _routeBuilderControl = FindObjectOfType<RouteBuilderControl>();
             _IbuildingRequest = GetComponent<IBuildingRequestForTransport>();
+
+            _freeConnectionCount = _configReception.defaultConnectionCount;
         }
 
         private void BuildRoute(in ITransportReception secondObject)
@@ -87,8 +86,8 @@ namespace Transport.Reception
 
         public void ConnectionRequest(in ITransportReception fromObject)
         {
-            if (d_infoRouteConnect.Count <= _freeConnectionCount)
-                if (_typeConnectBuildings.Contains(fromObject.GetTypeBuilding()))
+            if (d_infoRouteConnect.Count <= _configReception.defaultConnectionCount)
+                if (_configReception.typeConnectBuildings.Contains(fromObject.GetTypeBuilding()))
                     if (fromObject.ConfirmRequest(this) && ConfirmRequest(fromObject))
                         BuildRoute(fromObject);
         }
@@ -126,6 +125,6 @@ namespace Transport.Reception
 
         public Transform GetPosition() { return this.transform; }
 
-        public TypeBuilding GetTypeBuilding() { return _typeCurrentBuilding; }
+        public TypeBuilding GetTypeBuilding() { return _configReception.typeCurrentBuilding; }
     }
 }
