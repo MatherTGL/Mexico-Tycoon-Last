@@ -15,7 +15,6 @@ namespace TimeControl
         [SerializeField, BoxGroup("Parameters"), Required]
         private ConfigTimeControlEditor _configTimeControl;
 
-        [SerializeField, BoxGroup("Parameters"), Required]
         private InputControl _inputControl;
 
         private float _currentTimeOneDay = 5;
@@ -27,6 +26,7 @@ namespace TimeControl
 
         void IBoot.InitAwake()
         {
+            _inputControl = GetComponent<InputControl>();
             _timeAcceleration = new(_configTimeControl, _inputControl);
         }
 

@@ -19,10 +19,7 @@ namespace Expense
 
         private ExpenseManagementControl() { }
 
-        void IBoot.InitAwake()
-        {
-            Debug.Log("helllooo");
-        }
+        void IBoot.InitAwake() { }
 
         (TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
         {
@@ -55,14 +52,16 @@ namespace Expense
         private void AddExpensesOnBuildings(in double addNumber, in ushort index,
                                             in AreaExpenditureType typeExpenses)
         {
-            l_objectsExpensesImplementation[index]?.ChangeExpenses(addNumber, typeExpenses, isAdd: true);
+            if (typeExpenses is AreaExpenditureType.Employees && l_objectsExpensesImplementation[index].Ihiring != null)
+                l_objectsExpensesImplementation[index]?.ChangeExpenses(addNumber, typeExpenses, isAdd: true);
         }
 
         [Button("Reduce Expenses"), DisableInEditorMode]
         private void ReduceExpensesOnBuildings(in double addNumber, in ushort index,
                                                in AreaExpenditureType typeExpenses)
         {
-            l_objectsExpensesImplementation[index]?.ChangeExpenses(addNumber, typeExpenses, isAdd: false);
+            if (typeExpenses is AreaExpenditureType.Employees && l_objectsExpensesImplementation[index].Ihiring != null)
+                l_objectsExpensesImplementation[index]?.ChangeExpenses(addNumber, typeExpenses, isAdd: false);
         }
     }
 #endif

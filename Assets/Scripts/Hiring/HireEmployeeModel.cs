@@ -8,16 +8,17 @@ using static Data.Player.DataPlayer;
 
 namespace Building.Hire
 {
-    public sealed class Hiring
+    public sealed class HireEmployeeModel : IHiring
     {
         private Lazy<Dictionary<TypeEmployee, List<AbstractEmployee>>> d_employees = new();
 
         private AbstractEmployee[] l_possibleEmployeesInShop = new AbstractEmployee[10];
 
         private double _currentExpenses;
+        double IHiring.currentExpenses { get => _currentExpenses; set => _currentExpenses = value; }
 
 
-        public Hiring()
+        public HireEmployeeModel()
         {
             for (byte i = 0; i < l_possibleEmployeesInShop.Length; i++)
                 l_possibleEmployeesInShop[i] = new Employee();
@@ -39,10 +40,7 @@ namespace Building.Hire
                     _currentExpenses += d_employees.Value[employee][i].paymentCostPerDay;
         }
 
-        public void ConstantUpdatingInfo()
-        {
-            Expenses();
-        }
+        public void ConstantUpdatingInfo() => Expenses();
 
         public void Hire(in byte indexEmployee)
         {

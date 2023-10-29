@@ -4,6 +4,6 @@ namespace Expense
     {
         public enum ExpensesTypeObject : byte { Building, Transport }
 
-        public enum AreaExpenditureType : byte { Production, Water, Security }
+        public enum AreaExpenditureType : byte { Production, Water, Security, Employees }
     }
 }

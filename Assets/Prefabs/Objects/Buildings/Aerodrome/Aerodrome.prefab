@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6856669002139344660}
   - component: {fileID: 783787705814791859}
   - component: {fileID: 2326677287463915099}
-  - component: {fileID: 8203836768819844336}
   m_Layer: 0
   m_Name: Aerodrome
   m_TagString: Untagged
@@ -137,15 +136,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 0.2}
   m_Center: {x: -0.00000047683716, y: 0.0000009536743, z: 0}
---- !u!114 &8203836768819844336
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2184122174264561220}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77190a8afa5968dacb7ece87a3d2ca45, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

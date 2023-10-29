@@ -156,10 +156,17 @@
     </MCItem>
     <MCItem>
       <type>MenuPath</type>
-      <command />
+      <command>GameObject/2D Object/Sprites/Hexagon Flat-Top</command>
       <original>None</original>
-      <overrideLabel>false</overrideLabel>
-      <label />
+      <overrideLabel>true</overrideLabel>
+      <label>GameObject/Sprites/Hexagon Flat-Top</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>GameObject/Light/Directional Light</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>Light/Directional Light</label>
     </MCItem>
   </hierarchyItemList>
   <projectItemList>
@@ -365,6 +372,13 @@
       <original>None</original>
       <overrideLabel>true</overrideLabel>
       <label>Create Config/Reception/Create New</label>
+    </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>Assets/Create/Config/Route/Create New</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>Create Config/Route/Create New</label>
     </MCItem>
   </projectItemList>
 </MCSetting>

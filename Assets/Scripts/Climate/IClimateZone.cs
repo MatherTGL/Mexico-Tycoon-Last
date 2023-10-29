@@ -5,5 +5,8 @@ namespace Climate
     public interface IClimateZone
     {
         ConfigClimateZoneEditor configClimateZone { get; }
+
+
+        ConfigClimateZoneEditor.TypeSeasons GetCurrentSeason();
     }
 }

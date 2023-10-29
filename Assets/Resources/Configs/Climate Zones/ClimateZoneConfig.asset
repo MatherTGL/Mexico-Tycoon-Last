@@ -14,3 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _typeClimate: 0
   _percentageImpactCostMaintenance: 0.1
+  _seasonLength: 90
+  _maxTemperature: 0
+  _minTemperature: 0
+  _humidityLevel: 0.1
+  _amountOfPrecipitation: 50

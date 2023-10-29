@@ -50,7 +50,7 @@ namespace Transport
         {
             var currentRoutePoint = _Itransportation.ItransportInteractRoute.routePoints[_indexCurrentRoutePoint];
             var lastRoutePoint = _Itransportation.ItransportInteractRoute.routePoints.Length - 1;
-            
+
             if (_someObject.transform.position == currentRoutePoint)
             {
                 if (_indexCurrentRoutePoint == 0)
@@ -71,22 +71,12 @@ namespace Transport
             }
         }
 
-        //TODO: Refactoring
         private void Move(in byte indexPositionRoute)
         {
-            _someObject.transform.position = Vector3.MoveTowards(_someObject.transform.position,
-                _Itransportation.ItransportInteractRoute.routePoints[indexPositionRoute], 
-                _currentSpeed);
-        }
+            Vector3 currentPosition = _someObject.transform.position;
+            Vector3 targetPosition = _Itransportation.ItransportInteractRoute.routePoints[indexPositionRoute];
 
-        public void MovementTransport()
-        {
-            if (_Itransportation.transportationFuel.IsFuelAvailable() &&
-                _Itransportation.transportationBreakdowns.IsNotInRepair())
-            {
-                CheckPosition();
-                Move(_indexCurrentRoutePoint);
-            }
+            _someObject.transform.position = Vector3.MoveTowards(currentPosition, targetPosition, _currentSpeed);
         }
 
         private bool CheckBuildingWorkingAndInvokeAction(in bool isStartedPosition)
@@ -116,6 +106,22 @@ namespace Transport
         public void ChangeSpeed()
         {
             _currentSpeed = UnityEngine.Random.Range(_minSpeed, _maxSpeed);
+        }
+
+        public void MovementTransport()
+        {
+            if (_Itransportation.transportationFuel.IsFuelAvailable() &&
+                _Itransportation.transportationBreakdowns.IsNotInRepair())
+            {
+                CheckPosition();
+                Move(_indexCurrentRoutePoint);
+            }
+        }
+
+        public void ChangeRoute()
+        {
+            _indexCurrentRoutePoint = 0;
+            _someObject.transform.position = _Itransportation.ItransportInteractRoute.routePoints[0];
         }
     }
 }

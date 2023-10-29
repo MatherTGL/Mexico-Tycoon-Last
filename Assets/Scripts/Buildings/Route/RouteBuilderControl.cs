@@ -7,37 +7,33 @@ using DebugCustomSystem;
 using static Boot.Bootstrap;
 using Data;
 using static Data.Player.DataPlayer;
+using Config.Building.Route;
 
 namespace Route.Builder
 {
     public sealed class RouteBuilderControl : MonoBehaviour, IBoot
     {
-        private enum TypeConnect : byte { Connect, Disconnect }
+        [SerializeField, Required, BoxGroup("Parameters")]
+        private ConfigRouteBuilderEditor _config;
+        public ConfigRouteBuilderEditor config => _config;
 
-        private const byte _maxPointConnection = 2;
+        private enum TypeConnect : byte { Connect, Disconnect }
 
         private InputControl _inputControl;
 
-        [SerializeField, Required, BoxGroup("Parameters")]
-        private CreatorCurveRoadControl _prefabRoute;
-        public CreatorCurveRoadControl prefabRoute => _prefabRoute;
-
         [ShowInInspector, BoxGroup("Parameters")]
-        private ITransportReception[] _connectionPoints = new ITransportReception[_maxPointConnection];
-
-        [SerializeField, MinValue(10), MaxValue(250), BoxGroup("Parameters")]
-        private byte _maxLengthRoute = 20;
-
-        [SerializeField, MinValue(100), BoxGroup("Parameters")]
-        [Tooltip("total cost = _costRoute * (Mathf.Abs distance) between objects")]
-        private double _costRoute = 100;
+        private ITransportReception[] _connectionPoints;
 
         private float _routeLength;
 
 
         private RouteBuilderControl() { }
 
-        void IBoot.InitAwake() => _inputControl = FindObjectOfType<InputControl>();
+        void IBoot.InitAwake()
+        {
+            _inputControl = FindObjectOfType<InputControl>();
+            _connectionPoints = new ITransportReception[_config.maxPointConnection];
+        }
 
         (TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
         {
@@ -52,7 +48,7 @@ namespace Route.Builder
         {
             try
             {
-                if (_connectionPoints.Length == _maxPointConnection && CheckRouteLength())
+                if (_connectionPoints.Length == _config.maxPointConnection && CheckRouteLength())
                 {
                     if (BuyRoute() == false)
                         return;
@@ -75,7 +71,7 @@ namespace Route.Builder
 
         private bool BuyRoute()
         {
-            double totalCostRoute = _costRoute * Mathf.Abs(_routeLength);
+            double totalCostRoute = _config.costRoute * Mathf.Abs(_routeLength);
             return DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(totalCostRoute, SpendAndCheckMoneyState.Spend);
         }
 
@@ -84,7 +80,7 @@ namespace Route.Builder
             _routeLength = Vector2.Distance(_connectionPoints[0].GetPosition().position,
                                             _connectionPoints[1].GetPosition().position);
 
-            if (Mathf.RoundToInt(_routeLength) < _maxLengthRoute)
+            if (Mathf.RoundToInt(_routeLength) < _config.maxLengthRoute)
                 return true;
             else
                 return false;

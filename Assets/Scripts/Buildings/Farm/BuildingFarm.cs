@@ -6,19 +6,16 @@ using UnityEngine;
 using Climate;
 using Expense;
 using static Expense.ExpensesEnumTypes;
-using System;
-using Building.Hire;
+using Hire;
 
 namespace Building.Farm
 {
-    public sealed class BuildingFarm : AbstractBuilding, IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption, IChangedFarmType, IUsesClimateInfo, IUsesExpensesManagement, IHiring
+    public sealed class BuildingFarm : AbstractBuilding, IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption, IChangedFarmType, IUsesClimateInfo, IUsesExpensesManagement, IUsesHiring
     {
         private readonly IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
         IBuildingMonitorEnergy IEnergyConsumption.IbuildingMonitorEnergy => _IbuildingMonitorEnergy;
 
         private IClimateZone _IclimateZone;
-
-        private Lazy<Hiring> _hiring = new Lazy<Hiring>();
 
         IObjectsExpensesImplementation ISpending.IobjectsExpensesImplementation => IobjectsExpensesImplementation;
         IObjectsExpensesImplementation IUsesExpensesManagement.IobjectsExpensesImplementation
@@ -111,9 +108,17 @@ namespace Building.Farm
                                                            isAdd: true);
         }
 
+        private bool IsGrowingSeason()
+        {
+            if (_config.typeFarm is ConfigBuildingFarmEditor.TypeFarm.Terrestrial)
+                return _config.growingSeasons.Contains(_IclimateZone.GetCurrentSeason());
+            else
+                return true;
+        }
+
         void IBuilding.ConstantUpdatingInfo()
         {
-            if (isWorked && isBuyed)
+            if (isWorked && isBuyed && IsGrowingSeason())
                 Production();
         }
 
@@ -129,12 +134,5 @@ namespace Building.Farm
             _IclimateZone = IclimateZone;
             CalculateImpactClimateZones();
         }
-
-        //? move to into interface
-        void IHiring.Hire(in byte indexEmployee) => _hiring.Value.Hire(indexEmployee);
-
-        void IHiring.Firing(in byte indexEmployee) => _hiring.Value.Firing(indexEmployee);
-
-        void IHiring.ConstantUpdatingInfo() => _hiring.Value.ConstantUpdatingInfo();
     }
 }

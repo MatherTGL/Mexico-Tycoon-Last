@@ -4,6 +4,7 @@ using Resources;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using Config.Climate;
 
 namespace Config.Building
 {
@@ -26,6 +27,10 @@ namespace Config.Building
 
         [SerializeField, BoxGroup("Parameters"), EnumPaging]
         public TypeFarm typeFarm;
+
+        [SerializeField, BoxGroup("Parameters"), HideLabel]
+        private List<ConfigClimateZoneEditor.TypeSeasons> l_growingSeasons = new();
+        public List<ConfigClimateZoneEditor.TypeSeasons> growingSeasons => l_growingSeasons;
 
         [SerializeField, BoxGroup("Parameters"), MinValue(1)]
         private ushort _productionPerformanceStart = 1;

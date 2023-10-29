@@ -1,42 +1,23 @@
-using UnityEngine;
-using Sirenix.OdinInspector;
-using System.Collections;
-using TimeControl;
-
 namespace Building.Hire
 {
-    public sealed class HireEmployeeView : MonoBehaviour
+    public sealed class HireEmployeeView
     {
-        private IHiring _IHiring;
-
-        private TimeDateControl _timeControl;
-
-        private WaitForSeconds _coroutineTimeStep;
+        private HireEmployeeControl _hireEmployeeControl;
 
 
-        public void Init(in IBuilding building)
+        public HireEmployeeView(in HireEmployeeControl hireEmployeeControl)
         {
-            _timeControl = FindObjectOfType<TimeDateControl>();
-            _coroutineTimeStep = new WaitForSeconds(_timeControl.GetCurrentTimeOneDay());
-            _IHiring = building as IHiring;
-
-            if (_IHiring != null)
-                StartCoroutine(UpdateInfo());
+            _hireEmployeeControl = hireEmployeeControl;
         }
 
-        private IEnumerator UpdateInfo()
+        public void HireEmployee(in byte indexEmployee)
         {
-            while (true)
-            {
-                _IHiring.ConstantUpdatingInfo();
-                yield return _coroutineTimeStep;
-            }
+            _hireEmployeeControl.Ihiring?.Hire(indexEmployee);
         }
 
-        [Button("Hire Employee"), BoxGroup("Editor Control | Employees"), DisableInEditorMode]
-        private void HireEmployee(in byte indexEmployee) => _IHiring?.Hire(indexEmployee);
-
-        [Button("Fire Employee"), BoxGroup("Editor Control | Employees"), DisableInEditorMode]
-        private void FireEmployee(in byte indexEmployee) => _IHiring?.Firing(indexEmployee);
+        public void FireEmployee(in byte indexEmployee)
+        {
+            _hireEmployeeControl.Ihiring?.Firing(indexEmployee);
+        }
     }
 }

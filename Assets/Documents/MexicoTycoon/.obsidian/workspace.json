@@ -4,17 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "bd952c4a6cbd58a4",
+        "id": "caccbf89553e8721",
         "type": "tabs",
         "children": [
           {
-            "id": "d1a4a10c5d92f1c8",
+            "id": "bff3b2c72c2b1561",
             "type": "leaf",
             "state": {
-              "type": "diagram-edit",
-              "state": {
-                "file": "Untitled Diagram 2.svg"
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -85,7 +83,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Untitled Diagram 2.svg",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +99,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Untitled Diagram 2.svg",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -124,9 +120,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "Untitled Diagram 2.svg"
-              }
+              "state": {}
             }
           }
         ]
@@ -146,7 +140,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "d1a4a10c5d92f1c8",
+  "active": "bff3b2c72c2b1561",
   "lastOpenFiles": [
     "Untitled Diagram 2.svg",
     "Untitled Diagram.svg",

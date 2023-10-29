@@ -22,12 +22,11 @@ using Config.Expenses;
 using System;
 using static Building.BuildingEnumType;
 using Building.Hire;
+using Hire;
 
 namespace Building
 {
-    [RequireComponent(typeof(TransportReception))]
-    [RequireComponent(typeof(BoxCollider))]
-    [RequireComponent(typeof(HireEmployeeView))]
+    [RequireComponent(typeof(TransportReception), typeof(BoxCollider))]
     public sealed class BuildingControl : MonoBehaviour, IBoot, IBuildingRequestForTransport
     {
         [ShowInInspector, ReadOnly]
@@ -72,7 +71,6 @@ namespace Building
             _Ispending = _Ibuilding as ISpending;
             _IcityBusiness = _Ibuilding as ICityBusiness;
             _IbuildingPurchased = _Ibuilding as IBuildingPurchased;
-            GetComponent<HireEmployeeView>().Init(_Ibuilding);
 
             ConnectExpensesManagementControl();
             CreateDictionaryTypeDrugs();
@@ -86,10 +84,21 @@ namespace Building
                 IUsesExpensesManagement IusesExpensesManagement = expensesManagement;
                 IExpensesManagement IexpensesManagement = FindObjectOfType<ExpenseManagementControl>();
 
-                if (IexpensesManagement != null && _configExpenses != null)
+                if (IexpensesManagement != null & _configExpenses != null)
                     IusesExpensesManagement.LoadExpensesManagement(IexpensesManagement, _configExpenses);
                 else
                     throw new NullReferenceException();
+
+                ConnectHiring();
+            }
+        }
+
+        private void ConnectHiring()
+        {
+            if (_Ibuilding is IUsesHiring)
+            {
+                gameObject.AddComponent<HireEmployeeControl>().Init();
+                _Ispending.IobjectsExpensesImplementation.Ihiring = GetComponent<HireEmployeeControl>().Ihiring;
             }
         }
 
@@ -184,7 +193,7 @@ namespace Building
             IusesClimateInfo?.SetClimateZone(IclimateZone);
         }
 
-//TODO: move all to view class
+        //TODO: move all to view class and make mvc
 
 #if UNITY_EDITOR
         [Button("Buy Building"), BoxGroup("Editor Control"), HorizontalGroup("Editor Control/Hor")]

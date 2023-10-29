@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Building.Hire;
 using Config.Expenses;
 using Expense.Areas;
 using static Expense.ExpensesEnumTypes;
@@ -9,7 +10,10 @@ namespace Expense
     {
         private ConfigExpensesManagementEditor _configExpensesManagement;
 
-        private Dictionary<AreaExpenditureType, IAreasExpenditure> d_IareasExpenditure = new();
+        private IHiring _Ihiring;
+        IHiring IObjectsExpensesImplementation.Ihiring { get => _Ihiring; set => _Ihiring = value; }
+
+        private Dictionary<AreaExpenditureType, AbstractAreasExpenditure> d_IareasExpenditure = new();
 
 
         public ExpensesBuildings(in ConfigExpensesManagementEditor config)
@@ -22,14 +26,16 @@ namespace Expense
         {
             if (d_IareasExpenditure.ContainsKey(typeExpenses) == false)
             {
-                IAreasExpenditure areasExpenditure;
+                AbstractAreasExpenditure areasExpenditure;
 
                 if (typeExpenses is AreaExpenditureType.Water)
                     areasExpenditure = new ExpensesOnWater(_configExpensesManagement);
                 else if (typeExpenses is AreaExpenditureType.Security)
                     areasExpenditure = new ExpensesOnSecurity(_configExpensesManagement);
-                else
+                else if (typeExpenses is AreaExpenditureType.Production)
                     areasExpenditure = new ExpensesOnProduction(_configExpensesManagement);
+                else
+                    areasExpenditure = new ExpensesOnEmployees(_Ihiring);
 
                 d_IareasExpenditure.Add(typeExpenses, areasExpenditure);
             }

@@ -7,9 +7,7 @@ using static Boot.Bootstrap;
 
 namespace Player.Movement
 {
-    [RequireComponent(typeof(Rigidbody))]
-    [RequireComponent(typeof(InputControl))]
-    [RequireComponent(typeof(TimeDateControl))]
+    [RequireComponent(typeof(Rigidbody), typeof(InputControl), typeof(TimeDateControl))]
     internal sealed class PlayerControlMovement : MonoBehaviour, IBoot
     {
 #if UNITY_EDITOR
@@ -22,16 +20,10 @@ namespace Player.Movement
         [HideLabel, Title("Player Control Move", HorizontalLine = false)]
         private ConfigPlayerControlMoveEditor _configPlayerControlMove;
 
-        [SerializeField, Required, BoxGroup("Parameters/Components"), EnableIf("_isEditParametersEditor")]
-        [HideLabel, Title("Input Control", HorizontalLine = false)]
         private InputControl _inputControl;
 
-        [SerializeField, Required, BoxGroup("Parameters/Components"), EnableIf("_isEditParametersEditor")]
-        [HideLabel, Title("Rigidbody", HorizontalLine = false)]
         private Rigidbody _rigidbody;
 
-        [SerializeField, Required, BoxGroup("Parameters/Components"), EnableIf("_isEditParametersEditor")]
-        [HideLabel, Title("Transform", HorizontalLine = false)]
         private Transform _transform;
 
         private Vector3 _directionMoveCamera;
@@ -45,7 +37,13 @@ namespace Player.Movement
 
         private PlayerControlMovement() { }
 
-        void IBoot.InitAwake() => DontDestroyOnLoad(gameObject);
+        void IBoot.InitAwake()
+        {
+            _transform = this.transform;
+            _rigidbody = GetComponent<Rigidbody>();
+            _inputControl = GetComponent<InputControl>();
+            DontDestroyOnLoad(gameObject);
+        }
 
         private void LateUpdate() => PlayerTransformClamp();
 

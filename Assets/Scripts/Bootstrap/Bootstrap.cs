@@ -1,3 +1,7 @@
+//*Searches all objects on the scene that inherit MonoBehaviour and implement the IBoot interface,
+//*then sorts them by the importance of loading and by the singleness parameter of the object.
+//*After all objects are loaded one by one into Awake
+
 using System;
 using UnityEngine;
 using System.Collections.Generic;

@@ -1,4 +1,4 @@
-using System.Linq;
+using System;
 using Config.Employees;
 using UnityEngine;
 
@@ -13,15 +13,22 @@ namespace Hire.Employee
         {
             try
             {
-                config = UnityEngine.Resources.LoadAll<ConfigEmployeeEditor>(_pathEmployeesConfigs).Single();
-                LoadData();
+                var configs = UnityEngine.Resources.LoadAll<ConfigEmployeeEditor>(_pathEmployeesConfigs);
 
-                Debug.Log(config);
-                Debug.Log(this.config);
+                foreach (var conf in configs)
+                {
+                    if (conf.typeEmployee == typeEmployee)
+                    {
+                        config = conf;
+                        return;
+                    }
+                }
+
+                LoadData();
             }
-            finally
+            catch (Exception exception)
             {
-                Debug.Log("employee created");
+                Debug.Log($"employee config error: {exception}");
             }
         }
 

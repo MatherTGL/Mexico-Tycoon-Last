@@ -42,7 +42,7 @@ namespace Transport.Reception
         {
             if (IsBuildingsWerePurchased(secondObject))
             {
-                CreatorCurveRoadControl createdRoute = Instantiate(_routeBuilderControl.prefabRoute,
+                CreatorCurveRoadControl createdRoute = Instantiate(_routeBuilderControl.config.prefabRoute,
                 Vector3.zero, Quaternion.identity);
 
                 createdRoute.SetPositionPoints(secondObject, this);

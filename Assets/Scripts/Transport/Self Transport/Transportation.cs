@@ -122,14 +122,12 @@ namespace Transport
             _typeCurrentTransportResource = typeResource;
         }
 
-        //TODO: Finish it
         public void ChangeRoute(in ITransportInteractRoute routeTransportControl)
         {
             if (routeTransportControl != null)
             {
                 _ItransportInteractRoute = routeTransportControl;
-                //?_indexCurrentRoutePoint = 0;
-                //?_someObject.transform.position = _ItransportInteractRoute.routePoints[0];
+                _transportationMovement.ChangeRoute();
             }
         }
 
