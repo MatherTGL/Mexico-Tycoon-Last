@@ -40,6 +40,6 @@ namespace Building.Hire
         private void HireEmployee(in byte indexEmployee) => _hireEmployeeView.HireEmployee(indexEmployee);
 
         [Button("Fire Employee"), BoxGroup("Editor Control | Employees"), DisableInEditorMode]
-        private void FireEmployee(in byte indexEmployee) => _hireEmployeeView.FireEmployee(indexEmployee); 
+        private void FireEmployee(in byte indexEmployee) => _hireEmployeeView.FireEmployee(indexEmployee);
     }
 }

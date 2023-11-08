@@ -1,7 +1,10 @@
+using System;
 using System.Collections.Generic;
 using Building.Hire;
 using Config.Expenses;
 using Expense.Areas;
+using UnityEngine;
+using static Config.Employees.ConfigEmployeeEditor;
 using static Expense.ExpensesEnumTypes;
 
 namespace Expense
@@ -26,7 +29,7 @@ namespace Expense
         {
             if (d_IareasExpenditure.ContainsKey(typeExpenses) == false)
             {
-                AbstractAreasExpenditure areasExpenditure;
+                AbstractAreasExpenditure areasExpenditure = null;
 
                 if (typeExpenses is AreaExpenditureType.Water)
                     areasExpenditure = new ExpensesOnWater(_configExpensesManagement);
@@ -34,13 +37,24 @@ namespace Expense
                     areasExpenditure = new ExpensesOnSecurity(_configExpensesManagement);
                 else if (typeExpenses is AreaExpenditureType.Production)
                     areasExpenditure = new ExpensesOnProduction(_configExpensesManagement);
-                else
-                    areasExpenditure = new ExpensesOnEmployees(_Ihiring);
 
                 d_IareasExpenditure.Add(typeExpenses, areasExpenditure);
             }
 
             d_IareasExpenditure[typeExpenses].ChangeExpenses(addNumber, isAdd);
+        }
+
+        void IObjectsExpensesImplementation.ChangeEmployeesExpenses(in double expenses, in bool isAdd, in TypeEmployee typeEmployee)
+        {
+            Debug.Log("ChangeEmployeesExpenses");
+            if (d_IareasExpenditure.ContainsKey(AreaExpenditureType.Employees) == false)
+            {
+                d_IareasExpenditure.Add(AreaExpenditureType.Employees, new ExpensesOnEmployees());
+                d_IareasExpenditure[AreaExpenditureType.Employees].InitHiring(_Ihiring);
+            }
+
+            d_IareasExpenditure[AreaExpenditureType.Employees].ChangeEmployeesExpenses(expenses, isAdd, typeEmployee);
+            //areasExpenditure.InitHiring(_Ihiring);
         }
 
         double IObjectsExpensesImplementation.GetTotalExpenses()

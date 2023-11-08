@@ -15,16 +15,10 @@ namespace Hire.Employee
             {
                 var configs = UnityEngine.Resources.LoadAll<ConfigEmployeeEditor>(_pathEmployeesConfigs);
 
-                foreach (var conf in configs)
-                {
-                    if (conf.typeEmployee == typeEmployee)
-                    {
-                        config = conf;
-                        return;
-                    }
-                }
+                var randomNumberConfig = UnityEngine.Random.Range(0, configs.Length);
+                config = configs[randomNumberConfig];
 
-                LoadData();
+                LoadAndRandomizeData();
             }
             catch (Exception exception)
             {
@@ -35,11 +29,12 @@ namespace Hire.Employee
         private Employee(in AbstractEmployee employee)
         {
             config = employee.config;
-            LoadData();
+            LoadAndRandomizeData();
         }
 
-        private void LoadData()
+        private void LoadAndRandomizeData()
         {
+            //TODO: randomize data
             typeEmployee = config.typeEmployee;
             paymentCostPerDay = config.paymentPerDay;
             rating = config.rating;

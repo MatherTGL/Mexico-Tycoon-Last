@@ -14,60 +14,68 @@ namespace Building.Hire
 
         private AbstractEmployee[] l_possibleEmployeesInShop = new AbstractEmployee[10];
 
-        private double _currentExpenses;
-        double IHiring.currentExpenses { get => _currentExpenses; set => _currentExpenses = value; }
+        private Lazy<Dictionary<TypeEmployee, double>> d_employeeExpenses = new();
+        Lazy<Dictionary<TypeEmployee, double>> IHiring.d_employeeExpenses
+        {
+            get => d_employeeExpenses; set => d_employeeExpenses = value;
+        }
 
 
         public HireEmployeeModel()
         {
             for (byte i = 0; i < l_possibleEmployeesInShop.Length; i++)
                 l_possibleEmployeesInShop[i] = new Employee();
-            CalculateAllExpenses();
+
+            //? CalculateAllExpenses();
         }
 
         private void Expenses()
         {
-            Debug.Log(_currentExpenses);
-            DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(_currentExpenses, SpendAndCheckMoneyState.Spend);
+            foreach (var typeEmployeeExpenses in d_employeeExpenses.Value.Keys)
+            {
+                Debug.Log(d_employeeExpenses.Value[typeEmployeeExpenses]);
+                DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(d_employeeExpenses.Value[typeEmployeeExpenses],
+                                                                    SpendAndCheckMoneyState.Spend);
+            }
         }
 
-        private void CalculateAllExpenses()
-        {
-            _currentExpenses = 0;
+        // private void CalculateAllExpenses()
+        // {
+        //     _currentExpenses = 0;
 
-            foreach (var employee in d_employees.Value.Keys)
-                for (byte i = 0; i < d_employees.Value[employee].Count; i++)
-                    _currentExpenses += d_employees.Value[employee][i].paymentCostPerDay;
-        }
+        //     foreach (var employee in d_employees.Value.Keys)
+        //         for (byte i = 0; i < d_employees.Value[employee].Count; i++)
+        //             _currentExpenses += d_employees.Value[employee][i].paymentCostPerDay;
+        // }
 
         public void ConstantUpdatingInfo() => Expenses();
 
         public void Hire(in byte indexEmployee)
         {
             var typeEmployee = l_possibleEmployeesInShop[indexEmployee].typeEmployee;
+            Debug.Log($"Type Employee: {typeEmployee}");
 
             if (d_employees.Value.ContainsKey(typeEmployee) == false)
+            {
                 d_employees.Value.Add(typeEmployee, new List<AbstractEmployee>());
+                d_employeeExpenses.Value.Add(typeEmployee, 0);
+            }
 
             var hiredEmployee = l_possibleEmployeesInShop[indexEmployee].Clone();
             d_employees.Value[typeEmployee].Add(hiredEmployee);
-            _currentExpenses += hiredEmployee.paymentCostPerDay;
-            Debug.Log(hiredEmployee.paymentCostPerDay);
-            Debug.Log(_currentExpenses);
+            d_employeeExpenses.Value[typeEmployee] += hiredEmployee.paymentCostPerDay;
+            Debug.Log($"CurrentExpenses: {d_employeeExpenses.Value[typeEmployee]}");
         }
 
         public void Firing(in byte indexEmployee)
         {
             var typeEmployee = l_possibleEmployeesInShop[indexEmployee].typeEmployee;
 
-            if (d_employees.Value.ContainsKey(typeEmployee))
+            if (d_employees.Value.ContainsKey(typeEmployee) && d_employees.Value[typeEmployee].IsNotEmpty(indexEmployee))
             {
-                if (d_employees.Value[typeEmployee].IsNotEmpty(indexEmployee))
-                {
-                    _currentExpenses -= d_employees.Value[typeEmployee][indexEmployee].paymentCostPerDay;
-                    Debug.Log(_currentExpenses);
-                    d_employees.Value[typeEmployee].RemoveAt(indexEmployee);
-                }
+                d_employeeExpenses.Value[typeEmployee] -= d_employees.Value[typeEmployee][indexEmployee].paymentCostPerDay;
+                Debug.Log($"CurrentExpenses: {d_employeeExpenses.Value[typeEmployee]}");
+                d_employees.Value[typeEmployee].RemoveAt(indexEmployee);
             }
         }
     }

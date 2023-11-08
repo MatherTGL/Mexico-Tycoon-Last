@@ -3,7 +3,9 @@ using Boot;
 using Config.Expenses;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Video;
 using static Boot.Bootstrap;
+using static Config.Employees.ConfigEmployeeEditor;
 using static Expense.ExpensesEnumTypes;
 
 namespace Expense
@@ -48,20 +50,30 @@ namespace Expense
 
 
 #if UNITY_EDITOR
-        [Button("Add Expenses"), DisableInEditorMode]
-        private void AddExpensesOnBuildings(in double addNumber, in ushort index,
+        [SerializeField, ToggleLeft, BoxGroup("Change Expenses")]
+        private bool _isAdd;
+
+        [SerializeField, BoxGroup("Change Expenses")]
+        private ushort _index;
+
+
+        [Button("Change Expenses"), DisableInEditorMode, BoxGroup("Change Expenses")]
+        private void ChangeExpensesOnBuildings(in double addNumber,
                                             in AreaExpenditureType typeExpenses)
         {
-            if (typeExpenses is AreaExpenditureType.Employees && l_objectsExpensesImplementation[index].Ihiring != null)
-                l_objectsExpensesImplementation[index]?.ChangeExpenses(addNumber, typeExpenses, isAdd: true);
+            if (!l_objectsExpensesImplementation.IsNotEmpty(_index) && l_objectsExpensesImplementation[_index] == null)
+                return;
+
+            l_objectsExpensesImplementation[_index]?.ChangeExpenses(addNumber, typeExpenses, _isAdd);
         }
 
-        [Button("Reduce Expenses"), DisableInEditorMode]
-        private void ReduceExpensesOnBuildings(in double addNumber, in ushort index,
-                                               in AreaExpenditureType typeExpenses)
+        [Button("Change Employee Expenses"), DisableInEditorMode, BoxGroup("Change Expenses")]
+        private void ChangeExpensesOnEmployees(in double addNumber, in TypeEmployee typeEmployee)
         {
-            if (typeExpenses is AreaExpenditureType.Employees && l_objectsExpensesImplementation[index].Ihiring != null)
-                l_objectsExpensesImplementation[index]?.ChangeExpenses(addNumber, typeExpenses, isAdd: false);
+            if (!l_objectsExpensesImplementation.IsNotEmpty(_index) && l_objectsExpensesImplementation[_index] == null)
+                return;
+
+            l_objectsExpensesImplementation[_index]?.ChangeEmployeesExpenses(addNumber, _isAdd, typeEmployee);
         }
     }
 #endif
