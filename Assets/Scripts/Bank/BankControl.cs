@@ -2,6 +2,9 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using Boot;
 using Config.Bank;
+using System.Collections;
+using TimeControl;
+using System;
 
 namespace Bank
 {
@@ -15,18 +18,34 @@ namespace Bank
 
         private BankView _bankView;
 
+        private WaitForSeconds _waitForSeconds;
+
+        public event Action updated;
+
 
         void IBoot.InitAwake()
         {
+            float timeDateControl = FindObjectOfType<TimeDateControl>().GetCurrentTimeOneDay();
+            _waitForSeconds = new WaitForSeconds(timeDateControl);
+
             _bankModel = new BankModel(this);
             _bankView = new BankView(this);
         }
 
-        void IBoot.InitStart() { }
+        void IBoot.InitStart() => StartCoroutine(UpdateData());
 
         (Bootstrap.TypeLoadObject typeLoad, Bootstrap.TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
         {
             return (Bootstrap.TypeLoadObject.SimpleImportant, Bootstrap.TypeSingleOrLotsOf.Single);
+        }
+
+        private IEnumerator UpdateData()
+        {
+            while (true)
+            {
+                yield return _waitForSeconds;
+                updated();
+            }
         }
 
 #if UNITY_EDITOR

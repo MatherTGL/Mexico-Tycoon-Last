@@ -15,7 +15,9 @@ namespace Bank
         public BankModel(in BankControl bankControl)
         {
             _bankControl = bankControl;
-            _affordableCredit = _bankControl.configBank.averageAffordableCredit;
+            _affordableCredit = _bankControl.configBank.affordableCredit;
+
+            _bankControl.updated += AccrueInterestDebt;
         }
 
         public void TakeLoan(in float percentage)
@@ -41,6 +43,13 @@ namespace Bank
                 Debug.Log($"AF: {_affordableCredit} / CD: {_currentDebt}");
                 Data.DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(repayment, SpendAndCheckMoneyState.Spend);
             }
+        }
+
+        private void AccrueInterestDebt()
+        {
+            if (_currentDebt > 0)
+                _currentDebt += _currentDebt * _bankControl.configBank.loanInterest / 100;
+            Debug.Log(_currentDebt);
         }
     }
 }
