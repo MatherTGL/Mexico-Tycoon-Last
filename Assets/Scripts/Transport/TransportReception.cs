@@ -38,6 +38,8 @@ namespace Transport.Reception
             _freeConnectionCount = _configReception.defaultConnectionCount;
         }
 
+        void IBoot.InitStart() { }
+
         private void BuildRoute(in ITransportReception secondObject)
         {
             if (IsBuildingsWerePurchased(secondObject))
@@ -123,7 +125,7 @@ namespace Transport.Reception
             else return false;
         }
 
-        public Transform GetPosition() { return this.transform; }
+        public Transform GetPosition() { return transform; }
 
         public TypeBuilding GetTypeBuilding() { return _configReception.typeCurrentBuilding; }
     }

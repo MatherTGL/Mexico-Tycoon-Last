@@ -5,7 +5,6 @@ using Boot;
 using TimeControl.Acceleration;
 using static Boot.Bootstrap;
 
-
 namespace TimeControl
 {
     internal sealed class TimeDateControl : MonoBehaviour, IBoot
@@ -29,6 +28,8 @@ namespace TimeControl
             _inputControl = GetComponent<InputControl>();
             _timeAcceleration = new(_configTimeControl, _inputControl);
         }
+
+        void IBoot.InitStart() { }
 
         (TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
         {

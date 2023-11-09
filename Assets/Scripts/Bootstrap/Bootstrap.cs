@@ -1,32 +1,38 @@
-//*Searches all objects on the scene that inherit MonoBehaviour and implement the IBoot interface,
-//*then sorts them by the importance of loading and by the singleness parameter of the object.
-//*After all objects are loaded one by one into Awake
-
 using System;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-using Sirenix.OdinInspector;
 
 namespace Boot
 {
     public sealed class Bootstrap : MonoBehaviour
     {
-        public enum TypeLoadObject { SuperImportant, MediumImportant, SimpleImportant }
+        public enum TypeLoadObject
+        {
+            SuperImportant,
+            MediumImportant,
+            SimpleImportant,
+            UI
+        }
 
         public enum TypeSingleOrLotsOf { Single, LotsOf }
 
-        [ShowInInspector, ReadOnly, BoxGroup("Parameters")]
         private List<IBoot> l_bootObject = new List<IBoot>();
 
 
         private void Awake() => LoadToList();
 
+        private void Start()
+        {
+            for (ushort i = 0; i < l_bootObject.Count; i++)
+                l_bootObject[i].InitStart();
+        }
+
         private void LoadToList()
         {
             IBoot[] bootObjects = FindObjectsOfType<MonoBehaviour>()
                 .OfType<IBoot>().Where(item => ((MonoBehaviour)item).enabled)
-                .Distinct().ToArray<IBoot>();
+                .Distinct().ToArray();
 
             SortingObjectsList(ref bootObjects);
         }
@@ -34,30 +40,20 @@ namespace Boot
         private void SortingObjectsList(ref IBoot[] bootObjects)
         {
             foreach (TypeLoadObject typeLoad in Enum.GetValues(typeof(TypeLoadObject)))
-            {
-                LoadSingleSuperImportant(typeLoad, bootObjects);
-                LoadAllMultiplyObjects(typeLoad, bootObjects);
-            }
+                foreach (TypeSingleOrLotsOf singleOrLotsOf in Enum.GetValues(typeof(TypeSingleOrLotsOf)))
+                    LoadObjectsToList(typeLoad, singleOrLotsOf, bootObjects);
+
             Array.Clear(bootObjects, 0, bootObjects.Length);
-            StartInit();
+            StartInitAwake();
         }
 
-        private void LoadSingleSuperImportant(TypeLoadObject typeLoad, in IBoot[] bootObjects)
+        private void LoadObjectsToList(TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf, in IBoot[] bootObjects)
         {
-            if (typeLoad is TypeLoadObject.SuperImportant)
-            {
-                l_bootObject.AddRange(bootObjects.Where(item => item.GetTypeLoad().typeLoad.Equals(typeLoad)
-                    && item.GetTypeLoad().singleOrLotsOf is TypeSingleOrLotsOf.Single));
-            }
+            l_bootObject.AddRange(bootObjects.Where(item => item.GetTypeLoad().typeLoad.Equals(typeLoad) &&
+                item.GetTypeLoad().singleOrLotsOf.Equals(singleOrLotsOf)));
         }
 
-        private void LoadAllMultiplyObjects(TypeLoadObject typeLoad, in IBoot[] bootObjects)
-        {
-            l_bootObject.AddRange(bootObjects.Where(item => item.GetTypeLoad().typeLoad.Equals(typeLoad)
-                        && item.GetTypeLoad().singleOrLotsOf is TypeSingleOrLotsOf.LotsOf));
-        }
-
-        private void StartInit()
+        private void StartInitAwake()
         {
             for (ushort i = 0; i < l_bootObject.Count; i++)
                 l_bootObject[i].InitAwake();

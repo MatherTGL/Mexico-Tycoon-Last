@@ -28,6 +28,10 @@ namespace Climate
         {
             _seasonLength = new WaitForSeconds(_configClimateZone.seasonLength);
             FindObjectsInArea();
+        }
+
+        void IBoot.InitStart()
+        {
             StartCoroutine(SeasonChanger());
         }
 

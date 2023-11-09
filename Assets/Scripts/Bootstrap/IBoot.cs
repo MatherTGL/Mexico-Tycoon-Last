@@ -6,6 +6,8 @@ namespace Boot
     {
         void InitAwake();
 
-        (Bootstrap.TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) GetTypeLoad();
+        void InitStart();
+
+        (TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) GetTypeLoad();
     }
 }

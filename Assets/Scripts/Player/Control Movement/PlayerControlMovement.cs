@@ -42,6 +42,11 @@ namespace Player.Movement
             _transform = this.transform;
             _rigidbody = GetComponent<Rigidbody>();
             _inputControl = GetComponent<InputControl>();
+
+        }
+
+        void IBoot.InitStart()
+        {
             DontDestroyOnLoad(gameObject);
         }
 
@@ -101,7 +106,7 @@ namespace Player.Movement
 
         (TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
         {
-            return (typeLoad: TypeLoadObject.SuperImportant, TypeSingleOrLotsOf.Single);
+            return (TypeLoadObject.SuperImportant, TypeSingleOrLotsOf.Single);
         }
     }
 }

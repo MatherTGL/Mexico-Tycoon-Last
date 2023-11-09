@@ -25,9 +25,11 @@ namespace Data
             _IDataPlayer.SetDataConfig(_configDataPlayer);
         }
 
+        void IBoot.InitStart() { }
+
         (TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
         {
-            return (typeLoad: Bootstrap.TypeLoadObject.SuperImportant, TypeSingleOrLotsOf.Single);
+            return (TypeLoadObject.SuperImportant, TypeSingleOrLotsOf.Single);
         }
     }
 }

@@ -1,16 +1,13 @@
 using System.Collections.Generic;
-using Boot;
 using Config.Expenses;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Video;
-using static Boot.Bootstrap;
 using static Config.Employees.ConfigEmployeeEditor;
 using static Expense.ExpensesEnumTypes;
 
 namespace Expense
 {
-    public sealed class ExpenseManagementControl : MonoBehaviour, IBoot, IExpensesManagement
+    public sealed class ExpenseManagementControl : MonoBehaviour, IExpensesManagement
     {
         [ShowInInspector, ReadOnly]
         private List<IUsesExpensesManagement> l_usesExpensesObjects = new();
@@ -20,13 +17,6 @@ namespace Expense
 
 
         private ExpenseManagementControl() { }
-
-        void IBoot.InitAwake() { }
-
-        (TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
-        {
-            return (TypeLoadObject.SuperImportant, TypeSingleOrLotsOf.Single);
-        }
 
         IObjectsExpensesImplementation IExpensesManagement.Registration(
             in IUsesExpensesManagement IusesExpensesManagement, in ExpensesTypeObject typeObject,

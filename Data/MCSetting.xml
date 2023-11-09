@@ -380,5 +380,12 @@
       <overrideLabel>true</overrideLabel>
       <label>Create Config/Route/Create New</label>
     </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>Assets/Create/Config/Bank/Create New</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>Create Config/Bank/Create New</label>
+    </MCItem>
   </projectItemList>
 </MCSetting>

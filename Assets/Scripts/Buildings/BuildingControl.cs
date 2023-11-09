@@ -74,6 +74,10 @@ namespace Building
 
             ConnectExpensesManagementControl();
             CreateDictionaryTypeDrugs();
+        }
+
+        void IBoot.InitStart()
+        {
             StartCoroutine(ConstantUpdating());
         }
 
@@ -235,7 +239,6 @@ namespace Building
         {
             _IcityBusiness.SellBusiness(indexBusiness);
         }
-
         #endregion
 #endif
     }

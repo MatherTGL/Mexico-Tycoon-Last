@@ -35,6 +35,8 @@ namespace Route.Builder
             _connectionPoints = new ITransportReception[_config.maxPointConnection];
         }
 
+        void IBoot.InitStart() { }
+
         (TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
         {
             return (TypeLoadObject.SuperImportant, TypeSingleOrLotsOf.Single);
