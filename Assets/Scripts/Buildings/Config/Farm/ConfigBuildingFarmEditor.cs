@@ -59,6 +59,10 @@ namespace Config.Building
         private float _harvestRipeningTime;
         public float harvestRipeningTime => _harvestRipeningTime;
 
+        [SerializeField, BoxGroup("Parameters"), MinValue(0)]
+        private double _costPurchase = 50_000;
+        public double costPurchase => _costPurchase;
+
 
 #if UNITY_EDITOR
         private void OnValidate()

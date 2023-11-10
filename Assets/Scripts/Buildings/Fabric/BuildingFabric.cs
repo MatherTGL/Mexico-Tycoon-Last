@@ -34,6 +34,8 @@ namespace Building.Fabric
 
         uint[] IBuilding.localCapacityProduction => _config.localCapacityProduction;
 
+        double IBuildingPurchased.costPurchase => _config.costPurchase;
+
         private ushort _productionPerformance;
 
         bool IBuildingJobStatus.isWorked { get => isWorked; set => isWorked = value; }

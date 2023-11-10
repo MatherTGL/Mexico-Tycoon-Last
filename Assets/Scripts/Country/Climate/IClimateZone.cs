@@ -1,11 +1,11 @@
 using Config.Climate;
+using Country.Climate;
 
 namespace Climate
 {
     public interface IClimateZone
     {
-        ConfigClimateZoneEditor configClimateZone { get; }
-
+        void Init(in ICountryClimate IcountryClimate);
 
         ConfigClimateZoneEditor.TypeSeasons GetCurrentSeason();
     }

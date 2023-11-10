@@ -17,6 +17,10 @@ namespace Config.Building
         private uint[] _localCapacityProduction;
         public uint[] localCapacityProduction => _localCapacityProduction;
 
+        [SerializeField, BoxGroup("Parameters"), MinValue(0)]
+        private double _costPurchase = 50_000;
+        public double costPurchase => _costPurchase;
+
 
 #if UNITY_EDITOR
         [Button("Update Info Capacity")]

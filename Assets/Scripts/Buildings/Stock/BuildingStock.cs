@@ -32,6 +32,8 @@ namespace Building.Stock
 
         uint[] IBuilding.localCapacityProduction => _config.localCapacityProduction;
 
+        double IBuildingPurchased.costPurchase => _config.costPurchase;
+
         bool IBuildingJobStatus.isWorked { get => isWorked; set => isWorked = value; }
 
         bool IBuildingPurchased.isBuyed { get => isBuyed; set => isBuyed = value; }

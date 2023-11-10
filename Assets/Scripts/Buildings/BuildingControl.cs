@@ -17,19 +17,19 @@ using Building.SeaPort;
 using Building.City.Business;
 using Climate;
 using Expense;
-using static Boot.Bootstrap;
 using Config.Expenses;
 using System;
-using static Building.BuildingEnumType;
 using Building.Hire;
 using Hire;
+using static Boot.Bootstrap;
+using static Building.BuildingEnumType;
+using Country;
 
 namespace Building
 {
     [RequireComponent(typeof(TransportReception), typeof(BoxCollider))]
     public sealed class BuildingControl : MonoBehaviour, IBoot, IBuildingRequestForTransport
     {
-        [ShowInInspector, ReadOnly]
         private IBuilding _Ibuilding;
 
         private ISpending _Ispending;
@@ -191,10 +191,12 @@ namespace Building
             return (TypeLoadObject.SuperImportant, TypeSingleOrLotsOf.LotsOf);
         }
 
-        public void SetClimateZone(in IClimateZone IclimateZone)
+        public void SetCountry(in ICountryBuildings IcountryBuildings)
         {
-            IUsesClimateInfo IusesClimateInfo = _Ibuilding as IUsesClimateInfo;
-            IusesClimateInfo?.SetClimateZone(IclimateZone);
+            IUsesCountryInfo IusesCountryInfo = _Ibuilding as IUsesCountryInfo;
+            IusesCountryInfo?.SetCountry(IcountryBuildings);
+            //? IUsesClimateInfo IusesClimateInfo = _Ibuilding as IUsesClimateInfo;
+            //? IusesClimateInfo?.SetClimateZone(IclimateZone);
         }
 
         //TODO: move all to view class and make mvc
@@ -219,6 +221,7 @@ namespace Building
         #region Farm
 
         [Button("Change Farm Type"), BoxGroup("Editor Control | Farm"), DisableInEditorMode]
+        [ShowIf("@_typeBuilding == BuildingEnumType.TypeBuilding.Farm")]
         private void ChangeFarmTypeEditor(in ConfigBuildingFarmEditor.TypeFarm typeFarm)
         {
             ChangeFarmType(typeFarm);
@@ -229,12 +232,14 @@ namespace Building
         #region City-Business
 
         [Button("Buy"), BoxGroup("Editor Control | City Business"), DisableInEditorMode]
+        [ShowIf("@_typeBuilding == BuildingEnumType.TypeBuilding.City")]
         private void BuyBusiness(in CityBusiness.TypeBusiness typeBusiness)
         {
             _IcityBusiness.BuyBusiness(typeBusiness);
         }
 
         [Button("Sell"), BoxGroup("Editor Control | City Business"), DisableInEditorMode]
+        [ShowIf("@_typeBuilding == BuildingEnumType.TypeBuilding.City")]
         private void SellBusiness(in ushort indexBusiness)
         {
             _IcityBusiness.SellBusiness(indexBusiness);

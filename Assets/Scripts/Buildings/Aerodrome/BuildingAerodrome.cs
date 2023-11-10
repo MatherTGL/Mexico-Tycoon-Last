@@ -29,6 +29,8 @@ namespace Building.Aerodrome
 
         uint[] IBuilding.localCapacityProduction => _config.localCapacityProduction;
 
+        double IBuildingPurchased.costPurchase => _config.costPurchase;
+
         bool IBuildingPurchased.isBuyed { get => isBuyed; set => isBuyed = value; }
 
         bool IBuildingJobStatus.isWorked { get => isWorked; set => isWorked = value; }

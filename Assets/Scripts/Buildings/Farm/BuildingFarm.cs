@@ -7,15 +7,16 @@ using Climate;
 using Expense;
 using static Expense.ExpensesEnumTypes;
 using Hire;
+using Country;
 
 namespace Building.Farm
 {
-    public sealed class BuildingFarm : AbstractBuilding, IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption, IChangedFarmType, IUsesClimateInfo, IUsesExpensesManagement, IUsesHiring
+    public sealed class BuildingFarm : AbstractBuilding, IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption, IChangedFarmType, IUsesCountryInfo, IUsesExpensesManagement, IUsesHiring
     {
         private readonly IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
         IBuildingMonitorEnergy IEnergyConsumption.IbuildingMonitorEnergy => _IbuildingMonitorEnergy;
 
-        private IClimateZone _IclimateZone;
+        private ICountryBuildings _IcountryBuildings;
 
         IObjectsExpensesImplementation ISpending.IobjectsExpensesImplementation => IobjectsExpensesImplementation;
         IObjectsExpensesImplementation IUsesExpensesManagement.IobjectsExpensesImplementation
@@ -39,6 +40,9 @@ namespace Building.Farm
 
         uint[] IBuilding.localCapacityProduction => _config.localCapacityProduction;
 
+        private double _costPurchase;
+        double IBuildingPurchased.costPurchase => _costPurchase;
+
         private ushort _productionPerformance;
 
         private float _currentPercentageOfMaturity;
@@ -60,6 +64,7 @@ namespace Building.Farm
         {
             _productionPerformance = config.productionStartPerformance;
             _typeProductionResource = config.typeProductionResource;
+            _costPurchase = config.costPurchase;
         }
 
         private void Production()
@@ -101,8 +106,10 @@ namespace Building.Farm
 
         private void CalculateImpactClimateZones()
         {
-            double addingNumber = IobjectsExpensesImplementation.GetTotalExpenses() * _IclimateZone
-                .configClimateZone.percentageImpactCostMaintenance;
+            double addingNumber = IobjectsExpensesImplementation.GetTotalExpenses() * _IcountryBuildings
+                .configClimate.percentageImpactCostMaintenance;
+
+            Debug.Log(addingNumber);
 
             IobjectsExpensesImplementation.ChangeExpenses(addingNumber, AreaExpenditureType.Production,
                                                            isAdd: true);
@@ -111,7 +118,7 @@ namespace Building.Farm
         private bool IsGrowingSeason()
         {
             if (_config.typeFarm is ConfigBuildingFarmEditor.TypeFarm.Terrestrial)
-                return _config.growingSeasons.Contains(_IclimateZone.GetCurrentSeason());
+                return _config.growingSeasons.Contains(_IcountryBuildings.IclimateZone.GetCurrentSeason());
             else
                 return true;
         }
@@ -120,6 +127,12 @@ namespace Building.Farm
         {
             if (isWorked && isBuyed && IsGrowingSeason())
                 Production();
+
+            if (!isBuyed)
+            {
+                _costPurchase += _costPurchase * _IcountryBuildings.IcountryInflation.GetTotalInflation() / 100;
+                Debug.Log(_costPurchase);
+            }
         }
 
         void IChangedFarmType.ChangeType(in ConfigBuildingFarmEditor.TypeFarm typeFarm)
@@ -129,9 +142,9 @@ namespace Building.Farm
                     _config = config;
         }
 
-        void IUsesClimateInfo.SetClimateZone(in IClimateZone IclimateZone)
+        void IUsesCountryInfo.SetCountry(in ICountryBuildings IcountryBuildings)
         {
-            _IclimateZone = IclimateZone;
+            _IcountryBuildings = IcountryBuildings;
             CalculateImpactClimateZones();
         }
     }
