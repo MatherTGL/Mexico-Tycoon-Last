@@ -195,8 +195,6 @@ namespace Building
         {
             IUsesCountryInfo IusesCountryInfo = _Ibuilding as IUsesCountryInfo;
             IusesCountryInfo?.SetCountry(IcountryBuildings);
-            //? IUsesClimateInfo IusesClimateInfo = _Ibuilding as IUsesClimateInfo;
-            //? IusesClimateInfo?.SetClimateZone(IclimateZone);
         }
 
         //TODO: move all to view class and make mvc

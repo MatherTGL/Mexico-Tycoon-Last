@@ -1,4 +1,3 @@
-using System.Collections;
 namespace Country.Inflation
 {
     public sealed class CountryInflation : ICountryInflation
