@@ -387,5 +387,12 @@
       <overrideLabel>true</overrideLabel>
       <label>Create Config/Bank/Create New</label>
     </MCItem>
+    <MCItem>
+      <type>MenuPath</type>
+      <command>Assets/Create/Config/Country/Inflation/Create New</command>
+      <original>None</original>
+      <overrideLabel>true</overrideLabel>
+      <label>Create Config/Country/Inflation/Create New</label>
+    </MCItem>
   </projectItemList>
 </MCSetting>

@@ -1,22 +1,33 @@
+using UnityEngine;
+
 namespace Country.Inflation
 {
-    public sealed class CountryInflation : ICountryInflation
+    public sealed class CountryInflation : IInflation
     {
+        private ICountryInflation _IcountryInflation;
+
         private float _currentTotalInflation;
 
-        private float _percentageInflationPerTimeTick = 0.1f; //? Config load
+        private float _currentPercentageInflation;
 
 
-        void ICountryInflation.Init(in CountryControl countryControl)
+        void IInflation.Init(in ICountryInflation countryControl)
         {
             countryControl.timeUpdated += CalculateInflation;
+            _currentPercentageInflation = countryControl.configInflation.startedInflation;
+            _IcountryInflation = countryControl;
         }
 
         private void CalculateInflation()
         {
-            _currentTotalInflation += _percentageInflationPerTimeTick;
+            _currentPercentageInflation = Random.Range(_IcountryInflation.configInflation.percentageDeflationMax,
+                                                      _IcountryInflation.configInflation.percentageInflationMax);
+
+            Debug.Log($"RandomInflation %: {_currentPercentageInflation}");
+            _currentTotalInflation += _currentPercentageInflation;
+            Debug.Log($"Current Total %: {_currentTotalInflation}");
         }
 
-        float ICountryInflation.GetTotalInflation() => _currentTotalInflation;
+        float IInflation.GetTotalInflation() => _currentTotalInflation;
     }
 }

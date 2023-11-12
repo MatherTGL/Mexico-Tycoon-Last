@@ -6,17 +6,18 @@ using System.Collections;
 using TimeControl;
 using System;
 using Climate;
-using Config.Climate;
 using Country.Climate;
 using System.Linq;
 using Building;
+using Config.Country.Climate;
+using Config.Country.Inflation;
 
 namespace Country
 {
-    public sealed class CountryControl : MonoBehaviour, IBoot, ICountryBuildings, ICountryClimate
+    public sealed class CountryControl : MonoBehaviour, IBoot, ICountryBuildings, ICountryClimate, ICountryInflation
     {
-        private ICountryInflation _IcountryInflation;
-        ICountryInflation ICountryBuildings.IcountryInflation => _IcountryInflation;
+        private IInflation _IInflation;
+        IInflation ICountryBuildings.IcountryInflation => _IInflation;
 
         private IClimateZone _IclimateZone;
         IClimateZone ICountryBuildings.IclimateZone => _IclimateZone;
@@ -30,11 +31,17 @@ namespace Country
         ConfigClimateZoneEditor ICountryClimate.configClimate => _configClimateZone;
         ConfigClimateZoneEditor ICountryBuildings.configClimate => _configClimateZone;
 
+        [SerializeField, Required]
+        private ConfigInflationEditor _configInflation;
+        ConfigInflationEditor ICountryInflation.configInflation => _configInflation;
+
+
+        private CountryControl() { }
 
         void IBoot.InitAwake()
         {
-            _IcountryInflation = new CountryInflation();
-            _IcountryInflation.Init(this);
+            _IInflation = new CountryInflation();
+            _IInflation.Init(this);
 
             float time = FindObjectOfType<TimeDateControl>().GetCurrentTimeOneDay();
             _timeTick = new WaitForSeconds(time);

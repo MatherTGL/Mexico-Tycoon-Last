@@ -1,5 +1,5 @@
 using Climate;
-using Config.Climate;
+using Config.Country.Climate;
 using Country.Inflation;
 
 namespace Country
@@ -9,7 +9,7 @@ namespace Country
         ConfigClimateZoneEditor configClimate { get; }
 
 
-        ICountryInflation IcountryInflation { get; }
+        IInflation IcountryInflation { get; }
 
         IClimateZone IclimateZone { get; }
     }

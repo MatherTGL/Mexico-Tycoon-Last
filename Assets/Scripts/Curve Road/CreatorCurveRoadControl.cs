@@ -116,17 +116,11 @@ namespace Route.Builder
             var secondObject = _positionPoints[_indexPositionPointsTo].typeCurrentBuilding;
 
             if (firstObject == TypeBuilding.Aerodrome && secondObject == TypeBuilding.Aerodrome)
-            {
                 _typeRoute = TypeTransport.Type.Air;
-            }
             else if (firstObject == TypeBuilding.SeaPort && secondObject == TypeBuilding.SeaPort)
-            {
                 _typeRoute = TypeTransport.Type.Marine;
-            }
             else
-            {
                 _typeRoute = TypeTransport.Type.Ground;
-            }
         }
 
         Vector3[] ICreatorCurveRoad.GetRoutePoints()

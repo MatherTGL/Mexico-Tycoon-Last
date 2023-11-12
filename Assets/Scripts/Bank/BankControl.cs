@@ -23,6 +23,8 @@ namespace Bank
         public event Action updated;
 
 
+        private BankControl() { }
+
         void IBoot.InitAwake()
         {
             float timeDateControl = FindObjectOfType<TimeDateControl>().GetCurrentTimeOneDay();

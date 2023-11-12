@@ -1185,6 +1185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _configClimateZone: {fileID: 11400000, guid: b6f70de29d39e6bc1ad4afd2457cefcc, type: 2}
+  _configInflation: {fileID: 11400000, guid: 64443fa2e4f4ce39cbaeb3f04d0f896d, type: 2}
 --- !u!64 &1141501232
 MeshCollider:
   m_ObjectHideFlags: 0

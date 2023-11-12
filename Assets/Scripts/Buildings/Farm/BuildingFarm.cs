@@ -131,7 +131,7 @@ namespace Building.Farm
             if (!isBuyed)
             {
                 _costPurchase += _costPurchase * _IcountryBuildings.IcountryInflation.GetTotalInflation() / 100;
-                Debug.Log(_costPurchase);
+                Debug.Log($"Farm cost: {_costPurchase}");
             }
         }
 

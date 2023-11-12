@@ -1,12 +1,8 @@
 using UnityEngine;
-using Config.Climate;
-using Building;
 using Sirenix.OdinInspector;
-using Boot;
-using System.Linq;
-using static Boot.Bootstrap;
 using System.Collections;
 using Country.Climate;
+using Config.Country.Climate;
 
 namespace Climate
 {

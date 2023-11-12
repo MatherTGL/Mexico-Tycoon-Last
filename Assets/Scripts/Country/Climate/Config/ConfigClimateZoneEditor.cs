@@ -1,9 +1,9 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-namespace Config.Climate
+namespace Config.Country.Climate
 {
-    [CreateAssetMenu(fileName = "ClimateZoneConfig", menuName = "Config/Climate/Zone/Create New", order = 50)]
+    [CreateAssetMenu(fileName = "ClimateZoneConfig", menuName = "Config/Country/Climate/Zone/Create New", order = 50)]
     public sealed class ConfigClimateZoneEditor : ScriptableObject
     {
         public enum TypeClimate : byte

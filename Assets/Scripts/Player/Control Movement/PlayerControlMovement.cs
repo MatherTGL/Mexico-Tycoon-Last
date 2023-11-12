@@ -39,16 +39,12 @@ namespace Player.Movement
 
         void IBoot.InitAwake()
         {
-            _transform = this.transform;
+            _transform = transform;
             _rigidbody = GetComponent<Rigidbody>();
             _inputControl = GetComponent<InputControl>();
-
         }
 
-        void IBoot.InitStart()
-        {
-            DontDestroyOnLoad(gameObject);
-        }
+        void IBoot.InitStart() => DontDestroyOnLoad(gameObject);
 
         private void LateUpdate() => PlayerTransformClamp();
 

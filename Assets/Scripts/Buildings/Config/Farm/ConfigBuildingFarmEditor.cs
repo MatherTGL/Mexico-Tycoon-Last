@@ -4,7 +4,7 @@ using Resources;
 using System.Collections.Generic;
 using System;
 using System.Linq;
-using Config.Climate;
+using Config.Country.Climate;
 
 namespace Config.Building
 {

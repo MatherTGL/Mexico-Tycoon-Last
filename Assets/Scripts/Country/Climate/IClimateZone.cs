@@ -1,4 +1,4 @@
-using Config.Climate;
+using Config.Country.Climate;
 using Country.Climate;
 
 namespace Climate
