@@ -43,3 +43,5 @@ Thumbs.db
 *.blob
 *.log
 *.log
+*.log
+*.dwlt
