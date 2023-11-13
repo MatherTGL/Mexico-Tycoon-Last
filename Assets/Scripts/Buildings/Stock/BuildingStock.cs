@@ -4,6 +4,7 @@ using Config.Building;
 using Building.Additional;
 using UnityEngine;
 using Expense;
+using Country;
 
 namespace Building.Stock
 {
@@ -11,6 +12,9 @@ namespace Building.Stock
     {
         private readonly IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
         IBuildingMonitorEnergy IEnergyConsumption.IbuildingMonitorEnergy => _IbuildingMonitorEnergy;
+
+        private ICountryBuildings _IcountryBuildings;
+        ICountryBuildings IUsesCountryInfo.IcountryBuildings { get => _IcountryBuildings; set => _IcountryBuildings = value; }
 
         IObjectsExpensesImplementation ISpending.IobjectsExpensesImplementation => IobjectsExpensesImplementation;
         IObjectsExpensesImplementation IUsesExpensesManagement.IobjectsExpensesImplementation
@@ -32,7 +36,8 @@ namespace Building.Stock
 
         uint[] IBuilding.localCapacityProduction => _config.localCapacityProduction;
 
-        double IBuildingPurchased.costPurchase => _config.costPurchase;
+        private double _costPurchase;
+        double IBuildingPurchased.costPurchase { get => _costPurchase; set => _costPurchase = value; }
 
         bool IBuildingJobStatus.isWorked { get => isWorked; set => isWorked = value; }
 
@@ -42,6 +47,9 @@ namespace Building.Stock
         public BuildingStock(in ScriptableObject config)
         {
             _config = config as ConfigBuildingStockEditor;
+
+            if (_config != null)
+                _costPurchase = _config.costPurchase;
         }
 
         void IBuilding.ConstantUpdatingInfo()

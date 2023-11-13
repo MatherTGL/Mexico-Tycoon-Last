@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Resources;
 using Building.Additional;
 using UnityEngine;
-using Climate;
 using Expense;
 using static Expense.ExpensesEnumTypes;
 using Hire;
@@ -11,12 +10,13 @@ using Country;
 
 namespace Building.Farm
 {
-    public sealed class BuildingFarm : AbstractBuilding, IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption, IChangedFarmType, IUsesCountryInfo, IUsesExpensesManagement, IUsesHiring
+    public sealed class BuildingFarm : AbstractBuilding, IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption, IChangedFarmType, IUsesExpensesManagement, IUsesHiring
     {
         private readonly IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
         IBuildingMonitorEnergy IEnergyConsumption.IbuildingMonitorEnergy => _IbuildingMonitorEnergy;
 
         private ICountryBuildings _IcountryBuildings;
+        ICountryBuildings IUsesCountryInfo.IcountryBuildings { get => _IcountryBuildings; set => _IcountryBuildings = value; }
 
         IObjectsExpensesImplementation ISpending.IobjectsExpensesImplementation => IobjectsExpensesImplementation;
         IObjectsExpensesImplementation IUsesExpensesManagement.IobjectsExpensesImplementation
@@ -41,7 +41,7 @@ namespace Building.Farm
         uint[] IBuilding.localCapacityProduction => _config.localCapacityProduction;
 
         private double _costPurchase;
-        double IBuildingPurchased.costPurchase => _costPurchase;
+        double IBuildingPurchased.costPurchase { get => _costPurchase; set => _costPurchase = value; }
 
         private ushort _productionPerformance;
 
@@ -99,6 +99,7 @@ namespace Building.Farm
                 for (ushort i = 0; i < _config.quantityRequiredRawMaterials.Count; i++)
                     if (d_amountResources[typeDrug] < _config.quantityRequiredRawMaterials[i])
                         return false;
+
                 d_amountResources[typeDrug] -= _config.quantityRequiredRawMaterials[0];
             }
             return true;
@@ -127,12 +128,6 @@ namespace Building.Farm
         {
             if (isWorked && isBuyed && IsGrowingSeason())
                 Production();
-
-            if (!isBuyed)
-            {
-                _costPurchase += _costPurchase * _IcountryBuildings.IcountryInflation.GetTotalInflation() / 100;
-                Debug.Log($"Farm cost: {_costPurchase}");
-            }
         }
 
         void IChangedFarmType.ChangeType(in ConfigBuildingFarmEditor.TypeFarm typeFarm)

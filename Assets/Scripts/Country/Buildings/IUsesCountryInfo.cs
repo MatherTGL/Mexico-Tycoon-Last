@@ -2,6 +2,12 @@ namespace Country
 {
     public interface IUsesCountryInfo
     {
-        void SetCountry(in ICountryBuildings IcountryBuildings);
+        protected ICountryBuildings IcountryBuildings { get; set; }
+
+
+        void SetCountry(in ICountryBuildings IcountryBuildings)
+        {
+            this.IcountryBuildings = IcountryBuildings;
+        }
     }
 }

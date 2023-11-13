@@ -163,6 +163,11 @@ namespace Building
                 _IenergyConsumption.MonitorEnergy(_IenergyConsumption);
         }
 
+        private void CalculateBuildingCostPurchased()
+        {
+            _IbuildingPurchased?.UpdateCostPurchased();
+        }
+
         private IEnumerator ConstantUpdating()
         {
             while (true)
@@ -170,6 +175,7 @@ namespace Building
                 _Ibuilding.ConstantUpdatingInfo();
                 UpdateSpendingBuildings();
                 MonitorEnergy();
+                CalculateBuildingCostPurchased();
                 yield return _coroutineTimeStep;
             }
         }

@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maintenanceExpenses: 30
   _localCapacityProduction: 1e0000001e0000001e0000001e0000001e000000
+  _costPurchase: 25000

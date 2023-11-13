@@ -4,6 +4,7 @@ using Config.Building;
 using UnityEngine;
 using System.Collections.Generic;
 using Expense;
+using Country;
 
 namespace Building.Aerodrome
 {
@@ -14,6 +15,9 @@ namespace Building.Aerodrome
         {
             get => IobjectsExpensesImplementation; set => IobjectsExpensesImplementation = value;
         }
+
+        private ICountryBuildings _IcountryBuildings;
+        ICountryBuildings IUsesCountryInfo.IcountryBuildings { get => _IcountryBuildings; set => _IcountryBuildings = value; }
 
         private readonly ConfigBuildingAerodromeEditor _config;
 
@@ -29,7 +33,8 @@ namespace Building.Aerodrome
 
         uint[] IBuilding.localCapacityProduction => _config.localCapacityProduction;
 
-        double IBuildingPurchased.costPurchase => _config.costPurchase;
+        private double _costPurchase;
+        double IBuildingPurchased.costPurchase { get => _costPurchase; set => _costPurchase = value; }
 
         bool IBuildingPurchased.isBuyed { get => isBuyed; set => isBuyed = value; }
 
@@ -39,6 +44,9 @@ namespace Building.Aerodrome
         public BuildingAerodrome(in ScriptableObject config)
         {
             _config = config as ConfigBuildingAerodromeEditor;
+
+            if (_config != null)
+                _costPurchase = _config.costPurchase;
         }
 
         void IBuilding.ConstantUpdatingInfo()

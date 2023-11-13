@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Building.Additional;
 using Config.Building;
+using Country;
 using Expense;
 using Resources;
 using UnityEngine;
@@ -11,6 +12,9 @@ namespace Building.Fabric
     {
         private IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
         IBuildingMonitorEnergy IEnergyConsumption.IbuildingMonitorEnergy => _IbuildingMonitorEnergy;
+
+        private ICountryBuildings _IcountryBuildings;
+        ICountryBuildings IUsesCountryInfo.IcountryBuildings { get => _IcountryBuildings; set => _IcountryBuildings = value; }
 
         IObjectsExpensesImplementation ISpending.IobjectsExpensesImplementation => IobjectsExpensesImplementation;
         IObjectsExpensesImplementation IUsesExpensesManagement.IobjectsExpensesImplementation
@@ -34,7 +38,8 @@ namespace Building.Fabric
 
         uint[] IBuilding.localCapacityProduction => _config.localCapacityProduction;
 
-        double IBuildingPurchased.costPurchase => _config.costPurchase;
+        private double _costPurchase;
+        double IBuildingPurchased.costPurchase { get => _costPurchase; set => _costPurchase = value; }
 
         private ushort _productionPerformance;
 
@@ -46,13 +51,16 @@ namespace Building.Fabric
         public BuildingFabric(in ScriptableObject config)
         {
             _config = config as ConfigBuildingFabricEditor;
-            LoadConfigData(_config);
+
+            if (_config != null)
+                LoadConfigData(_config);
         }
 
         private void LoadConfigData(in ConfigBuildingFabricEditor config)
         {
             _typeProductionResource = TypeProductionResources.TypeResource.Cocaine;
             _productionPerformance = config.productionPerformance;
+            _costPurchase = _config.costPurchase;
         }
 
         private void Production()

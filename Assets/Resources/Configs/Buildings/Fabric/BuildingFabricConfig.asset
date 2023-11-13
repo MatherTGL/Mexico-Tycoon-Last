@@ -20,3 +20,4 @@ MonoBehaviour:
   _productConversionStep: 5
   _maintenanceExpenses: 150
   _localCapacityProduction: 0a0000000a0000000a0000000a0000000a000000
+  _costPurchase: 150000

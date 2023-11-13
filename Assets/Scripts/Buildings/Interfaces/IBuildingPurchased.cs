@@ -1,13 +1,15 @@
+using Country;
 using Data;
+using UnityEngine;
 using static Data.Player.DataPlayer;
 
 namespace Building.Additional
 {
-    public interface IBuildingPurchased
+    public interface IBuildingPurchased : IUsesCountryInfo
     {
         bool isBuyed { get; protected set; }
 
-        double costPurchase { get; }
+        protected double costPurchase { get; set; }
 
 
         void Buy()
@@ -20,6 +22,15 @@ namespace Building.Additional
         {
             if (isBuyed)
                 isBuyed = false;
+        }
+
+        void UpdateCostPurchased()
+        {
+            if (!isBuyed)
+            {
+                costPurchase += costPurchase * IcountryBuildings.IcountryInflation.GetTotalInflation() / 100;
+                Debug.Log($"Building cost: {costPurchase}");
+            }
         }
     }
 }

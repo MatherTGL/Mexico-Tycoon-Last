@@ -18,6 +18,8 @@ namespace TimeControl
 
         private float _currentTimeOneDay = 5;
 
+        private float _accelerationDefault;
+
         private bool _isPaused = false;
 
 
@@ -29,7 +31,10 @@ namespace TimeControl
             _timeAcceleration = new(_configTimeControl, _inputControl);
         }
 
-        void IBoot.InitStart() { }
+        void IBoot.InitStart()
+        {
+            _accelerationDefault = (float)ConfigTimeControlEditor.AccelerationTime.X1 / _currentTimeOneDay;
+        }
 
         (TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
         {
@@ -43,9 +48,8 @@ namespace TimeControl
 
         public float GetCurrentTimeOneDay(bool isUseCoroutine = false)
         {
-            float accelerationDefault = (float)ConfigTimeControlEditor.AccelerationTime.X1;
             if (isUseCoroutine)
-                return accelerationDefault / _currentTimeOneDay;
+                return _accelerationDefault;
             else
                 return _currentTimeOneDay;
         }
