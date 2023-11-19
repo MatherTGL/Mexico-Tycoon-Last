@@ -5,19 +5,19 @@ namespace Bank
 {
     public sealed class BankModel
     {
-        private BankControl _bankControl;
-
         private double _affordableCredit;
 
         private double _currentDebt;
 
+        private float _loanInterest;
+
 
         public BankModel(in BankControl bankControl)
         {
-            _bankControl = bankControl;
-            _affordableCredit = _bankControl.configBank.affordableCredit;
+            _affordableCredit = bankControl.configBank.affordableCredit;
+            _loanInterest = bankControl.configBank.loanInterest;
 
-            _bankControl.updated += AccrueInterestDebt;
+            bankControl.updated += AccrueInterestDebt;
         }
 
         public void TakeLoan(in float percentage)
@@ -48,7 +48,7 @@ namespace Bank
         private void AccrueInterestDebt()
         {
             if (_currentDebt > 0)
-                _currentDebt += _currentDebt * _bankControl.configBank.loanInterest / 100;
+                _currentDebt += _currentDebt * _loanInterest / 100;
             Debug.Log(_currentDebt);
         }
     }

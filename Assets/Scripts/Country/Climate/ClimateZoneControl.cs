@@ -3,6 +3,7 @@ using Sirenix.OdinInspector;
 using System.Collections;
 using Country.Climate;
 using Config.Country.Climate;
+using System;
 
 namespace Climate
 {
@@ -16,6 +17,10 @@ namespace Climate
 
         private WaitForSeconds _seasonLength;
 
+        public event Action updatedSeason;
+
+        private float _percentageImpactCostMaintenance;
+
 
         private ClimateZoneControl() { }
 
@@ -23,6 +28,8 @@ namespace Climate
         {
             _IcountryClimate = IcountryClimate;
             _seasonLength = new WaitForSeconds(IcountryClimate.configClimate.seasonLength);
+
+            CalculateImpact();
             StartCoroutine(SeasonChanger());
         }
 
@@ -30,6 +37,15 @@ namespace Climate
         {
             if (++_currentSeason > ConfigClimateZoneEditor.TypeSeasons.Spring)
                 _currentSeason = 0;
+
+            CalculateImpact();
+            updatedSeason();
+        }
+
+        private void CalculateImpact()
+        {
+            _percentageImpactCostMaintenance = _IcountryClimate.configClimate.seasonsImpactExpenses.Get(_currentSeason);
+            Debug.Log(_percentageImpactCostMaintenance);
         }
 
         private IEnumerator SeasonChanger()
@@ -37,10 +53,13 @@ namespace Climate
             while (true)
             {
                 yield return _seasonLength;
+                Debug.Log("SeasonChanger");
                 ChangeSeason();
             }
         }
 
         ConfigClimateZoneEditor.TypeSeasons IClimateZone.GetCurrentSeason() => _currentSeason;
+
+        float IClimateZone.GetCurrentSeasonImpact() => _percentageImpactCostMaintenance;
     }
 }

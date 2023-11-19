@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 634e784815e94251096849ce94d17f86, type: 3}
   m_Name: BuildingFarmTerrestrialConfig
   m_EditorClassIdentifier: 
-  l_requiredRawMaterials: 01
+  l_requiredRawMaterials: 0105
   l_quantityRequiredRawMaterials:
   - 2
+  - 4
   _typeProductionResource: 0
   typeFarm: 0
   l_growingSeasons: 0003
@@ -25,3 +26,4 @@ MonoBehaviour:
   _maintenanceExpensesOnSecurity: 20
   _maintenanceExpensesOnWater: 15
   _harvestRipeningTime: 4
+  _costPurchase: 50000

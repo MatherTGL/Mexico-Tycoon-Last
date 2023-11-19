@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5636d93095664c50b1e5ae4afe7b395, type: 3}
   m_Name: CostResourcesConf
   m_EditorClassIdentifier: 
-  _costsSellResources: a00f0000e8030000307500000000000000000000
-  _costBuyResources: 4f14000013050000579800000000000000000000
+  _costsSellResources: a00f0000e80300003075000000000000f40100002c010000
+  _costBuyResources: 4f1400001305000057980000000000008902000085010000
+  _costDifference: 1.3

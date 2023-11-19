@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: eedbc72935bb64782a3a3fb5f86d38ee
+timeCreated: 1470749676
+licenseType: Store
+DefaultImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 57647
+  packageName: Script Dependency Visualizer
+  packageVersion: 1.2
+  assetPath: Assets/BlackPeaStudios/ScriptDependencyVisualizer/SDV_ReadMe.pdf
+  uploadId: 161075

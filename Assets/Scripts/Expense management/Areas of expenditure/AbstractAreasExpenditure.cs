@@ -8,6 +8,8 @@ namespace Expense.Areas
     {
         protected IHiring _Ihiring;
 
+        protected double _baseExpenses;
+
         protected double _expenses;
         public double expenses => _expenses;
 
@@ -16,14 +18,19 @@ namespace Expense.Areas
 
         public virtual void ChangeExpenses(in double expenses, in bool isAdd)
         {
-            //TODO: refactoring
             if (isAdd == true)
                 _expenses += expenses;
             else if ((_expenses - expenses) > 0)
                 _expenses -= expenses;
 
+            _baseExpenses = _expenses;
             _percentageQuality = Mathf.Clamp((int)(_expenses / 4), 10, 95); //!
             Debug.Log($"{_expenses} / {_percentageQuality}");
+        }
+
+        public virtual void ChangeSeasonExpenses(in double expenses)
+        {
+            _expenses = _baseExpenses + expenses;
         }
 
         public void InitHiring(in IHiring Ihiring)

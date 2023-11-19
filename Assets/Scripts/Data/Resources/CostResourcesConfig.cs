@@ -1,17 +1,19 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-
 namespace Resources
 {
     [CreateAssetMenu(fileName = "CostResourcesConf", menuName = "Config/Data/Costs/Resources/Create New", order = 50)]
     public sealed class CostResourcesConfig : ScriptableObject
     {
-        [SerializeField, ReadOnly]
+        [SerializeField]
         private uint[] _costsSellResources;
 
         [SerializeField, ReadOnly]
         private uint[] _costBuyResources;
+
+        [SerializeField, MinValue(0.5f)]
+        private float _costDifference = 1.3f;
 
 
         private void OnValidate()
@@ -19,7 +21,7 @@ namespace Resources
             _costBuyResources = new uint[_costsSellResources.Length];
 
             for (int i = 0; i < _costsSellResources.Length; i++)
-                _costBuyResources[i] = (uint)(_costsSellResources[i] * 1.3f);
+                _costBuyResources[i] = (uint)(_costsSellResources[i] * _costDifference);
         }
 
         public uint[] GetCostsSellResources() { return _costsSellResources; }

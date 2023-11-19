@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 41b24b08ab2884ce39020bcc266c6637
+timeCreated: 1455521666
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 57647
+  packageName: Script Dependency Visualizer
+  packageVersion: 1.2
+  assetPath: Assets/BlackPeaStudios/ScriptDependencyVisualizer/Editor/Utilities/DependencyCore/ScriptData.cs
+  uploadId: 161075

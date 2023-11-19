@@ -107,13 +107,10 @@ namespace Building.Farm
 
         private void CalculateImpactClimateZones()
         {
-            double addingNumber = IobjectsExpensesImplementation.GetTotalExpenses() * _IcountryBuildings
-                .configClimate.percentageImpactCostMaintenance;
+            double addingNumber = IobjectsExpensesImplementation.GetTotalExpenses()
+                * _IcountryBuildings.IclimateZone.GetCurrentSeasonImpact() / 100;
 
-            Debug.Log(addingNumber);
-
-            IobjectsExpensesImplementation.ChangeExpenses(addingNumber, AreaExpenditureType.Production,
-                                                           isAdd: true);
+            IobjectsExpensesImplementation.ChangeSeasonExpenses(addingNumber);
         }
 
         private bool IsGrowingSeason()
@@ -141,6 +138,8 @@ namespace Building.Farm
         {
             _IcountryBuildings = IcountryBuildings;
             CalculateImpactClimateZones();
+
+            _IcountryBuildings.IclimateZone.updatedSeason += CalculateImpactClimateZones;
         }
     }
 }

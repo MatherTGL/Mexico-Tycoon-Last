@@ -40,6 +40,9 @@ namespace Country
 
         void IBoot.InitAwake()
         {
+            _IclimateZone = FindObjectOfType<ClimateZoneControl>();
+            _IclimateZone.Init(this);
+
             _IInflation = new CountryInflation();
             _IInflation.Init(this);
 

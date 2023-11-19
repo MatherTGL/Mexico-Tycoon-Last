@@ -13,8 +13,17 @@ MonoBehaviour:
   m_Name: ClimateZoneConfig
   m_EditorClassIdentifier: 
   _typeClimate: 0
-  _percentageImpactCostMaintenance: 0.1
-  _seasonLength: 90
+  d_seasonsImpactExpenses:
+    _pairs:
+    - _key: 0
+      _value: 0
+    - _key: 1
+      _value: 7
+    - _key: 2
+      _value: 15
+    - _key: 3
+      _value: 4
+  _seasonLength: 5
   _maxTemperature: 0
   _minTemperature: 0
   _humidityLevel: 0.1

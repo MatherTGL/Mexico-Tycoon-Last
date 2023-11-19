@@ -44,6 +44,14 @@ namespace Expense
             d_IareasExpenditure[typeExpenses].ChangeExpenses(addNumber, isAdd);
         }
 
+        void IObjectsExpensesImplementation.ChangeSeasonExpenses(in double expenses)
+        {
+            if (d_IareasExpenditure.ContainsKey(AreaExpenditureType.Production) == false)
+                d_IareasExpenditure.Add(AreaExpenditureType.Production, new ExpensesOnProduction(_configExpensesManagement));
+
+            d_IareasExpenditure[AreaExpenditureType.Production].ChangeSeasonExpenses(expenses);
+        }
+
         void IObjectsExpensesImplementation.ChangeEmployeesExpenses(in double expenses, in bool isAdd, in TypeEmployee typeEmployee)
         {
             Debug.Log("ChangeEmployeesExpenses");
