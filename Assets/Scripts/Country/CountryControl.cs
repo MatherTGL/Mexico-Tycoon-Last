@@ -8,7 +8,6 @@ using System;
 using Climate;
 using Country.Climate;
 using System.Linq;
-using Building;
 using Config.Country.Climate;
 using Config.Country.Inflation;
 
@@ -40,7 +39,7 @@ namespace Country
 
         void IBoot.InitAwake()
         {
-            _IclimateZone = FindObjectOfType<ClimateZoneControl>();
+            _IclimateZone = GetComponent<ClimateZoneControl>();
             _IclimateZone.Init(this);
 
             _IInflation = new CountryInflation();
@@ -69,12 +68,12 @@ namespace Country
 
         private void FindObjectsInArea()
         {
-            var collidersBuildings = Physics.OverlapBox(
+            var collidersInteractObjects = Physics.OverlapBox(
                 transform.position, GetComponent<MeshCollider>().bounds.size, Quaternion.identity)
-                .Where(item => item.GetComponent<BuildingControl>()).ToArray();
+                .Where(item => item.GetComponent(typeof(ICountryAreaFindSceneObjects))).ToArray();
 
-            for (ushort i = 0; i < collidersBuildings.Length; i++)
-                collidersBuildings[i].GetComponent<BuildingControl>().SetCountry(this);
+            for (ushort i = 0; i < collidersInteractObjects.Length; i++)
+                collidersInteractObjects[i].GetComponent<ICountryAreaFindSceneObjects>().SetCountry(this);
         }
     }
 }

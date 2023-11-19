@@ -15,7 +15,6 @@ using Building.Aerodrome;
 using Building.Stock;
 using Building.SeaPort;
 using Building.City.Business;
-using Climate;
 using Expense;
 using Config.Expenses;
 using System;
@@ -24,11 +23,12 @@ using Hire;
 using static Boot.Bootstrap;
 using static Building.BuildingEnumType;
 using Country;
+using Regulation;
 
 namespace Building
 {
     [RequireComponent(typeof(TransportReception), typeof(BoxCollider))]
-    public sealed class BuildingControl : MonoBehaviour, IBoot, IBuildingRequestForTransport
+    public sealed class BuildingControl : MonoBehaviour, IBoot, IBuildingRequestForTransport, ICountryAreaFindSceneObjects
     {
         private IBuilding _Ibuilding;
 
@@ -109,7 +109,10 @@ namespace Building
         private void CreateInstance()
         {
             if (_typeBuilding is TypeBuilding.City)
-                _Ibuilding = new BuildingCity(_configSO);
+            {
+                var regulationCostSale = FindObjectOfType<RegulationCostSaleControl>();
+                _Ibuilding = new BuildingCity(_configSO, regulationCostSale);
+            }
             else if (_typeBuilding is TypeBuilding.Farm)
                 _Ibuilding = new BuildingFarm(_configSO);
             else if (_typeBuilding is TypeBuilding.Fabric)
@@ -197,7 +200,7 @@ namespace Building
             return (TypeLoadObject.SuperImportant, TypeSingleOrLotsOf.LotsOf);
         }
 
-        public void SetCountry(in ICountryBuildings IcountryBuildings)
+        void ICountryAreaFindSceneObjects.SetCountry(in ICountryBuildings IcountryBuildings)
         {
             IUsesCountryInfo IusesCountryInfo = _Ibuilding as IUsesCountryInfo;
             IusesCountryInfo?.SetCountry(IcountryBuildings);

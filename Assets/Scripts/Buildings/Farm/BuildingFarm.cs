@@ -4,7 +4,6 @@ using Resources;
 using Building.Additional;
 using UnityEngine;
 using Expense;
-using static Expense.ExpensesEnumTypes;
 using Hire;
 using Country;
 

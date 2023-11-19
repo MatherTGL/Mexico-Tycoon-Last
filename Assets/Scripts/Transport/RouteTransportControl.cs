@@ -252,7 +252,6 @@ namespace Transport
         {
             if (CheckRulesBuyingTransport(_indexTypeTransport))
             {
-                Debug.Log("Replacement is possible");
                 _transportationDataStorage.ReplaceTransportation(_indexTransportInList,
                                                              _allTypesTransport[_indexTypeTransport]);
             }
