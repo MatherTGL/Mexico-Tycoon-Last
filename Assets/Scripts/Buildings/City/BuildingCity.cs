@@ -9,9 +9,10 @@ using UnityEngine;
 
 namespace Building.City
 {
-    public sealed class BuildingCity : AbstractBuilding, IBuilding, ICityBusiness
+    public sealed class BuildingCity : AbstractBuilding, IBuilding, ICityBusiness, IRegulationBuilding
     {
         private IRegulationCostSale _IregulationCostSale;
+        IRegulationCostSale IRegulationBuilding.IregulationCostSale => _IregulationCostSale;
 
         private readonly CityPopulationReproduction _cityPopulationReproduction;
 
@@ -42,6 +43,7 @@ namespace Building.City
         private uint _population;
 
         private int _cellIndexRegulationCostSale;
+        int IRegulationBuilding.cellIndexRegulationCostSale => _cellIndexRegulationCostSale;
 
 
         public BuildingCity(in ScriptableObject config, in IRegulationCostSale regulationCostSale)

@@ -110,8 +110,10 @@ namespace Building
         {
             if (_typeBuilding is TypeBuilding.City)
             {
-                var regulationCostSale = FindObjectOfType<RegulationCostSaleControl>();
+                var regulationCostSale = FindObjectOfType<ProductCostSaleDataBaseControl>();
                 _Ibuilding = new BuildingCity(_configSO, regulationCostSale);
+                gameObject.AddComponent<RegulationProductCostControl>();
+                GetComponent<IRegulationProductCost>().Init(_Ibuilding);
             }
             else if (_typeBuilding is TypeBuilding.Farm)
                 _Ibuilding = new BuildingFarm(_configSO);
