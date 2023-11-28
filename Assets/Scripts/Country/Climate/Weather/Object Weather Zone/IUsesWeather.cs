@@ -1,11 +1,9 @@
 using Country.Climate.Weather;
 
-namespace Country
+namespace Building.Additional
 {
-    public interface ICountryAreaFindSceneObjects
+    public interface IUsesWeather
     {
-        void SetCountry(in ICountryBuildings IcountryBuildings);
-
         void ActivateWeatherEvent(in IWeatherZone IweatherZone);
 
         void DeactiveWeatherEvent();

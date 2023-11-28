@@ -23,7 +23,13 @@ MonoBehaviour:
       _value: 15
     - _key: 3
       _value: 4
-  _seasonLength: 5
+  _availableWeatherInCountry:
+  - weatherType: 0
+    minLifetime: 1
+    maxLifetime: 4
+    minZoneScale: 1
+    maxZoneScale: 4
+  _seasonLength: 90
   _maxTemperature: 0
   _minTemperature: 0
   _humidityLevel: 0.1

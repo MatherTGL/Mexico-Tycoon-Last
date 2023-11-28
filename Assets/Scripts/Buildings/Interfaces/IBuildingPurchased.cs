@@ -5,7 +5,7 @@ using static Data.Player.DataPlayer;
 
 namespace Building.Additional
 {
-    public interface IBuildingPurchased : IUsesCountryInfo
+    public interface IBuildingPurchased : IUsesCountryInfo, IUsesWeather
     {
         bool isBuyed { get; protected set; }
 

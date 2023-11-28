@@ -5,6 +5,7 @@ using Building.Additional;
 using UnityEngine;
 using Expense;
 using Country;
+using Country.Climate.Weather;
 
 namespace Building.Stock
 {
@@ -56,6 +57,16 @@ namespace Building.Stock
         {
             if (isBuyed && isWorked)
                 Debug.Log("Stock is work");
+        }
+
+        void IUsesWeather.ActivateWeatherEvent(in IWeatherZone IweatherZone)
+        {
+            Debug.Log("ActivateWeatherEvent");
+        }
+
+        void IUsesWeather.DeactiveWeatherEvent()
+        {
+            Debug.Log("DeactiveWeatherEvent");
         }
     }
 }

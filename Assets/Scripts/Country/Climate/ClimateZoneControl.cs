@@ -4,10 +4,11 @@ using System.Collections;
 using Country.Climate;
 using Config.Country.Climate;
 using System;
+using Country.Climate.Weather;
 
 namespace Climate
 {
-    [RequireComponent(typeof(MeshCollider))]
+    [RequireComponent(typeof(MeshCollider), typeof(WeatherControl))]
     public sealed class ClimateZoneControl : MonoBehaviour, IClimateZone
     {
         private ICountryClimate _IcountryClimate;
@@ -31,6 +32,9 @@ namespace Climate
 
             CalculateImpact();
             StartCoroutine(SeasonChanger());
+
+            var weatherClimate = GetComponent<IWeatherControl>();
+            weatherClimate.Init(_IcountryClimate);
         }
 
         private void ChangeSeason()

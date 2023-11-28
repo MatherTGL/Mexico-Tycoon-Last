@@ -1,6 +1,8 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
 using SerializableDictionary.Scripts;
+using System;
+using static Config.Country.Climate.ConfigClimateZoneEditor;
 
 namespace Config.Country.Climate
 {
@@ -14,6 +16,8 @@ namespace Config.Country.Climate
 
         public enum TypeSeasons : byte { Summer, Autumn, Winter, Spring }
 
+        public enum WeatherType : byte { Rain, Snow, Storm, AbnormalHeat, Hurricane }
+
         [SerializeField, EnumPaging, BoxGroup("Parameters")]
         private TypeClimate _typeClimate;
         public TypeClimate typeClimate => _typeClimate;
@@ -21,6 +25,10 @@ namespace Config.Country.Climate
         [SerializeField, BoxGroup("Parameters/Seasons"), Space(5)]
         private SerializableDictionary<TypeSeasons, float> d_seasonsImpactExpenses = new();
         public SerializableDictionary<TypeSeasons, float> seasonsImpactExpenses => d_seasonsImpactExpenses;
+
+        [SerializeField, BoxGroup("Parameters/Weather"), Space(5)]
+        private WeatherSettings[] _availableWeatherInCountry;
+        public WeatherSettings[] availableWeatherInCountry => _availableWeatherInCountry;
 
         [SerializeField, BoxGroup("Parameters"), MinValue(0), Space(5)]
         [InfoBox("Value in seconds!", InfoMessageType.Warning)]
@@ -42,5 +50,23 @@ namespace Config.Country.Climate
         [SerializeField, MinValue(50), MaxValue(4000), BoxGroup("Parameters")]
         private ushort _amountOfPrecipitation;
         public ushort amountOfPrecipitation => _amountOfPrecipitation;
+    }
+
+    [Serializable]
+    public struct WeatherSettings
+    {
+        public WeatherType weatherType;
+
+        [MinValue(1.0f), MaxValue("@maxLifetime"), HorizontalGroup("Lifetime")]
+        public float minLifetime;
+
+        [MinValue("@minLifetime"), HorizontalGroup("Lifetime")]
+        public float maxLifetime;
+
+        [MinValue(1.0f), MaxValue("@maxZoneScale"), HorizontalGroup("Scale")]
+        public float minZoneScale;
+
+        [MinValue("@minZoneScale"), HorizontalGroup("Scale")]
+        public float maxZoneScale;
     }
 }

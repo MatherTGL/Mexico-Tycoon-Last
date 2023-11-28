@@ -24,6 +24,7 @@ using static Boot.Bootstrap;
 using static Building.BuildingEnumType;
 using Country;
 using Regulation;
+using Country.Climate.Weather;
 
 namespace Building
 {
@@ -76,10 +77,7 @@ namespace Building
             CreateDictionaryTypeDrugs();
         }
 
-        void IBoot.InitStart()
-        {
-            StartCoroutine(ConstantUpdating());
-        }
+        void IBoot.InitStart() => StartCoroutine(ConstantUpdating());
 
         private void ConnectExpensesManagementControl()
         {
@@ -206,6 +204,16 @@ namespace Building
         {
             IUsesCountryInfo IusesCountryInfo = _Ibuilding as IUsesCountryInfo;
             IusesCountryInfo?.SetCountry(IcountryBuildings);
+        }
+
+        void ICountryAreaFindSceneObjects.ActivateWeatherEvent(in IWeatherZone IweatherZone)
+        {
+            _IbuildingPurchased?.ActivateWeatherEvent(IweatherZone);
+        }
+
+        void ICountryAreaFindSceneObjects.DeactiveWeatherEvent()
+        {
+            _IbuildingPurchased?.DeactiveWeatherEvent();
         }
 
         //TODO: move all to view class and make mvc

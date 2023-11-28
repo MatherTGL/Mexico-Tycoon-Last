@@ -10,9 +10,11 @@ using Country.Climate;
 using System.Linq;
 using Config.Country.Climate;
 using Config.Country.Inflation;
+using Country.Climate.Weather;
 
 namespace Country
 {
+    [RequireComponent(typeof(WeatherControl), typeof(ClimateZoneControl))]
     public sealed class CountryControl : MonoBehaviour, IBoot, ICountryBuildings, ICountryClimate, ICountryInflation
     {
         private IInflation _IInflation;

@@ -6,6 +6,7 @@ using UnityEngine;
 using Expense;
 using Hire;
 using Country;
+using Country.Climate.Weather;
 
 namespace Building.Farm
 {
@@ -104,7 +105,7 @@ namespace Building.Farm
             return true;
         }
 
-        private void CalculateImpactClimateZones()
+        private void CalculateTemporaryImpact()
         {
             double addingNumber = IobjectsExpensesImplementation.GetTotalExpenses()
                 * _IcountryBuildings.IclimateZone.GetCurrentSeasonImpact() / 100;
@@ -136,9 +137,19 @@ namespace Building.Farm
         void IUsesCountryInfo.SetCountry(in ICountryBuildings IcountryBuildings)
         {
             _IcountryBuildings = IcountryBuildings;
-            CalculateImpactClimateZones();
+            CalculateTemporaryImpact();
 
-            _IcountryBuildings.IclimateZone.updatedSeason += CalculateImpactClimateZones;
+            _IcountryBuildings.IclimateZone.updatedSeason += CalculateTemporaryImpact;
+        }
+
+        void IUsesWeather.ActivateWeatherEvent(in IWeatherZone IweatherZone)
+        {
+            Debug.Log("ActivateWeatherEvent");
+        }
+
+        void IUsesWeather.DeactiveWeatherEvent()
+        {
+            Debug.Log("DeactiveWeatherEvent");
         }
     }
 }
