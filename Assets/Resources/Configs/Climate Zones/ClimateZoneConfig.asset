@@ -29,6 +29,15 @@ MonoBehaviour:
     maxLifetime: 4
     minZoneScale: 1
     maxZoneScale: 4
+    minPercentageImpact: 8
+    maxPercentageImpact: 15
+  - weatherType: 1
+    minLifetime: 1
+    maxLifetime: 4
+    minZoneScale: 1
+    maxZoneScale: 4
+    minPercentageImpact: 15
+    maxPercentageImpact: 20
   _seasonLength: 90
   _maxTemperature: 0
   _minTemperature: 0

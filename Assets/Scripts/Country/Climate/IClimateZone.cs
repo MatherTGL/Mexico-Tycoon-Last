@@ -6,7 +6,7 @@ namespace Climate
 {
     public interface IClimateZone
     {
-        event Action updatedSeason;
+        event Action<float> updatedSeason;
 
 
         void Init(in ICountryClimate IcountryClimate);

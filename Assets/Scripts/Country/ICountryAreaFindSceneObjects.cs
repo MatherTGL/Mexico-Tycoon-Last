@@ -8,6 +8,6 @@ namespace Country
 
         void ActivateWeatherEvent(in IWeatherZone IweatherZone);
 
-        void DeactiveWeatherEvent();
+        void DeactiveWeatherEvent(in IWeatherZone IweatherZone);
     }
 }

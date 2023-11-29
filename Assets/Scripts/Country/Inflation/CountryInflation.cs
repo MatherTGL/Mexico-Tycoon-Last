@@ -23,9 +23,9 @@ namespace Country.Inflation
             _currentPercentageInflation = Random.Range(_IcountryInflation.configInflation.percentageDeflationMax,
                                                       _IcountryInflation.configInflation.percentageInflationMax);
 
-            Debug.Log($"RandomInflation %: {_currentPercentageInflation}");
+            //Debug.Log($"RandomInflation %: {_currentPercentageInflation}");
             _currentTotalInflation += _currentPercentageInflation;
-            Debug.Log($"Current Total %: {_currentTotalInflation}");
+            //Debug.Log($"Current Total %: {_currentTotalInflation}");
         }
 
         float IInflation.GetTotalInflation() => _currentTotalInflation;

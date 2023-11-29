@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
 using Building.Hire;
 using Config.Expenses;
 using Expense.Areas;
-using UnityEngine;
 using static Config.Employees.ConfigEmployeeEditor;
 using static Expense.ExpensesEnumTypes;
 
@@ -22,47 +20,33 @@ namespace Expense
         public ExpensesBuildings(in ConfigExpensesManagementEditor config)
         {
             _configExpensesManagement = config;
+            CreateAreasExpenditure();
+        }
+
+        private void CreateAreasExpenditure()
+        {
+            d_IareasExpenditure.TryAdd(AreaExpenditureType.Production, new ExpensesOnProduction(_configExpensesManagement));
+            d_IareasExpenditure.TryAdd(AreaExpenditureType.Water, new ExpensesOnWater(_configExpensesManagement));
+            d_IareasExpenditure.TryAdd(AreaExpenditureType.Security, new ExpensesOnSecurity(_configExpensesManagement));
+            d_IareasExpenditure.TryAdd(AreaExpenditureType.Employees, new ExpensesOnEmployees());
+
+            d_IareasExpenditure[AreaExpenditureType.Employees].InitHiring(_Ihiring);
         }
 
         void IObjectsExpensesImplementation.ChangeExpenses(in double addNumber, in AreaExpenditureType typeExpenses,
                                                            in bool isAdd)
         {
-            if (d_IareasExpenditure.ContainsKey(typeExpenses) == false)
-            {
-                AbstractAreasExpenditure areasExpenditure = null;
-
-                if (typeExpenses is AreaExpenditureType.Water)
-                    areasExpenditure = new ExpensesOnWater(_configExpensesManagement);
-                else if (typeExpenses is AreaExpenditureType.Security)
-                    areasExpenditure = new ExpensesOnSecurity(_configExpensesManagement);
-                else if (typeExpenses is AreaExpenditureType.Production)
-                    areasExpenditure = new ExpensesOnProduction(_configExpensesManagement);
-
-                d_IareasExpenditure.Add(typeExpenses, areasExpenditure);
-            }
-
             d_IareasExpenditure[typeExpenses].ChangeExpenses(addNumber, isAdd);
         }
 
         void IObjectsExpensesImplementation.ChangeSeasonExpenses(in double expenses)
         {
-            if (d_IareasExpenditure.ContainsKey(AreaExpenditureType.Production) == false)
-                d_IareasExpenditure.Add(AreaExpenditureType.Production, new ExpensesOnProduction(_configExpensesManagement));
-
             d_IareasExpenditure[AreaExpenditureType.Production].ChangeSeasonExpenses(expenses);
         }
 
         void IObjectsExpensesImplementation.ChangeEmployeesExpenses(in double expenses, in bool isAdd, in TypeEmployee typeEmployee)
         {
-            Debug.Log("ChangeEmployeesExpenses");
-            if (d_IareasExpenditure.ContainsKey(AreaExpenditureType.Employees) == false)
-            {
-                d_IareasExpenditure.Add(AreaExpenditureType.Employees, new ExpensesOnEmployees());
-                d_IareasExpenditure[AreaExpenditureType.Employees].InitHiring(_Ihiring);
-            }
-
             d_IareasExpenditure[AreaExpenditureType.Employees].ChangeEmployeesExpenses(expenses, isAdd, typeEmployee);
-            //areasExpenditure.InitHiring(_Ihiring);
         }
 
         double IObjectsExpensesImplementation.GetTotalExpenses()

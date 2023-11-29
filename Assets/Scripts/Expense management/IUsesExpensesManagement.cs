@@ -1,4 +1,5 @@
 using Config.Expenses;
+using UnityEngine;
 using static Expense.ExpensesEnumTypes;
 
 namespace Expense
@@ -8,7 +9,7 @@ namespace Expense
         IObjectsExpensesImplementation IobjectsExpensesImplementation { get; set; }
 
 
-        void LoadExpensesManagement(in IExpensesManagement IexpensesManagement, 
+        void LoadExpensesManagement(in IExpensesManagement IexpensesManagement,
                                     in ConfigExpensesManagementEditor configExpenses)
         {
             IobjectsExpensesImplementation = IexpensesManagement.Registration(

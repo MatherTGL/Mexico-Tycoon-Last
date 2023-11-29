@@ -2,6 +2,7 @@ using UnityEngine;
 using static Config.Country.Climate.ConfigClimateZoneEditor;
 using System.Collections;
 using System.Linq;
+using System;
 
 namespace Country.Climate.Weather
 {
@@ -10,49 +11,61 @@ namespace Country.Climate.Weather
     {
         private WaitForSecondsRealtime _weatherLifetime;
 
+        private Collider[] _collidersInteractObjects;
+
+        private float _scaleWeatherZone;
+
+        private float _lifetimeWeatherZone;
+
+        private float _impactWeatherZone;
+        float IWeatherZone.impactWeatherZone => _impactWeatherZone;
+
 
         void IWeatherZone.Init(in ICountryClimate countryClimate)
         {
-            float scaleWeatherZone = 0;
-            float lifetimeWeatherZone = 0;
+            int randomIndexWeather = UnityEngine.Random.Range(0, countryClimate.configClimate.availableWeatherInCountry.Length);
+            var config = countryClimate.configClimate.availableWeatherInCountry[randomIndexWeather];
 
-            for (int i = 0; i < countryClimate.configClimate.availableWeatherInCountry.Length; i++)
-            {
-                if (countryClimate.configClimate.availableWeatherInCountry[i].weatherType is WeatherType.Rain)
-                {
-                    var config = countryClimate.configClimate.availableWeatherInCountry[i];
+            _scaleWeatherZone = UnityEngine.Random.Range(config.minZoneScale, config.maxZoneScale);
+            _lifetimeWeatherZone = UnityEngine.Random.Range(config.minLifetime, config.maxLifetime);
+            _impactWeatherZone = UnityEngine.Random.Range(config.minPercentageImpact, config.maxPercentageImpact);
 
-                    scaleWeatherZone = Random.Range(config.minZoneScale, config.maxZoneScale);
-                    lifetimeWeatherZone = Random.Range(config.minLifetime, config.maxLifetime);
+            GetComponent<BoxCollider>().size = new Vector3(_scaleWeatherZone, _scaleWeatherZone, _scaleWeatherZone);
+            _weatherLifetime = new WaitForSecondsRealtime(_lifetimeWeatherZone);
 
-                    GetComponent<BoxCollider>().size = new Vector3(scaleWeatherZone, scaleWeatherZone, scaleWeatherZone);
-                    _weatherLifetime = new WaitForSecondsRealtime(lifetimeWeatherZone);
-
-                    gameObject.SetActive(true);
-                    StartCoroutine(WeatherLifetime());
-                    return;
-                }
-            }
+            gameObject.SetActive(true);
+            StartCoroutine(WeatherLifetime());
+            return;
         }
 
         private IEnumerator WeatherLifetime()
         {
             FindObjectsInArea();
+            ActivateWeatherEvent();
 
             yield return _weatherLifetime;
+
+            DeactivateWeatherEvent();
             gameObject.SetActive(false);
         }
 
         private void FindObjectsInArea()
         {
-            //? separate to array
-
-            var collidersInteractObjects = Physics.OverlapBox(
+            _collidersInteractObjects = Physics.OverlapBox(
                 transform.position, GetComponent<BoxCollider>().bounds.size)
                 .Where(item => item.GetComponent(typeof(ICountryAreaFindSceneObjects))).ToArray();
+        }
 
-            for (ushort i = 0; i < collidersInteractObjects.Length; i++)
-                collidersInteractObjects[i].GetComponent<ICountryAreaFindSceneObjects>().ActivateWeatherEvent(this);
+        private void ActivateWeatherEvent()
+        {
+            for (ushort i = 0; i < _collidersInteractObjects.Length; i++)
+                _collidersInteractObjects[i].GetComponent<ICountryAreaFindSceneObjects>().ActivateWeatherEvent(this);
+        }
+
+        private void DeactivateWeatherEvent()
+        {
+            for (ushort i = 0; i < _collidersInteractObjects.Length; i++)
+                _collidersInteractObjects[i].GetComponent<ICountryAreaFindSceneObjects>().DeactiveWeatherEvent(this);
         }
     }
 }

@@ -211,9 +211,9 @@ namespace Building
             _IbuildingPurchased?.ActivateWeatherEvent(IweatherZone);
         }
 
-        void ICountryAreaFindSceneObjects.DeactiveWeatherEvent()
+        void ICountryAreaFindSceneObjects.DeactiveWeatherEvent(in IWeatherZone IweatherZone)
         {
-            _IbuildingPurchased?.DeactiveWeatherEvent();
+            _IbuildingPurchased?.DeactiveWeatherEvent(IweatherZone);
         }
 
         //TODO: move all to view class and make mvc

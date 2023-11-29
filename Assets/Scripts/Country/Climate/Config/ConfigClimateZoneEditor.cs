@@ -68,5 +68,11 @@ namespace Config.Country.Climate
 
         [MinValue("@minZoneScale"), HorizontalGroup("Scale")]
         public float maxZoneScale;
+
+        [MinValue(2), MaxValue("@maxPercentageImpact"), HorizontalGroup("Percentage Impact")]
+        public float minPercentageImpact;
+
+        [MinValue("@minPercentageImpact"), MaxValue(50), HorizontalGroup("Percentage Impact")]
+        public float maxPercentageImpact;
     }
 }

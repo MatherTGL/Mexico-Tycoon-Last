@@ -31,6 +31,7 @@ namespace Expense.Areas
         public virtual void ChangeSeasonExpenses(in double expenses)
         {
             _expenses = _baseExpenses + expenses;
+            Debug.Log($"{expenses} . {_expenses} . {_baseExpenses}");
         }
 
         public void InitHiring(in IHiring Ihiring)

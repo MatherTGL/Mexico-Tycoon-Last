@@ -18,7 +18,7 @@ namespace Climate
 
         private WaitForSeconds _seasonLength;
 
-        public event Action updatedSeason;
+        public event Action<float> updatedSeason;
 
         private float _percentageImpactCostMaintenance;
 
@@ -43,7 +43,7 @@ namespace Climate
                 _currentSeason = 0;
 
             CalculateImpact();
-            updatedSeason();
+            updatedSeason.Invoke(0);
         }
 
         private void CalculateImpact()
@@ -57,7 +57,6 @@ namespace Climate
             while (true)
             {
                 yield return _seasonLength;
-                Debug.Log("SeasonChanger");
                 ChangeSeason();
             }
         }

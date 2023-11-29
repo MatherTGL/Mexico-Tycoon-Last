@@ -6,7 +6,6 @@ using UnityEngine;
 using Expense;
 using Hire;
 using Country;
-using Country.Climate.Weather;
 
 namespace Building.Farm
 {
@@ -23,6 +22,7 @@ namespace Building.Farm
         {
             get => IobjectsExpensesImplementation; set => IobjectsExpensesImplementation = value;
         }
+        IObjectsExpensesImplementation IUsesWeather.IobjectsExpensesImplementation => IobjectsExpensesImplementation;
 
         private ConfigBuildingFarmEditor _config;
 
@@ -105,20 +105,18 @@ namespace Building.Farm
             return true;
         }
 
-        private void CalculateTemporaryImpact()
-        {
-            double addingNumber = IobjectsExpensesImplementation.GetTotalExpenses()
-                * _IcountryBuildings.IclimateZone.GetCurrentSeasonImpact() / 100;
-
-            IobjectsExpensesImplementation.ChangeSeasonExpenses(addingNumber);
-        }
-
         private bool IsGrowingSeason()
         {
             if (_config.typeFarm is ConfigBuildingFarmEditor.TypeFarm.Terrestrial)
                 return _config.growingSeasons.Contains(_IcountryBuildings.IclimateZone.GetCurrentSeason());
             else
                 return true;
+        }
+
+        private void CalculateTemporaryImpact(float impact)
+        {
+            double addingNumber = IobjectsExpensesImplementation.GetTotalExpenses() * impact / 100;
+            IobjectsExpensesImplementation.ChangeSeasonExpenses(addingNumber);
         }
 
         void IBuilding.ConstantUpdatingInfo()
@@ -137,19 +135,9 @@ namespace Building.Farm
         void IUsesCountryInfo.SetCountry(in ICountryBuildings IcountryBuildings)
         {
             _IcountryBuildings = IcountryBuildings;
-            CalculateTemporaryImpact();
+            CalculateTemporaryImpact(_IcountryBuildings.IclimateZone.GetCurrentSeasonImpact());
 
             _IcountryBuildings.IclimateZone.updatedSeason += CalculateTemporaryImpact;
-        }
-
-        void IUsesWeather.ActivateWeatherEvent(in IWeatherZone IweatherZone)
-        {
-            Debug.Log("ActivateWeatherEvent");
-        }
-
-        void IUsesWeather.DeactiveWeatherEvent()
-        {
-            Debug.Log("DeactiveWeatherEvent");
         }
     }
 }

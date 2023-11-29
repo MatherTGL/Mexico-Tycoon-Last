@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Building.Additional;
 using Config.Building;
 using Country;
-using Country.Climate.Weather;
 using Expense;
 using Resources;
 using UnityEngine;
@@ -22,6 +21,7 @@ namespace Building.Fabric
         {
             get => IobjectsExpensesImplementation; set => IobjectsExpensesImplementation = value;
         }
+        IObjectsExpensesImplementation IUsesWeather.IobjectsExpensesImplementation => IobjectsExpensesImplementation;
 
         private ConfigBuildingFabricEditor _config;
 
@@ -87,16 +87,6 @@ namespace Building.Fabric
         {
             if (isBuyed && isWorked)
                 Production();
-        }
-
-        void IUsesWeather.ActivateWeatherEvent(in IWeatherZone IweatherZone)
-        {
-            Debug.Log("ActivateWeatherEvent");
-        }
-
-        void IUsesWeather.DeactiveWeatherEvent()
-        {
-            Debug.Log("DeactiveWeatherEvent");
         }
     }
 }

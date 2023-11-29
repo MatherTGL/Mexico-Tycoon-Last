@@ -5,7 +5,6 @@ using UnityEngine;
 using System.Collections.Generic;
 using Expense;
 using Country;
-using Country.Climate.Weather;
 
 namespace Building.Aerodrome
 {
@@ -16,6 +15,7 @@ namespace Building.Aerodrome
         {
             get => IobjectsExpensesImplementation; set => IobjectsExpensesImplementation = value;
         }
+        IObjectsExpensesImplementation IUsesWeather.IobjectsExpensesImplementation => IobjectsExpensesImplementation;
 
         private ICountryBuildings _IcountryBuildings;
         ICountryBuildings IUsesCountryInfo.IcountryBuildings { get => _IcountryBuildings; set => _IcountryBuildings = value; }
@@ -56,16 +56,6 @@ namespace Building.Aerodrome
             {
                 Debug.Log("Aerodrome is work");
             }
-        }
-
-        void IUsesWeather.ActivateWeatherEvent(in IWeatherZone IweatherZone)
-        {
-            Debug.Log("ActivateWeatherEvent");
-        }
-
-        void IUsesWeather.DeactiveWeatherEvent()
-        {
-            Debug.Log("DeactiveWeatherEvent");
         }
     }
 }
