@@ -46,7 +46,7 @@ namespace Country.Climate.Weather
             yield return _weatherLifetime;
 
             DeactivateWeatherEvent();
-            gameObject.SetActive(false);
+            gameObject.SetActive(false); //? move to pool or destroy
         }
 
         private void FindObjectsInArea()

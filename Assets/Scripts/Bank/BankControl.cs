@@ -50,10 +50,8 @@ namespace Bank
             }
         }
 
-#if UNITY_EDITOR
         [SerializeField, MinValue(0.0f), MaxValue(100.0f)]
         private float _percentageLoan;
-#endif
 
         [Button("Take Loan"), DisableInEditorMode]
         private void TakeLoan()

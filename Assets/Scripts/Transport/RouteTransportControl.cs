@@ -156,7 +156,6 @@ namespace Transport
         }
 
 
-#if UNITY_EDITOR
         [SerializeField, EnumPaging]
         private TypeProductionResources.TypeResource _typeTransportingResource;
 
@@ -256,6 +255,5 @@ namespace Transport
                                                              _allTypesTransport[_indexTypeTransport]);
             }
         }
-#endif
     }
 }

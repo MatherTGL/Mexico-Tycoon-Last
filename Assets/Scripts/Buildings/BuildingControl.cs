@@ -25,6 +25,8 @@ using static Building.BuildingEnumType;
 using Country;
 using Regulation;
 using Country.Climate.Weather;
+using Unity.VisualScripting;
+using Events.Buildings;
 
 namespace Building
 {
@@ -73,6 +75,8 @@ namespace Building
             _IcityBusiness = _Ibuilding as ICityBusiness;
             _IbuildingPurchased = _Ibuilding as IBuildingPurchased;
 
+
+            ConnectEventEditor();
             ConnectExpensesManagementControl();
             CreateDictionaryTypeDrugs();
         }
@@ -101,6 +105,15 @@ namespace Building
             {
                 gameObject.AddComponent<HireEmployeeControl>().Init();
                 _Ispending.IobjectsExpensesImplementation.Ihiring = GetComponent<HireEmployeeControl>().Ihiring;
+            }
+        }
+
+        private void ConnectEventEditor()
+        {
+            if (_IbuildingPurchased != null)
+            {
+                this.AddComponent<EventEditorBuildingsControl>();
+                GetComponent<IEventEditorBuildings>().Init(_Ibuilding);
             }
         }
 

@@ -39,7 +39,6 @@ namespace Expense
         }
 
 
-#if UNITY_EDITOR
         [SerializeField, ToggleLeft, BoxGroup("Change Expenses")]
         private bool _isAdd;
 
@@ -66,5 +65,4 @@ namespace Expense
             l_objectsExpensesImplementation[_index]?.ChangeEmployeesExpenses(addNumber, _isAdd, typeEmployee);
         }
     }
-#endif
 }

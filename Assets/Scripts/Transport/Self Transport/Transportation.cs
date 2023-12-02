@@ -156,8 +156,6 @@ namespace Transport
             }
         }
 
-
-#if UNITY_EDITOR
         public void ChangeLoadUnloadStates(in byte indexReception, in byte indexLoadOrUnload, in bool isState)
         {
             if (d_loadAndUnloadStates.ContainsKey(indexReception))
@@ -165,6 +163,5 @@ namespace Transport
         }
 
         public void ChangeStateWaiting(in bool isState) => _isWaitingReception = isState;
-#endif
     }
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using Config.Country.Climate;
+using Events.Buildings;
 
 namespace Config.Building
 {
@@ -32,6 +33,10 @@ namespace Config.Building
         private List<ConfigClimateZoneEditor.TypeSeasons> l_growingSeasons = new();
         public List<ConfigClimateZoneEditor.TypeSeasons> growingSeasons => l_growingSeasons;
 
+        [SerializeField, BoxGroup("Parameters"), HideLabel]
+        private List<BuildingEventStructure> l_activePossibleEvents = new();
+        public List<BuildingEventStructure> activePossibleEvents => l_activePossibleEvents;
+
         [SerializeField, BoxGroup("Parameters"), MinValue(1)]
         private ushort _productionPerformanceStart = 1;
         public ushort productionStartPerformance => _productionPerformanceStart;
@@ -39,21 +44,6 @@ namespace Config.Building
         [SerializeField, BoxGroup("Parameters"), MinValue(10)]
         private uint[] _localCapacityProduction;
         public uint[] localCapacityProduction => _localCapacityProduction;
-
-        [SerializeField, BoxGroup("Parameters"), MinValue(0), ReadOnly]
-        private double _currentMaintenanceExpenses = 0;
-        public double currentMaintenanceExpenses => _currentMaintenanceExpenses;
-
-        [SerializeField, BoxGroup("Parameters"), MinValue(10)]
-        private double _maintenanceExpenses = 10;
-
-        [SerializeField, BoxGroup("Parameters"), MinValue(10)]
-        private double _maintenanceExpensesOnSecurity = 10;
-        public double maintenanceExpensesOnSecurity => _maintenanceExpensesOnSecurity;
-
-        [SerializeField, BoxGroup("Parameters"), MinValue(10)]
-        private double _maintenanceExpensesOnWater = 10;
-        public double maintenanceExpensesOnWater => _maintenanceExpensesOnWater;
 
         [SerializeField, BoxGroup("Parameters"), MinValue(1)]
         private float _harvestRipeningTime;
@@ -65,16 +55,6 @@ namespace Config.Building
 
 
 #if UNITY_EDITOR
-        private void OnValidate()
-        {
-            double[] arrayMaintenanceExpenses = {
-                _maintenanceExpenses,
-                _maintenanceExpensesOnSecurity,
-                _maintenanceExpensesOnWater
-            };
-            _currentMaintenanceExpenses = arrayMaintenanceExpenses.Sum();
-        }
-
         [Button("Add New"), BoxGroup("Raw Materials"), HorizontalGroup("Raw Materials/Hor")]
         private void AddNewRawMaterial(in TypeProductionResources.TypeResource typeResource,
                                        in float quantityRawMaterial = 1)
