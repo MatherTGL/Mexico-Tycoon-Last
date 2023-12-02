@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using Building.Additional;
 using Config.Building;
+using Config.Building.Events;
 using Country;
+using Events.Buildings;
 using Expense;
 using Resources;
 using UnityEngine;
@@ -23,9 +25,16 @@ namespace Building.Fabric
         }
         IObjectsExpensesImplementation IUsesWeather.IobjectsExpensesImplementation => IobjectsExpensesImplementation;
 
-        private ConfigBuildingFabricEditor _config;
+        private readonly ConfigBuildingFabricEditor _config;
+
+        ConfigBuildingsEventsEditor IUsesBuildingsEvents.configBuildingsEvents => _config.configBuildingsEvents;
 
         Dictionary<TypeProductionResources.TypeResource, double> IBuilding.amountResources
+        {
+            get => d_amountResources; set => d_amountResources = value;
+        }
+
+        Dictionary<TypeProductionResources.TypeResource, double> IUsesBuildingsEvents.amountResources
         {
             get => d_amountResources; set => d_amountResources = value;
         }

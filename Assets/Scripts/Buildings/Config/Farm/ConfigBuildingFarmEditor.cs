@@ -5,13 +5,17 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using Config.Country.Climate;
-using Events.Buildings;
+using Config.Building.Events;
 
 namespace Config.Building
 {
     [CreateAssetMenu(fileName = "BuildingFarmConfig", menuName = "Config/Buildings/Farm/Create New", order = 50)]
     public sealed class ConfigBuildingFarmEditor : ScriptableObject
     {
+        [SerializeField, Required, BoxGroup("Configs")]
+        private ConfigBuildingsEventsEditor _configBuildingsEvents;
+        public ConfigBuildingsEventsEditor configBuildingsEvents => _configBuildingsEvents;
+
         [SerializeField, BoxGroup("Raw Materials"), ReadOnly, HideLabel]
         private List<TypeProductionResources.TypeResource> l_requiredRawMaterials = new();
         public List<TypeProductionResources.TypeResource> requiredRawMaterials => l_requiredRawMaterials;
@@ -32,10 +36,6 @@ namespace Config.Building
         [SerializeField, BoxGroup("Parameters"), HideLabel]
         private List<ConfigClimateZoneEditor.TypeSeasons> l_growingSeasons = new();
         public List<ConfigClimateZoneEditor.TypeSeasons> growingSeasons => l_growingSeasons;
-
-        [SerializeField, BoxGroup("Parameters"), HideLabel]
-        private List<BuildingEventStructure> l_activePossibleEvents = new();
-        public List<BuildingEventStructure> activePossibleEvents => l_activePossibleEvents;
 
         [SerializeField, BoxGroup("Parameters"), MinValue(1)]
         private ushort _productionPerformanceStart = 1;

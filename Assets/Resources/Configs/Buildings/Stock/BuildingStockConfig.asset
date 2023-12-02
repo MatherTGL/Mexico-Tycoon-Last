@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd9b29998a8390a5880735f937afb938, type: 3}
   m_Name: BuildingStockConfig
   m_EditorClassIdentifier: 
+  _configBuildingsEvents: {fileID: 11400000, guid: 4cdca8854fb0e7ff68e14b352d91a5f5, type: 2}
   _maintenanceExpenses: 30
   _localCapacityProduction: 1e0000001e0000001e0000001e0000001e000000
   _costPurchase: 25000

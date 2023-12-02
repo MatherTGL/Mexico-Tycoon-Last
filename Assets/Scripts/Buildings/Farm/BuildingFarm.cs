@@ -6,6 +6,8 @@ using UnityEngine;
 using Expense;
 using Hire;
 using Country;
+using Config.Building.Events;
+using Events.Buildings;
 
 namespace Building.Farm
 {
@@ -26,7 +28,14 @@ namespace Building.Farm
 
         private ConfigBuildingFarmEditor _config;
 
+        ConfigBuildingsEventsEditor IUsesBuildingsEvents.configBuildingsEvents => _config.configBuildingsEvents;
+
         Dictionary<TypeProductionResources.TypeResource, double> IBuilding.amountResources
+        {
+            get => d_amountResources; set => d_amountResources = value;
+        }
+
+        Dictionary<TypeProductionResources.TypeResource, double> IUsesBuildingsEvents.amountResources
         {
             get => d_amountResources; set => d_amountResources = value;
         }

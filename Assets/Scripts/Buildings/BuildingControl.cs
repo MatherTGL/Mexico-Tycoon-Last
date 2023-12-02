@@ -113,7 +113,7 @@ namespace Building
             if (_IbuildingPurchased != null)
             {
                 this.AddComponent<EventEditorBuildingsControl>();
-                GetComponent<IEventEditorBuildings>().Init(_Ibuilding);
+                GetComponent<IEventEditorBuildings>().Init(_IbuildingPurchased);
             }
         }
 

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 634e784815e94251096849ce94d17f86, type: 3}
   m_Name: BuildingFarmUndergroundConfig
   m_EditorClassIdentifier: 
+  _configBuildingsEvents: {fileID: 11400000, guid: 917d2d58c8171d17586f1b0a59e57a31, type: 2}
   l_requiredRawMaterials: 0105
   l_quantityRequiredRawMaterials:
   - 2
@@ -21,9 +22,5 @@ MonoBehaviour:
   l_growingSeasons: 
   _productionPerformanceStart: 3
   _localCapacityProduction: 0a0000000a0000000a0000000a0000000a000000
-  _currentMaintenanceExpenses: 220
-  _maintenanceExpenses: 200
-  _maintenanceExpensesOnSecurity: 10
-  _maintenanceExpensesOnWater: 10
   _harvestRipeningTime: 4
   _costPurchase: 50000

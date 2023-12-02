@@ -5,6 +5,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using Expense;
 using Country;
+using Config.Building.Events;
+using Events.Buildings;
 
 namespace Building.Aerodrome
 {
@@ -22,7 +24,14 @@ namespace Building.Aerodrome
 
         private readonly ConfigBuildingAerodromeEditor _config;
 
+        ConfigBuildingsEventsEditor IUsesBuildingsEvents.configBuildingsEvents => _config.configBuildingsEvents;
+
         Dictionary<TypeProductionResources.TypeResource, double> IBuilding.amountResources
+        {
+            get => d_amountResources; set => d_amountResources = value;
+        }
+
+        Dictionary<TypeProductionResources.TypeResource, double> IUsesBuildingsEvents.amountResources
         {
             get => d_amountResources; set => d_amountResources = value;
         }

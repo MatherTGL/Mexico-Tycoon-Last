@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c3d5d25e09dca1c386d4878c17d2b20, type: 3}
   m_Name: BuildingAerodromeConfig
   m_EditorClassIdentifier: 
+  _configBuildingsEvents: {fileID: 11400000, guid: aff7f2a2f2b8d046f80ee41077caaac4, type: 2}
   _maintenanceExpenses: 200
   _localCapacityProduction: 0a0000000a0000000a0000000a0000000a000000
   _costPurchase: 900000

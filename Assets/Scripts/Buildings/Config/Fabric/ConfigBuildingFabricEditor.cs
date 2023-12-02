@@ -4,12 +4,17 @@ using Resources;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using Config.Building.Events;
 
 namespace Config.Building
 {
     [CreateAssetMenu(fileName = "BuildingFabricConfig", menuName = "Config/Buildings/Fabric/Create New", order = 50)]
     public sealed class ConfigBuildingFabricEditor : ScriptableObject
     {
+        [SerializeField, Required, BoxGroup("Configs")]
+        private ConfigBuildingsEventsEditor _configBuildingsEvents;
+        public ConfigBuildingsEventsEditor configBuildingsEvents => _configBuildingsEvents;
+
         [SerializeField, BoxGroup("Raw Materials"), ReadOnly, HideLabel]
         private List<TypeProductionResources.TypeResource> l_requiredRawMaterials = new();
         public List<TypeProductionResources.TypeResource> requiredRawMaterials => l_requiredRawMaterials;
@@ -25,14 +30,6 @@ namespace Config.Building
         [SerializeField, BoxGroup("Parameters")]
         private ushort _productionPerformance = 1;
         public ushort productionPerformance => _productionPerformance;
-
-        [SerializeField, BoxGroup("Parameters")]
-        private ushort _productConversionStep = 5;
-        public ushort productConversionStep => _productConversionStep;
-
-        [SerializeField, BoxGroup("Parameters"), MinValue(10)]
-        private double _maintenanceExpenses = 10;
-        public double maintenanceExpenses => _maintenanceExpenses;
 
         [SerializeField, BoxGroup("Parameters"), MinValue(10)]
         private uint[] _localCapacityProduction;

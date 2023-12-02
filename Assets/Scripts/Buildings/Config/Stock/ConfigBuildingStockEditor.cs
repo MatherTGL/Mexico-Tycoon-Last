@@ -3,15 +3,16 @@ using Sirenix.OdinInspector;
 using System;
 using Resources;
 using System.Linq;
+using Config.Building.Events;
 
 namespace Config.Building
 {
     [CreateAssetMenu(fileName = "BuildingStockConfig", menuName = "Config/Buildings/Stock/Create New", order = 50)]
     public sealed class ConfigBuildingStockEditor : ScriptableObject
     {
-        [SerializeField, BoxGroup("Parameters"), MinValue(10)]
-        private double _maintenanceExpenses = 10;
-        public double maintenanceExpenses => _maintenanceExpenses;
+        [SerializeField, Required, BoxGroup("Configs")]
+        private ConfigBuildingsEventsEditor _configBuildingsEvents;
+        public ConfigBuildingsEventsEditor configBuildingsEvents => _configBuildingsEvents;
 
         [SerializeField, BoxGroup("Parameters"), MinValue(10)]
         private uint[] _localCapacityProduction;
