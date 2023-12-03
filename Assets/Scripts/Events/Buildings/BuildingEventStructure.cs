@@ -7,11 +7,11 @@ using System.Collections.Generic;
 namespace Events.Buildings
 {
     [Serializable]
-    public class BuildingEventStructure
+    public sealed class BuildingEventStructure
     {
         [ShowInInspector, ShowIf("@_isUseAccessResourcesAmount")]
-        private Dictionary<TypeResource, double> d_typeResource = new();
-        public Dictionary<TypeResource, double> typeResource => d_typeResource;
+        private Dictionary<TypeResource, double> d_typeResources = new();
+        public Dictionary<TypeResource, double> typeResources => d_typeResources;
 
         [SerializeField, MinValue(0.0f)]
         private float _percentageImpact;

@@ -1,6 +1,7 @@
 using UnityEngine;
 using Building;
 using System.Collections;
+using static Resources.TypeProductionResources;
 
 namespace Events.Buildings
 {
@@ -24,9 +25,7 @@ namespace Events.Buildings
                 for (byte i = 0; i < _IusesBuildingsEvents.configBuildingsEvents.activePossibleEvents.Count; i++)
                 {
                     if (_IusesBuildingsEvents.configBuildingsEvents.activePossibleEvents[i].isUseAccessResourcesAmount)
-                    {
-
-                    }
+                        ResourcesEvent(i);
                 }
                 yield return new WaitForSeconds(10); //!
             }
@@ -40,6 +39,15 @@ namespace Events.Buildings
         private bool InstantEvent()
         {
             return true;
+        }
+
+        private void ResourcesEvent(in byte indexElement)
+        {
+            foreach (var item in _IusesBuildingsEvents.configBuildingsEvents.activePossibleEvents[indexElement].typeResources)
+            {
+                TypeResource typeResource = item.Key;
+                //? if (_IusesBuildingsEvents.amountResources[typeResource] )
+            }
         }
     }
 }

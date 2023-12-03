@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BuildingsEventsConfigStock
   m_EditorClassIdentifier: 
   l_activePossibleEvents:
-  - _isTemporary: 0
-    _isUseAccessResourcesAmount: 0
-    _percentageImpact: 0
+  - _percentageImpact: 0
     _duration: 0
+    _isTemporary: 0
+    _isUseAccessResourcesAmount: 0
