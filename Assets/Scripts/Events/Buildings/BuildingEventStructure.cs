@@ -1,17 +1,19 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
 using System;
-using static Resources.TypeProductionResources;
-using System.Collections.Generic;
 
 namespace Events.Buildings
 {
     [Serializable]
     public sealed class BuildingEventStructure
     {
-        [ShowInInspector, ShowIf("@_isUseAccessResourcesAmount")]
-        private Dictionary<TypeResource, double> d_typeResources = new();
-        public Dictionary<TypeResource, double> typeResources => d_typeResources;
+        [SerializeField, EnumPaging]
+        private BuildingEventTypes _typeEvent;
+        public BuildingEventTypes typeEvent => _typeEvent;
+
+        [SerializeField, Required]
+        private ScriptableObject _config;
+        public ScriptableObject config => _config;
 
         [SerializeField, MinValue(0.0f)]
         private float _percentageImpact;

@@ -75,7 +75,6 @@ namespace Building
             _IcityBusiness = _Ibuilding as ICityBusiness;
             _IbuildingPurchased = _Ibuilding as IBuildingPurchased;
 
-
             ConnectEventEditor();
             ConnectExpensesManagementControl();
             CreateDictionaryTypeDrugs();

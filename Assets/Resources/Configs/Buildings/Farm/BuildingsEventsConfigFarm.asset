@@ -12,4 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46e54ae454ff9e01a8a7419306e08703, type: 3}
   m_Name: BuildingsEventsConfigFarm
   m_EditorClassIdentifier: 
-  l_activePossibleEvents: []
+  l_activePossibleEvents:
+  - _percentageImpact: 0
+    _duration: 0
+    _isTemporary: 0
+    _isUseAccessResourcesAmount: 1
+    _typeResource: 0
+    _amountResource: 2

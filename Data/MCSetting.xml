@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <MCSetting>
-  <useHierarchy>true</useHierarchy>
-  <useProject>true</useProject>
+  <useHierarchy>false</useHierarchy>
+  <useProject>false</useProject>
   <showPreferenceItem>true</showPreferenceItem>
   <logOutput>false</logOutput>
   <customHierarchyRoot />

@@ -8,14 +8,6 @@
         "type": "tabs",
         "children": [
           {
-            "id": "d677e5a59a49e30e",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
-            }
-          },
-          {
             "id": "843d92fa96f65087",
             "type": "leaf",
             "state": {
@@ -25,8 +17,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -155,11 +146,11 @@
       "obsidian-excalidraw-plugin:Create new drawing": false
     }
   },
-  "active": "843d92fa96f65087",
+  "active": "5d1d60e25bbbf2cc",
   "lastOpenFiles": [
+    "Excalidraw/Drawing 2023-11-29 17.34.14.excalidraw.md",
     "Excalidraw/Drawing 2023-11-29 17.34.14.excalidraw.md.meta",
     "Excalidraw.meta",
-    "Excalidraw/Drawing 2023-11-29 17.34.14.excalidraw.md",
     "Excalidraw"
   ]
 }
