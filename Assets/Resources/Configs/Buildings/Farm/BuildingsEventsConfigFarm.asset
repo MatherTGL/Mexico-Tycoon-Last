@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: BuildingsEventsConfigFarm
   m_EditorClassIdentifier: 
   l_activePossibleEvents:
-  - _percentageImpact: 0
+  - _typeEvent: 0
+    _config: {fileID: 11400000, guid: 1c351fa3726120c75a90983a779350f2, type: 2}
+    _percentageImpact: 0
     _duration: 0
     _isTemporary: 0
     _isUseAccessResourcesAmount: 1
-    _typeResource: 0
-    _amountResource: 2

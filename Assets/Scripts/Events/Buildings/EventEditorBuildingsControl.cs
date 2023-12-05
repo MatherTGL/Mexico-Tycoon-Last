@@ -2,6 +2,9 @@ using UnityEngine;
 using Building;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using System.Collections;
+using TimeControl;
+using Events.Buildings.Plants;
 
 namespace Events.Buildings
 {
@@ -13,69 +16,45 @@ namespace Events.Buildings
         [ShowInInspector, ReadOnly]
         private List<IBuildingEvent> l_allCreatedEvents = new();
 
+        private WaitForSeconds _timeStep;
+
 
         void IEventEditorBuildings.Init(in IUsesBuildingsEvents IusesBuildingsEvents)
         {
             _IusesBuildingsEvents = IusesBuildingsEvents;
+            _timeStep = new WaitForSeconds(FindObjectOfType<TimeDateControl>().GetCurrentTimeOneDay());
 
             for (byte i = 0; i < _IusesBuildingsEvents.configBuildingsEvents.activePossibleEvents.Count; i++)
             {
                 var eventType = _IusesBuildingsEvents.configBuildingsEvents.activePossibleEvents[i].typeEvent;
                 var config = _IusesBuildingsEvents.configBuildingsEvents.activePossibleEvents[i].config;
 
-
                 CreateDependence(eventType, config);
             }
+
+            if (_IusesBuildingsEvents.configBuildingsEvents.activePossibleEvents.Count != 0)
+                StartCoroutine(UpdateEvents());
         }
 
         private void CreateDependence(in BuildingEventTypes buildingEventTypes, in ScriptableObject config)
         {
             if (buildingEventTypes is BuildingEventTypes.PlantDiseases)
-                l_allCreatedEvents.Add(new PlantDiseasesEvent((ConfigEventPlantDiseases)config)); //? Set config
+                l_allCreatedEvents.Add(new PlantDiseasesEvent((ConfigEventPlantDiseases)config));
         }
 
-        private void CheckCreatedDependencies()
+        private void UpdateAllEvents()
         {
             for (byte i = 0; i < l_allCreatedEvents.Count; i++)
-            {
-                //? l_allCreatedEvents[i]. 
-            }
+                l_allCreatedEvents[i].CheckConditionsAreMet(_IusesBuildingsEvents);
         }
 
-        // private IEnumerator CheckTerms()
-        // {
-        //     while (true)
-        //     {
-        //         for (byte i = 0; i < _IusesBuildingsEvents.configBuildingsEvents.activePossibleEvents.Count; i++)
-        //         {
-        //             if (_IusesBuildingsEvents.configBuildingsEvents.activePossibleEvents[i].isUseAccessResourcesAmount)
-        //                 ResourcesEvent(i);
-        //         }
-        //         yield return new WaitForSeconds(10); //!
-        //     }
-        // }
-
-        // private bool TemporaryEvent()
-        // {
-        //     return true;
-        // }
-
-        // private bool InstantEvent()
-        // {
-        //     return true;
-        // }
-
-        // private void ResourcesEvent(in byte indexElement)
-        // {
-        //     for (int i = 0; i < _IusesBuildingsEvents.configBuildingsEvents.activePossibleEvents.Count; i++)
-        //     {
-        //         TypeResource typeResource = _IusesBuildingsEvents.configBuildingsEvents.activePossibleEvents.G;
-        //         if (_IusesBuildingsEvents.amountResources[item.typeResources] >= _IusesBuildingsEvents.configBuildingsEvents.activePossibleEvents[indexElement].typeResources[typeResource])
-        //         {
-        //             Debug.Log("Hui");
-        //         }
-
-        //     }
-        // }
+        private IEnumerator UpdateEvents()
+        {
+            while (true)
+            {
+                UpdateAllEvents();
+                yield return _timeStep;
+            }
+        }
     }
 }

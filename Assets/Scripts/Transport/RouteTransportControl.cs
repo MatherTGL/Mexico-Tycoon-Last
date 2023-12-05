@@ -21,7 +21,7 @@ namespace Transport
         private ICreatorCurveRoad _IcreatorCurveRoad;
 
         [ShowInInspector, Required]
-        private IReRouteTransportation _IreRouteTransportation;
+        private IReRouteTransportation _shiftRoute;
 
         private TransportationDataStorage _transportationDataStorage = new TransportationDataStorage();
 
@@ -40,11 +40,11 @@ namespace Transport
         private Vector3[] _routePoints;
         public Vector3[] routePoints => _routePoints;
 
-        private event Action _lateUpdated;
-        event Action ITransportInteractRoute.lateUpdated
+        private event Action _fixedUpdate;
+        event Action ITransportInteractRoute.fixedUpdate
         {
-            add => _lateUpdated += value;
-            remove => _lateUpdated -= value;
+            add => _fixedUpdate += value;
+            remove => _fixedUpdate -= value;
         }
 
         private event Action _updatedTimeStep;
@@ -71,7 +71,7 @@ namespace Transport
 
         private void OnDisable() => StopAllCoroutines();
 
-        private void LateUpdate() => _lateUpdated?.Invoke();
+        private void FixedUpdate() => _fixedUpdate?.Invoke();
 
         private void CalculateMaintenanceExenses()
         {
@@ -223,12 +223,12 @@ namespace Transport
         private void ReRouteTransportation()
         {
             ushort[] indexesForCleanup =
-                _IreRouteTransportation?.SendTransportTransferRequest(_transportationDataStorage);
+                _shiftRoute?.SendTransportTransferRequest(_transportationDataStorage);
 
             for (ushort i = 0; i < _transportationDataStorage.l_purchasedTransportData.Count; i++)
             {
                 _transportationDataStorage.l_purchasedTransportData[i]
-                                .ChangeRoute((ITransportInteractRoute)_IreRouteTransportation);
+                                .ChangeRoute((ITransportInteractRoute)_shiftRoute);
             }
 
             _transportationDataStorage.RemoveObjectsFromList(indexesForCleanup);

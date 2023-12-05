@@ -46,6 +46,8 @@ namespace Player.Movement
 
         void IBoot.InitStart() => DontDestroyOnLoad(gameObject);
 
+        private void Update() => GetDirections();
+
         private void LateUpdate() => PlayerTransformClamp();
 
         private void FixedUpdate() => MovementPlayer();
@@ -69,8 +71,6 @@ namespace Player.Movement
 
         private void MovementPlayer()
         {
-            GetDirections();
-
             _directionMoveCamera = new Vector3(_direcionMoveX, _directionMoveY, _directionMoveZ);
             _rigidbody.AddForce(_directionMoveCamera, ForceMode.Impulse);
         }

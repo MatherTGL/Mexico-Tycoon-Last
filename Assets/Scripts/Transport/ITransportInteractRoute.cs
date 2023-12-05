@@ -6,7 +6,7 @@ namespace Transport
 {
     public interface ITransportInteractRoute
     {
-        event Action lateUpdated;
+        event Action fixedUpdate;
 
         event Action updatedTimeStep;
 

@@ -61,7 +61,7 @@ namespace Transport
         private void SubscribeToEvents()
         {
             _transportationMovement.isInStartedPosition += SendRequestFromPosition;
-            _ItransportInteractRoute.lateUpdated += _transportationMovement.MovementTransport;
+            _ItransportInteractRoute.fixedUpdate += _transportationMovement.MovementTransport;
             _ItransportInteractRoute.updatedTimeStep += _transportationMovement.ChangeSpeed;
             _ItransportInteractRoute.updatedTimeStep += _transportationFuel.FuelConsumption;
             _ItransportInteractRoute.updatedTimeStep += _transportationBreakdowns.DamageVehicles;
@@ -90,6 +90,7 @@ namespace Transport
             {
                 _productLoad = _ItransportInteractRoute.GetPointsReception()[indexReception]
                                 .RequestConnectionToLoadRes(_typeTransport.capacity, _typeCurrentTransportResource);
+                Debug.Log($"Product load: {_productLoad}");
             }
         }
 
@@ -100,6 +101,7 @@ namespace Transport
                 _ItransportInteractRoute.GetPointsReception()[indexReception]
                                 .RequestConnectionToUnloadRes(_productLoad, _typeCurrentTransportResource);
                 _productLoad = 0;
+                Debug.Log($"Product load: {_productLoad}");
             }
         }
 
@@ -113,7 +115,7 @@ namespace Transport
 
         public void Dispose()
         {
-            _ItransportInteractRoute.lateUpdated -= _transportationMovement.MovementTransport;
+            _ItransportInteractRoute.fixedUpdate -= _transportationMovement.MovementTransport;
             GC.SuppressFinalize(this);
         }
 
