@@ -1,3 +1,5 @@
+using Config.Bank;
+using System.Collections.Generic;
 using UnityEngine;
 using static Data.Player.DataPlayer;
 
@@ -5,51 +7,58 @@ namespace Bank
 {
     public sealed class BankModel
     {
-        private double _affordableCredit;
+        private Dictionary<ConfigBankEditor, double> d_affordableCredit = new();
 
-        private double _currentDebt;
+        private Dictionary<ConfigBankEditor, double> d_currentDebt = new();
 
-        private float _loanInterest;
+        private Dictionary<ConfigBankEditor, float> d_loanInterest = new();
 
 
         public BankModel(in BankControl bankControl)
         {
-            _affordableCredit = bankControl.configBank.affordableCredit;
-            _loanInterest = bankControl.configBank.loanInterest;
+            for (byte i = 0; i < bankControl.configBanks.Length; i++)
+            {
+                d_affordableCredit.Add(bankControl.configBanks[i], bankControl.configBanks[i].affordableCredit);
+                d_loanInterest.Add(bankControl.configBanks[i], bankControl.configBanks[i].loanInterest);
+                d_currentDebt.Add(bankControl.configBanks[i], 0);
+            }
 
             bankControl.updated += AccrueInterestDebt;
         }
 
-        public void TakeLoan(in float percentage)
+        public void TakeLoan(in float percentage, in ConfigBankEditor bank)
         {
-            if ((_affordableCredit * percentage / 100) <= _affordableCredit)
+            if ((d_affordableCredit[bank] * percentage / 100) <= d_affordableCredit[bank])
             {
-                double loan = _affordableCredit * percentage / 100;
-                _affordableCredit -= loan;
-                _currentDebt += loan;
-                Debug.Log($"Current Debt: {_currentDebt} / Affordable Credit: {_affordableCredit}");
+                double loan = d_affordableCredit[bank] * percentage / 100;
+                d_affordableCredit[bank] -= loan;
+                d_currentDebt[bank] += loan;
+                Debug.Log($"Current Debt: {d_currentDebt[bank]} / Affordable Credit: {d_affordableCredit[bank]}");
                 Data.DataControl.IdataPlayer.AddPlayerMoney(loan);
             }
         }
 
-        public void LoanRepayment(in float percentage)
+        public void LoanRepayment(in float percentage, in ConfigBankEditor bank)
         {
-            if (Data.DataControl.IdataPlayer.GetPlayerMoney() >= (_currentDebt * percentage / 100))
+            if (Data.DataControl.IdataPlayer.GetPlayerMoney() >= (d_currentDebt[bank] * percentage / 100))
             {
-                double repayment = _currentDebt * percentage / 100;
+                double repayment = d_currentDebt[bank] * percentage / 100;
                 Debug.Log(repayment);
-                _currentDebt -= repayment;
-                _affordableCredit += repayment;
-                Debug.Log($"AF: {_affordableCredit} / CD: {_currentDebt}");
+                d_currentDebt[bank] -= repayment;
+                d_affordableCredit[bank] += repayment;
+                Debug.Log($"AF: {d_affordableCredit[bank]} / CD: {d_currentDebt[bank]}");
                 Data.DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(repayment, SpendAndCheckMoneyState.Spend);
             }
         }
 
         private void AccrueInterestDebt()
         {
-            if (_currentDebt > 0)
-                _currentDebt += _currentDebt * _loanInterest / 100;
-            Debug.Log(_currentDebt);
+            foreach (var bank in d_affordableCredit.Keys)
+            {
+                if (d_currentDebt[bank] > 0)
+                    d_currentDebt[bank] += d_currentDebt[bank] * d_loanInterest[bank] / 100;
+                Debug.Log(d_currentDebt[bank]);
+            }
         }
     }
 }

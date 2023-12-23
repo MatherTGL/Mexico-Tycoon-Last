@@ -46,11 +46,12 @@ namespace Player.Movement
 
         void IBoot.InitStart() => DontDestroyOnLoad(gameObject);
 
-        private void Update() => GetDirections();
-
-        private void LateUpdate() => PlayerTransformClamp();
-
-        private void FixedUpdate() => MovementPlayer();
+        private void Update() 
+        {
+            GetDirections();
+            PlayerTransformClamp();
+            MovementPlayer();
+        }
 
         private void PlayerTransformClamp()
         {
@@ -71,15 +72,15 @@ namespace Player.Movement
 
         private void MovementPlayer()
         {
-            _directionMoveCamera = new Vector3(_direcionMoveX, _directionMoveY, _directionMoveZ);
-            _rigidbody.AddForce(_directionMoveCamera, ForceMode.Impulse);
+            _directionMoveCamera = new Vector3(_direcionMoveX, _directionMoveY, _directionMoveZ) * Time.fixedDeltaTime;
+            _rigidbody.AddForce(_directionMoveCamera, ForceMode.Force);
         }
 
         private void GetDirections()
         {
             if (Input.GetKey(_inputControl.keycodeRightMouseButton))
             {
-                _distanceZoomSpeedMove = _transform.position.z / _configPlayerControlMove.speedMoveMouse;
+                _distanceZoomSpeedMove = _transform.position.z * _configPlayerControlMove.speedMoveMouse;
 
                 _direcionMoveX = _distanceZoomSpeedMove * _inputControl.axisMouseX;
                 _directionMoveY = _distanceZoomSpeedMove * _inputControl.axisMouseY;
@@ -91,12 +92,12 @@ namespace Player.Movement
                 else
                     _currentSpeed = _configPlayerControlMove.speedMove;
 
-                _distanceZoomSpeedMove = _transform.position.z / _currentSpeed;
+                _distanceZoomSpeedMove = _transform.position.z * _currentSpeed;
 
                 _direcionMoveX = _distanceZoomSpeedMove * _inputControl.axisHorizontalMove;
                 _directionMoveY = _distanceZoomSpeedMove * _inputControl.axisVerticalMove;
             }
-            var distanceZoomSpeedZoom = _transform.position.z / _configPlayerControlMove.speedZoom;
+            var distanceZoomSpeedZoom = _transform.position.z * _configPlayerControlMove.speedZoom;
             _directionMoveZ = distanceZoomSpeedZoom * _inputControl.axisMouseScrollWheel;
         }
 

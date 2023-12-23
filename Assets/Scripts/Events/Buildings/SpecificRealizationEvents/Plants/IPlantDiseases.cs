@@ -1,6 +1,6 @@
 namespace Events.Buildings.Plants
 {
-    public interface IPlantDiseases
+    public interface IPlantDiseases 
     {
         void Update(in IUsesBuildingsEvents buildingsEvents);
     }

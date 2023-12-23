@@ -10,5 +10,9 @@ namespace Events.Buildings
         [SerializeField, Required]
         private ConfigEventPlantDiseasesEpidemic _configPlantDiseasesEpidemic;
         public ConfigEventPlantDiseasesEpidemic configEventPlantDiseasesEpidemic => _configPlantDiseasesEpidemic;
+
+        [SerializeField, ToggleLeft]
+        private bool _isActiveEpidemic;
+        public bool isActiveEpidemic => _isActiveEpidemic;
     }
 }

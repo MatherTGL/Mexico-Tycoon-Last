@@ -18,9 +18,13 @@ namespace Events.Buildings.Plants
 
         private void CreateAllPlantDiseasesEvents()
         {
-            Debug.Log(_config);
-            Debug.Log(_config.configEventPlantDiseasesEpidemic);
-            l_variousPlantEvents.Add(new PlantDiseasesEpidemic(_config.configEventPlantDiseasesEpidemic));
+            IPlantDiseases plantDiseases = null;
+
+            if (_config.isActiveEpidemic)
+                plantDiseases = new PlantDiseasesEpidemic(_config.configEventPlantDiseasesEpidemic);
+
+            if (plantDiseases != null)
+                l_variousPlantEvents.Add(plantDiseases);
         }
 
         void IBuildingEvent.CheckConditionsAreMet(in IUsesBuildingsEvents buildingsEvents)

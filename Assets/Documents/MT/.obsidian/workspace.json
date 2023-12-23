@@ -67,8 +67,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "d540ed6c19b496ad",
@@ -148,6 +147,7 @@
   },
   "active": "843d92fa96f65087",
   "lastOpenFiles": [
+    "Просто заметки.md",
     "Excalidraw/Drawing 2023-11-29 17.34.14.excalidraw.md",
     "Excalidraw/Drawing 2023-11-29 17.34.14.excalidraw.md.meta",
     "Excalidraw.meta",

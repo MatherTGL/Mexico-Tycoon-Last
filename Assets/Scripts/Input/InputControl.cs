@@ -83,7 +83,7 @@ public sealed class InputControl : MonoBehaviour
 
     private void AxisMouse()
     {
-        _axisMouseScrollWheel = Mathf.Clamp(Input.GetAxis("Mouse ScrollWheel"), -5, 5); //!
+        _axisMouseScrollWheel = Input.GetAxisRaw("Mouse ScrollWheel");
         _axisMouseX = Mathf.Clamp(Input.GetAxis("Mouse X"), -_maxForceMouseClampHorizontal, _maxForceMouseClampHorizontal);
         _axisMouseY = Mathf.Clamp(Input.GetAxis("Mouse Y"), -_maxForceMouseClampVertical, _maxForceMouseClampVertical);
     }

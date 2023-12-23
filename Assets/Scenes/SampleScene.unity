@@ -2129,6 +2129,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 26f912876a23fe4f4b27f99a142bcd83, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2817,6 +2821,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 368299224758210978, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
+      propertyPath: _configBanks.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 368299224758210978, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
+      propertyPath: '_configBanks.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 00808ccd32a2c9d1399b18d846abca57, type: 2}
+    - target: {fileID: 368299224758210978, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
+      propertyPath: '_configBanks.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: e2c736e8f8de665429a587f84cdc82ab, type: 2}
+    - target: {fileID: 368299224758210978, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
+      propertyPath: '_configBanks.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: d635a0ee2f9f4c34c97f92968fd9899d, type: 2}
+    - target: {fileID: 368299224758210978, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
+      propertyPath: '_configBanks.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 94ab84e207bfd6344ae0554dbdc5f88a, type: 2}
     - target: {fileID: 8688798508615415646, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

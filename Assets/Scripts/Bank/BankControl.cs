@@ -11,8 +11,8 @@ namespace Bank
     public sealed class BankControl : MonoBehaviour, IBoot
     {
         [SerializeField, Required]
-        private ConfigBankEditor _configBank; //? array
-        public ConfigBankEditor configBank => _configBank;
+        private ConfigBankEditor[] _configBanks;
+        public ConfigBankEditor[] configBanks => _configBanks;
 
         private BankModel _bankModel;
 
@@ -54,16 +54,16 @@ namespace Bank
         private float _percentageLoan;
 
         [Button("Take Loan"), DisableInEditorMode]
-        private void TakeLoan()
+        private void TakeLoan(in byte idBank)
         {
-            _bankModel.TakeLoan(_percentageLoan);
+            _bankModel.TakeLoan(_percentageLoan, _configBanks[idBank]);
             _bankView.TakeLoan();
         }
 
         [Button("Loan Repayment"), DisableInEditorMode]
-        private void LoanRepayment()
+        private void LoanRepayment(in byte idBank)
         {
-            _bankModel.LoanRepayment(_percentageLoan);
+            _bankModel.LoanRepayment(_percentageLoan, _configBanks[idBank]);
             _bankView.LoanRepayment();
         }
     }

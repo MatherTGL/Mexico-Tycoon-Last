@@ -92,7 +92,7 @@ namespace MenuCustomizer
         {
             EditorApplication.ExecuteMenuItem("Window/Hierarchy");
 #if UNITY_EDITOR_WIN
-            EditorWindow.focusedWindow.SendEvent(new Event { keyCode = KeyCode.F2, type = EventType.keyDown });
+            EditorWindow.focusedWindow.SendEvent(new Event { keyCode = KeyCode.F2, type = EventType.KeyDown });
 #elif UNITY_EDITOR_OSX
             EditorWindow.focusedWindow.SendEvent(new Event { keyCode = KeyCode.Return, type = EventType.keyDown });
 #endif
@@ -103,7 +103,7 @@ namespace MenuCustomizer
         {
             EditorApplication.ExecuteMenuItem("Window/Project");
 #if UNITY_EDITOR_WIN
-            EditorWindow.focusedWindow.SendEvent(new Event { keyCode = KeyCode.F2, type = EventType.keyDown });
+            EditorWindow.focusedWindow.SendEvent(new Event { keyCode = KeyCode.F2, type = EventType.KeyDown });
 #elif UNITY_EDITOR_OSX
             EditorWindow.focusedWindow.SendEvent(new Event { keyCode = KeyCode.Return, type = EventType.keyDown });
 #endif

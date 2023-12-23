@@ -1,6 +1,6 @@
 using Data;
-using UnityEngine;
 using static Data.Player.DataPlayer;
+using Deb = DebugCustomSystem.DebugSystem;
 
 namespace Transport.Breakdowns
 {
@@ -21,7 +21,7 @@ namespace Transport.Breakdowns
 
         public void DamageVehicles()
         {
-            Debug.Log(_currentStrength);
+            Deb.Log(_currentStrength, Deb.SelectedColor.Green, "Transport current strength", "Transport");
             if ((_currentStrength - _typeTransport.damageInflicted) > _typeTransport.minStrength && !_isRepairs)
                 _currentStrength -= _typeTransport.damageInflicted;
             else
@@ -32,17 +32,23 @@ namespace Transport.Breakdowns
 
         public void Repair()
         {
-            _isRepairs = true;
-            _currentStrength += _typeTransport.speedOfRepairPerTimeStep;
-
-            if (_currentStrength >= _typeTransport.maxStrength)
+            do
             {
-                DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(_typeTransport.repairCost, 
-                                                                    SpendAndCheckMoneyState.Spend);
+                _isRepairs = true;
+                _currentStrength += _typeTransport.speedOfRepairPerTimeStep;
+                Deb.Log(_currentStrength, Deb.SelectedColor.Green, "Transport current strength", "Transport");
+                Deb.Log(_isRepairs, Deb.SelectedColor.Blue, "Transport in repair", "Transport");
 
-                _currentStrength = _typeTransport.maxStrength;
-                _isRepairs = false;
-            }
+                if (_currentStrength >= _typeTransport.maxStrength)
+                {
+                    DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(_typeTransport.repairCost, SpendAndCheckMoneyState.Spend);
+
+                    _currentStrength = _typeTransport.maxStrength;
+                    _isRepairs = false;
+                    Deb.Log(_currentStrength, Deb.SelectedColor.Green, "Transport current strength", "Transport");
+                    Deb.Log(_isRepairs, Deb.SelectedColor.Orange, "Transport in repair", "Transport");
+                }
+            } while (_isRepairs);
         }
     }
 }

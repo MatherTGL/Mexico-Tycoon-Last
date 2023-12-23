@@ -27,6 +27,7 @@ using Regulation;
 using Country.Climate.Weather;
 using Unity.VisualScripting;
 using Events.Buildings;
+using Building.City.Deliveries;
 
 namespace Building
 {
@@ -122,8 +123,10 @@ namespace Building
             {
                 var regulationCostSale = FindObjectOfType<ProductCostSaleDataBaseControl>();
                 _Ibuilding = new BuildingCity(_configSO, regulationCostSale);
-                gameObject.AddComponent<RegulationProductCostControl>();
+                this.AddComponent<RegulationProductCostControl>();
                 GetComponent<IRegulationProductCost>().Init(_Ibuilding);
+                this.AddComponent<Deliveries>();
+                GetComponent<IDeliveries>().Init();
             }
             else if (_typeBuilding is TypeBuilding.Farm)
                 _Ibuilding = new BuildingFarm(_configSO);

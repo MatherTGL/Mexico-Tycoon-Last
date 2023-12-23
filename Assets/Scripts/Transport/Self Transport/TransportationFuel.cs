@@ -1,6 +1,7 @@
 using Data;
 using UnityEngine;
 using static Data.Player.DataPlayer;
+using Deb = DebugCustomSystem.DebugSystem;
 
 namespace Transport.Fuel
 {
@@ -23,8 +24,9 @@ namespace Transport.Fuel
         {
             if (IsFuelAvailable())
             {
-                _currentFuelQuantity -= UnityEngine.Random.Range(
+                _currentFuelQuantity -= Random.Range(
                     _typeTransport.minFuelConsumptionInTimeStep, _typeTransport.maxFuelConsumptionInTimeStep);
+                Deb.Log(_currentFuelQuantity, Deb.SelectedColor.Red, "Transport current fuel", "Transport");
             }
             else
                 RefuelTransportation();
@@ -40,13 +42,20 @@ namespace Transport.Fuel
 
         private void RefuelTransportation()
         {
+            Deb.Log(_currentFuelQuantity, Deb.SelectedColor.Green, "Transport current fuel", "Transport");
             _isVehiclesAreRefueling = true;
             _currentFuelQuantity = 0;
+            Deb.Log(_isVehiclesAreRefueling, Deb.SelectedColor.Green, "Transport in fuel", "Transport");
 
             if (BuyFuel())
+            {
                 for (ushort liter = 0; liter < _typeTransport.maxFuelLoad; liter++)
+                {
                     _currentFuelQuantity += _typeTransport.fillingFuelRatePerTimeStep;
-
+                    Deb.Log(_currentFuelQuantity, Deb.SelectedColor.Blue, "Transport current fuel", "Transport");
+                }
+            }
+   
             _isVehiclesAreRefueling = false;
         }
 

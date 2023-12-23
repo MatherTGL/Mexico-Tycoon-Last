@@ -45,6 +45,8 @@ namespace Building.Farm
             get => d_stockCapacity; set => d_stockCapacity = value;
         }
 
+        private Dictionary<TypeProductionResources.TypeResource, ushort> d_currentCultivatedProducts = new();
+
         private TypeProductionResources.TypeResource _typeProductionResource;
 
         uint[] IBuilding.localCapacityProduction => _config.localCapacityProduction;
@@ -78,7 +80,6 @@ namespace Building.Farm
 
         private void Production()
         {
-            Debug.Log($"Production farm: {d_amountResources[_typeProductionResource]}");
             double localCapacity = _config.localCapacityProduction[(int)_typeProductionResource];
 
             if (d_amountResources[_typeProductionResource] < localCapacity)
@@ -87,6 +88,7 @@ namespace Building.Farm
                     return;
 
                 _isCurrentlyInProduction = true;
+                d_currentCultivatedProducts.Add(_typeProductionResource, _productionPerformance);
 
                 if (_currentPercentageOfMaturity < _config.harvestRipeningTime)
                 {
@@ -94,11 +96,13 @@ namespace Building.Farm
                 }
                 else
                 {
-                    d_amountResources[_typeProductionResource] += _productionPerformance;
+                    d_amountResources[_typeProductionResource] += d_currentCultivatedProducts[_typeProductionResource];
+                    d_amountResources.Remove(_typeProductionResource);
                     _currentPercentageOfMaturity = 0;
                     _isCurrentlyInProduction = false;
                 }
             }
+            Debug.Log($"Production farm: {d_amountResources[_typeProductionResource]}");
         }
 
         private bool CheckQuantityRequiredRawMaterials()

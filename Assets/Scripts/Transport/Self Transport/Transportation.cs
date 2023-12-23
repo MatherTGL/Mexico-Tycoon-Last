@@ -38,8 +38,8 @@ namespace Transport
 
 
         public Transportation(in TypeTransport typeTransport,
-                             in ITransportInteractRoute routeTransportControl,
-                             in GameObject objectTransport)
+                              in ITransportInteractRoute routeTransportControl,
+                              in GameObject objectTransport)
         {
             _typeTransport = typeTransport;
             _ItransportInteractRoute = routeTransportControl;

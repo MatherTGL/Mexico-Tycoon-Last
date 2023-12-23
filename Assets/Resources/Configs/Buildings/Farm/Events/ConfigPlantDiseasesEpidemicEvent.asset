@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52cb5e470b4611f09aa5c9c12284352e, type: 3}
   m_Name: ConfigPlantDiseasesEpidemicEvent
   m_EditorClassIdentifier: 
+  _spawnChance: 0.05
