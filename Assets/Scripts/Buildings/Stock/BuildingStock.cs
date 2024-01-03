@@ -7,10 +7,11 @@ using Expense;
 using Country;
 using Config.Building.Events;
 using Events.Buildings;
+using Building.Farm;
 
 namespace Building.Stock
 {
-    public sealed class BuildingStock : AbstractBuilding, IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption, IUsesExpensesManagement
+    public sealed class BuildingStock : AbstractBuilding, IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption, IUsesExpensesManagement, ICleaningResources
     {
         private readonly IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
         IBuildingMonitorEnergy IEnergyConsumption.IbuildingMonitorEnergy => _IbuildingMonitorEnergy;
@@ -66,6 +67,13 @@ namespace Building.Stock
         {
             if (isBuyed && isWorked)
                 Debug.Log("Stock is work");
+        }
+
+        void ICleaningResources.Clear(in TypeProductionResources.TypeResource typeResource, in double amount)
+        {
+            if (d_amountResources.ContainsKey(typeResource))
+                if (d_amountResources[typeResource] - amount >= 0)
+                    d_amountResources[typeResource] -= amount;
         }
     }
 }

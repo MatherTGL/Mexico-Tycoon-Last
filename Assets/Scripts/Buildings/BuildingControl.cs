@@ -23,7 +23,6 @@ using Hire;
 using static Boot.Bootstrap;
 using static Building.BuildingEnumType;
 using Country;
-using Regulation;
 using Country.Climate.Weather;
 using Unity.VisualScripting;
 using Events.Buildings;
@@ -120,26 +119,28 @@ namespace Building
         private void CreateInstance()
         {
             if (_typeBuilding is TypeBuilding.City)
-            {
-                var regulationCostSale = FindObjectOfType<ProductCostSaleDataBaseControl>();
-                _Ibuilding = new BuildingCity(_configSO, regulationCostSale);
-                this.AddComponent<RegulationProductCostControl>();
-                GetComponent<IRegulationProductCost>().Init(_Ibuilding);
-                this.AddComponent<Deliveries>();
-                GetComponent<IDeliveries>().Init();
-            }
+                InitCityBuilding();
             else if (_typeBuilding is TypeBuilding.Farm)
                 _Ibuilding = new BuildingFarm(_configSO);
             else if (_typeBuilding is TypeBuilding.Fabric)
                 _Ibuilding = new BuildingFabric(_configSO);
             else if (_typeBuilding is TypeBuilding.Stock)
+            {
                 _Ibuilding = new BuildingStock(_configSO);
+                this.AddComponent<WarehouseCleaning>().Init((ICleaningResources)_Ibuilding);
+            }  
             else if (_typeBuilding is TypeBuilding.Border)
                 _Ibuilding = new BuildingBorder(_configSO);
             else if (_typeBuilding is TypeBuilding.Aerodrome)
                 _Ibuilding = new BuildingAerodrome(_configSO);
             else if (_typeBuilding is TypeBuilding.SeaPort)
                 _Ibuilding = new BuildingSeaPort(_configSO);
+        }
+
+        private void InitCityBuilding()
+        {
+            this.AddComponent<Deliveries>();
+            _Ibuilding = new BuildingCity(_configSO, GetComponent<IDeliveries>());
         }
 
         private void CreateDictionaryTypeDrugs()

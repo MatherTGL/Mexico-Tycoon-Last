@@ -3,6 +3,7 @@ using Sirenix.OdinInspector;
 using Resources;
 using System;
 using System.Linq;
+using Config.Building.Deliveries;
 
 namespace Config.Building
 {
@@ -12,6 +13,10 @@ namespace Config.Building
         [SerializeField, Required]
         private CostResourcesConfig _costResourcesConfig;
         public CostResourcesConfig costResourcesConfig => _costResourcesConfig;
+
+        [SerializeField, Required]
+        private ConfigDeliveriesEditor _configDeliveriesEditor;
+        public ConfigDeliveriesEditor configDeliveries => _configDeliveriesEditor;
 
         [SerializeField, MinValue(-1.0f), MaxValue(0.0f)]
         private float _populationChangeStepPercentMin;

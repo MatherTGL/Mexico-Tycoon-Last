@@ -1,18 +1,19 @@
+using Building.Additional;
 using Building.City.Business;
+using Building.City.Deliveries;
 using Config.Building;
-using Regulation;
 using Resources;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Building.City
 {
-    public sealed class BuildingCity : AbstractBuilding, IBuilding, ICityBusiness, IRegulationBuilding
+    public sealed class BuildingCity : AbstractBuilding, IBuilding, ICityBusiness
     {
-        private IRegulationCostSale _IregulationCostSale;
-        IRegulationCostSale IRegulationBuilding.IregulationCostSale => _IregulationCostSale;
+        //! private IDeliveries _Ideliveries; -> move to SellResources class
+        
+        private ISellResources _IsellResources;
 
         private readonly CityPopulationReproduction _cityPopulationReproduction;
 
@@ -42,30 +43,16 @@ namespace Building.City
 
         private uint _population;
 
-        private int _cellIndexRegulationCostSale;
-        int IRegulationBuilding.cellIndexRegulationCostSale => _cellIndexRegulationCostSale;
 
-
-        public BuildingCity(in ScriptableObject config, in IRegulationCostSale regulationCostSale)
+        public BuildingCity(in ScriptableObject config, in IDeliveries deliveries)
         {
             _config = config as ConfigBuildingCityEditor;
             _cityPopulationReproduction = new(_config);
             _cityBusiness = new(this);
-            _IregulationCostSale = regulationCostSale;
+            _IsellResources = new SellResources(deliveries, _config);
 
-            InitArrays(_config, _IregulationCostSale);
             _population = (uint)UnityEngine.Random.Range(
                 _config.populationStartMin, _config.populationStartMax);
-        }
-
-        private void InitArrays(in ConfigBuildingCityEditor configBuilding,
-                                in IRegulationCostSale regulationCostSale)
-        {
-            int amountTypeDrugs = Enum.GetValues(typeof(TypeProductionResources.TypeResource)).Length;
-
-            var costPerKg = new uint[amountTypeDrugs];
-            costPerKg = configBuilding.costResourcesConfig.GetCostsSellResources();
-            _cellIndexRegulationCostSale = regulationCostSale.Registration(costPerKg);
         }
 
         void IBuilding.ConstantUpdatingInfo()
@@ -78,15 +65,7 @@ namespace Building.City
 
         private void SellResources()
         {
-            foreach (var drug in d_amountResources.Keys.ToArray())
-            {
-                if (drug != TypeProductionResources.TypeResource.DirtyMoney)
-                {
-                    double salesProfit = d_amountResources[drug] * _IregulationCostSale.GetResourceCosts(_cellIndexRegulationCostSale)[(int)drug];
-                    d_amountResources[TypeProductionResources.TypeResource.DirtyMoney] += salesProfit;
-                    d_amountResources[drug] = 0;
-                }
-            }
+            _IsellResources.Sell(ref d_amountResources);
             ToLaunderMoney();
         }
 
@@ -97,13 +76,9 @@ namespace Building.City
         }
 
         void ICityBusiness.BuyBusiness(in CityBusiness.TypeBusiness typeBusiness)
-        {
-            _cityBusiness.BuyBusiness(typeBusiness);
-        }
+            => _cityBusiness.BuyBusiness(typeBusiness);
 
         void ICityBusiness.SellBusiness(in ushort indexBusiness)
-        {
-            _cityBusiness.SellBusiness(indexBusiness);
-        }
+            => _cityBusiness.SellBusiness(indexBusiness);
     }
 }
