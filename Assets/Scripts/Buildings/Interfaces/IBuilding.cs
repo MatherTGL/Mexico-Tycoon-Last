@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using DebugCustomSystem;
 using Resources;
-using UnityEngine;
 
 namespace Building
 {
@@ -32,10 +32,15 @@ namespace Building
         float GetResources(in float transportCapacity,
                            in TypeProductionResources.TypeResource typeResource)
         {
-            Debug.Log($"GetRes: {amountResources[typeResource]}");
+            DebugSystem.Log($"{this} - Request GetRes (amount {transportCapacity}) & current amount res ({typeResource}): {amountResources[typeResource]}",
+                DebugSystem.SelectedColor.Blue, tag: "Building");
+
             if (amountResources[typeResource] >= transportCapacity)
             {
                 amountResources[typeResource] -= transportCapacity;
+                DebugSystem.Log($"{this} - current amount res ({typeResource}): {amountResources[typeResource]}",
+                    DebugSystem.SelectedColor.Blue, tag: "Building");
+
                 return transportCapacity;
             }
             else
@@ -45,11 +50,15 @@ namespace Building
         bool SetResources(in float quantityResource,
                           in TypeProductionResources.TypeResource typeResource)
         {
-            Debug.Log($"SetRes: {amountResources[typeResource]}");
+            DebugSystem.Log($"{this} - Request SetRes (amount {quantityResource}) & current amount res ({typeResource}): {amountResources[typeResource]}",
+                DebugSystem.SelectedColor.Blue, tag: "Building");
 
             if (stockCapacity.TryGetValue(typeResource, out uint capacity))
                 if (amountResources[typeResource] < capacity)
                     amountResources[typeResource] += quantityResource;
+
+            DebugSystem.Log($"{this} - current amount res ({typeResource}): {amountResources[typeResource]}",
+                    DebugSystem.SelectedColor.Blue, tag: "Building");
 
             return true;
         }

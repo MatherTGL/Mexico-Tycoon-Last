@@ -1,4 +1,3 @@
-using Building.Additional;
 using Building.City.Business;
 using Building.City.Deliveries;
 using Config.Building;
@@ -9,17 +8,15 @@ using UnityEngine;
 
 namespace Building.City
 {
-    public sealed class BuildingCity : AbstractBuilding, IBuilding, ICityBusiness
+    public sealed class BuildingCity : AbstractBuilding, IBuilding, IUseBusiness
     {
-        //! private IDeliveries _Ideliveries; -> move to SellResources class
-        
-        private ISellResources _IsellResources;
-
         private readonly CityPopulationReproduction _cityPopulationReproduction;
 
         private readonly CityBusiness _cityBusiness;
 
         private readonly ConfigBuildingCityEditor _config;
+
+        private readonly ILocalMarket _IlocalMarket;
 
         Dictionary<TypeProductionResources.TypeResource, double> IBuilding.amountResources
         {
@@ -33,7 +30,7 @@ namespace Building.City
 
         private event Action _updatedTimeStep;
 
-        event Action ICityBusiness.updatedTimeStep
+        event Action IUseBusiness.updatedTimeStep
         {
             add => _updatedTimeStep += value;
             remove => _updatedTimeStep -= value;
@@ -44,41 +41,38 @@ namespace Building.City
         private uint _population;
 
 
-        public BuildingCity(in ScriptableObject config, in IDeliveries deliveries)
+        public BuildingCity(in ScriptableObject config, in ILocalMarket localMarket)
         {
             _config = config as ConfigBuildingCityEditor;
             _cityPopulationReproduction = new(_config);
             _cityBusiness = new(this);
-            _IsellResources = new SellResources(deliveries, _config);
+
+            _IlocalMarket = localMarket;
+            _IlocalMarket.Init(_config.costResourcesConfig, this);
 
             _population = (uint)UnityEngine.Random.Range(
                 _config.populationStartMin, _config.populationStartMax);
         }
 
-        void IBuilding.ConstantUpdatingInfo()
-        {
-            _updatedTimeStep?.Invoke();
-            _cityPopulationReproduction.PopulationReproduction(ref _population);
-
-            SellResources();
-        }
-
-        private void SellResources()
-        {
-            _IsellResources.Sell(ref d_amountResources);
-            ToLaunderMoney();
-        }
-
+        //! refactoring (Move to special script)
         private void ToLaunderMoney()
         {
             _cityBusiness.ToLaunderMoney(d_amountResources[TypeProductionResources.TypeResource.DirtyMoney]);
             d_amountResources[TypeProductionResources.TypeResource.DirtyMoney] = 0;
         }
 
-        void ICityBusiness.BuyBusiness(in CityBusiness.TypeBusiness typeBusiness)
+        void IBuilding.ConstantUpdatingInfo()
+        {
+            _updatedTimeStep?.Invoke();
+            ToLaunderMoney();
+            _cityPopulationReproduction.PopulationReproduction(ref _population);
+        }
+
+        //! refactoring (Move to special script)
+        void IUseBusiness.BuyBusiness(in CityBusiness.TypeBusiness typeBusiness)
             => _cityBusiness.BuyBusiness(typeBusiness);
 
-        void ICityBusiness.SellBusiness(in ushort indexBusiness)
+        void IUseBusiness.SellBusiness(in ushort indexBusiness)
             => _cityBusiness.SellBusiness(indexBusiness);
     }
 }

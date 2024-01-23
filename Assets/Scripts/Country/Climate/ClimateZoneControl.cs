@@ -5,6 +5,7 @@ using Country.Climate;
 using Config.Country.Climate;
 using System;
 using Country.Climate.Weather;
+using DebugCustomSystem;
 
 namespace Climate
 {
@@ -35,6 +36,7 @@ namespace Climate
 
             var weatherClimate = GetComponent<IWeatherControl>();
             weatherClimate.Init(_IcountryClimate);
+            DebugSystem.Log($"Season in country: {_currentSeason}", DebugSystem.SelectedColor.Orange, tag: "Country");
         }
 
         private void ChangeSeason()
@@ -44,6 +46,7 @@ namespace Climate
 
             CalculateImpact();
             updatedSeason.Invoke(0);
+            DebugSystem.Log($"Season in country: {_currentSeason}", DebugSystem.SelectedColor.Orange, tag: "Country");
         }
 
         private void CalculateImpact()

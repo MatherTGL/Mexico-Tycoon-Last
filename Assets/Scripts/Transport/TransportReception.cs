@@ -125,8 +125,8 @@ namespace Transport.Reception
             else return false;
         }
 
-        public Transform GetPosition() { return transform; }
+        public Transform GetPosition() => transform;
 
-        public TypeBuilding GetTypeBuilding() { return _configReception.typeCurrentBuilding; }
+        public TypeBuilding GetTypeBuilding() => _configReception.typeCurrentBuilding;
     }
 }

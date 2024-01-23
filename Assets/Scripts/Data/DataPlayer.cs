@@ -1,4 +1,5 @@
 using Config.Data.Player;
+using DebugCustomSystem;
 using UnityEngine;
 
 namespace Data.Player
@@ -19,7 +20,7 @@ namespace Data.Player
         void IDataPlayer.AddPlayerMoney(in double amountMoney)
         {
             _money += amountMoney;
-            Debug.Log($"Player Current Amount Money: {_money}$");
+            DebugSystem.Log($"Haved amount money: {_money}", DebugSystem.SelectedColor.Yellow, tag: "Player");
         }
 
         void IDataPlayer.AddPlayerResearchPoints(in ushort amountResearchPoints)
@@ -32,7 +33,7 @@ namespace Data.Player
             if ((_money - neededSum) > 0 && state == SpendAndCheckMoneyState.Spend)
             {
                 _money -= neededSum;
-                Debug.Log(_money);
+                DebugSystem.Log($"Haved amount money: {_money}", DebugSystem.SelectedColor.Yellow, tag: "Player");
                 return true;
             }
             else return false;

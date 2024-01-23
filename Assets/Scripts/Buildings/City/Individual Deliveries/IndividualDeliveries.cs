@@ -1,6 +1,5 @@
 using Config.Building.Deliveries;
 using Resources;
-using System.Collections.Generic;
 using UnityEngine;
 using static Building.City.Deliveries.Deliveries;
 
@@ -11,14 +10,14 @@ namespace Building.City.Deliveries
         private TypeDeliveries _typeDeliveries = TypeDeliveries.Individual;
         TypeDeliveries IDeliveriesType.typeDeliveries => _typeDeliveries;
 
-        private ConfigDeliveriesEditor _config;
+        private ConfigContractsEditor _config;
 
         private DataIndividualDeliveries _contractData;
 
         private int _randomPercentageCost;
 
 
-        public IndividualDeliveries(in ConfigDeliveriesEditor configDeliveries, in DataIndividualDeliveries contractData)
+        public IndividualDeliveries(in ConfigContractsEditor configDeliveries, in DataIndividualDeliveries contractData)
         {
             _config = configDeliveries;
             _contractData = contractData;
@@ -28,7 +27,7 @@ namespace Building.City.Deliveries
             Debug.Log($"randomPercentageCost: {_randomPercentageCost}");
         }
 
-        double IDeliveriesType.GetResourceCost(in TypeProductionResources.TypeResource typeResource, in CostResourcesConfig config)
+        double IDeliveriesType.GetResourceCost(in TypeProductionResources.TypeResource _)
         {
             var totalCost = _contractData.costPerKg * _randomPercentageCost / 100;
             Debug.Log($"totalCost sell res: {totalCost}");

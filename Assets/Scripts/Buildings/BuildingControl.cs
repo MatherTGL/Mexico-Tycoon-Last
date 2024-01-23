@@ -45,7 +45,7 @@ namespace Building
         private IBuildingPurchased _IbuildingPurchased;
         IBuildingPurchased IBuildingRequestForTransport.IbuildingPurchased => _IbuildingPurchased;
 
-        private ICityBusiness _IcityBusiness;
+        private IUseBusiness _IcityBusiness;
 
         [SerializeField, Required, BoxGroup("Parameters"), HideLabel]
         private ConfigExpensesManagementEditor _configExpenses; //TODO: load from resources
@@ -72,7 +72,7 @@ namespace Building
                 CreateInstance();
 
             _Ispending = _Ibuilding as ISpending;
-            _IcityBusiness = _Ibuilding as ICityBusiness;
+            _IcityBusiness = _Ibuilding as IUseBusiness;
             _IbuildingPurchased = _Ibuilding as IBuildingPurchased;
 
             ConnectEventEditor();
@@ -119,7 +119,10 @@ namespace Building
         private void CreateInstance()
         {
             if (_typeBuilding is TypeBuilding.City)
-                InitCityBuilding();
+            {
+                this.AddComponent<LocalMarket>();
+                _Ibuilding = new BuildingCity(_configSO, GetComponent<ILocalMarket>());
+            }
             else if (_typeBuilding is TypeBuilding.Farm)
                 _Ibuilding = new BuildingFarm(_configSO);
             else if (_typeBuilding is TypeBuilding.Fabric)
@@ -137,18 +140,13 @@ namespace Building
                 _Ibuilding = new BuildingSeaPort(_configSO);
         }
 
-        private void InitCityBuilding()
-        {
-            this.AddComponent<Deliveries>();
-            _Ibuilding = new BuildingCity(_configSO, GetComponent<IDeliveries>());
-        }
-
         private void CreateDictionaryTypeDrugs()
         {
             if (_Ibuilding is not BuildingBorder)
                 _Ibuilding.InitDictionaries();
         }
 
+        //! refactoring
         private void ChangeOwnerState(in bool isBuy)
         {
             if (isBuy) _IbuildingPurchased?.Buy();

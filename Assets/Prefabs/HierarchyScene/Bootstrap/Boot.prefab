@@ -1,49 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &77281084866644624
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6877678242174679614}
-  - component: {fileID: 4894412989679671411}
-  m_Layer: 0
-  m_Name: Regulation Cost Sell Control
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6877678242174679614
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 77281084866644624}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11.901294, y: -1.864545, z: 61.710247}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8688798508615415646}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4894412989679671411
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 77281084866644624}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d33aa1d75bd99c82bf3ab825207e4a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2061466202788608039
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,7 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fc7a2718b4e6d891b6d9a177ccbe13b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _configBank: {fileID: 11400000, guid: 00808ccd32a2c9d1399b18d846abca57, type: 2}
+  _configBanks: []
   _percentageLoan: 0
 --- !u!1 &7725296046780728073
 GameObject:
@@ -214,7 +170,6 @@ Transform:
   - {fileID: 468011289892411558}
   - {fileID: 8255196423321157206}
   - {fileID: 6632771244102386357}
-  - {fileID: 6877678242174679614}
   - {fileID: 8688798507687682190}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

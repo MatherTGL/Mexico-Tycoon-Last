@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DebugCustomSystem;
 using Resources;
 using Transport.Breakdowns;
 using Transport.Fuel;
@@ -90,7 +91,8 @@ namespace Transport
             {
                 _productLoad = _ItransportInteractRoute.GetPointsReception()[indexReception]
                                 .RequestConnectionToLoadRes(_typeTransport.capacity, _typeCurrentTransportResource);
-                Debug.Log($"Product load: {_productLoad}");
+                DebugSystem.Log($"object: {this} (request load) & current product load: {_productLoad}",
+                    DebugSystem.SelectedColor.Green, tag: "Transport");
             }
         }
 
@@ -101,7 +103,8 @@ namespace Transport
                 _ItransportInteractRoute.GetPointsReception()[indexReception]
                                 .RequestConnectionToUnloadRes(_productLoad, _typeCurrentTransportResource);
                 _productLoad = 0;
-                Debug.Log($"Product load: {_productLoad}");
+                DebugSystem.Log($"object: {this} (request unload) & current product load: {_productLoad}", 
+                    DebugSystem.SelectedColor.Red, tag: "Transport");
             }
         }
 
@@ -162,6 +165,9 @@ namespace Transport
         {
             if (d_loadAndUnloadStates.ContainsKey(indexReception))
                 d_loadAndUnloadStates[indexReception][indexLoadOrUnload] = isState;
+
+            DebugSystem.Log($"object: {this} (Load/Unload states) & current states: {d_loadAndUnloadStates[indexReception][indexLoadOrUnload]}",
+                    DebugSystem.SelectedColor.Green, tag: "Transport");
         }
 
         public void ChangeStateWaiting(in bool isState) => _isWaitingReception = isState;

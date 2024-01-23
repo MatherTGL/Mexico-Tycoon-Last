@@ -1,7 +1,6 @@
 using Building.City.Deliveries;
-using Config.Building;
+using DebugCustomSystem;
 using Resources;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -9,53 +8,57 @@ namespace Building.Additional
 {
     public sealed class SellResources : ISellResources
     {
-        private IDeliveries _Ideliveries;
+        private IContract _Icontract;
 
         private IIndividualDeliveries _IindividualDeliveries;
 
         private double _salesProfit = 0;
 
 
-        public SellResources(in IDeliveries Ideliveries, in ConfigBuildingCityEditor configCity)
+        public SellResources(in IContract Ideliveries)
         {
-            _Ideliveries = Ideliveries;
-            _Ideliveries.Init(configCity.configDeliveries, configCity.costResourcesConfig);
+            _Icontract = Ideliveries;
         }
 
-        void ISellResources.Sell(ref Dictionary<TypeProductionResources.TypeResource, double> amountResources)
+        void ISellResources.Sell(in IBuilding building)
         {
-            for (int i = _Ideliveries.l_deliveriesType.Count - 1; i >= 0; i--)
-            {
-                foreach (var drug in amountResources.Keys.ToArray())
-                {
-                    if (_Ideliveries.l_deliveriesType[i].typeDeliveries == Deliveries.TypeDeliveries.Individual)
-                        IndividualSell(ref amountResources, i, drug);
+            if (_Icontract == null)
+                throw new System.Exception("IContract == null");
 
-                    _salesProfit += amountResources[drug] * _Ideliveries.GetResourceCosts(drug);
-                    amountResources[drug] = 0;
+            for (int i = _Icontract.l_deliveriesType.Count - 1; i >= 0; i--)
+            {
+                foreach (var drug in building.amountResources.Keys.ToArray())
+                {
+                    if (_Icontract.l_deliveriesType[i].typeDeliveries == Deliveries.TypeDeliveries.Individual)
+                        IndividualSell(building, i, drug);
+
+                    _salesProfit += building.amountResources[drug] * _Icontract.GetResourceCosts(drug);
+                    building.amountResources[drug] = 0;
                 }
             }
 
-            amountResources[TypeProductionResources.TypeResource.DirtyMoney] += _salesProfit;
+            building.amountResources[TypeProductionResources.TypeResource.DirtyMoney] += _salesProfit;
             _salesProfit = 0;
-            Debug.Log($"DirtyMoney: {amountResources[TypeProductionResources.TypeResource.DirtyMoney]}");
+
+            DebugSystem.Log($"DirtyMoney in city ({this}): {building.amountResources[TypeProductionResources.TypeResource.DirtyMoney]}", 
+                DebugSystem.SelectedColor.Blue, tag: "City");
         }
 
-        private void IndividualSell(ref Dictionary<TypeProductionResources.TypeResource, double> amountResources, in int indexDeliveries,
+        private void IndividualSell(in IBuilding building, in int indexDeliveries, 
                                     in TypeProductionResources.TypeResource drug)
         {
             if (drug == TypeProductionResources.TypeResource.DirtyMoney)
                 return;
 
-            _IindividualDeliveries = _Ideliveries.l_deliveriesType[indexDeliveries] as IIndividualDeliveries;
+            _IindividualDeliveries = _Icontract.l_deliveriesType[indexDeliveries] as IIndividualDeliveries;
 
             if (_IindividualDeliveries.GetResourceBeingSent() != drug || _IindividualDeliveries.IsContractIsFinalized())
                 return;
 
-            if (amountResources[drug] >= _IindividualDeliveries.GetDailyAllowanceKg())
+            if (building.amountResources[drug] >= _IindividualDeliveries.GetDailyAllowanceKg())
             {
-                _salesProfit += _IindividualDeliveries.GetDailyAllowanceKg() * _Ideliveries.GetResourceCosts(drug);
-                amountResources[drug] -= _IindividualDeliveries.GetDailyAllowanceKg();
+                _salesProfit += _IindividualDeliveries.GetDailyAllowanceKg() * _Icontract.GetResourceCosts(drug);
+                building.amountResources[drug] -= _IindividualDeliveries.GetDailyAllowanceKg();
             }
         }
     }

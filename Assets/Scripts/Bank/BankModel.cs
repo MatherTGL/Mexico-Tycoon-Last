@@ -1,4 +1,5 @@
 using Config.Bank;
+using DebugCustomSystem;
 using System.Collections.Generic;
 using UnityEngine;
 using static Data.Player.DataPlayer;
@@ -57,7 +58,7 @@ namespace Bank
             {
                 if (d_currentDebt[bank] > 0)
                     d_currentDebt[bank] += d_currentDebt[bank] * d_loanInterest[bank] / 100;
-                Debug.Log(d_currentDebt[bank]);
+                DebugSystem.Log($"Current debt in bank: {d_currentDebt[bank]}", DebugSystem.SelectedColor.Green, tag: "Bank");
             }
         }
     }

@@ -8,7 +8,7 @@ namespace Building.City.Deliveries
         TypeDeliveries typeDeliveries { get; }
 
 
-        double GetResourceCost(in TypeProductionResources.TypeResource typeResource, in CostResourcesConfig costResourcesConfig);
+        double GetResourceCost(in TypeProductionResources.TypeResource typeResource);
 
         void UpdateTime();
     }

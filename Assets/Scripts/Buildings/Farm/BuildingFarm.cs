@@ -8,6 +8,7 @@ using Hire;
 using Country;
 using Config.Building.Events;
 using Events.Buildings;
+using DebugCustomSystem;
 
 namespace Building.Farm
 {
@@ -88,7 +89,7 @@ namespace Building.Farm
                     return;
 
                 _isCurrentlyInProduction = true;
-                d_currentCultivatedProducts.Add(_typeProductionResource, _productionPerformance);
+                d_currentCultivatedProducts.TryAdd(_typeProductionResource, _productionPerformance);
 
                 if (_currentPercentageOfMaturity < _config.harvestRipeningTime)
                 {
@@ -97,12 +98,14 @@ namespace Building.Farm
                 else
                 {
                     d_amountResources[_typeProductionResource] += d_currentCultivatedProducts[_typeProductionResource];
-                    d_amountResources.Remove(_typeProductionResource);
+                    DebugSystem.Log($"Current production resources: {d_amountResources[_typeProductionResource]}", 
+                        DebugSystem.SelectedColor.Green, tag: "Farm");
+
+                    d_currentCultivatedProducts.Remove(_typeProductionResource);
                     _currentPercentageOfMaturity = 0;
                     _isCurrentlyInProduction = false;
                 }
             }
-            Debug.Log($"Production farm: {d_amountResources[_typeProductionResource]}");
         }
 
         private bool CheckQuantityRequiredRawMaterials()

@@ -2,8 +2,6 @@ using System.Collections.Generic;
 using Business;
 using System.Linq;
 using Config.Building.Business;
-using Data;
-using UnityEngine;
 
 namespace Building.City.Business
 {
@@ -13,15 +11,12 @@ namespace Building.City.Business
 
         private List<IBusiness> l_purchasedBusinesses = new();
 
-        public enum TypeBusiness : byte
-        {
-            CarWash
-        }
+        public enum TypeBusiness : byte { CarWash }
 
         private double _costSell;
 
 
-        public CityBusiness(in ICityBusiness IcityBusiness)
+        public CityBusiness(in IUseBusiness IcityBusiness)
         {
             IcityBusiness.updatedTimeStep += ConstantUpdatingInfo;
         }
@@ -42,6 +37,7 @@ namespace Building.City.Business
         {
             _config = UnityEngine.Resources.FindObjectsOfTypeAll<ConfigCityBusinessEditor>()
                         .Where(config => config.typeBusiness == typeBusiness)?.ElementAt(0);
+
             InitAdditionalParameters();
         }
 

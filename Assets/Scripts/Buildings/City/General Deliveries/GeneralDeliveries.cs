@@ -1,7 +1,4 @@
 using Resources;
-using System;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using static Building.City.Deliveries.Deliveries;
 
@@ -12,11 +9,18 @@ namespace Building.City.Deliveries
         private TypeDeliveries _typeDeliveries = TypeDeliveries.General;
         TypeDeliveries IDeliveriesType.typeDeliveries => _typeDeliveries;
 
+        private IDeliveriesCurrentCosts _IdeliveriesCurrentCosts;
 
-        double IDeliveriesType.GetResourceCost(in TypeProductionResources.TypeResource typeResource, in CostResourcesConfig costResourcesConfig)
+
+        public GeneralDeliveries(in IDeliveriesCurrentCosts deliveriesCurrentCosts)
         {
-            Debug.Log($"Cost sell res: {costResourcesConfig.GetCostsSellResources()[(int)typeResource]}");
-            return costResourcesConfig.GetCostsSellResources()[(int)typeResource];
+            _IdeliveriesCurrentCosts = deliveriesCurrentCosts;
+        }
+
+        double IDeliveriesType.GetResourceCost(in TypeProductionResources.TypeResource typeResource)
+        {
+            Debug.Log($"Cost sell res: {_IdeliveriesCurrentCosts.currentCostsSellResources[(int)typeResource]}");
+            return _IdeliveriesCurrentCosts.currentCostsSellResources[(int)typeResource];
         }
 
         void IDeliveriesType.UpdateTime()

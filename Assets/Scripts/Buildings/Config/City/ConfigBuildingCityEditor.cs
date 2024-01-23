@@ -15,8 +15,8 @@ namespace Config.Building
         public CostResourcesConfig costResourcesConfig => _costResourcesConfig;
 
         [SerializeField, Required]
-        private ConfigDeliveriesEditor _configDeliveriesEditor;
-        public ConfigDeliveriesEditor configDeliveries => _configDeliveriesEditor;
+        private ConfigContractsEditor _configDeliveriesEditor;
+        public ConfigContractsEditor configDeliveries => _configDeliveriesEditor;
 
         [SerializeField, MinValue(-1.0f), MaxValue(0.0f)]
         private float _populationChangeStepPercentMin;

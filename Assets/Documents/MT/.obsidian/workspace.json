@@ -16,8 +16,31 @@
                 "file": "Excalidraw/Drawing 2023-11-29 17.34.14.excalidraw.md"
               }
             }
+          },
+          {
+            "id": "0f70679584e15a36",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Механика контрактов.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "00ed98a2a67af65c",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "Excalidraw/ContractsDrawing2024-01-05 14.54.50.excalidraw.md"
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -84,7 +107,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Excalidraw/Drawing 2023-11-29 17.34.14.excalidraw.md",
+                "file": "Excalidraw/ContractsDrawing2024-01-05 14.54.50.excalidraw.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -101,7 +124,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Excalidraw/Drawing 2023-11-29 17.34.14.excalidraw.md",
+                "file": "Excalidraw/ContractsDrawing2024-01-05 14.54.50.excalidraw.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -124,7 +147,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Excalidraw/Drawing 2023-11-29 17.34.14.excalidraw.md"
+                "file": "Excalidraw/ContractsDrawing2024-01-05 14.54.50.excalidraw.md"
               }
             }
           }
@@ -146,10 +169,14 @@
       "obsidian-excalidraw-plugin:Create new drawing": false
     }
   },
-  "active": "843d92fa96f65087",
+  "active": "00ed98a2a67af65c",
   "lastOpenFiles": [
-    "Просто заметки.md",
+    "Excalidraw/ContractsDrawing2024-01-05 14.54.50.excalidraw.md.meta",
+    "Механика контрактов.md.meta",
+    "Механика контрактов.md",
+    "Excalidraw/ContractsDrawing2024-01-05 14.54.50.excalidraw.md",
     "Excalidraw/Drawing 2023-11-29 17.34.14.excalidraw.md",
+    "Просто заметки.md",
     "Excalidraw/Drawing 2023-11-29 17.34.14.excalidraw.md.meta",
     "Excalidraw.meta",
     "Excalidraw"

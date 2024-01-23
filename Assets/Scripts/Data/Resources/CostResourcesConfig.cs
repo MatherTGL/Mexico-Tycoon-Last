@@ -1,13 +1,18 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
+using Config.Building.Deliveries;
 
 namespace Resources
 {
     [CreateAssetMenu(fileName = "CostResourcesConf", menuName = "Config/Data/Costs/Resources/Create New", order = 50)]
     public sealed class CostResourcesConfig : ScriptableObject
     {
+        [SerializeField, Required]
+        private ConfigContractsEditor _configForContracts;
+        public ConfigContractsEditor configForContracts => _configForContracts;
+
         [SerializeField]
-        private uint[] _costsSellResources;
+        private uint[] _costSellResources;
 
         [SerializeField, ReadOnly]
         private uint[] _costBuyResources;
@@ -18,13 +23,18 @@ namespace Resources
 
         private void OnValidate()
         {
-            _costBuyResources = new uint[_costsSellResources.Length];
+            _costBuyResources = new uint[_costSellResources.Length];
 
-            for (int i = 0; i < _costsSellResources.Length; i++)
-                _costBuyResources[i] = (uint)(_costsSellResources[i] * _costDifference);
+            for (int i = 0; i < _costSellResources.Length; i++)
+                _costBuyResources[i] = (uint)(_costSellResources[i] * _costDifference);
+
+#if UNITY_EDITOR
+            if (_configForContracts == null)
+                throw new System.Exception($"_configForContracts equal null in config({name})");
+#endif
         }
 
-        public uint[] GetCostsSellResources() { return _costsSellResources; }
+        public uint[] GetCostsSellResources() { return _costSellResources; }
 
         public uint[] GetCostsBuyResources() { return _costBuyResources; }
 
@@ -33,7 +43,7 @@ namespace Resources
         private void AddElementCost(in TypeProductionResources.TypeResource _typeResource,
                                     in uint cost)
         {
-            _costsSellResources[(int)_typeResource] = cost;
+            _costSellResources[(int)_typeResource] = cost;
         }
 #endif
     }
