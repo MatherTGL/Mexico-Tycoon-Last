@@ -37,8 +37,8 @@ namespace Transport
 
         private bool _isRequestTransportationRepairIsMade;
 
-        private bool _transportationAwaiting;
-        bool ITransportation.transportationAwaiting => _transportationAwaiting;
+        private bool _isTransportationAwaiting;
+        bool ITransportation.transportationAwaiting => _isTransportationAwaiting;
 
 
         public Transportation(in TypeTransport typeTransport,
@@ -66,9 +66,17 @@ namespace Transport
         {
             _transportationMovement.isInStartedPosition += SendRequestFromPosition;
             _ItransportInteractRoute.fixedUpdate += _transportationMovement.MovementTransport;
-            _ItransportInteractRoute.updatedTimeStep += _transportationMovement.ChangeSpeed;
-            _ItransportInteractRoute.updatedTimeStep += _transportationFuel.FuelConsumption;
-            _ItransportInteractRoute.updatedTimeStep += _transportationBreakdowns.DamageVehicles;
+            _ItransportInteractRoute.updatedTimeStep += UpdatedTimeStep;
+        }
+
+        private void UpdatedTimeStep()
+        {
+            if (_isTransportationAwaiting)
+                return;
+
+            _transportationFuel.FuelConsumption();
+            _transportationMovement.ChangeSpeed();
+            _transportationBreakdowns.DamageVehicles();
         }
 
         private void SendRequestFromPosition(bool isStartedPosition)
@@ -84,27 +92,17 @@ namespace Transport
             RequestLoad(indexStateLoad: 0, indexReception: indexReception);
             RequestUnload(indexStateLoad: 1, indexReception: indexReception);
 
-            if (WaitLoadOrUnload(indexReception))
-            {
-                _transportationAwaiting = false;
-                Debug.Log($"PUK-PUK {WaitLoadOrUnload(indexReception)}");
+            _isTransportationAwaiting = !IsWaitLoadOrUnload(indexReception);
+
+            if (IsWaitLoadOrUnload(indexReception))
                 _transportationMovement.isFirstPosition = isFirstPosition;
-            }
-            else
-            {
-                _transportationAwaiting = true;
-            }
         }
 
         private void RequestLoad(in byte indexStateLoad, in byte indexReception)
         {
             if (d_loadAndUnloadStates[indexReception][indexStateLoad] && _productLoad == 0)
-            {
                 _productLoad = _ItransportInteractRoute.GetPointsReception()[indexReception]
-                                .RequestConnectionToLoadRes(_typeTransport.capacity, _typeCurrentTransportResource);
-                DebugSystem.Log($"object: {this} (request load) & current product load: {_productLoad}",
-                    DebugSystem.SelectedColor.Green, tag: "Transport");
-            }
+                        .GetRequestConnectionToLoadRes(_typeTransport.capacity, _typeCurrentTransportResource);
         }
 
         private void RequestUnload(in byte indexStateLoad, in byte indexReception)
@@ -112,16 +110,14 @@ namespace Transport
             if (d_loadAndUnloadStates[indexReception][indexStateLoad])
             {
                 if (_ItransportInteractRoute.GetPointsReception()[indexReception]
-                                .RequestConnectionToUnloadRes(_productLoad, _typeCurrentTransportResource))
-                {
-                    _productLoad = 0;
-                    DebugSystem.Log($"object: {this} (request unload) & current product load: {_productLoad}",
-                        DebugSystem.SelectedColor.Red, tag: "Transport");
-                }
+                    .IsRequestConnectionToUnloadRes(_productLoad, _typeCurrentTransportResource) == false)
+                    return;
+
+                _productLoad = 0;
             }
         }
 
-        private bool WaitLoadOrUnload(in byte indexReception)
+        private bool IsWaitLoadOrUnload(in byte indexReception)
         {
             if (d_loadAndUnloadStates[indexReception][d_loadAndUnloadStates.Count - 1])
             {

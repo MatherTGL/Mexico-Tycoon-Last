@@ -85,7 +85,7 @@ namespace Building.Farm
 
             if (d_amountResources[_typeProductionResource] < localCapacity)
             {
-                if (_isCurrentlyInProduction == false && CheckQuantityRequiredRawMaterials() == false)
+                if (_isCurrentlyInProduction == false && IsQuantityRequiredRawMaterials() == false)
                     return;
 
                 _isCurrentlyInProduction = true;
@@ -98,8 +98,6 @@ namespace Building.Farm
                 else
                 {
                     d_amountResources[_typeProductionResource] += d_currentCultivatedProducts[_typeProductionResource];
-                    DebugSystem.Log($"Current production resources: {d_amountResources[_typeProductionResource]}", 
-                        DebugSystem.SelectedColor.Green, tag: "Farm");
 
                     d_currentCultivatedProducts.Remove(_typeProductionResource);
                     _currentPercentageOfMaturity = 0;
@@ -108,7 +106,7 @@ namespace Building.Farm
             }
         }
 
-        private bool CheckQuantityRequiredRawMaterials()
+        private bool IsQuantityRequiredRawMaterials()
         {
             foreach (var typeDrug in _config.requiredRawMaterials)
             {

@@ -48,7 +48,7 @@ namespace Building.Border
                 return 0.0f;
         }
 
-        bool IBuilding.SetResources(in float quantityResource,
+        bool IBuilding.IsSetResources(in float quantityResource,
                                     in TypeProductionResources.TypeResource typeResource)
         {
             if (quantityResource > 0)

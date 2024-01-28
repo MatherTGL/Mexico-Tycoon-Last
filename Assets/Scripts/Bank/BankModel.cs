@@ -1,6 +1,7 @@
 using Config.Bank;
 using DebugCustomSystem;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 using static Data.Player.DataPlayer;
 
@@ -8,11 +9,11 @@ namespace Bank
 {
     public sealed class BankModel
     {
-        private Dictionary<ConfigBankEditor, double> d_affordableCredit = new();
+        private readonly Dictionary<ConfigBankEditor, double> d_affordableCredit = new();
 
-        private Dictionary<ConfigBankEditor, double> d_currentDebt = new();
+        private readonly Dictionary<ConfigBankEditor, double> d_currentDebt = new();
 
-        private Dictionary<ConfigBankEditor, float> d_loanInterest = new();
+        private readonly Dictionary<ConfigBankEditor, float> d_loanInterest = new();
 
 
         public BankModel(in BankControl bankControl)

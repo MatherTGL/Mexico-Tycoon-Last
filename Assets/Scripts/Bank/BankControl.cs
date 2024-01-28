@@ -37,9 +37,7 @@ namespace Bank
         void IBoot.InitStart() => StartCoroutine(UpdateData());
 
         (Bootstrap.TypeLoadObject typeLoad, Bootstrap.TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
-        {
-            return (Bootstrap.TypeLoadObject.SimpleImportant, Bootstrap.TypeSingleOrLotsOf.Single);
-        }
+            => (Bootstrap.TypeLoadObject.SimpleImportant, Bootstrap.TypeSingleOrLotsOf.Single);
 
         private IEnumerator UpdateData()
         {

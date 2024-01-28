@@ -47,7 +47,7 @@ namespace Route.Builder
             _lineRenderer = GetComponent<LineRenderer>();
             _lineRenderer.positionCount = _numberOfPoints;
 
-            RandomBias();
+            GetRandomBias();
             CalculatePoints();
         }
 
@@ -98,7 +98,8 @@ namespace Route.Builder
             }
         }
 
-        private float RandomBias()
+        //TODO: refactoring
+        private float GetRandomBias()
         {
             Vector3 distancePointA = _positionPoints[_indexPositionPointsFrom].GetPosition().position;
             Vector3 distancePointB = _positionPoints[_indexPositionPointsTo].GetPosition().position;
@@ -134,11 +135,9 @@ namespace Route.Builder
         }
 
         Vector3 ICreatorCurveRoad.GetRouteMainPoint()
-        {
-            return _positionPoints[_indexPositionPointsFrom].GetPosition().position;
-        }
+            => _positionPoints[_indexPositionPointsFrom].GetPosition().position;
 
-        ITransportReception[] ICreatorCurveRoad.GetPointsConnectionRoute() { return _positionPoints; }
+        ITransportReception[] ICreatorCurveRoad.GetPointsConnectionRoute() => _positionPoints;
 
         public void SetPositionPoints(ITransportReception firstPoint, ITransportReception secondPoint)
         {

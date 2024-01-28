@@ -2,13 +2,12 @@ using Building.City.Deliveries;
 using DebugCustomSystem;
 using Resources;
 using System.Linq;
-using UnityEngine;
 
 namespace Building.Additional
 {
     public sealed class SellResources : ISellResources
     {
-        private IContract _Icontract;
+        private readonly IContract _Icontract;
 
         private IIndividualDeliveries _IindividualDeliveries;
 
@@ -16,9 +15,7 @@ namespace Building.Additional
 
 
         public SellResources(in IContract Ideliveries)
-        {
-            _Icontract = Ideliveries;
-        }
+            => _Icontract = Ideliveries;
 
         void ISellResources.Sell(in IBuilding building)
         {

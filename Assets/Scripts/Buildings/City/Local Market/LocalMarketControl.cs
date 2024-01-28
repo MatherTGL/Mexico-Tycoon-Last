@@ -25,6 +25,8 @@ namespace Building.City.Deliveries
         private uint[] _resourcePurchaseCost;
 
 
+        private LocalMarketControl() { }
+
         void ILocalMarket.Init(in CostResourcesConfig costResourcesConfig, in IBuilding building)
         {
             this.AddComponent<DeliveriesControl>();

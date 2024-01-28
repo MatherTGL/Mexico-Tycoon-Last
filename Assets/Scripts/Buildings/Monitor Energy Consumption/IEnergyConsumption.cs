@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace Building.Additional
 {
     public interface IEnergyConsumption

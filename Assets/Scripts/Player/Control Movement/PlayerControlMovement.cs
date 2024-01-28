@@ -48,7 +48,7 @@ namespace Player.Movement
 
         private void Update() 
         {
-            GetDirections();
+            CalculateDirection();
             PlayerTransformClamp();
             MovementPlayer();
         }
@@ -76,7 +76,7 @@ namespace Player.Movement
             _rigidbody.AddForce(_directionMoveCamera, ForceMode.Force);
         }
 
-        private void GetDirections()
+        private void CalculateDirection()
         {
             if (Input.GetKey(_inputControl.keycodeRightMouseButton))
             {
@@ -102,8 +102,6 @@ namespace Player.Movement
         }
 
         (TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
-        {
-            return (TypeLoadObject.SuperImportant, TypeSingleOrLotsOf.Single);
-        }
+            => (TypeLoadObject.SuperImportant, TypeSingleOrLotsOf.Single);
     }
 }

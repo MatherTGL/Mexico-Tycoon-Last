@@ -1,5 +1,4 @@
 using Config.Building.Deliveries;
-using DebugCustomSystem;
 using Resources;
 using System;
 using System.Collections;
@@ -70,15 +69,12 @@ namespace Building.City.Deliveries
             double costPerKg = defaultCostPerKg + (fastRandom.Range(defaultCostPerKg * _configContracts.minPercentageOfMarketValue / 100,
                 defaultCostPerKg * _configContracts.maxPercentageOfMarketValue / 100));
 
-            DebugSystem.Log($"CostPerKg in contract: {costPerKg} / DefaultCost: {defaultCostPerKg}", 
-                DebugSystem.SelectedColor.Green, tag: "Contracts");
-
             individualContractData.remainingContractTime = _configContracts.remainingContractTime;
             individualContractData.costPerKg = costPerKg;
             individualContractData.dailyAllowanceKg = fastRandom.Range(10, 100); //! refactoring
         }
 
-        private bool IsContractAlreadyExists(DataIndividualDeliveries individualContractData)
+        private bool IsContractAlreadyExists(in DataIndividualDeliveries individualContractData)
         {
             for (byte j = 0; j < _Ideliveries.l_deliveriesType.Count; j++)
                 if (_Ideliveries.l_deliveriesType[j] is IIndividualDeliveries contract)
@@ -92,17 +88,20 @@ namespace Building.City.Deliveries
         {
             while (true)
             {
+                yield return _waitForSeconds;
+
                 //! refactoring
                 for (byte i = 0; i < _Ideliveries.l_deliveriesType.Count; i++)
                 {
+                    if (_Ideliveries.l_deliveriesType[i] is IIndividualDeliveries)
+                        continue;
+
                     if (_Ideliveries.l_deliveriesType[i] is IIndividualDeliveries contract && 
-                        contract.IsContractIsFinalized() == false || _Ideliveries.l_deliveriesType[i] is not IIndividualDeliveries)
+                        contract.IsContractIsFinalized() == false)
                     {
                         _Ideliveries.l_deliveriesType[i].UpdateTime();
                     }
                 }
-
-                yield return _waitForSeconds;
             }
         }
 

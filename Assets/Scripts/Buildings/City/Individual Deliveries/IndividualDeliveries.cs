@@ -1,7 +1,5 @@
 using Config.Building.Deliveries;
-using DebugCustomSystem;
 using Resources;
-using UnityEngine;
 using static Building.City.Deliveries.DeliveriesControl;
 
 namespace Building.City.Deliveries
@@ -24,14 +22,8 @@ namespace Building.City.Deliveries
             _contractData = contractData;
         }
 
-        //! refactoring
         double IDeliveriesType.GetResourceCost(in TypeProductionResources.TypeResource drug)
-        {
-            //var totalCost = _contractData.costPerKg * _randomPercentageCost / 100;
-            DebugSystem.Log($"totalCost sell res in object: {this} / Cost: {_contractData.costPerKg} / drug: {_contractData.resource} / {drug}", 
-                DebugSystem.SelectedColor.Red, tag: "Deliveries");
-            return _contractData.costPerKg;
-        }
+            => _contractData.costPerKg;
 
         void IDeliveriesType.UpdateTime()
         {
@@ -39,7 +31,6 @@ namespace Building.City.Deliveries
                 return;
 
             _contractData.remainingContractTime--;
-            Debug.Log($"Contract period: {_contractData.remainingContractTime}");
         }
 
         bool IIndividualDeliveries.IsContractIsFinalized()
@@ -51,14 +42,7 @@ namespace Building.City.Deliveries
         }
 
         void IDeliveriesType.UpdateContract(in DataIndividualDeliveries contractData)
-        {
-            Debug.Log($"Contract Data before: {_contractData.resource}");
-            _contractData = contractData;
-
-            Debug.Log($"Contract Data after: {_contractData.resource}");
-            Debug.Log($"Contract period: {_contractData.remainingContractTime}");
-            Debug.Log("Individual Contract is updated");
-        }
+            => _contractData = contractData;
 
         TypeProductionResources.TypeResource IIndividualDeliveries.GetResourceBeingSent() => _contractData.resource;
 
@@ -66,6 +50,6 @@ namespace Building.City.Deliveries
 
         void IIndividualDeliveries.SignedContract() => _isSigned = true;
 
-        bool IIndividualDeliveries.GetIsSignedContract() => _isSigned;
+        bool IIndividualDeliveries.IsSignedContract() => _isSigned;
     }
 }

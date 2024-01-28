@@ -50,10 +50,7 @@ namespace Climate
         }
 
         private void CalculateImpact()
-        {
-            _percentageImpactCostMaintenance = _IcountryClimate.configClimate.seasonsImpactExpenses.Get(_currentSeason);
-            Debug.Log(_percentageImpactCostMaintenance);
-        }
+            => _percentageImpactCostMaintenance = _IcountryClimate.configClimate.seasonsImpactExpenses.Get(_currentSeason);
 
         private IEnumerator SeasonChanger()
         {

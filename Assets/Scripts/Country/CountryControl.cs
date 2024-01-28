@@ -55,9 +55,7 @@ namespace Country
         void IBoot.InitStart() => StartCoroutine(UpdateTick());
 
         (Bootstrap.TypeLoadObject typeLoad, Bootstrap.TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
-        {
-            return (Bootstrap.TypeLoadObject.MediumImportant, Bootstrap.TypeSingleOrLotsOf.LotsOf);
-        }
+            => (Bootstrap.TypeLoadObject.MediumImportant, Bootstrap.TypeSingleOrLotsOf.LotsOf);
 
         private IEnumerator UpdateTick()
         {

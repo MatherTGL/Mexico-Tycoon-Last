@@ -9,7 +9,7 @@ namespace Expense
 {
     public sealed class ExpensesBuildings : IObjectsExpensesImplementation
     {
-        private ConfigExpensesManagementEditor _configExpensesManagement;
+        private readonly ConfigExpensesManagementEditor _configExpensesManagement;
 
         private IHiring _Ihiring;
         IHiring IObjectsExpensesImplementation.Ihiring { get => _Ihiring; set => _Ihiring = value; }

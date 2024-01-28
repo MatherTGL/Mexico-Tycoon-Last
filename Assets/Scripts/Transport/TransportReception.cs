@@ -64,37 +64,33 @@ namespace Transport.Reception
                 return false;
         }
 
-        float ITransportReception.RequestConnectionToLoadRes(in float transportCapacity,
-                                                             in TypeProductionResources.TypeResource typeResource)
+        float ITransportReception.GetRequestConnectionToLoadRes(in float transportCapacity,
+            in TypeProductionResources.TypeResource typeResource)
         {
             return _IbuildingRequest.RequestGetResource(transportCapacity, typeResource);
         }
 
-        bool ITransportReception.RequestConnectionToUnloadRes(in float quantityForUnloading,
-                                                              in TypeProductionResources.TypeResource typeResource)
+        bool ITransportReception.IsRequestConnectionToUnloadRes(in float quantityForUnloading, 
+            in TypeProductionResources.TypeResource typeResource)
         {
             return _IbuildingRequest.RequestUnloadResource(quantityForUnloading, typeResource);
         }
 
         (TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
-        {
-            return (TypeLoadObject.MediumImportant, TypeSingleOrLotsOf.LotsOf);
-        }
+            => (TypeLoadObject.MediumImportant, TypeSingleOrLotsOf.LotsOf);
 
         public void AddConnectionToDictionary(in ITransportReception fromObject, in GameObject createdRouteObject)
-        {
-            d_infoRouteConnect.Add(fromObject, createdRouteObject);
-        }
+            => d_infoRouteConnect.Add(fromObject, createdRouteObject);
 
         public void ConnectionRequest(in ITransportReception fromObject)
         {
             if (d_infoRouteConnect.Count <= _configReception.defaultConnectionCount)
                 if (_configReception.typeConnectBuildings.Contains(fromObject.GetTypeBuilding()))
-                    if (fromObject.ConfirmRequest(this) && ConfirmRequest(fromObject))
+                    if (fromObject.IsConfirmRequest(this) && IsConfirmRequest(fromObject))
                         BuildRoute(fromObject);
         }
 
-        public bool ConfirmRequest(in ITransportReception fromObject)
+        public bool IsConfirmRequest(in ITransportReception fromObject)
         {
             if (!d_infoRouteConnect.ContainsKey(fromObject) || !d_infoRouteConnect.ContainsKey(this))
             {
@@ -106,14 +102,14 @@ namespace Transport.Reception
 
         public void DisconnectRequest(in ITransportReception fromObject)
         {
-            if (d_infoRouteConnect.ContainsKey(fromObject) && fromObject.ConfirmDisconnectRequest(this))
+            if (d_infoRouteConnect.ContainsKey(fromObject) && fromObject.IsConfirmDisconnectRequest(this))
             {
                 d_infoRouteConnect.Remove(fromObject);
                 _freeConnectionCount++;
             }
         }
 
-        public bool ConfirmDisconnectRequest(in ITransportReception fromObject)
+        public bool IsConfirmDisconnectRequest(in ITransportReception fromObject)
         {
             if (d_infoRouteConnect.ContainsKey(fromObject))
             {

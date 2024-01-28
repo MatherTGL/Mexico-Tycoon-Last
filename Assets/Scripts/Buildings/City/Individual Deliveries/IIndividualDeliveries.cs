@@ -6,7 +6,7 @@ namespace Building.City.Deliveries
     {
         void SignedContract();
 
-        bool GetIsSignedContract();
+        bool IsSignedContract();
 
         bool IsContractIsFinalized();
 

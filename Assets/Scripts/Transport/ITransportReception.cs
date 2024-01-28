@@ -11,14 +11,14 @@ namespace Transport.Reception
         TypeBuilding typeCurrentBuilding { get; }
 
         void ConnectionRequest(in ITransportReception fromObject);
-        bool ConfirmRequest(in ITransportReception fromObject);
+        bool IsConfirmRequest(in ITransportReception fromObject);
 
         void DisconnectRequest(in ITransportReception fromObject);
-        bool ConfirmDisconnectRequest(in ITransportReception fromObject);
+        bool IsConfirmDisconnectRequest(in ITransportReception fromObject);
 
-        float RequestConnectionToLoadRes(in float transportCapacity,
+        float GetRequestConnectionToLoadRes(in float transportCapacity,
             in TypeProductionResources.TypeResource typeResource);
-        bool RequestConnectionToUnloadRes(in float quantityForUnloading,
+        bool IsRequestConnectionToUnloadRes(in float quantityForUnloading,
             in TypeProductionResources.TypeResource typeResource);
 
         Transform GetPosition();

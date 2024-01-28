@@ -78,10 +78,8 @@ namespace Transport
             double totalMaintenanceExenses = 0;
 
             for (ushort i = 0; i < _transportationDataStorage.l_purchasedTransportData.Count; i++)
-            {
                 totalMaintenanceExenses += _transportationDataStorage.l_purchasedTransportData[i]
-                                           .typeTransport.maintenanceExpenses;
-            }
+                        .typeTransport.maintenanceExpenses;
 
             SpendingToObjects.SendNewExpense(totalMaintenanceExenses);
         }
@@ -106,7 +104,7 @@ namespace Transport
             );
         }
 
-        private bool CheckRulesBuyingTransport(in byte indexTypeTransport)
+        private bool IsRulesBuyingTransport(in byte indexTypeTransport)
         {
             if (_allTypesTransport[indexTypeTransport].type == _IcreatorCurveRoad.typeRoute)
                 return true;
@@ -167,7 +165,7 @@ namespace Transport
             if (DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(
                 _allTypesTransport[_indexTypeTransport].costPurchase, SpendAndCheckMoneyState.Spend))
             {
-                if (CheckRulesBuyingTransport(_indexTypeTransport) == false)
+                if (IsRulesBuyingTransport(_indexTypeTransport) == false)
                     return;
 
                 if (_routePoints[0] == Vector3.zero)
@@ -247,7 +245,7 @@ namespace Transport
         [Button("Change Transportation")]
         private void ChangeTransportation()
         {
-            if (CheckRulesBuyingTransport(_indexTypeTransport))
+            if (IsRulesBuyingTransport(_indexTypeTransport))
             {
                 _transportationDataStorage.ReplaceTransportation(_indexTransportInList,
                                                              _allTypesTransport[_indexTypeTransport]);

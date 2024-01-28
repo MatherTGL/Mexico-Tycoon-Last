@@ -21,6 +21,8 @@ namespace Building.City.Deliveries
         public enum TypeDeliveries : byte { General, Individual }
 
 
+        private DeliveriesControl() { }
+
         void IContract.Init(in CostResourcesConfig costResourcesConfig)
         {
             _currentCostsSellResources = costResourcesConfig.GetCostsSellResources();
@@ -37,7 +39,7 @@ namespace Building.City.Deliveries
 
             IIndividualDeliveries individualDeliveries = l_deliveriesType[indexContract] as IIndividualDeliveries;
 
-            if (individualDeliveries == null || individualDeliveries.GetIsSignedContract()) 
+            if (individualDeliveries == null || individualDeliveries.IsSignedContract()) 
                 return;
 
             individualDeliveries.SignedContract();
@@ -61,20 +63,14 @@ namespace Building.City.Deliveries
 
         void IDeliveries.AddNewContract(in IDeliveriesType deliveriesType)
         {
-            if (deliveriesType == null)
-                return;
-
-            l_deliveriesType.Add(deliveriesType);
+            if (deliveriesType != null)
+                l_deliveriesType.Add(deliveriesType);
         }
 
         double IContract.GetResourceCosts(in TypeProductionResources.TypeResource typeResource)
-        {
-            return l_deliveriesType[l_deliveriesType.Count - 1].GetResourceCost(typeResource);
-        }
+            => l_deliveriesType[l_deliveriesType.Count - 1].GetResourceCost(typeResource);
 
         void IDeliveries.UpdateContract(in DataIndividualDeliveries dataIndividualDeliveries, in byte index)
-        {
-            l_deliveriesType[index].UpdateContract(dataIndividualDeliveries); 
-        }
+            => l_deliveriesType[index].UpdateContract(dataIndividualDeliveries); 
     }
 }

@@ -181,9 +181,7 @@ namespace Building
         }
 
         private void CalculateBuildingCostPurchased()
-        {
-            _IbuildingPurchased?.UpdateCostPurchased();
-        }
+            => _IbuildingPurchased?.UpdateCostPurchased();
 
         private IEnumerator ConstantUpdating()
         {
@@ -206,13 +204,11 @@ namespace Building
         bool IBuildingRequestForTransport.RequestUnloadResource(in float quantityResource,
             in TypeProductionResources.TypeResource typeResource)
         {
-            return _Ibuilding.SetResources(quantityResource, typeResource);
+            return _Ibuilding.IsSetResources(quantityResource, typeResource);
         }
 
         (TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
-        {
-            return (TypeLoadObject.SuperImportant, TypeSingleOrLotsOf.LotsOf);
-        }
+            => (TypeLoadObject.SuperImportant, TypeSingleOrLotsOf.LotsOf);
 
         void ICountryAreaFindSceneObjects.SetCountry(in ICountryBuildings IcountryBuildings)
         {
@@ -221,14 +217,10 @@ namespace Building
         }
 
         void ICountryAreaFindSceneObjects.ActivateWeatherEvent(in IWeatherZone IweatherZone)
-        {
-            _IbuildingPurchased?.ActivateWeatherEvent(IweatherZone);
-        }
+            => _IbuildingPurchased?.ActivateWeatherEvent(IweatherZone);
 
         void ICountryAreaFindSceneObjects.DeactiveWeatherEvent(in IWeatherZone IweatherZone)
-        {
-            _IbuildingPurchased?.DeactiveWeatherEvent(IweatherZone);
-        }
+            => _IbuildingPurchased?.DeactiveWeatherEvent(IweatherZone);
 
         //TODO: move all to view class and make mvc
 

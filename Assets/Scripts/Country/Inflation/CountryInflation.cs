@@ -21,11 +21,9 @@ namespace Country.Inflation
         private void CalculateInflation()
         {
             _currentPercentageInflation = Random.Range(_IcountryInflation.configInflation.percentageDeflationMax,
-                                                      _IcountryInflation.configInflation.percentageInflationMax);
+                                                       _IcountryInflation.configInflation.percentageInflationMax);
 
-            //Debug.Log($"RandomInflation %: {_currentPercentageInflation}");
             _currentTotalInflation += _currentPercentageInflation;
-            //Debug.Log($"Current Total %: {_currentTotalInflation}");
         }
 
         float IInflation.GetTotalInflation() => _currentTotalInflation;

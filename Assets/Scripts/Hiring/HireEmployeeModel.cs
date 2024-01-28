@@ -39,15 +39,6 @@ namespace Building.Hire
             }
         }
 
-        // private void CalculateAllExpenses()
-        // {
-        //     _currentExpenses = 0;
-
-        //     foreach (var employee in d_employees.Value.Keys)
-        //         for (byte i = 0; i < d_employees.Value[employee].Count; i++)
-        //             _currentExpenses += d_employees.Value[employee][i].paymentCostPerDay;
-        // }
-
         public void ConstantUpdatingInfo() => Expenses();
 
         public void Hire(in byte indexEmployee)

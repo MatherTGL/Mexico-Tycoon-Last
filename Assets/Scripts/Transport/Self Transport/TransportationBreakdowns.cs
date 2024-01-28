@@ -1,6 +1,5 @@
 using Data;
 using static Data.Player.DataPlayer;
-using Deb = DebugCustomSystem.DebugSystem;
 
 namespace Transport.Breakdowns
 {
@@ -21,7 +20,6 @@ namespace Transport.Breakdowns
 
         public void DamageVehicles()
         {
-            Deb.Log(_currentStrength, Deb.SelectedColor.Green, "Transport current strength", "Transport");
             if ((_currentStrength - _typeTransport.damageInflicted) > _typeTransport.minStrength && !_isRepairs)
                 _currentStrength -= _typeTransport.damageInflicted;
             else
@@ -36,8 +34,6 @@ namespace Transport.Breakdowns
             {
                 _isRepairs = true;
                 _currentStrength += _typeTransport.speedOfRepairPerTimeStep;
-                Deb.Log(_currentStrength, Deb.SelectedColor.Green, "Transport current strength", "Transport");
-                Deb.Log(_isRepairs, Deb.SelectedColor.Blue, "Transport in repair", "Transport");
 
                 if (_currentStrength >= _typeTransport.maxStrength)
                 {
@@ -45,8 +41,6 @@ namespace Transport.Breakdowns
 
                     _currentStrength = _typeTransport.maxStrength;
                     _isRepairs = false;
-                    Deb.Log(_currentStrength, Deb.SelectedColor.Green, "Transport current strength", "Transport");
-                    Deb.Log(_isRepairs, Deb.SelectedColor.Orange, "Transport in repair", "Transport");
                 }
             } while (_isRepairs);
         }

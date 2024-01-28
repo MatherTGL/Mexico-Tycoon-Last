@@ -32,19 +32,13 @@ namespace TimeControl
         }
 
         void IBoot.InitStart()
-        {
-            _accelerationDefault = (float)ConfigTimeControlEditor.AccelerationTime.X1 / _currentTimeOneDay;
-        }
+            => _accelerationDefault = (float)ConfigTimeControlEditor.AccelerationTime.X1 / _currentTimeOneDay;
 
         (TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
-        {
-            return (typeLoad: TypeLoadObject.SuperImportant, TypeSingleOrLotsOf.Single);
-        }
+            => (typeLoad: TypeLoadObject.SuperImportant, TypeSingleOrLotsOf.Single);
 
         private void Update()
-        {
-            _timeAcceleration?.AccelerationCheck(ref _currentTimeOneDay, ref _isPaused);
-        }
+            => _timeAcceleration?.AccelerationCheck(ref _currentTimeOneDay, ref _isPaused);
 
         public float GetCurrentTimeOneDay(bool isUseCoroutine = false)
         {
@@ -54,6 +48,6 @@ namespace TimeControl
                 return _currentTimeOneDay;
         }
 
-        public bool GetStatePaused() => _isPaused;
+        public bool IsStatePaused() => _isPaused;
     }
 }

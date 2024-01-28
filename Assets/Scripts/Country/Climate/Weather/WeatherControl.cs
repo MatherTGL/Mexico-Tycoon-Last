@@ -18,9 +18,7 @@ namespace Country.Climate.Weather
 
 
         void IWeatherControl.Init(in ICountryClimate IcountryClimate)
-        {
-            _IcountryClimate = IcountryClimate;
-        }
+            => _IcountryClimate = IcountryClimate;
 
         [Button("Invoke Random Weather")]
         private void InvokeRandomWeather()

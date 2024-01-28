@@ -7,7 +7,7 @@ namespace Transport
     {
         private const float _fullSpeedPercentage = 1.0f;
 
-        private ITransportation _Itransportation;
+        private readonly ITransportation _Itransportation;
 
         private readonly GameObject _someObject;
 
@@ -55,12 +55,12 @@ namespace Transport
             {
                 if (_indexCurrentRoutePoint == 0)
                 {
-                    if (CheckBuildingWorkingAndInvokeAction(true) == false)
+                    if (IsBuildingWorkingAndInvokeAction(true) == false)
                         return;
                 }
                 else if (_indexCurrentRoutePoint == lastRoutePoint)
                 {
-                    if (CheckBuildingWorkingAndInvokeAction(false) == false)
+                    if (IsBuildingWorkingAndInvokeAction(false) == false)
                         return;
                 }
 
@@ -79,7 +79,7 @@ namespace Transport
             _someObject.transform.position = Vector3.MoveTowards(currentPosition, targetPosition, _currentSpeed);
         }
 
-        private bool CheckBuildingWorkingAndInvokeAction(in bool isStartedPosition)
+        private bool IsBuildingWorkingAndInvokeAction(in bool isStartedPosition)
         {
             if (IsBuildingWork(isStartedPosition) == false)
                 return false;
@@ -104,9 +104,7 @@ namespace Transport
         }
 
         public void ChangeSpeed()
-        {
-            _currentSpeed = UnityEngine.Random.Range(_minSpeed, _maxSpeed);
-        }
+            => _currentSpeed = UnityEngine.Random.Range(_minSpeed, _maxSpeed);
 
         public void MovementTransport()
         {

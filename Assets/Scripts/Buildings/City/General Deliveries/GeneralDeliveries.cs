@@ -9,7 +9,7 @@ namespace Building.City.Deliveries
         private TypeDeliveries _typeDeliveries = TypeDeliveries.General;
         TypeDeliveries IDeliveriesType.typeDeliveries => _typeDeliveries;
 
-        private IDeliveriesCurrentCosts _IdeliveriesCurrentCosts;
+        private readonly IDeliveriesCurrentCosts _IdeliveriesCurrentCosts;
 
 
         public GeneralDeliveries(in IDeliveriesCurrentCosts deliveriesCurrentCosts)
@@ -18,10 +18,7 @@ namespace Building.City.Deliveries
         }
 
         double IDeliveriesType.GetResourceCost(in TypeProductionResources.TypeResource typeResource)
-        {
-            Debug.Log($"Cost sell res: {_IdeliveriesCurrentCosts.currentCostsSellResources[(int)typeResource]}");
-            return _IdeliveriesCurrentCosts.currentCostsSellResources[(int)typeResource];
-        }
+            => _IdeliveriesCurrentCosts.currentCostsSellResources[(int)typeResource];
 
         void IDeliveriesType.UpdateTime()
         {

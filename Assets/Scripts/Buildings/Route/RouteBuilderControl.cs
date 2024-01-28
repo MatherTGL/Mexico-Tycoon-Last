@@ -38,9 +38,7 @@ namespace Route.Builder
         void IBoot.InitStart() { }
 
         (TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
-        {
-            return (TypeLoadObject.SuperImportant, TypeSingleOrLotsOf.Single);
-        }
+            => (TypeLoadObject.SuperImportant, TypeSingleOrLotsOf.Single);
 
         private void SendRequestConnect() => SendingRequest(TypeConnect.Connect);
 
@@ -50,9 +48,9 @@ namespace Route.Builder
         {
             try
             {
-                if (_connectionPoints.Length == _config.maxPointConnection && CheckRouteLength())
+                if (_connectionPoints.Length == _config.maxPointConnection && IsRouteLength())
                 {
-                    if (BuyRoute() == false)
+                    if (IsBuyRoute() == false)
                         return;
 
                     if (typeConnect is TypeConnect.Connect)
@@ -71,13 +69,13 @@ namespace Route.Builder
             }
         }
 
-        private bool BuyRoute()
+        private bool IsBuyRoute()
         {
             double totalCostRoute = _config.costRoute * Mathf.Abs(_routeLength);
             return DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(totalCostRoute, SpendAndCheckMoneyState.Spend);
         }
 
-        private bool CheckRouteLength()
+        private bool IsRouteLength()
         {
             _routeLength = Vector2.Distance(_connectionPoints[0].GetPosition().position,
                                             _connectionPoints[1].GetPosition().position);
