@@ -54,13 +54,18 @@ namespace Building
                 DebugSystem.SelectedColor.Blue, tag: "Building");
 
             if (stockCapacity.TryGetValue(typeResource, out uint capacity))
+            {
                 if (amountResources[typeResource] < capacity)
+                {
                     amountResources[typeResource] += quantityResource;
+                    return true;
+                }
+            }
 
             DebugSystem.Log($"{this} - current amount res ({typeResource}): {amountResources[typeResource]}",
                     DebugSystem.SelectedColor.Blue, tag: "Building");
 
-            return true;
+            return false;
         }
     }
 }

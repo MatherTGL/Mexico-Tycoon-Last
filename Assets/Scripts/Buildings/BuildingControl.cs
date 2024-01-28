@@ -120,7 +120,7 @@ namespace Building
         {
             if (_typeBuilding is TypeBuilding.City)
             {
-                this.AddComponent<LocalMarket>();
+                this.AddComponent<LocalMarketControl>();
                 _Ibuilding = new BuildingCity(_configSO, GetComponent<ILocalMarket>());
             }
             else if (_typeBuilding is TypeBuilding.Farm)

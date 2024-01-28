@@ -37,6 +37,9 @@ namespace Transport
 
         private bool _isRequestTransportationRepairIsMade;
 
+        private bool _transportationAwaiting;
+        bool ITransportation.transportationAwaiting => _transportationAwaiting;
+
 
         public Transportation(in TypeTransport typeTransport,
                               in ITransportInteractRoute routeTransportControl,
@@ -81,8 +84,16 @@ namespace Transport
             RequestLoad(indexStateLoad: 0, indexReception: indexReception);
             RequestUnload(indexStateLoad: 1, indexReception: indexReception);
 
-            if (WaitLoadOrUnload())
+            if (WaitLoadOrUnload(indexReception))
+            {
+                _transportationAwaiting = false;
+                Debug.Log($"PUK-PUK {WaitLoadOrUnload(indexReception)}");
                 _transportationMovement.isFirstPosition = isFirstPosition;
+            }
+            else
+            {
+                _transportationAwaiting = true;
+            }
         }
 
         private void RequestLoad(in byte indexStateLoad, in byte indexReception)
@@ -100,20 +111,30 @@ namespace Transport
         {
             if (d_loadAndUnloadStates[indexReception][indexStateLoad])
             {
-                _ItransportInteractRoute.GetPointsReception()[indexReception]
-                                .RequestConnectionToUnloadRes(_productLoad, _typeCurrentTransportResource);
-                _productLoad = 0;
-                DebugSystem.Log($"object: {this} (request unload) & current product load: {_productLoad}", 
-                    DebugSystem.SelectedColor.Red, tag: "Transport");
+                if (_ItransportInteractRoute.GetPointsReception()[indexReception]
+                                .RequestConnectionToUnloadRes(_productLoad, _typeCurrentTransportResource))
+                {
+                    _productLoad = 0;
+                    DebugSystem.Log($"object: {this} (request unload) & current product load: {_productLoad}",
+                        DebugSystem.SelectedColor.Red, tag: "Transport");
+                }
             }
         }
 
-        private bool WaitLoadOrUnload()
+        private bool WaitLoadOrUnload(in byte indexReception)
         {
-            if (_isWaitingReception && _productLoad >= _typeTransport.capacity || !_isWaitingReception)
-                return true;
+            if (d_loadAndUnloadStates[indexReception][d_loadAndUnloadStates.Count - 1])
+            {
+                if (_isWaitingReception && _productLoad < _typeTransport.capacity || !_isWaitingReception)
+                    return true;
+            }
             else
-                return false;
+            {
+                if (_isWaitingReception && _productLoad >= _typeTransport.capacity || !_isWaitingReception)
+                    return true;
+            }
+
+            return false;
         }
 
         public void Dispose()

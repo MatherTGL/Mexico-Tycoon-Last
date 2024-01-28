@@ -1,4 +1,5 @@
 using Config.Building.Deliveries;
+using DebugCustomSystem;
 using Resources;
 using System;
 using System.Collections;
@@ -17,16 +18,22 @@ namespace Building.City.Deliveries
 
         private WaitForSeconds _waitForSeconds;
 
+        private WaitForSeconds _contractRenewalTime;
+
 
         void IContractsGenerator.Init(in ConfigContractsEditor configContracts)
         {
             _waitForSeconds = new WaitForSeconds(FindAnyObjectByType<TimeDateControl>().GetCurrentTimeOneDay());
+            _contractRenewalTime = new WaitForSeconds(configContracts.contractRenewalTime);
+
             _Ideliveries = GetComponent<IDeliveries>();
             _configContracts = configContracts;
             _IlocalMarket = GetComponent<ILocalMarket>();
 
             GenerateContracts();
+
             StartCoroutine(TimeUpdate());
+            StartCoroutine(UpdateContracts());
         }
 
         private void GenerateContracts()
@@ -38,9 +45,6 @@ namespace Building.City.Deliveries
                 individualContractData = new DataIndividualDeliveries();
                 GenerateRandomParameters(ref individualContractData);
 
-                if (IsContractAlreadyExists(individualContractData))
-                    GenerateRandomParameters(ref individualContractData);
-
                 IDeliveriesType individualContract = new IndividualDeliveries(_configContracts, individualContractData);
                 _Ideliveries.AddNewContract(individualContract);
             }
@@ -50,22 +54,28 @@ namespace Building.City.Deliveries
         private void GenerateRandomParameters(ref DataIndividualDeliveries individualContractData)
         {
             int lengthDrugTypes = Enum.GetNames(typeof(TypeProductionResources.TypeResource)).Length;
-            var drugType = UnityEngine.Random.Range(0, lengthDrugTypes);
+            int drugType;
 
-            while (drugType is (int)TypeProductionResources.TypeResource.DirtyMoney)
-                drugType = UnityEngine.Random.Range(0, lengthDrugTypes);
-
-            var defaultCostPerKg = _IlocalMarket.GetCurrentCostSellDrug(individualContractData.resource);
-
-            var fastRandom = new FastRandom();
-            double costPerKg = fastRandom.Range(defaultCostPerKg * _configContracts.minPercentageOfMarketValue / 100,
-                defaultCostPerKg * _configContracts.maxPercentageOfMarketValue / 100);
+            do { drugType = UnityEngine.Random.Range(0, lengthDrugTypes); }
+            while (drugType is (int)TypeProductionResources.TypeResource.DirtyMoney);
 
             individualContractData.resource = (TypeProductionResources.TypeResource)drugType;
-            individualContractData.costPerKg = costPerKg;
+            
+            if (IsContractAlreadyExists(individualContractData))
+                GenerateRandomParameters(ref individualContractData);
 
-            //! refactoring
-            individualContractData.dailyAllowanceKg = fastRandom.Range(10, 100);
+            double defaultCostPerKg = _IlocalMarket.GetCurrentCostSellDrug(individualContractData.resource);
+            var fastRandom = new FastRandom();
+
+            double costPerKg = defaultCostPerKg + (fastRandom.Range(defaultCostPerKg * _configContracts.minPercentageOfMarketValue / 100,
+                defaultCostPerKg * _configContracts.maxPercentageOfMarketValue / 100));
+
+            DebugSystem.Log($"CostPerKg in contract: {costPerKg} / DefaultCost: {defaultCostPerKg}", 
+                DebugSystem.SelectedColor.Green, tag: "Contracts");
+
+            individualContractData.remainingContractTime = _configContracts.remainingContractTime;
+            individualContractData.costPerKg = costPerKg;
+            individualContractData.dailyAllowanceKg = fastRandom.Range(10, 100); //! refactoring
         }
 
         private bool IsContractAlreadyExists(DataIndividualDeliveries individualContractData)
@@ -94,6 +104,28 @@ namespace Building.City.Deliveries
 
                 yield return _waitForSeconds;
             }
+        }
+
+        //! refactoring
+        private IEnumerator UpdateContracts()
+        {
+            while (true)
+            {
+                yield return _contractRenewalTime;
+
+                for (byte index = 0; index < _Ideliveries.l_deliveriesType.Count; index++)
+                    UpdateContract(index);
+            }
+        }
+
+        private void UpdateContract(in byte index)
+        {
+            if (_Ideliveries.l_deliveriesType[index].typeDeliveries is DeliveriesControl.TypeDeliveries.General)
+                return;
+
+            DataIndividualDeliveries individualDeliveries = new();
+            GenerateRandomParameters(ref individualDeliveries);
+            _Ideliveries.UpdateContract(individualDeliveries, index);
         }
     }
 }

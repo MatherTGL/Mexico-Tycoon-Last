@@ -20,6 +20,14 @@ namespace Config.Building.Deliveries
         private byte _maxPercentageOfMarketValue = 30;
         public byte maxPercentageOfMarketValue => _maxPercentageOfMarketValue;
 
+        [SerializeField, MinValue(10), MaxValue(1000)]
+        private ushort _remainingContractTime = 180;
+        public ushort remainingContractTime => _remainingContractTime;
+
+        [SerializeField, MinValue(10), MaxValue(1000)]
+        private ushort _contractRenewalTime = 30;
+        public ushort contractRenewalTime => _contractRenewalTime;
+
         //private double _dailyAllowanceKg;
     }
 }

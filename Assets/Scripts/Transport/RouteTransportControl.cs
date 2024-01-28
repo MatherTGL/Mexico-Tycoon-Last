@@ -122,10 +122,8 @@ namespace Transport
                 _impactOfObstaclesOnSpeed += obstacle.config.percentageImpactSpeed;
         }
 
-        ITransportReception[] ITransportInteractRoute.GetPointsReception()
-        {
-            return _IcreatorCurveRoad.GetPointsConnectionRoute();
-        }
+        ITransportReception[] ITransportInteractRoute.GetPointsReception() 
+            => _IcreatorCurveRoad.GetPointsConnectionRoute();
 
         ushort[] IReRouteTransportation.SendTransportTransferRequest(
             in TransportationDataStorage allTransportation)
@@ -205,7 +203,7 @@ namespace Transport
                 .ChangeLoadUnloadStates(indexReception, indexTypeState, isState);
         }
 
-        [Button("Set Cat Waiting Mode")]
+        [Button("Set Car Waiting Mode")]
         private void SetCarWaitingMode(in bool isState)
         {
             _transportationDataStorage.l_purchasedTransportData[_indexTransportInList]

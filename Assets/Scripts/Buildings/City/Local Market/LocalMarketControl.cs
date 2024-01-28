@@ -4,10 +4,11 @@ using Resources;
 using Building.Additional;
 using System.Collections;
 using TimeControl;
+using DebugCustomSystem;
 
 namespace Building.City.Deliveries
 {
-    public sealed class LocalMarket : MonoBehaviour, ILocalMarket
+    public sealed class LocalMarketControl : MonoBehaviour, ILocalMarket
     {
         private IBuilding _Ibuilding;
 
@@ -26,7 +27,7 @@ namespace Building.City.Deliveries
 
         void ILocalMarket.Init(in CostResourcesConfig costResourcesConfig, in IBuilding building)
         {
-            this.AddComponent<Deliveries>();
+            this.AddComponent<DeliveriesControl>();
             this.AddComponent<ContractsGenerator>();
 
             _costSellingResources = costResourcesConfig.GetCostsSellResources();
@@ -35,8 +36,8 @@ namespace Building.City.Deliveries
             _Ideliveries = GetComponent<IDeliveries>();
             _IcontractsGenerator = GetComponent<IContractsGenerator>();
             _Ibuilding = building;
-
             IContract contract = GetComponent<IContract>();
+
             _IsellResources = new SellResources(_Ideliveries as IContract);
             _IsellWaitForSeconds = new WaitForSeconds(FindObjectOfType<TimeDateControl>().GetCurrentTimeOneDay());
 

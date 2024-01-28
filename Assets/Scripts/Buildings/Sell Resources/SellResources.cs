@@ -29,10 +29,12 @@ namespace Building.Additional
             {
                 foreach (var drug in building.amountResources.Keys.ToArray())
                 {
-                    if (_Icontract.l_deliveriesType[i].typeDeliveries == Deliveries.TypeDeliveries.Individual)
+                    if (_Icontract.l_deliveriesType[i].typeDeliveries == DeliveriesControl.TypeDeliveries.Individual)
                         IndividualSell(building, i, drug);
 
                     _salesProfit += building.amountResources[drug] * _Icontract.GetResourceCosts(drug);
+                    DebugSystem.Log($"Sales profit in city: {this} / ${_salesProfit} / Contract cost: {_Icontract.GetResourceCosts(drug)}",
+                        DebugSystem.SelectedColor.Red, tag: "Deliveries");
                     building.amountResources[drug] = 0;
                 }
             }

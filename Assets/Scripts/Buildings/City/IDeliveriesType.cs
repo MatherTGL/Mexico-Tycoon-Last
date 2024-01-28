@@ -1,5 +1,5 @@
 using Resources;
-using static Building.City.Deliveries.Deliveries;
+using static Building.City.Deliveries.DeliveriesControl;
 
 namespace Building.City.Deliveries
 {
@@ -11,5 +11,7 @@ namespace Building.City.Deliveries
         double GetResourceCost(in TypeProductionResources.TypeResource typeResource);
 
         void UpdateTime();
+
+        void UpdateContract(in DataIndividualDeliveries contractData);
     }
 }

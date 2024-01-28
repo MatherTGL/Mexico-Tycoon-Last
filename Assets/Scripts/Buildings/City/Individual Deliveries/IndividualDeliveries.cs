@@ -1,7 +1,8 @@
 using Config.Building.Deliveries;
+using DebugCustomSystem;
 using Resources;
 using UnityEngine;
-using static Building.City.Deliveries.Deliveries;
+using static Building.City.Deliveries.DeliveriesControl;
 
 namespace Building.City.Deliveries
 {
@@ -10,33 +11,33 @@ namespace Building.City.Deliveries
         private TypeDeliveries _typeDeliveries = TypeDeliveries.Individual;
         TypeDeliveries IDeliveriesType.typeDeliveries => _typeDeliveries;
 
-        private ConfigContractsEditor _config;
+        private readonly ConfigContractsEditor _config;
 
         private DataIndividualDeliveries _contractData;
 
-        private int _randomPercentageCost;
+        private bool _isSigned = false;
 
 
         public IndividualDeliveries(in ConfigContractsEditor configDeliveries, in DataIndividualDeliveries contractData)
         {
             _config = configDeliveries;
             _contractData = contractData;
-            _randomPercentageCost = Random.Range(_config.minPercentageOfMarketValue, _config.maxPercentageOfMarketValue);
-
-            Debug.Log($"Contract period: {_contractData.remainingContractTime}");
-            Debug.Log($"randomPercentageCost: {_randomPercentageCost}");
         }
 
-        double IDeliveriesType.GetResourceCost(in TypeProductionResources.TypeResource _)
+        //! refactoring
+        double IDeliveriesType.GetResourceCost(in TypeProductionResources.TypeResource drug)
         {
-            var totalCost = _contractData.costPerKg * _randomPercentageCost / 100;
-            Debug.Log($"totalCost sell res: {totalCost}");
-
-            return totalCost;
+            //var totalCost = _contractData.costPerKg * _randomPercentageCost / 100;
+            DebugSystem.Log($"totalCost sell res in object: {this} / Cost: {_contractData.costPerKg} / drug: {_contractData.resource} / {drug}", 
+                DebugSystem.SelectedColor.Red, tag: "Deliveries");
+            return _contractData.costPerKg;
         }
 
         void IDeliveriesType.UpdateTime()
         {
+            if (_isSigned == false)
+                return;
+
             _contractData.remainingContractTime--;
             Debug.Log($"Contract period: {_contractData.remainingContractTime}");
         }
@@ -45,21 +46,26 @@ namespace Building.City.Deliveries
         {
             if (_contractData.remainingContractTime <= 0)
                 return true;
+
             return false;
         }
 
-        void IIndividualDeliveries.UpdateContract(in DataIndividualDeliveries contractData)
+        void IDeliveriesType.UpdateContract(in DataIndividualDeliveries contractData)
         {
+            Debug.Log($"Contract Data before: {_contractData.resource}");
             _contractData = contractData;
-            _randomPercentageCost = Random.Range(_config.minPercentageOfMarketValue, _config.maxPercentageOfMarketValue);
 
+            Debug.Log($"Contract Data after: {_contractData.resource}");
             Debug.Log($"Contract period: {_contractData.remainingContractTime}");
-            Debug.Log($"randomPercentageCost: {_randomPercentageCost}");
             Debug.Log("Individual Contract is updated");
         }
 
         TypeProductionResources.TypeResource IIndividualDeliveries.GetResourceBeingSent() => _contractData.resource;
 
         double IIndividualDeliveries.GetDailyAllowanceKg() => _contractData.dailyAllowanceKg;
+
+        void IIndividualDeliveries.SignedContract() => _isSigned = true;
+
+        bool IIndividualDeliveries.GetIsSignedContract() => _isSigned;
     }
 }

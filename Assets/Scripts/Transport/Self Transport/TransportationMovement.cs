@@ -110,8 +110,8 @@ namespace Transport
 
         public void MovementTransport()
         {
-            if (_Itransportation.transportationFuel.IsFuelAvailable() &&
-                _Itransportation.transportationBreakdowns.IsNotInRepair())
+            if (_Itransportation.transportationFuel.IsFuelAvailable() && _Itransportation.transportationBreakdowns.IsNotInRepair()
+                    && _Itransportation.transportationAwaiting == false)
             {
                 CheckPosition();
                 Move(_indexCurrentRoutePoint);

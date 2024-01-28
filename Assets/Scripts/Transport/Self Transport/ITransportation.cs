@@ -5,6 +5,9 @@ namespace Transport
 {
     public interface ITransportation
     {
+        bool transportationAwaiting { get; }
+
+
         ITransportInteractRoute ItransportInteractRoute { get; }
 
         TransportationFuel transportationFuel { get; }

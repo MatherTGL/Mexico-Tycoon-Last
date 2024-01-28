@@ -1,6 +1,6 @@
 using Resources;
 using UnityEngine;
-using static Building.City.Deliveries.Deliveries;
+using static Building.City.Deliveries.DeliveriesControl;
 
 namespace Building.City.Deliveries
 {
@@ -27,5 +27,7 @@ namespace Building.City.Deliveries
         {
             Debug.Log("General update time");
         }
+
+        void IDeliveriesType.UpdateContract(in DataIndividualDeliveries contractData) => throw new System.NotImplementedException();
     }
 }

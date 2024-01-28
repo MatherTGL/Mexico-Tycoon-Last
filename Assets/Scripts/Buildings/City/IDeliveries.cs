@@ -8,5 +8,7 @@ namespace Building.City.Deliveries
 
 
         void AddNewContract(in IDeliveriesType deliveriesType);
+
+        void UpdateContract(in DataIndividualDeliveries dataIndividualDeliveries, in byte index);
     }
 }
