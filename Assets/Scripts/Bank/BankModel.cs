@@ -1,7 +1,6 @@
 using Config.Bank;
 using DebugCustomSystem;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using UnityEngine;
 using static Data.Player.DataPlayer;
 

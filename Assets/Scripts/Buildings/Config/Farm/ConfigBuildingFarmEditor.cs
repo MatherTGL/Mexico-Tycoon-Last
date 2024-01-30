@@ -6,6 +6,8 @@ using System;
 using System.Linq;
 using Config.Country.Climate;
 using Config.Building.Events;
+using static Config.Employees.ConfigEmployeeEditor;
+using SerializableDictionary.Scripts;
 
 namespace Config.Building
 {
@@ -52,6 +54,11 @@ namespace Config.Building
         [SerializeField, BoxGroup("Parameters"), MinValue(0)]
         private double _costPurchase = 50_000;
         public double costPurchase => _costPurchase;
+
+        [SerializeField, BoxGroup("Parameters/Employees")]
+        [Tooltip("Required employees for the operation of the building, as well as their number")]
+        private SerializableDictionary<TypeEmployee, byte> d_requiredEmployees = new();
+        public SerializableDictionary<TypeEmployee, byte> requiredEmployees => d_requiredEmployees;
 
 
 #if UNITY_EDITOR

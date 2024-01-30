@@ -8,7 +8,8 @@ using Hire;
 using Country;
 using Config.Building.Events;
 using Events.Buildings;
-using DebugCustomSystem;
+using Hire.Employee;
+using System.Linq;
 
 namespace Building.Farm
 {
@@ -81,9 +82,12 @@ namespace Building.Farm
 
         private void Production()
         {
-            double localCapacity = _config.localCapacityProduction[(int)_typeProductionResource];
+            if (IsThereAreEnoughEmployees() == false)
+                return;
 
-            if (d_amountResources[_typeProductionResource] < localCapacity)
+            Debug.Log("Farm production now");
+
+            if (d_amountResources[_typeProductionResource] < _config.localCapacityProduction[(int)_typeProductionResource])
             {
                 if (_isCurrentlyInProduction == false && IsQuantityRequiredRawMaterials() == false)
                     return;
@@ -104,6 +108,23 @@ namespace Building.Farm
                     _isCurrentlyInProduction = false;
                 }
             }
+        }
+
+        private bool IsThereAreEnoughEmployees()
+        {
+            Debug.Log("Enter to IsThereAreEnoughEmployees() method");
+            foreach (var employee in _config.requiredEmployees.Dictionary.Keys)
+            {
+                if (IobjectsExpensesImplementation.Ihiring.GetAllEmployees().ContainsKey(employee) == false ||
+                    IobjectsExpensesImplementation.Ihiring.GetAllEmployees()[employee].Count < _config.requiredEmployees.Dictionary[employee])
+                {
+                    Debug.Log("Enter to IsThereAreEnoughEmployees() method and return false");
+                    return false;
+                }
+
+                Debug.Log("Enter to IsThereAreEnoughEmployees() method and return true");
+            }
+            return true;
         }
 
         private bool IsQuantityRequiredRawMaterials()

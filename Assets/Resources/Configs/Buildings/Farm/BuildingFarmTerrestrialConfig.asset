@@ -24,3 +24,11 @@ MonoBehaviour:
   _localCapacityProduction: 0a0000000a0000000a0000000a0000000a000000
   _harvestRipeningTime: 4
   _costPurchase: 50000
+  d_requiredEmployees:
+    _pairs:
+    - _key: 0
+      _value: 1
+    - _key: 1
+      _value: 1
+    - _key: 2
+      _value: 2

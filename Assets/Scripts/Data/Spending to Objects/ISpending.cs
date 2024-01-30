@@ -7,14 +7,8 @@ namespace Building.Additional
         IObjectsExpensesImplementation IobjectsExpensesImplementation { get; }
 
 
-        double GetExpenses()
-        {
-            return IobjectsExpensesImplementation.GetTotalExpenses();
-        }
+        double GetExpenses() => IobjectsExpensesImplementation.GetTotalExpenses();
 
-        void Spending()
-        {
-            SpendingToObjects.SendNewExpense(GetExpenses());
-        }
+        void Spending() => SpendingToObjects.SendNewExpense(GetExpenses());
     }
 }

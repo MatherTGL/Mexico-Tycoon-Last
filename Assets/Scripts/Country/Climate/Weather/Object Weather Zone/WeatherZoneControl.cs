@@ -1,8 +1,6 @@
 using UnityEngine;
-using static Config.Country.Climate.ConfigClimateZoneEditor;
 using System.Collections;
 using System.Linq;
-using System;
 
 namespace Country.Climate.Weather
 {

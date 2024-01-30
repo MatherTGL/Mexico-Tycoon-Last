@@ -40,14 +40,10 @@ namespace Expense
         }
 
         void IObjectsExpensesImplementation.ChangeSeasonExpenses(in double expenses)
-        {
-            d_IareasExpenditure[AreaExpenditureType.Production].ChangeSeasonExpenses(expenses);
-        }
+            => d_IareasExpenditure[AreaExpenditureType.Production].ChangeSeasonExpenses(expenses);
 
         void IObjectsExpensesImplementation.ChangeEmployeesExpenses(in double expenses, in bool isAdd, in TypeEmployee typeEmployee)
-        {
-            d_IareasExpenditure[AreaExpenditureType.Employees].ChangeEmployeesExpenses(expenses, isAdd, typeEmployee);
-        }
+            => d_IareasExpenditure[AreaExpenditureType.Employees].ChangeEmployeesExpenses(expenses, isAdd, typeEmployee);
 
         double IObjectsExpensesImplementation.GetTotalExpenses()
         {

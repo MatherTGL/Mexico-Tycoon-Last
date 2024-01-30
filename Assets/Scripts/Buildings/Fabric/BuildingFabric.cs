@@ -73,6 +73,12 @@ namespace Building.Fabric
             _costPurchase = _config.costPurchase;
         }
 
+        void IBuilding.ConstantUpdatingInfo()
+        {
+            if (isBuyed && isWorked)
+                Production();
+        }
+
         private void Production()
         {
             Debug.Log($"Production fabric: {d_amountResources[_typeProductionResource]}");
@@ -90,12 +96,6 @@ namespace Building.Fabric
                 d_amountResources[_typeProductionResource] += _productionPerformance;
                 Debug.Log(d_amountResources[_typeProductionResource]);
             }
-        }
-
-        void IBuilding.ConstantUpdatingInfo()
-        {
-            if (isBuyed && isWorked)
-                Production();
         }
     }
 }

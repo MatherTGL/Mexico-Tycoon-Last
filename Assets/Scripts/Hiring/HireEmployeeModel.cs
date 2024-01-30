@@ -12,7 +12,11 @@ namespace Building.Hire
     {
         private Lazy<Dictionary<TypeEmployee, List<AbstractEmployee>>> d_employees = new();
 
-        private AbstractEmployee[] l_possibleEmployeesInShop = new AbstractEmployee[10];
+        private AbstractEmployee[] a_possibleEmployeesInShop = new AbstractEmployee[10];
+
+#if UNITY_EDITOR
+        AbstractEmployee[] IHiring.a_possibleEmployeesInShop => a_possibleEmployeesInShop;
+#endif
 
         private Lazy<Dictionary<TypeEmployee, double>> d_employeeExpenses = new();
         Lazy<Dictionary<TypeEmployee, double>> IHiring.d_employeeExpenses
@@ -23,8 +27,8 @@ namespace Building.Hire
 
         public HireEmployeeModel()
         {
-            for (byte i = 0; i < l_possibleEmployeesInShop.Length; i++)
-                l_possibleEmployeesInShop[i] = new Employee();
+            for (byte i = 0; i < a_possibleEmployeesInShop.Length; i++)
+                a_possibleEmployeesInShop[i] = new Employee();
 
             //? CalculateAllExpenses();
         }
@@ -32,18 +36,15 @@ namespace Building.Hire
         private void Expenses()
         {
             foreach (var typeEmployeeExpenses in d_employeeExpenses.Value.Keys)
-            {
-                Debug.Log(d_employeeExpenses.Value[typeEmployeeExpenses]);
                 DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(d_employeeExpenses.Value[typeEmployeeExpenses],
                                                                     SpendAndCheckMoneyState.Spend);
-            }
         }
 
-        public void ConstantUpdatingInfo() => Expenses();
+        void IHiring.ConstantUpdatingInfo() => Expenses();
 
-        public void Hire(in byte indexEmployee)
+        void IHiring.Hire(in byte indexEmployee)
         {
-            var typeEmployee = l_possibleEmployeesInShop[indexEmployee].typeEmployee;
+            var typeEmployee = a_possibleEmployeesInShop[indexEmployee].typeEmployee;
             Debug.Log($"Type Employee: {typeEmployee}");
 
             if (d_employees.Value.ContainsKey(typeEmployee) == false)
@@ -52,15 +53,15 @@ namespace Building.Hire
                 d_employeeExpenses.Value.Add(typeEmployee, 0);
             }
 
-            var hiredEmployee = l_possibleEmployeesInShop[indexEmployee].Clone();
+            var hiredEmployee = a_possibleEmployeesInShop[indexEmployee].Clone();
             d_employees.Value[typeEmployee].Add(hiredEmployee);
             d_employeeExpenses.Value[typeEmployee] += hiredEmployee.paymentCostPerDay;
             Debug.Log($"CurrentExpenses: {d_employeeExpenses.Value[typeEmployee]}");
         }
 
-        public void Firing(in byte indexEmployee)
+        void IHiring.Firing(in byte indexEmployee)
         {
-            var typeEmployee = l_possibleEmployeesInShop[indexEmployee].typeEmployee;
+            var typeEmployee = a_possibleEmployeesInShop[indexEmployee].typeEmployee;
 
             if (d_employees.Value.ContainsKey(typeEmployee) && d_employees.Value[typeEmployee].IsNotEmpty(indexEmployee))
             {
@@ -69,5 +70,7 @@ namespace Building.Hire
                 d_employees.Value[typeEmployee].RemoveAt(indexEmployee);
             }
         }
+
+        Dictionary<TypeEmployee, List<AbstractEmployee>> IHiring.GetAllEmployees() => d_employees.Value;
     }
 }
