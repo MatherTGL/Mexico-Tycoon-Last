@@ -20,9 +20,7 @@ namespace Building.Hire
 
         private Lazy<Dictionary<TypeEmployee, double>> d_employeeExpenses = new();
         Lazy<Dictionary<TypeEmployee, double>> IHiring.d_employeeExpenses
-        {
-            get => d_employeeExpenses; set => d_employeeExpenses = value;
-        }
+        { get => d_employeeExpenses; set => d_employeeExpenses = value; }
 
 
         public HireEmployeeModel()

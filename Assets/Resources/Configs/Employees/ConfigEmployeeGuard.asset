@@ -15,4 +15,5 @@ MonoBehaviour:
   _typeEmployee: 1
   _paymentPerDay: 10
   _rating: 7
-  _efficiency: 70
+  d_productionEfficiency:
+    _pairs: []

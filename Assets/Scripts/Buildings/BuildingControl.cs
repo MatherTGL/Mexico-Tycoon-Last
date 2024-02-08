@@ -48,10 +48,10 @@ namespace Building
         private IUseBusiness _IcityBusiness;
 
         [SerializeField, Required, BoxGroup("Parameters"), HideLabel]
-        private ConfigExpensesManagementEditor _configExpenses; //TODO: load from resources
+        private ConfigExpensesManagementEditor _configExpenses; //TODO: load from resources https://ru.yougile.com/team/bf00efa6ea26/#MEX-91
 
         [SerializeField, Required, BoxGroup("Parameters"), HideLabel, PropertySpace(0, 5), DisableInPlayMode]
-        private ScriptableObject _configSO; //TODO: load from resources
+        private ScriptableObject _configSO; //TODO: maybe load from resources
 
         private TimeDateControl _timeDateControl;
 
@@ -146,7 +146,6 @@ namespace Building
                 _Ibuilding.InitDictionaries();
         }
 
-        //! refactoring
         private void ChangeOwnerState(in bool isBuy)
         {
             if (isBuy) _IbuildingPurchased?.Buy();

@@ -18,12 +18,12 @@
             }
           },
           {
-            "id": "0f70679584e15a36",
+            "id": "4bf6cf435fe3f4db",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Механика контрактов.md",
+                "file": "Диздок/Основные механики/Управление.md",
                 "mode": "source",
                 "source": false
               }
@@ -39,8 +39,7 @@
               }
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -90,8 +89,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "d540ed6c19b496ad",
@@ -107,7 +105,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Excalidraw/ContractsDrawing2024-01-05 14.54.50.excalidraw.md",
+                "file": "Excalidraw/Drawing 2023-11-29 17.34.14.excalidraw.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -124,7 +122,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Excalidraw/ContractsDrawing2024-01-05 14.54.50.excalidraw.md",
+                "file": "Excalidraw/Drawing 2023-11-29 17.34.14.excalidraw.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -147,7 +145,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Excalidraw/ContractsDrawing2024-01-05 14.54.50.excalidraw.md"
+                "file": "Excalidraw/Drawing 2023-11-29 17.34.14.excalidraw.md"
               }
             }
           }
@@ -169,16 +167,25 @@
       "obsidian-excalidraw-plugin:Create new drawing": false
     }
   },
-  "active": "00ed98a2a67af65c",
+  "active": "843d92fa96f65087",
   "lastOpenFiles": [
-    "Excalidraw/ContractsDrawing2024-01-05 14.54.50.excalidraw.md.meta",
-    "Механика контрактов.md.meta",
+    "Диздок/Основные механики/Управление.md",
+    "Диздок/Диздок.md.meta",
+    "Диздок/Основные механики.meta",
+    "Диздок/Краткая информация.md.meta",
+    "ss_e688ecbe539df73e02535c3921c4fd3ff72aada0.1920x1080-2633484889.jpg.meta",
+    "Диздок/Основные механики/Управление.md.meta",
+    "Диздок.meta",
+    "Диздок/Краткая информация.md",
+    "Диздок/Диздок.md",
+    "ss_e688ecbe539df73e02535c3921c4fd3ff72aada0.1920x1080-2633484889.jpg",
+    "Диздок/Основные механики",
+    "Диздок",
+    "Excalidraw/Drawing 2023-11-29 17.34.14.excalidraw.md",
     "Механика контрактов.md",
     "Excalidraw/ContractsDrawing2024-01-05 14.54.50.excalidraw.md",
-    "Excalidraw/Drawing 2023-11-29 17.34.14.excalidraw.md",
-    "Просто заметки.md",
-    "Excalidraw/Drawing 2023-11-29 17.34.14.excalidraw.md.meta",
-    "Excalidraw.meta",
-    "Excalidraw"
+    "Excalidraw/ContractsDrawing2024-01-05 14.54.50.excalidraw.md.meta",
+    "Механика контрактов.md.meta",
+    "Просто заметки.md"
   ]
 }

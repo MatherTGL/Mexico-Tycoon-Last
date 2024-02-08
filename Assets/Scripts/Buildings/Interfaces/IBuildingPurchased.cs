@@ -1,8 +1,6 @@
 using Country;
 using Data;
-using DebugCustomSystem;
 using Events.Buildings;
-using UnityEngine;
 using static Data.Player.DataPlayer;
 
 namespace Building.Additional
@@ -29,10 +27,7 @@ namespace Building.Additional
         void UpdateCostPurchased()
         {
             if (!isBuyed)
-            {
                 costPurchase += costPurchase * IcountryBuildings.IcountryInflation.GetTotalInflation() / 100;
-                DebugSystem.Log($"Building {this} cost purchase: {costPurchase}", DebugSystem.SelectedColor.Green, tag: "Building");
-            }
         }
     }
 }

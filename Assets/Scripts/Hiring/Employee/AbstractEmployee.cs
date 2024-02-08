@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using Config.Employees;
 using static Config.Employees.ConfigEmployeeEditor;
+using static Resources.TypeProductionResources;
 
 namespace Hire.Employee
 {
@@ -13,7 +15,7 @@ namespace Hire.Employee
 
         public byte rating { get; protected set; }
 
-        public byte efficiency { get; protected set; }
+        public Dictionary<TypeResource, ushort> efficiencyDictionary { get; protected set; } = new();
 
 
         public abstract AbstractEmployee Clone();

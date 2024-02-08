@@ -4,6 +4,8 @@ using System;
 using Resources;
 using System.Linq;
 using Config.Building.Events;
+using SerializableDictionary.Scripts;
+using static Config.Employees.ConfigEmployeeEditor;
 
 namespace Config.Building
 {
@@ -22,6 +24,10 @@ namespace Config.Building
         private double _costPurchase = 50_000;
         public double costPurchase => _costPurchase;
 
+        [SerializeField, BoxGroup("Parameters/Employees")]
+        [Tooltip("Required employees for the operation of the building, as well as their number")]
+        private SerializableDictionary<TypeEmployee, byte> d_requiredEmployees = new();
+        public SerializableDictionary<TypeEmployee, byte> requiredEmployees => d_requiredEmployees;
 
 #if UNITY_EDITOR
         [Button("Update Info Capacity")]

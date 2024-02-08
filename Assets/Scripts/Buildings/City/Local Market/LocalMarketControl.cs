@@ -4,7 +4,8 @@ using Resources;
 using Building.Additional;
 using System.Collections;
 using TimeControl;
-using DebugCustomSystem;
+using Building.City.Market;
+using static Resources.TypeProductionResources;
 
 namespace Building.City.Deliveries
 {
@@ -17,6 +18,9 @@ namespace Building.City.Deliveries
         private IContractsGenerator _IcontractsGenerator;
 
         private ISellResources _IsellResources;
+
+        private IProductDemand _IproductDemand;
+        IProductDemand ILocalMarket.IproductDemand => _IproductDemand;
 
         private WaitForSeconds _IsellWaitForSeconds;
 
@@ -42,9 +46,11 @@ namespace Building.City.Deliveries
 
             _IsellResources = new SellResources(_Ideliveries as IContract);
             _IsellWaitForSeconds = new WaitForSeconds(FindObjectOfType<TimeDateControl>().GetCurrentTimeOneDay());
+            _IproductDemand = new ProductDemand(_Ibuilding as IPotentialÑonsumers);
 
             contract.Init(costResourcesConfig);
             _IcontractsGenerator.Init(costResourcesConfig.configForContracts);
+
             StartCoroutine(TickUpdate());
         }
 
@@ -57,10 +63,10 @@ namespace Building.City.Deliveries
             }
         }
 
-        double ILocalMarket.GetCurrentCostSellDrug(in TypeProductionResources.TypeResource typeResource)
+        double ILocalMarket.GetCurrentCostSellDrug(in TypeResource typeResource)
             => _costSellingResources[(int)typeResource];
 
-        double ILocalMarket.GetCurrentCostBuyDrug(in TypeProductionResources.TypeResource typeResource)
+        double ILocalMarket.GetCurrentCostBuyDrug(in TypeResource typeResource)
             => _resourcePurchaseCost[(int)typeResource];
     }
 }

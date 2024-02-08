@@ -13,9 +13,7 @@ namespace Building.City.Deliveries
 
 
         public GeneralDeliveries(in IDeliveriesCurrentCosts deliveriesCurrentCosts)
-        {
-            _IdeliveriesCurrentCosts = deliveriesCurrentCosts;
-        }
+            => _IdeliveriesCurrentCosts = deliveriesCurrentCosts; 
 
         double IDeliveriesType.GetResourceCost(in TypeProductionResources.TypeResource typeResource)
             => _IdeliveriesCurrentCosts.currentCostsSellResources[(int)typeResource];

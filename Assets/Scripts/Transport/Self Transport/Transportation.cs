@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using DebugCustomSystem;
+using System.Threading.Tasks;
 using Resources;
 using Transport.Breakdowns;
 using Transport.Fuel;
@@ -38,7 +38,8 @@ namespace Transport
         private bool _isRequestTransportationRepairIsMade;
 
         private bool _isTransportationAwaiting;
-        bool ITransportation.transportationAwaiting => _isTransportationAwaiting;
+
+        private volatile bool _isWait;
 
 
         public Transportation(in TypeTransport typeTransport,
@@ -87,11 +88,23 @@ namespace Transport
                 SendRequestsAndCheckWaitingCar(indexReception: 1, isFirstPosition: false);
         }
 
-        private void SendRequestsAndCheckWaitingCar(in byte indexReception, in bool isFirstPosition)
+        //TODO: https://ru.yougile.com/team/bf00efa6ea26/#chat:b0f6f3738d74
+        private async void SendRequestsAndCheckWaitingCar(byte indexReception, bool isFirstPosition)
         {
-            RequestLoad(indexStateLoad: 0, indexReception: indexReception);
-            RequestUnload(indexStateLoad: 1, indexReception: indexReception);
+            if (_isWait)
+                return;
 
+            await Task.Run(async () =>
+            {
+                _isWait = true;
+                await Task.Delay(_typeTransport.timeLoadAndUnloadInSeconds * 1_000);
+
+                RequestLoad(indexStateLoad: 0, indexReception: indexReception);
+                RequestUnload(indexStateLoad: 1, indexReception: indexReception);
+
+                _isWait = false;
+            });
+            
             _isTransportationAwaiting = !IsWaitLoadOrUnload(indexReception);
 
             if (IsWaitLoadOrUnload(indexReception))
@@ -140,9 +153,7 @@ namespace Transport
         }
 
         public void SetTypeTransportingResource(in TypeProductionResources.TypeResource typeResource)
-        {
-            _typeCurrentTransportResource = typeResource;
-        }
+            => _typeCurrentTransportResource = typeResource;
 
         public void ChangeRoute(in ITransportInteractRoute routeTransportControl)
         {
@@ -154,9 +165,7 @@ namespace Transport
         }
 
         public void SendVehicleForRepair()
-        {
-            _transportationBreakdowns.Repair();
-        }
+            => _transportationBreakdowns.Repair();
 
         public void SendRequestReplaceTypeTransport(in TypeTransport typeTransport)
         {
@@ -182,11 +191,17 @@ namespace Transport
         {
             if (d_loadAndUnloadStates.ContainsKey(indexReception))
                 d_loadAndUnloadStates[indexReception][indexLoadOrUnload] = isState;
-
-            DebugSystem.Log($"object: {this} (Load/Unload states) & current states: {d_loadAndUnloadStates[indexReception][indexLoadOrUnload]}",
-                    DebugSystem.SelectedColor.Green, tag: "Transport");
         }
 
-        public void ChangeStateWaiting(in bool isState) => _isWaitingReception = isState;
+        public void ChangeStateWaiting(in bool isState) 
+            => _isWaitingReception = isState;
+
+        bool ITransportation.IsWait()
+        {
+            if (_isWait || _isTransportationAwaiting)
+                return true;
+            else
+                return false;
+        }
     }
 }

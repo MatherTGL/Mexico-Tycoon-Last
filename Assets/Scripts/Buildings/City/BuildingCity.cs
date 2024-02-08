@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Building.City
 {
-    public sealed class BuildingCity : AbstractBuilding, IBuilding, IUseBusiness
+    public sealed class BuildingCity : AbstractBuilding, IBuilding, IUseBusiness, IPotential—onsumers
     {
         private readonly CityPopulationReproduction _cityPopulationReproduction;
 
@@ -19,14 +19,10 @@ namespace Building.City
         private readonly ILocalMarket _IlocalMarket;
 
         Dictionary<TypeProductionResources.TypeResource, double> IBuilding.amountResources
-        {
-            get => d_amountResources; set => d_amountResources = value;
-        }
+        { get => d_amountResources; set => d_amountResources = value; }
 
         Dictionary<TypeProductionResources.TypeResource, uint> IBuilding.stockCapacity
-        {
-            get => d_stockCapacity; set => d_stockCapacity = value;
-        }
+        { get => d_stockCapacity; set => d_stockCapacity = value; }
 
         private event Action _updatedTimeStep;
 
@@ -47,14 +43,14 @@ namespace Building.City
             _cityPopulationReproduction = new(_config);
             _cityBusiness = new(this);
 
-            _IlocalMarket = localMarket;
-            _IlocalMarket.Init(_config.costResourcesConfig, this);
-
             _population = (uint)UnityEngine.Random.Range(
                 _config.populationStartMin, _config.populationStartMax);
+
+            _IlocalMarket = localMarket;
+            _IlocalMarket.Init(_config.costResourcesConfig, this);
         }
 
-        //! refactoring (Move to special script)
+        //! refactoring (Move to special script) https://ru.yougile.com/team/bf00efa6ea26/#MEX-89
         private void ToLaunderMoney()
         {
             _cityBusiness.ToLaunderMoney(d_amountResources[TypeProductionResources.TypeResource.DirtyMoney]);
@@ -63,16 +59,18 @@ namespace Building.City
 
         void IBuilding.ConstantUpdatingInfo()
         {
+            _cityPopulationReproduction.PopulationReproduction(ref _population);
             _updatedTimeStep?.Invoke();
             ToLaunderMoney();
-            _cityPopulationReproduction.PopulationReproduction(ref _population);
         }
 
-        //! refactoring (Move to special script)
+        //! refactoring (Move to special script) https://ru.yougile.com/team/bf00efa6ea26/#MEX-90
         void IUseBusiness.BuyBusiness(in CityBusiness.TypeBusiness typeBusiness)
             => _cityBusiness.BuyBusiness(typeBusiness);
 
         void IUseBusiness.SellBusiness(in ushort indexBusiness)
             => _cityBusiness.SellBusiness(indexBusiness);
+
+        uint IPotential—onsumers.GetCount() => _population;
     }
 }

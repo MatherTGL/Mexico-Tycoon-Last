@@ -4,16 +4,16 @@ using Resources;
 using Building.Additional;
 using UnityEngine;
 using Expense;
-using Hire;
 using Country;
 using Config.Building.Events;
 using Events.Buildings;
-using Hire.Employee;
-using System.Linq;
+using Building.Additional.Production;
+using Config.Employees;
 
 namespace Building.Farm
 {
-    public sealed class BuildingFarm : AbstractBuilding, IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption, IChangedFarmType, IUsesExpensesManagement, IUsesHiring
+    public sealed class BuildingFarm : AbstractBuilding, IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption, IChangedFarmType, IUsesExpensesManagement,
+        IProductionBuilding
     {
         private readonly IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
         IBuildingMonitorEnergy IEnergyConsumption.IbuildingMonitorEnergy => _IbuildingMonitorEnergy;
@@ -21,11 +21,15 @@ namespace Building.Farm
         private ICountryBuildings _IcountryBuildings;
         ICountryBuildings IUsesCountryInfo.IcountryBuildings { get => _IcountryBuildings; set => _IcountryBuildings = value; }
 
+        private IProduction _Iproduction;
+
         IObjectsExpensesImplementation ISpending.IobjectsExpensesImplementation => IobjectsExpensesImplementation;
+
+        IObjectsExpensesImplementation IProductionBuilding.IobjectsExpensesImplementation => IobjectsExpensesImplementation;
+
         IObjectsExpensesImplementation IUsesExpensesManagement.IobjectsExpensesImplementation
-        {
-            get => IobjectsExpensesImplementation; set => IobjectsExpensesImplementation = value;
-        }
+        { get => IobjectsExpensesImplementation; set => IobjectsExpensesImplementation = value; }
+
         IObjectsExpensesImplementation IUsesWeather.IobjectsExpensesImplementation => IobjectsExpensesImplementation;
 
         private ConfigBuildingFarmEditor _config;
@@ -33,111 +37,55 @@ namespace Building.Farm
         ConfigBuildingsEventsEditor IUsesBuildingsEvents.configBuildingsEvents => _config.configBuildingsEvents;
 
         Dictionary<TypeProductionResources.TypeResource, double> IBuilding.amountResources
-        {
-            get => d_amountResources; set => d_amountResources = value;
-        }
+        { get => d_amountResources; set => d_amountResources = value; }
+
+        Dictionary<TypeProductionResources.TypeResource, double> IProductionBuilding.amountResources
+        { get => d_amountResources; set => d_amountResources = value; }
 
         Dictionary<TypeProductionResources.TypeResource, double> IUsesBuildingsEvents.amountResources
-        {
-            get => d_amountResources; set => d_amountResources = value;
-        }
+        { get => d_amountResources; set => d_amountResources = value; }
 
         Dictionary<TypeProductionResources.TypeResource, uint> IBuilding.stockCapacity
-        {
-            get => d_stockCapacity; set => d_stockCapacity = value;
-        }
+        { get => d_stockCapacity; set => d_stockCapacity = value; }
 
-        private Dictionary<TypeProductionResources.TypeResource, ushort> d_currentCultivatedProducts = new();
+        Dictionary<ConfigEmployeeEditor.TypeEmployee, byte> IProductionBuilding.requiredEmployees => _config.requiredEmployees.Dictionary;
 
-        private TypeProductionResources.TypeResource _typeProductionResource;
+        private TypeProductionResources.TypeResource _typeProductionResource; //! move to Production class
+
+        List<TypeProductionResources.TypeResource> IProductionBuilding.requiredRawMaterials => _config.requiredRawMaterials;
+
+        List<float> IProductionBuilding.quantityRequiredRawMaterials => _config.quantityRequiredRawMaterials;
+
+        TypeProductionResources.TypeResource IProductionBuilding.typeProductionResource => _typeProductionResource;
 
         uint[] IBuilding.localCapacityProduction => _config.localCapacityProduction;
+
+        uint[] IProductionBuilding.localCapacityProduction => _config.localCapacityProduction;
 
         private double _costPurchase;
         double IBuildingPurchased.costPurchase { get => _costPurchase; set => _costPurchase = value; }
 
-        private ushort _productionPerformance;
+        ushort IProductionBuilding.defaultProductionPerformance => _config.productionStartPerformance;
 
-        private float _currentPercentageOfMaturity;
+        float IProductionBuilding.harvestRipeningTime => _config.harvestRipeningTime;
 
         bool IBuildingJobStatus.isWorked { get => isWorked; set => isWorked = value; }
 
         bool IBuildingPurchased.isBuyed { get => isBuyed; set => isBuyed = value; }
 
-        private bool _isCurrentlyInProduction;
-
 
         public BuildingFarm(in ScriptableObject config)
         {
             _config = config as ConfigBuildingFarmEditor;
+            _Iproduction = new Production(this);
+
             LoadConfigData(_config);
         }
 
         private void LoadConfigData(in ConfigBuildingFarmEditor config)
         {
-            _productionPerformance = config.productionStartPerformance;
             _typeProductionResource = config.typeProductionResource;
             _costPurchase = config.costPurchase;
-        }
-
-        private void Production()
-        {
-            if (IsThereAreEnoughEmployees() == false)
-                return;
-
-            Debug.Log("Farm production now");
-
-            if (d_amountResources[_typeProductionResource] < _config.localCapacityProduction[(int)_typeProductionResource])
-            {
-                if (_isCurrentlyInProduction == false && IsQuantityRequiredRawMaterials() == false)
-                    return;
-
-                _isCurrentlyInProduction = true;
-                d_currentCultivatedProducts.TryAdd(_typeProductionResource, _productionPerformance);
-
-                if (_currentPercentageOfMaturity < _config.harvestRipeningTime)
-                {
-                    _currentPercentageOfMaturity++;
-                }
-                else
-                {
-                    d_amountResources[_typeProductionResource] += d_currentCultivatedProducts[_typeProductionResource];
-
-                    d_currentCultivatedProducts.Remove(_typeProductionResource);
-                    _currentPercentageOfMaturity = 0;
-                    _isCurrentlyInProduction = false;
-                }
-            }
-        }
-
-        private bool IsThereAreEnoughEmployees()
-        {
-            Debug.Log("Enter to IsThereAreEnoughEmployees() method");
-            foreach (var employee in _config.requiredEmployees.Dictionary.Keys)
-            {
-                if (IobjectsExpensesImplementation.Ihiring.GetAllEmployees().ContainsKey(employee) == false ||
-                    IobjectsExpensesImplementation.Ihiring.GetAllEmployees()[employee].Count < _config.requiredEmployees.Dictionary[employee])
-                {
-                    Debug.Log("Enter to IsThereAreEnoughEmployees() method and return false");
-                    return false;
-                }
-
-                Debug.Log("Enter to IsThereAreEnoughEmployees() method and return true");
-            }
-            return true;
-        }
-
-        private bool IsQuantityRequiredRawMaterials()
-        {
-            foreach (var typeDrug in _config.requiredRawMaterials)
-            {
-                for (ushort i = 0; i < _config.quantityRequiredRawMaterials.Count; i++)
-                    if (d_amountResources[typeDrug] < _config.quantityRequiredRawMaterials[i])
-                        return false;
-
-                d_amountResources[typeDrug] -= _config.quantityRequiredRawMaterials[0];
-            }
-            return true;
         }
 
         private bool IsGrowingSeason()
@@ -154,10 +102,20 @@ namespace Building.Farm
             IobjectsExpensesImplementation.ChangeSeasonExpenses(addingNumber);
         }
 
+        private bool IsThereAreEnoughEmployees()
+        {
+            foreach (var employee in _config.requiredEmployees.Dictionary.Keys)
+                if (IobjectsExpensesImplementation.Ihiring.GetAllEmployees().ContainsKey(employee) == false ||
+                    IobjectsExpensesImplementation.Ihiring.GetAllEmployees()[employee].Count < _config.requiredEmployees.Dictionary[employee])
+                    return false;
+
+            return true;
+        }
+
         void IBuilding.ConstantUpdatingInfo()
         {
-            if (isWorked && isBuyed && IsGrowingSeason())
-                Production();
+            if (isWorked && isBuyed && IsGrowingSeason() && IsThereAreEnoughEmployees())
+                _Iproduction.Production();
         }
 
         void IChangedFarmType.ChangeType(in ConfigBuildingFarmEditor.TypeFarm typeFarm)

@@ -11,9 +11,7 @@ namespace Building.City
 
 
         public CityPopulationReproduction(in ConfigBuildingCityEditor configBuilding)
-        {
-            _configBuilding = configBuilding;
-        }
+            => _configBuilding = configBuilding;
 
         public void PopulationReproduction(ref uint populationCity)
         {

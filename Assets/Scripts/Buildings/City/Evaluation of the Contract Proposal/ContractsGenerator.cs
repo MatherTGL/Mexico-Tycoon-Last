@@ -1,9 +1,12 @@
 using Config.Building.Deliveries;
+using Mono.Cecil;
 using Resources;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using TimeControl;
 using UnityEngine;
+using static Resources.TypeProductionResources;
 
 namespace Building.City.Deliveries
 {
@@ -15,19 +18,24 @@ namespace Building.City.Deliveries
 
         private ConfigContractsEditor _configContracts;
 
-        private WaitForSeconds _waitForSeconds;
+        private WaitForSeconds _mainUpdateTime;
 
         private WaitForSeconds _contractRenewalTime;
+
+        private readonly Dictionary<TypeResource, float> d_percentageUsersForIndividualContracts = new();
 
 
         void IContractsGenerator.Init(in ConfigContractsEditor configContracts)
         {
-            _waitForSeconds = new WaitForSeconds(FindAnyObjectByType<TimeDateControl>().GetCurrentTimeOneDay());
+            _mainUpdateTime = new WaitForSeconds(FindAnyObjectByType<TimeDateControl>().GetCurrentTimeOneDay());
             _contractRenewalTime = new WaitForSeconds(configContracts.contractRenewalTime);
 
             _Ideliveries = GetComponent<IDeliveries>();
             _configContracts = configContracts;
             _IlocalMarket = GetComponent<ILocalMarket>();
+
+            foreach (TypeResource resource in Enum.GetValues(typeof(TypeResource)))
+                d_percentageUsersForIndividualContracts.TryAdd(resource, 0);
 
             GenerateContracts();
 
@@ -52,13 +60,13 @@ namespace Building.City.Deliveries
         //! refactoring
         private void GenerateRandomParameters(ref DataIndividualDeliveries individualContractData)
         {
-            int lengthDrugTypes = Enum.GetNames(typeof(TypeProductionResources.TypeResource)).Length;
+            int lengthDrugTypes = Enum.GetNames(typeof(TypeResource)).Length;
             int drugType;
 
             do { drugType = UnityEngine.Random.Range(0, lengthDrugTypes); }
-            while (drugType is (int)TypeProductionResources.TypeResource.DirtyMoney);
+            while (drugType is (int)TypeResource.DirtyMoney);
 
-            individualContractData.resource = (TypeProductionResources.TypeResource)drugType;
+            individualContractData.resource = (TypeResource)drugType;
             
             if (IsContractAlreadyExists(individualContractData))
                 GenerateRandomParameters(ref individualContractData);
@@ -71,7 +79,8 @@ namespace Building.City.Deliveries
 
             individualContractData.remainingContractTime = _configContracts.remainingContractTime;
             individualContractData.costPerKg = costPerKg;
-            individualContractData.dailyAllowanceKg = fastRandom.Range(10, 100); //! refactoring
+            individualContractData.dailyAllowanceKg = _IlocalMarket.IproductDemand.FormAndGet(individualContractData.resource,
+                FormAndGetPercentageUsers(individualContractData.resource));
         }
 
         private bool IsContractAlreadyExists(in DataIndividualDeliveries individualContractData)
@@ -84,11 +93,18 @@ namespace Building.City.Deliveries
             return false;
         }
 
+        private float FormAndGetPercentageUsers(in TypeResource typeResource)
+        {
+            d_percentageUsersForIndividualContracts[typeResource] = UnityEngine.Random.Range(_configContracts.percentageUsers.Dictionary[typeResource][0],
+                                                                                             _configContracts.percentageUsers.Dictionary[typeResource][1]) / 100;
+            return d_percentageUsersForIndividualContracts[typeResource];
+        }
+
         private IEnumerator TimeUpdate()
         {
             while (true)
             {
-                yield return _waitForSeconds;
+                yield return _mainUpdateTime;
 
                 //! refactoring
                 for (byte i = 0; i < _Ideliveries.l_deliveriesType.Count; i++)

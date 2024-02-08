@@ -83,5 +83,9 @@ namespace Transport
         [SerializeField, MinValue(1)]
         private byte _speedOfRepairPerTimeStep = 1;
         public byte speedOfRepairPerTimeStep => _speedOfRepairPerTimeStep;
+
+        [SerializeField, MinValue(1), MaxValue(10)]
+        private byte _timeLoadAndUnloadInSeconds = 3;
+        public byte timeLoadAndUnloadInSeconds => _timeLoadAndUnloadInSeconds;
     }
 }

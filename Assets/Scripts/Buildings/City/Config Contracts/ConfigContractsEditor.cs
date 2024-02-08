@@ -1,5 +1,7 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
+using SerializableDictionary.Scripts;
+using static Resources.TypeProductionResources;
 
 namespace Config.Building.Deliveries
 {
@@ -28,6 +30,8 @@ namespace Config.Building.Deliveries
         private ushort _contractRenewalTime = 30;
         public ushort contractRenewalTime => _contractRenewalTime;
 
-        //private double _dailyAllowanceKg;
+        [SerializeField, BoxGroup("Individual Contracts")]
+        private SerializableDictionary<TypeResource, float[]> d_percentageUsers = new();
+        public SerializableDictionary<TypeResource, float[]> percentageUsers => d_percentageUsers;
     }
 }

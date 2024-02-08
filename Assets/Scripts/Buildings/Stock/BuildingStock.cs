@@ -63,9 +63,19 @@ namespace Building.Stock
                 _costPurchase = _config.costPurchase;
         }
 
+        private bool IsThereAreEnoughEmployees()
+        {
+            foreach (var employee in _config.requiredEmployees.Dictionary.Keys)
+                if (IobjectsExpensesImplementation.Ihiring.GetAllEmployees().ContainsKey(employee) == false ||
+                    IobjectsExpensesImplementation.Ihiring.GetAllEmployees()[employee].Count < _config.requiredEmployees.Dictionary[employee])
+                    return false;
+
+            return true;
+        }
+
         void IBuilding.ConstantUpdatingInfo()
         {
-            if (isBuyed && isWorked)
+            if (isBuyed && isWorked && IsThereAreEnoughEmployees())
                 Debug.Log("Stock is work");
         }
 

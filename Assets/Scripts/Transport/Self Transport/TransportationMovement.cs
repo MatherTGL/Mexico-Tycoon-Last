@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Transport
 {
@@ -45,7 +46,6 @@ namespace Transport
             _minSpeed = _maxSpeed * _Itransportation.typeTransport.minSpeedPercentageMaxSpeed;
         }
 
-        //TODO: Refactoring
         private void CheckPosition()
         {
             var currentRoutePoint = _Itransportation.ItransportInteractRoute.routePoints[_indexCurrentRoutePoint];
@@ -88,11 +88,9 @@ namespace Transport
             return true;
         }
 
-        //TODO: Refactoring
         private bool IsBuildingWork(in bool isStartedPosition)
         {
             byte indexNextReception = Convert.ToByte(isStartedPosition);
-
             var jobStatus = _Itransportation.ItransportInteractRoute
                                             .GetPointsReception()[indexNextReception]
                                             .IbuildingRequest.IbuildingJobStatus;
@@ -104,12 +102,12 @@ namespace Transport
         }
 
         public void ChangeSpeed()
-            => _currentSpeed = UnityEngine.Random.Range(_minSpeed, _maxSpeed);
+            => _currentSpeed = Random.Range(_minSpeed, _maxSpeed);
 
         public void MovementTransport()
         {
             if (_Itransportation.transportationFuel.IsFuelAvailable() && _Itransportation.transportationBreakdowns.IsNotInRepair()
-                    && _Itransportation.transportationAwaiting == false)
+                    && _Itransportation.IsWait() == false)
             {
                 CheckPosition();
                 Move(_indexCurrentRoutePoint);

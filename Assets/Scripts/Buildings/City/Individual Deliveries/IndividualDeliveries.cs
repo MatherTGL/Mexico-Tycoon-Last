@@ -1,5 +1,6 @@
 using Config.Building.Deliveries;
 using Resources;
+using UnityEngine;
 using static Building.City.Deliveries.DeliveriesControl;
 
 namespace Building.City.Deliveries
@@ -31,6 +32,7 @@ namespace Building.City.Deliveries
                 return;
 
             _contractData.remainingContractTime--;
+            Debug.Log($"contractData.remainingContractTime: {_contractData.remainingContractTime} / isSigned: {_isSigned}");
         }
 
         bool IIndividualDeliveries.IsContractIsFinalized()
@@ -44,7 +46,8 @@ namespace Building.City.Deliveries
         void IDeliveriesType.UpdateContract(in DataIndividualDeliveries contractData)
             => _contractData = contractData;
 
-        TypeProductionResources.TypeResource IIndividualDeliveries.GetResourceBeingSent() => _contractData.resource;
+        TypeProductionResources.TypeResource IIndividualDeliveries.GetResourceBeingSent() 
+            => _contractData.resource;
 
         double IIndividualDeliveries.GetDailyAllowanceKg() => _contractData.dailyAllowanceKg;
 

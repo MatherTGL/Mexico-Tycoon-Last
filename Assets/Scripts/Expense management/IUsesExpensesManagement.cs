@@ -1,10 +1,10 @@
 using Config.Expenses;
-using UnityEngine;
+using Hire;
 using static Expense.ExpensesEnumTypes;
 
 namespace Expense
 {
-    public interface IUsesExpensesManagement
+    public interface IUsesExpensesManagement : IUsesHiring
     {
         IObjectsExpensesImplementation IobjectsExpensesImplementation { get; set; }
 

@@ -3,6 +3,8 @@ using Sirenix.OdinInspector;
 using System;
 using Resources;
 using System.Linq;
+using SerializableDictionary.Scripts;
+using static Config.Employees.ConfigEmployeeEditor;
 
 namespace Config.Building
 {
@@ -13,6 +15,10 @@ namespace Config.Building
         private uint[] _localCapacityProduction;
         public uint[] localCapacityProduction => _localCapacityProduction;
 
+        [SerializeField, BoxGroup("Parameters/Employees")]
+        [Tooltip("Required employees for the operation of the building, as well as their number")]
+        private SerializableDictionary<TypeEmployee, byte> d_requiredEmployees = new();
+        public SerializableDictionary<TypeEmployee, byte> requiredEmployees => d_requiredEmployees;
 
 #if UNITY_EDITOR
         [Button("Update Info Capacity")]

@@ -18,7 +18,11 @@ MonoBehaviour:
   - 5
   _typeProductionResource: 2
   _productionPerformance: 1
-  _productConversionStep: 5
-  _maintenanceExpenses: 150
   _localCapacityProduction: 0a0000000a0000000a0000000a0000000a000000
   _costPurchase: 150000
+  d_requiredEmployees:
+    _pairs:
+    - _key: 0
+      _value: 4
+    - _key: 1
+      _value: 2

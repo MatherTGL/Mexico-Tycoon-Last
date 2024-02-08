@@ -13,3 +13,9 @@ MonoBehaviour:
   m_Name: BuildingSeaPortConfig
   m_EditorClassIdentifier: 
   _localCapacityProduction: 0a0000000a0000000a0000000a0000000a000000
+  d_requiredEmployees:
+    _pairs:
+    - _key: 0
+      _value: 1
+    - _key: 1
+      _value: 4

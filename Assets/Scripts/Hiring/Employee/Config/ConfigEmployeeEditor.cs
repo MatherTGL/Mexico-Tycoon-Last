@@ -1,12 +1,14 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
+using static Resources.TypeProductionResources;
+using SerializableDictionary.Scripts;
 
 namespace Config.Employees
 {
     [CreateAssetMenu(fileName = "ConfigEmployeeDefault", menuName = "Config/Employee/Create New", order = 50)]
     public sealed class ConfigEmployeeEditor : ScriptableObject
     {
-        public enum TypeEmployee
+        public enum TypeEmployee : byte
         {
             Scientist, Guard, Grover
         }
@@ -24,7 +26,7 @@ namespace Config.Employees
         public byte rating => _rating;
 
         [SerializeField]
-        private byte _efficiency;
-        public byte efficiency => _efficiency;
+        private SerializableDictionary<TypeResource, ushort> d_productionEfficiency = new();
+        public SerializableDictionary<TypeResource, ushort> productionEfficiencyDictionary => d_productionEfficiency;
     }
 }

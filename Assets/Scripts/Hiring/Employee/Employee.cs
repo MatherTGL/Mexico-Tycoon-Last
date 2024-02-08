@@ -1,6 +1,7 @@
 using System;
 using Config.Employees;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Hire.Employee
 {
@@ -14,10 +15,9 @@ namespace Hire.Employee
             try
             {
                 var configs = UnityEngine.Resources.LoadAll<ConfigEmployeeEditor>(_pathEmployeesConfigs);
+                var randomNumberConfig = Random.Range(0, configs.Length);
 
-                var randomNumberConfig = UnityEngine.Random.Range(0, configs.Length);
                 config = configs[randomNumberConfig];
-
                 LoadAndRandomizeData();
             }
             catch (Exception exception)
@@ -32,13 +32,15 @@ namespace Hire.Employee
             LoadAndRandomizeData();
         }
 
+        //TODO: randomize data
         private void LoadAndRandomizeData()
         {
-            //TODO: randomize data
             typeEmployee = config.typeEmployee;
             paymentCostPerDay = config.paymentPerDay;
             rating = config.rating;
-            efficiency = config.efficiency;
+
+            foreach (var employee in config.productionEfficiencyDictionary.Dictionary.Keys)
+                efficiencyDictionary.Add(employee, config.productionEfficiencyDictionary.Dictionary[employee]);
         }
 
         public sealed override AbstractEmployee Clone() => new Employee(this);

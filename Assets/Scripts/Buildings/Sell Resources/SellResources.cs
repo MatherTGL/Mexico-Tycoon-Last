@@ -30,8 +30,6 @@ namespace Building.Additional
                         IndividualSell(building, i, drug);
 
                     _salesProfit += building.amountResources[drug] * _Icontract.GetResourceCosts(drug);
-                    DebugSystem.Log($"Sales profit in city: {this} / ${_salesProfit} / Contract cost: {_Icontract.GetResourceCosts(drug)}",
-                        DebugSystem.SelectedColor.Red, tag: "Deliveries");
                     building.amountResources[drug] = 0;
                 }
             }
