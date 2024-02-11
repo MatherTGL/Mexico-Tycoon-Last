@@ -27,7 +27,7 @@ namespace Transport
 
         private TypeTransport _futureConfigTypeTransport;
 
-        private Dictionary<byte, bool[]> d_loadAndUnloadStates = new Dictionary<byte, bool[]>();
+        private readonly Dictionary<byte, bool[]> d_loadAndUnloadStates = new();
 
         private TypeProductionResources.TypeResource _typeCurrentTransportResource;
 
@@ -83,17 +83,31 @@ namespace Transport
         private void SendRequestFromPosition(bool isStartedPosition)
         {
             if (isStartedPosition)
-                SendRequestsAndCheckWaitingCar(indexReception: 0, isFirstPosition: true);
+                AsyncSendRequestsAndCheckWaitingCar(indexReception: 0, isFirstPosition: true);
             else
-                SendRequestsAndCheckWaitingCar(indexReception: 1, isFirstPosition: false);
+                AsyncSendRequestsAndCheckWaitingCar(indexReception: 1, isFirstPosition: false);
         }
 
         //TODO: https://ru.yougile.com/team/bf00efa6ea26/#chat:b0f6f3738d74
-        private async void SendRequestsAndCheckWaitingCar(byte indexReception, bool isFirstPosition)
+        private async void AsyncSendRequestsAndCheckWaitingCar(byte indexReception, bool isFirstPosition)
         {
             if (_isWait)
                 return;
 
+            if (d_loadAndUnloadStates[indexReception][0] || d_loadAndUnloadStates[indexReception][^1] && _productLoad > 0)
+            {
+                await AsyncDelayLoadAndUnload(indexReception);
+
+                _isTransportationAwaiting = IsWaitLoadOrUnload(indexReception);
+                Debug.Log($"HAHAH: {IsWaitLoadOrUnload(indexReception)} / _isTransportationAwaiting: {_isTransportationAwaiting}");
+            }
+
+            if (IsWaitLoadOrUnload(indexReception) == false)
+                _transportationMovement.isFirstPosition = isFirstPosition;
+        }
+
+        private async Task AsyncDelayLoadAndUnload(byte indexReception)
+        {
             await Task.Run(async () =>
             {
                 _isWait = true;
@@ -104,11 +118,6 @@ namespace Transport
 
                 _isWait = false;
             });
-            
-            _isTransportationAwaiting = !IsWaitLoadOrUnload(indexReception);
-
-            if (IsWaitLoadOrUnload(indexReception))
-                _transportationMovement.isFirstPosition = isFirstPosition;
         }
 
         private void RequestLoad(in byte indexStateLoad, in byte indexReception)
@@ -134,16 +143,15 @@ namespace Transport
         {
             if (d_loadAndUnloadStates[indexReception][d_loadAndUnloadStates.Count - 1])
             {
-                if (_isWaitingReception && _productLoad < _typeTransport.capacity || !_isWaitingReception)
-                    return true;
+                if (_isWaitingReception && _productLoad < _typeTransport.capacity ||
+                    _isWaitingReception && _productLoad >= _typeTransport.capacity || !_isWaitingReception)
+                {
+                    return false;
+                }
             }
-            else
-            {
-                if (_isWaitingReception && _productLoad >= _typeTransport.capacity || !_isWaitingReception)
-                    return true;
-            }
+            else if (d_loadAndUnloadStates[indexReception][d_loadAndUnloadStates.Count - 1] == false) return false;
 
-            return false;
+            return true;
         }
 
         public void Dispose()
@@ -193,7 +201,7 @@ namespace Transport
                 d_loadAndUnloadStates[indexReception][indexLoadOrUnload] = isState;
         }
 
-        public void ChangeStateWaiting(in bool isState) 
+        public void ChangeStateWaiting(in bool isState)
             => _isWaitingReception = isState;
 
         bool ITransportation.IsWait()

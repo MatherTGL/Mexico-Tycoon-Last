@@ -120,7 +120,7 @@ namespace Transport
                 _impactOfObstaclesOnSpeed += obstacle.config.percentageImpactSpeed;
         }
 
-        ITransportReception[] ITransportInteractRoute.GetPointsReception() 
+        ITransportReception[] ITransportInteractRoute.GetPointsReception()
             => _IcreatorCurveRoad.GetPointsConnectionRoute();
 
         ushort[] IReRouteTransportation.SendTransportTransferRequest(

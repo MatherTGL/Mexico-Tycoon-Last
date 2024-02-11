@@ -46,7 +46,7 @@ namespace Building.City.Deliveries
 
             _IsellResources = new SellResources(_Ideliveries as IContract);
             _IsellWaitForSeconds = new WaitForSeconds(FindObjectOfType<TimeDateControl>().GetCurrentTimeOneDay());
-            _IproductDemand = new ProductDemand(_Ibuilding as IPotential—onsumers);
+            _IproductDemand = new ProductDemand(_Ibuilding as IPotentialConsumers);
 
             contract.Init(costResourcesConfig);
             _IcontractsGenerator.Init(costResourcesConfig.configForContracts);

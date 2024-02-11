@@ -1,6 +1,6 @@
 namespace Building.City
 {
-    public interface IPotential—onsumers
+    public interface IPotentialConsumers
     {
         uint GetCount();
     }

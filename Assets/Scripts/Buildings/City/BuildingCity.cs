@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Building.City
 {
-    public sealed class BuildingCity : AbstractBuilding, IBuilding, IUseBusiness, IPotentialÑonsumers
+    public sealed class BuildingCity : AbstractBuilding, IBuilding, IUseBusiness, IPotentialConsumers
     {
         private readonly CityPopulationReproduction _cityPopulationReproduction;
 
@@ -71,6 +71,6 @@ namespace Building.City
         void IUseBusiness.SellBusiness(in ushort indexBusiness)
             => _cityBusiness.SellBusiness(indexBusiness);
 
-        uint IPotentialÑonsumers.GetCount() => _population;
+        uint IPotentialConsumers.GetCount() => _population;
     }
 }
