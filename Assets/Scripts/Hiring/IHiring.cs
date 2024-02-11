@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Hire.Employee;
 using static Config.Employees.ConfigEmployeeEditor;
@@ -21,5 +20,7 @@ namespace Building.Hire
         void Firing(in byte indexEmployee);
 
         Dictionary<TypeEmployee, List<AbstractEmployee>> GetAllEmployees();
+
+        void UpdateAllEmployees();
     }
 }

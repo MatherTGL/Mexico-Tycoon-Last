@@ -97,9 +97,7 @@ namespace Transport
             if (d_loadAndUnloadStates[indexReception][0] || d_loadAndUnloadStates[indexReception][^1] && _productLoad > 0)
             {
                 await AsyncDelayLoadAndUnload(indexReception);
-
                 _isTransportationAwaiting = IsWaitLoadOrUnload(indexReception);
-                Debug.Log($"HAHAH: {IsWaitLoadOrUnload(indexReception)} / _isTransportationAwaiting: {_isTransportationAwaiting}");
             }
 
             if (IsWaitLoadOrUnload(indexReception) == false)

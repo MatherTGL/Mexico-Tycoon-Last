@@ -26,6 +26,7 @@ namespace Building.Hire
             _hireEmployeeView = new HireEmployeeView(this);
 
             StartCoroutine(UpdateInfo());
+            StartCoroutine(UpdatePossibleEmployees());
         }
 
         private IEnumerator UpdateInfo()
@@ -34,6 +35,15 @@ namespace Building.Hire
             {
                 _Ihiring.ConstantUpdatingInfo();
                 yield return _coroutineTimeStep;
+            }
+        }
+
+        private IEnumerator UpdatePossibleEmployees()
+        {
+            while (true)
+            {
+                _Ihiring.UpdateAllEmployees();
+                yield return new WaitForSeconds(5);
             }
         }
 

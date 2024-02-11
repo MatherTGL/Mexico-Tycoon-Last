@@ -10,9 +10,9 @@ namespace Building.Hire
 {
     public sealed class HireEmployeeModel : IHiring
     {
-        private Lazy<Dictionary<TypeEmployee, List<AbstractEmployee>>> d_employees = new();
+        private readonly Lazy<Dictionary<TypeEmployee, List<AbstractEmployee>>> d_employees = new();
 
-        private AbstractEmployee[] a_possibleEmployeesInShop = new AbstractEmployee[10];
+        private readonly AbstractEmployee[] a_possibleEmployeesInShop = new AbstractEmployee[10];
 
 #if UNITY_EDITOR
         AbstractEmployee[] IHiring.a_possibleEmployeesInShop => a_possibleEmployeesInShop;
@@ -70,5 +70,12 @@ namespace Building.Hire
         }
 
         Dictionary<TypeEmployee, List<AbstractEmployee>> IHiring.GetAllEmployees() => d_employees.Value;
+
+        void IHiring.UpdateAllEmployees()
+        {
+            Debug.Log("Invoke UpdateAllEmployees()");
+            for (byte i = 0; i < a_possibleEmployeesInShop.Length; i++)
+                a_possibleEmployeesInShop[i].Update();
+        }
     }
 }

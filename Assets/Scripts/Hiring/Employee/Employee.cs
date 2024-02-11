@@ -10,7 +10,15 @@ namespace Hire.Employee
         private const string _pathEmployeesConfigs = "Configs/Employees";
 
 
-        public Employee()
+        public Employee() => LoadRandomConfig();
+
+        private Employee(in AbstractEmployee employee)
+        {
+            config = employee.config;
+            LoadAndRandomizeData();
+        }
+
+        private void LoadRandomConfig()
         {
             try
             {
@@ -26,12 +34,6 @@ namespace Hire.Employee
             }
         }
 
-        private Employee(in AbstractEmployee employee)
-        {
-            config = employee.config;
-            LoadAndRandomizeData();
-        }
-
         //TODO: randomize data
         private void LoadAndRandomizeData()
         {
@@ -40,9 +42,11 @@ namespace Hire.Employee
             rating = config.rating;
 
             foreach (var employee in config.productionEfficiencyDictionary.Dictionary.Keys)
-                efficiencyDictionary.Add(employee, config.productionEfficiencyDictionary.Dictionary[employee]);
+                efficiencyDictionary.TryAdd(employee, config.productionEfficiencyDictionary.Dictionary[employee]);
         }
 
         public sealed override AbstractEmployee Clone() => new Employee(this);
+
+        public override void Update() => LoadRandomConfig();
     }
 }
