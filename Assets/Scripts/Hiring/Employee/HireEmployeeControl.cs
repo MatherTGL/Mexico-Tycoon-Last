@@ -3,11 +3,16 @@ using TimeControl;
 using System.Collections;
 using Sirenix.OdinInspector;
 using DebugCustomSystem;
+using Config.Employees;
+using System.Linq;
 
 namespace Building.Hire
 {
+    //! Adding in runtime on start game
     public sealed class HireEmployeeControl : MonoBehaviour
     {
+        private const string pathConfig = "Configs/Employees/";
+
         private IHiring _Ihiring;
         public IHiring Ihiring => _Ihiring;
 
@@ -15,13 +20,26 @@ namespace Building.Hire
 
         private TimeDateControl _timeControl;
 
+        private ConfigPossibleEmployeesInShopEditor _config;
+
         private WaitForSeconds _coroutineTimeStep;
 
+        private WaitForSeconds _coroutineTimeUpdateOffers;
+
+
+        private HireEmployeeControl() { }
 
         public void Init()
         {
+            try
+            {
+                _config = UnityEngine.Resources.FindObjectsOfTypeAll<ConfigPossibleEmployeesInShopEditor>().First();
+            }
+            catch (System.Exception ex) { throw new System.Exception($"{ex}"); }
+
             _timeControl = FindObjectOfType<TimeDateControl>();
             _coroutineTimeStep = new WaitForSeconds(_timeControl.GetCurrentTimeOneDay());
+            _coroutineTimeUpdateOffers = new WaitForSeconds(_config.timeUpdateOffers);
             _Ihiring = new HireEmployeeModel();
             _hireEmployeeView = new HireEmployeeView(this);
 
@@ -43,7 +61,7 @@ namespace Building.Hire
             while (true)
             {
                 _Ihiring.UpdateAllEmployees();
-                yield return new WaitForSeconds(5);
+                yield return _coroutineTimeUpdateOffers;
             }
         }
 

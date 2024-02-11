@@ -1,8 +1,8 @@
 using System;
+using System.Linq;
 using Config.Employees;
 using UnityEngine;
 using Random = UnityEngine.Random;
-
 namespace Hire.Employee
 {
     public sealed class Employee : AbstractEmployee
@@ -22,10 +22,10 @@ namespace Hire.Employee
         {
             try
             {
-                var configs = UnityEngine.Resources.LoadAll<ConfigEmployeeEditor>(_pathEmployeesConfigs);
-                var randomNumberConfig = Random.Range(0, configs.Length);
+                config = UnityEngine.Resources.LoadAll<ConfigEmployeeEditor>(_pathEmployeesConfigs)
+                    .OrderBy(rand => Random.Range(int.MinValue, int.MaxValue))
+                    .First();
 
-                config = configs[randomNumberConfig];
                 LoadAndRandomizeData();
             }
             catch (Exception exception)
@@ -47,6 +47,6 @@ namespace Hire.Employee
 
         public sealed override AbstractEmployee Clone() => new Employee(this);
 
-        public override void Update() => LoadRandomConfig();
+        public sealed override void Update() => LoadRandomConfig();
     }
 }
