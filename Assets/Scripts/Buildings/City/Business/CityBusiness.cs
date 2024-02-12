@@ -2,14 +2,17 @@ using System.Collections.Generic;
 using Business;
 using System.Linq;
 using Config.Building.Business;
+using UnityEngine;
 
 namespace Building.City.Business
 {
     public sealed class CityBusiness
     {
+        private const string pathToConfigs = "Configs/Buildings/City/Business";
+
         private ConfigCityBusinessEditor _config;
 
-        private List<IBusiness> l_purchasedBusinesses = new();
+        private readonly List<IBusiness> l_purchasedBusinesses = new();
 
         public enum TypeBusiness : byte { CarWash }
 
@@ -17,9 +20,7 @@ namespace Building.City.Business
 
 
         public CityBusiness(in IUseBusiness IcityBusiness)
-        {
-            IcityBusiness.updatedTimeStep += ConstantUpdatingInfo;
-        }
+            => IcityBusiness.updatedTimeStep += ConstantUpdatingInfo;
 
         public void BuyBusiness(in TypeBusiness typeBusiness)
         {
@@ -35,16 +36,19 @@ namespace Building.City.Business
 
         private void LoadDataFromConfig(TypeBusiness typeBusiness)
         {
-            _config = UnityEngine.Resources.FindObjectsOfTypeAll<ConfigCityBusinessEditor>()
-                        .Where(config => config.typeBusiness == typeBusiness)?.ElementAt(0);
+            try
+            {
+                _config = UnityEngine.Resources.LoadAll<ConfigCityBusinessEditor>(pathToConfigs)
+                           .Where(config => config.typeBusiness == typeBusiness)?.ElementAt(0);
+                Debug.Log($"config loadeed: {_config.name}");
+            }
+            catch (System.Exception) { throw new System.Exception(); }
 
             InitAdditionalParameters();
         }
 
         private void InitAdditionalParameters()
-        {
-            _costSell = _config.costPurchase / 2;
-        }
+            => _costSell = _config.costPurchase / 2;
 
         public void SellBusiness(in ushort indexBusiness)
         {

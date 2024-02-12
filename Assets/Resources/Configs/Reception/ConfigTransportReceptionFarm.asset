@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _typeConnectBuildings: 0605040301
   _typeCurrentBuilding: 2
-  _defaultConnectionCount: 2
+  _defaultConnectionCount: 3

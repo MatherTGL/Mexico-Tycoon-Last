@@ -20,7 +20,7 @@ namespace Route.Builder
         [ShowInInspector]
         private ITransportReception[] _positionPoints;
 
-        [SerializeField]
+        [SerializeField, EnumToggleButtons]
         private TypeTransport.Type _typeRoute;
         TypeTransport.Type ICreatorCurveRoad.typeRoute => _typeRoute;
 
@@ -110,20 +110,6 @@ namespace Route.Builder
                 return _biasDividerCurrent = Random.Range(_biasDividerMin * 0.7f, _biasDividerMin);
         }
 
-        private void SetRouteType()
-        {
-            //TODO: refactoring
-            var firstObject = _positionPoints[_indexPositionPointsFrom].typeCurrentBuilding;
-            var secondObject = _positionPoints[_indexPositionPointsTo].typeCurrentBuilding;
-
-            if (firstObject == TypeBuilding.Aerodrome && secondObject == TypeBuilding.Aerodrome)
-                _typeRoute = TypeTransport.Type.Air;
-            else if (firstObject == TypeBuilding.SeaPort && secondObject == TypeBuilding.SeaPort)
-                _typeRoute = TypeTransport.Type.Marine;
-            else
-                _typeRoute = TypeTransport.Type.Ground;
-        }
-
         Vector3[] ICreatorCurveRoad.GetRoutePoints()
         {
             Vector3[] allRoutePoints = new Vector3[_numberOfPoints];
@@ -139,13 +125,13 @@ namespace Route.Builder
 
         ITransportReception[] ICreatorCurveRoad.GetPointsConnectionRoute() => _positionPoints;
 
-        public void SetPositionPoints(ITransportReception firstPoint, ITransportReception secondPoint)
+        public void Generate(in ITransportReception firstPoint, in ITransportReception secondPoint, in TypeTransport.Type typeRoute)
         {
             _positionPoints = new ITransportReception[_maxPositionPoints];
             _positionPoints[_indexPositionPointsFrom] = firstPoint;
             _positionPoints[_indexPositionPointsTo] = secondPoint;
+            _typeRoute = typeRoute;
 
-            SetRouteType();
             DrawBizierCurve();
         }
     }

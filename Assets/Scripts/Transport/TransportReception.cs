@@ -23,7 +23,7 @@ namespace Transport.Reception
 
         TypeBuilding ITransportReception.typeCurrentBuilding => _configReception.typeCurrentBuilding;
 
-        private Dictionary<ITransportReception, GameObject> d_infoRouteConnect = new();
+        private readonly Dictionary<ITransportReception, GameObject> d_infoRouteConnect = new();
 
         private byte _freeConnectionCount;
 
@@ -34,20 +34,19 @@ namespace Transport.Reception
         {
             _routeBuilderControl = FindObjectOfType<RouteBuilderControl>();
             _IbuildingRequest = GetComponent<IBuildingRequestForTransport>();
-
             _freeConnectionCount = _configReception.defaultConnectionCount;
         }
 
         void IBoot.InitStart() { }
 
-        private void BuildRoute(in ITransportReception secondObject)
+        private void BuildRoute(in ITransportReception secondObject, in TypeTransport.Type typeRoute)
         {
             if (IsBuildingsWerePurchased(secondObject))
             {
                 CreatorCurveRoadControl createdRoute = Instantiate(_routeBuilderControl.config.prefabRoute,
                 Vector3.zero, Quaternion.identity);
 
-                createdRoute.SetPositionPoints(secondObject, this);
+                createdRoute.Generate(secondObject, this, typeRoute);
                 AddConnectionToDictionary(secondObject, createdRoute.gameObject);
                 secondObject.AddConnectionToDictionary(this, createdRoute.gameObject);
             }
@@ -70,7 +69,7 @@ namespace Transport.Reception
             return _IbuildingRequest.RequestGetResource(transportCapacity, typeResource);
         }
 
-        bool ITransportReception.IsRequestConnectionToUnloadRes(in float quantityForUnloading, 
+        bool ITransportReception.IsRequestConnectionToUnloadRes(in float quantityForUnloading,
             in TypeProductionResources.TypeResource typeResource)
         {
             return _IbuildingRequest.RequestUnloadResource(quantityForUnloading, typeResource);
@@ -82,12 +81,12 @@ namespace Transport.Reception
         public void AddConnectionToDictionary(in ITransportReception fromObject, in GameObject createdRouteObject)
             => d_infoRouteConnect.Add(fromObject, createdRouteObject);
 
-        public void ConnectionRequest(in ITransportReception fromObject)
+        public void ConnectionRequest(in ITransportReception fromObject, in TypeTransport.Type typeRoute)
         {
             if (d_infoRouteConnect.Count <= _configReception.defaultConnectionCount)
                 if (_configReception.typeConnectBuildings.Contains(fromObject.GetTypeBuilding()))
                     if (fromObject.IsConfirmRequest(this) && IsConfirmRequest(fromObject))
-                        BuildRoute(fromObject);
+                        BuildRoute(fromObject, typeRoute);
         }
 
         public bool IsConfirmRequest(in ITransportReception fromObject)

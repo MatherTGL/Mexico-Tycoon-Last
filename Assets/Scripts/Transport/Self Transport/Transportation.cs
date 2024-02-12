@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 using Resources;
 using Transport.Breakdowns;
 using Transport.Fuel;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 namespace Transport
 {
@@ -89,22 +92,25 @@ namespace Transport
         }
 
         //TODO: https://ru.yougile.com/team/bf00efa6ea26/#chat:b0f6f3738d74
-        private async void AsyncSendRequestsAndCheckWaitingCar(byte indexReception, bool isFirstPosition)
+        private async ValueTask AsyncSendRequestsAndCheckWaitingCar(byte indexReception, bool isFirstPosition)
         {
             if (_isWait)
                 return;
 
-            if (d_loadAndUnloadStates[indexReception][0] || d_loadAndUnloadStates[indexReception][^1] && _productLoad > 0)
+            await Task.Run(async () =>
             {
-                await AsyncDelayLoadAndUnload(indexReception);
-                _isTransportationAwaiting = IsWaitLoadOrUnload(indexReception);
-            }
+                if (d_loadAndUnloadStates[indexReception][0] || d_loadAndUnloadStates[indexReception][^1] && _productLoad > 0)
+                {
+                    await AsyncDelayLoadAndUnload(indexReception);
+                    _isTransportationAwaiting = IsWaitLoadOrUnload(indexReception);
+                }
+            });
 
             if (IsWaitLoadOrUnload(indexReception) == false)
                 _transportationMovement.isFirstPosition = isFirstPosition;
         }
 
-        private async Task AsyncDelayLoadAndUnload(byte indexReception)
+        private async ValueTask AsyncDelayLoadAndUnload(byte indexReception)
         {
             await Task.Run(async () =>
             {

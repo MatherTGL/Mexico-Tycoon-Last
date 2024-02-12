@@ -11,7 +11,7 @@ namespace Transport.Reception
         TypeBuilding typeCurrentBuilding { get; }
 
 
-        void ConnectionRequest(in ITransportReception fromObject);
+        void ConnectionRequest(in ITransportReception fromObject, in TypeTransport.Type routeType);
 
         bool IsConfirmRequest(in ITransportReception fromObject);
 

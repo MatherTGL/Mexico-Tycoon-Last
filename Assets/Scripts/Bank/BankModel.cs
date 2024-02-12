@@ -34,7 +34,7 @@ namespace Bank
                 double loan = d_affordableCredit[bank] * percentage / 100;
                 d_affordableCredit[bank] -= loan;
                 d_currentDebt[bank] += loan;
-                Debug.Log($"Current Debt: {d_currentDebt[bank]} / Affordable Credit: {d_affordableCredit[bank]}");
+                //!Debug.Log($"Current Debt: {d_currentDebt[bank]} / Affordable Credit: {d_affordableCredit[bank]}");
                 Data.DataControl.IdataPlayer.AddPlayerMoney(loan);
             }
         }
@@ -44,10 +44,10 @@ namespace Bank
             if (Data.DataControl.IdataPlayer.GetPlayerMoney() >= (d_currentDebt[bank] * percentage / 100))
             {
                 double repayment = d_currentDebt[bank] * percentage / 100;
-                Debug.Log(repayment);
+                //!Debug.Log(repayment);
                 d_currentDebt[bank] -= repayment;
                 d_affordableCredit[bank] += repayment;
-                Debug.Log($"AF: {d_affordableCredit[bank]} / CD: {d_currentDebt[bank]}");
+                //!Debug.Log($"AF: {d_affordableCredit[bank]} / CD: {d_currentDebt[bank]}");
                 Data.DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(repayment, SpendAndCheckMoneyState.Spend);
             }
         }
@@ -58,7 +58,7 @@ namespace Bank
             {
                 if (d_currentDebt[bank] > 0)
                     d_currentDebt[bank] += d_currentDebt[bank] * d_loanInterest[bank] / 100;
-                DebugSystem.Log($"Current debt in bank: {d_currentDebt[bank]}", DebugSystem.SelectedColor.Green, tag: "Bank");
+                //!DebugSystem.Log($"Current debt in bank: {d_currentDebt[bank]}", DebugSystem.SelectedColor.Green, tag: "Bank");
             }
         }
     }

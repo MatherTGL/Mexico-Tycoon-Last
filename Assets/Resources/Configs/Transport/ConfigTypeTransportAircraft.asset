@@ -15,18 +15,19 @@ MonoBehaviour:
   _prefab: {fileID: 6291475073526262561, guid: efd4c69d0d657e29280093f8de63072f, type: 3}
   _typeResource: 0
   _type: 1
-  _maxSpeed: 2
+  _maxSpeed: 600
   _minSpeedPercentageMaxSpeed: 0.9
   _capacity: 5
-  _maintenanceExpenses: 80
+  _maintenanceExpenses: 300
   _maxFuelLoad: 50
   _minFuelConsumptionInTimeStep: 1
   _maxFuelConsumptionInTimeStep: 2
   _fillingFuelRatePerTimeStep: 1
   _fuelCostPerLiter: 0.2
-  _costPurchase: 12.29
-  _repairCost: 10
+  _costPurchase: 10000
+  _repairCost: 1000
   _minStrength: 0
   _maxStrength: 100
   _damageInflicted: 10
   _speedOfRepairPerTimeStep: 1
+  _timeLoadAndUnloadInSeconds: 3

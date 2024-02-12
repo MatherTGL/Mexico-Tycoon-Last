@@ -73,7 +73,6 @@ namespace Building.Hire
 
         void IHiring.UpdateAllEmployees()
         {
-            Debug.Log("Invoke UpdateAllEmployees()");
             for (byte i = 0; i < a_possibleEmployeesInShop.Length; i++)
                 a_possibleEmployeesInShop[i].Update();
         }

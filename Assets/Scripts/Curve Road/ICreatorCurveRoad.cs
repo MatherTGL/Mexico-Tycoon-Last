@@ -2,7 +2,6 @@ using UnityEngine;
 using Transport.Reception;
 using Transport;
 
-
 namespace Route.Builder
 {
     public interface ICreatorCurveRoad

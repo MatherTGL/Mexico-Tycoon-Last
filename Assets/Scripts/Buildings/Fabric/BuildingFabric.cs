@@ -91,15 +91,22 @@ namespace Building.Fabric
 
         void IBuilding.ConstantUpdatingInfo()
         {
+            Debug.Log($"{this} / IsThereAreEnoughEmployees(): {IsThereAreEnoughEmployees()}");
             if (isBuyed && isWorked && IsThereAreEnoughEmployees())
                 _Iproduction.Production();
         }
 
+        //TODO: move to general class for buildings
         private bool IsThereAreEnoughEmployees()
         {
             foreach (var employee in _config.requiredEmployees.Dictionary.Keys)
             {
-                if (IobjectsExpensesImplementation.Ihiring.GetAllEmployees().ContainsKey(employee) == false 
+#if UNITY_EDITOR
+                if (IobjectsExpensesImplementation.Ihiring.GetAllEmployees().ContainsKey(employee))
+                    Debug.Log($"{IobjectsExpensesImplementation.Ihiring.GetAllEmployees()[employee].Count}");
+#endif
+
+                if (IobjectsExpensesImplementation.Ihiring.GetAllEmployees().ContainsKey(employee) == false
                     || IobjectsExpensesImplementation.Ihiring.GetAllEmployees()[employee].Count < _config.requiredEmployees.Dictionary[employee])
                     return false;
             }

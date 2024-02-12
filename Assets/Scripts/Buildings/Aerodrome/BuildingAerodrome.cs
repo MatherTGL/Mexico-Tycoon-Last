@@ -10,13 +10,17 @@ using Events.Buildings;
 
 namespace Building.Aerodrome
 {
-    public sealed class BuildingAerodrome : AbstractBuilding, IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IUsesExpensesManagement
+    public sealed class BuildingAerodrome : AbstractBuilding, IBuilding, IBuildingPurchased, IBuildingJobStatus, IEnergyConsumption, ISpending, IUsesExpensesManagement
     {
+        private readonly IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
+
+        IBuildingMonitorEnergy IEnergyConsumption.IbuildingMonitorEnergy => _IbuildingMonitorEnergy;
+
         IObjectsExpensesImplementation ISpending.IobjectsExpensesImplementation => IobjectsExpensesImplementation;
+
         IObjectsExpensesImplementation IUsesExpensesManagement.IobjectsExpensesImplementation
-        {
-            get => IobjectsExpensesImplementation; set => IobjectsExpensesImplementation = value;
-        }
+        { get => IobjectsExpensesImplementation; set => IobjectsExpensesImplementation = value; }
+
         IObjectsExpensesImplementation IUsesWeather.IobjectsExpensesImplementation => IobjectsExpensesImplementation;
 
         private ICountryBuildings _IcountryBuildings;
@@ -27,19 +31,13 @@ namespace Building.Aerodrome
         ConfigBuildingsEventsEditor IUsesBuildingsEvents.configBuildingsEvents => _config.configBuildingsEvents;
 
         Dictionary<TypeProductionResources.TypeResource, double> IBuilding.amountResources
-        {
-            get => d_amountResources; set => d_amountResources = value;
-        }
+        { get => d_amountResources; set => d_amountResources = value; }
 
         Dictionary<TypeProductionResources.TypeResource, double> IUsesBuildingsEvents.amountResources
-        {
-            get => d_amountResources; set => d_amountResources = value;
-        }
+        { get => d_amountResources; set => d_amountResources = value; }
 
         Dictionary<TypeProductionResources.TypeResource, uint> IBuilding.stockCapacity
-        {
-            get => d_stockCapacity; set => d_stockCapacity = value;
-        }
+        { get => d_stockCapacity; set => d_stockCapacity = value; }
 
         uint[] IBuilding.localCapacityProduction => _config.localCapacityProduction;
 
@@ -72,7 +70,12 @@ namespace Building.Aerodrome
         void IBuilding.ConstantUpdatingInfo()
         {
             if (isBuyed && isWorked && IsThereAreEnoughEmployees())
+            {
                 Debug.Log("Aerodrome is work");
+
+                foreach (var resource in d_amountResources.Keys)
+                    Debug.Log($"d_amountResources in aero: {this} / {resource} = {d_amountResources[resource]}");
+            }
         }
     }
 }

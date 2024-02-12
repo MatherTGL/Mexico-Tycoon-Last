@@ -8,6 +8,8 @@ using static Boot.Bootstrap;
 using Data;
 using static Data.Player.DataPlayer;
 using Config.Building.Route;
+using static Building.BuildingEnumType;
+using Transport;
 
 namespace Route.Builder
 {
@@ -48,13 +50,14 @@ namespace Route.Builder
         {
             try
             {
-                if (_connectionPoints.Length == _config.maxPointConnection && IsRouteLength())
+                TypeTransport.Type routeType = GetRouteType();
+                if (_connectionPoints.Length == _config.maxPointConnection && IsRouteLength(routeType))
                 {
                     if (IsBuyRoute() == false)
                         return;
 
                     if (typeConnect is TypeConnect.Connect)
-                        _connectionPoints[1].ConnectionRequest(_connectionPoints[0]);
+                        _connectionPoints[1].ConnectionRequest(_connectionPoints[0], routeType);
                     else
                         _connectionPoints[1].DisconnectRequest(_connectionPoints[0]);
                 }
@@ -69,18 +72,31 @@ namespace Route.Builder
             }
         }
 
+        private TypeTransport.Type GetRouteType()
+        {
+            var firstObject = _connectionPoints[0].typeCurrentBuilding;
+            var secondObject = _connectionPoints[^1].typeCurrentBuilding;
+
+            if (firstObject == TypeBuilding.Aerodrome && secondObject == TypeBuilding.Aerodrome)
+                return TypeTransport.Type.Air;
+            else if (firstObject == TypeBuilding.SeaPort && secondObject == TypeBuilding.SeaPort)
+                return TypeTransport.Type.Marine;
+            else
+                return TypeTransport.Type.Ground;
+        }
+
         private bool IsBuyRoute()
         {
             double totalCostRoute = _config.costRoute * Mathf.Abs(_routeLength);
             return DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(totalCostRoute, SpendAndCheckMoneyState.Spend);
         }
 
-        private bool IsRouteLength()
+        private bool IsRouteLength(in TypeTransport.Type routeType)
         {
             _routeLength = Vector2.Distance(_connectionPoints[0].GetPosition().position,
                                             _connectionPoints[1].GetPosition().position);
 
-            if (Mathf.RoundToInt(_routeLength) < _config.maxLengthRoute)
+            if (_config.maxLengthRoutes.ContainsKey(routeType) && _routeLength < _config.maxLengthRoutes[routeType])
                 return true;
             else
                 return false;

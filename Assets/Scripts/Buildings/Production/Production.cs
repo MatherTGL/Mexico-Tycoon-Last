@@ -12,7 +12,7 @@ namespace Building.Additional.Production
 
         private TypeResource _resource => _IproductionBuilding.typeProductionResource;
 
-        private Dictionary<TypeResource, ushort> d_currentCultivatedProducts = new();
+        private readonly Dictionary<TypeResource, ushort> d_currentCultivatedProducts = new();
 
         private uint[] localCapacityProduction => _IproductionBuilding.localCapacityProduction;
 
@@ -20,14 +20,13 @@ namespace Building.Additional.Production
 
         private bool _isCurrentlyInProduction;
 
-        
+
         public Production(in IProductionBuilding iproductionBuilding)
         {
             _IproductionBuilding = iproductionBuilding;
             d_currentCultivatedProducts.Add(_resource, 0);
         }
 
-        //TODO: test
         void IProduction.Production()
         {
             if (_IproductionBuilding.amountResources[_resource] < localCapacityProduction[(int)_resource])
@@ -48,8 +47,6 @@ namespace Building.Additional.Production
                     _currentPercentageOfMaturity = 0;
                     _isCurrentlyInProduction = false;
                 }
-
-                Debug.Log($"amountResources[_resource]: {this} / {_IproductionBuilding.amountResources[_resource]}");
             }
         }
 

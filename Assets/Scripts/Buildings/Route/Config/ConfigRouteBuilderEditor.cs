@@ -1,6 +1,8 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
 using Route.Builder;
+using UnityEngine.Rendering;
+using Transport;
 
 namespace Config.Building.Route
 {
@@ -15,9 +17,14 @@ namespace Config.Building.Route
         private CreatorCurveRoadControl _prefabRoute;
         public CreatorCurveRoadControl prefabRoute => _prefabRoute;
 
-        [SerializeField, MinValue(10), MaxValue(250), BoxGroup("Parameters")]
-        private byte _maxLengthRoute = 20;
-        public byte maxLengthRoute => _maxLengthRoute;
+        [SerializeField, BoxGroup("Parameters")]
+        private SerializedDictionary<TypeTransport.Type, float> d_maxLengthRoute = new()
+        {
+            { TypeTransport.Type.Air, 100 },
+            { TypeTransport.Type.Ground, 20 },
+            { TypeTransport.Type.Marine, 200 }
+        };
+        public SerializedDictionary<TypeTransport.Type, float> maxLengthRoutes => d_maxLengthRoute;
 
         [SerializeField, MinValue(100), BoxGroup("Parameters")]
         [Tooltip("total cost = _costRoute * (Mathf.Abs distance) between objects")]

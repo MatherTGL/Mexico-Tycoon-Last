@@ -21,7 +21,7 @@ namespace Building.Farm
         private ICountryBuildings _IcountryBuildings;
         ICountryBuildings IUsesCountryInfo.IcountryBuildings { get => _IcountryBuildings; set => _IcountryBuildings = value; }
 
-        private IProduction _Iproduction;
+        private readonly IProduction _Iproduction;
 
         IObjectsExpensesImplementation ISpending.IobjectsExpensesImplementation => IobjectsExpensesImplementation;
 
@@ -105,15 +105,20 @@ namespace Building.Farm
         private bool IsThereAreEnoughEmployees()
         {
             foreach (var employee in _config.requiredEmployees.Dictionary.Keys)
+            {
                 if (IobjectsExpensesImplementation.Ihiring.GetAllEmployees().ContainsKey(employee) == false ||
                     IobjectsExpensesImplementation.Ihiring.GetAllEmployees()[employee].Count < _config.requiredEmployees.Dictionary[employee])
+                {
                     return false;
+                }
+            }
 
             return true;
         }
 
         void IBuilding.ConstantUpdatingInfo()
         {
+            Debug.Log($"{this} / IsThereAreEnoughEmployees(): {IsThereAreEnoughEmployees()}");
             if (isWorked && isBuyed && IsGrowingSeason() && IsThereAreEnoughEmployees())
                 _Iproduction.Production();
         }
