@@ -52,7 +52,7 @@ namespace Building.Farm
 
         Dictionary<ConfigEmployeeEditor.TypeEmployee, byte> IProductionBuilding.requiredEmployees => _config.requiredEmployees.Dictionary;
 
-        private TypeProductionResources.TypeResource _typeProductionResource; //! move to Production class
+        private TypeProductionResources.TypeResource _typeProductionResource;
 
         List<TypeProductionResources.TypeResource> IProductionBuilding.requiredRawMaterials => _config.requiredRawMaterials;
 
@@ -105,7 +105,7 @@ namespace Building.Farm
         private bool IsConditionsAreMet()
         {
             bool isHiredEmployees = _InumberOfEmployees.IsThereAreEnoughEmployees(_config.requiredEmployees.Dictionary,
-                                                                                IobjectsExpensesImplementation.Ihiring.GetAllEmployees());
+                                                                                  IobjectsExpensesImplementation.Ihiring.GetAllEmployees());
 
             if (isBuyed && isWorked && isHiredEmployees && IsGrowingSeason())
                 return true;

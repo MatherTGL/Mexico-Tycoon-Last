@@ -17,7 +17,7 @@ namespace Building.Fabric
     {
         private readonly INumberOfEmployees _InumberOfEmployees = new NumberOfEmployees();
 
-        private IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
+        private readonly IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
         IBuildingMonitorEnergy IEnergyConsumption.IbuildingMonitorEnergy => _IbuildingMonitorEnergy;
 
         private ICountryBuildings _IcountryBuildings;
