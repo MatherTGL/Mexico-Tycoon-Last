@@ -2,7 +2,7 @@ namespace Building.Hire
 {
     public sealed class HireEmployeeView
     {
-        private HireEmployeeControl _hireEmployeeControl;
+        private readonly HireEmployeeControl _hireEmployeeControl;
 
 
         public HireEmployeeView(in HireEmployeeControl hireEmployeeControl)

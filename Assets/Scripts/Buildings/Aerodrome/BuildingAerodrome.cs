@@ -12,6 +12,8 @@ namespace Building.Aerodrome
 {
     public sealed class BuildingAerodrome : AbstractBuilding, IBuilding, IBuildingPurchased, IBuildingJobStatus, IEnergyConsumption, ISpending, IUsesExpensesManagement
     {
+        private readonly INumberOfEmployees _InumberOfEmployees = new NumberOfEmployees();
+
         private readonly IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
 
         IBuildingMonitorEnergy IEnergyConsumption.IbuildingMonitorEnergy => _IbuildingMonitorEnergy;
@@ -57,25 +59,21 @@ namespace Building.Aerodrome
                 _costPurchase = _config.costPurchase;
         }
 
-        private bool IsThereAreEnoughEmployees()
-        {
-            foreach (var employee in _config.requiredEmployees.Dictionary.Keys)
-                if (IobjectsExpensesImplementation.Ihiring.GetAllEmployees().ContainsKey(employee) == false ||
-                    IobjectsExpensesImplementation.Ihiring.GetAllEmployees()[employee].Count < _config.requiredEmployees.Dictionary[employee])
-                    return false;
-
-            return true;
-        }
-
         void IBuilding.ConstantUpdatingInfo()
         {
-            if (isBuyed && isWorked && IsThereAreEnoughEmployees())
-            {
+            if (IsConditionsAreMet())
                 Debug.Log("Aerodrome is work");
+        }
 
-                foreach (var resource in d_amountResources.Keys)
-                    Debug.Log($"d_amountResources in aero: {this} / {resource} = {d_amountResources[resource]}");
-            }
+        private bool IsConditionsAreMet()
+        {
+            bool hiredEmployees = _InumberOfEmployees.IsThereAreEnoughEmployees(_config.requiredEmployees.Dictionary,
+                                                                                IobjectsExpensesImplementation.Ihiring.GetAllEmployees());
+
+            if (isBuyed && isWorked && hiredEmployees)
+                return true;
+            else
+                return false;
         }
     }
 }

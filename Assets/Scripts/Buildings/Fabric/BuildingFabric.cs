@@ -15,13 +15,15 @@ namespace Building.Fabric
     public sealed class BuildingFabric : AbstractBuilding, IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption, IUsesExpensesManagement,
         IProductionBuilding
     {
+        private readonly INumberOfEmployees _InumberOfEmployees = new NumberOfEmployees();
+
         private IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
         IBuildingMonitorEnergy IEnergyConsumption.IbuildingMonitorEnergy => _IbuildingMonitorEnergy;
 
         private ICountryBuildings _IcountryBuildings;
         ICountryBuildings IUsesCountryInfo.IcountryBuildings { get => _IcountryBuildings; set => _IcountryBuildings = value; }
 
-        private IProduction _Iproduction;
+        private readonly IProduction _Iproduction;
 
         IObjectsExpensesImplementation ISpending.IobjectsExpensesImplementation => IobjectsExpensesImplementation;
         IObjectsExpensesImplementation IUsesExpensesManagement.IobjectsExpensesImplementation
@@ -91,27 +93,19 @@ namespace Building.Fabric
 
         void IBuilding.ConstantUpdatingInfo()
         {
-            Debug.Log($"{this} / IsThereAreEnoughEmployees(): {IsThereAreEnoughEmployees()}");
-            if (isBuyed && isWorked && IsThereAreEnoughEmployees())
+            if (IsConditionsAreMet())
                 _Iproduction.Production();
         }
 
-        //TODO: move to general class for buildings
-        private bool IsThereAreEnoughEmployees()
+        private bool IsConditionsAreMet()
         {
-            foreach (var employee in _config.requiredEmployees.Dictionary.Keys)
-            {
-#if UNITY_EDITOR
-                if (IobjectsExpensesImplementation.Ihiring.GetAllEmployees().ContainsKey(employee))
-                    Debug.Log($"{IobjectsExpensesImplementation.Ihiring.GetAllEmployees()[employee].Count}");
-#endif
+            bool hiredEmployees = _InumberOfEmployees.IsThereAreEnoughEmployees(_config.requiredEmployees.Dictionary,
+                                                                                IobjectsExpensesImplementation.Ihiring.GetAllEmployees());
 
-                if (IobjectsExpensesImplementation.Ihiring.GetAllEmployees().ContainsKey(employee) == false
-                    || IobjectsExpensesImplementation.Ihiring.GetAllEmployees()[employee].Count < _config.requiredEmployees.Dictionary[employee])
-                    return false;
-            }
-
-            return true;
+            if (isBuyed && isWorked && hiredEmployees)
+                return true;
+            else
+                return false;
         }
     }
 }

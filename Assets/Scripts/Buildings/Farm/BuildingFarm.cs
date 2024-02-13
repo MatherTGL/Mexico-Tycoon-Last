@@ -15,6 +15,8 @@ namespace Building.Farm
     public sealed class BuildingFarm : AbstractBuilding, IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption, IChangedFarmType, IUsesExpensesManagement,
         IProductionBuilding
     {
+        private readonly INumberOfEmployees _InumberOfEmployees = new NumberOfEmployees();
+
         private readonly IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
         IBuildingMonitorEnergy IEnergyConsumption.IbuildingMonitorEnergy => _IbuildingMonitorEnergy;
 
@@ -88,39 +90,35 @@ namespace Building.Farm
             _costPurchase = config.costPurchase;
         }
 
-        private bool IsGrowingSeason()
-        {
-            if (_config.typeFarm is ConfigBuildingFarmEditor.TypeFarm.Terrestrial)
-                return _config.growingSeasons.Contains(_IcountryBuildings.IclimateZone.GetCurrentSeason());
-            else
-                return true;
-        }
-
         private void CalculateTemporaryImpact(float impact)
         {
             double addingNumber = IobjectsExpensesImplementation.GetTotalExpenses() * impact / 100;
             IobjectsExpensesImplementation.ChangeSeasonExpenses(addingNumber);
         }
 
-        private bool IsThereAreEnoughEmployees()
-        {
-            foreach (var employee in _config.requiredEmployees.Dictionary.Keys)
-            {
-                if (IobjectsExpensesImplementation.Ihiring.GetAllEmployees().ContainsKey(employee) == false ||
-                    IobjectsExpensesImplementation.Ihiring.GetAllEmployees()[employee].Count < _config.requiredEmployees.Dictionary[employee])
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
         void IBuilding.ConstantUpdatingInfo()
         {
-            Debug.Log($"{this} / IsThereAreEnoughEmployees(): {IsThereAreEnoughEmployees()}");
-            if (isWorked && isBuyed && IsGrowingSeason() && IsThereAreEnoughEmployees())
+            if (IsConditionsAreMet())
                 _Iproduction.Production();
+        }
+
+        private bool IsConditionsAreMet()
+        {
+            bool hiredEmployees = _InumberOfEmployees.IsThereAreEnoughEmployees(_config.requiredEmployees.Dictionary,
+                                                                                IobjectsExpensesImplementation.Ihiring.GetAllEmployees());
+
+            if (isBuyed && isWorked && hiredEmployees && IsGrowingSeason())
+                return true;
+            else
+                return false;
+        }
+
+        private bool IsGrowingSeason()
+        {
+            if (_config.typeFarm is ConfigBuildingFarmEditor.TypeFarm.Terrestrial)
+                return _config.growingSeasons.Contains(_IcountryBuildings.IclimateZone.GetCurrentSeason());
+            else
+                return true;
         }
 
         void IChangedFarmType.ChangeType(in ConfigBuildingFarmEditor.TypeFarm typeFarm)

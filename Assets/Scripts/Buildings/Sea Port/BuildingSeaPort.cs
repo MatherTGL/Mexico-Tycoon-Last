@@ -30,19 +30,9 @@ namespace Building.SeaPort
         public BuildingSeaPort(in ScriptableObject config)
             => _config = (ConfigBuildingSeaPortEditor)config;
 
-        private bool IsThereAreEnoughEmployees()
-        {
-            foreach (var employee in _config.requiredEmployees.Dictionary.Keys)
-                if (IobjectsExpensesImplementation.Ihiring.GetAllEmployees().ContainsKey(employee) == false ||
-                    IobjectsExpensesImplementation.Ihiring.GetAllEmployees()[employee].Count < _config.requiredEmployees.Dictionary[employee])
-                    return false;
-
-            return true;
-        }
-
         void IBuilding.ConstantUpdatingInfo()
         {
-            if (isWorked && isBuyed && IsThereAreEnoughEmployees())
+            if (isWorked && isBuyed)
                 Debug.Log("Sea port is work");
         }
     }
