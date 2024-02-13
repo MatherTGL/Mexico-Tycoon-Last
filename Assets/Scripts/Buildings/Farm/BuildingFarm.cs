@@ -104,10 +104,10 @@ namespace Building.Farm
 
         private bool IsConditionsAreMet()
         {
-            bool hiredEmployees = _InumberOfEmployees.IsThereAreEnoughEmployees(_config.requiredEmployees.Dictionary,
+            bool isHiredEmployees = _InumberOfEmployees.IsThereAreEnoughEmployees(_config.requiredEmployees.Dictionary,
                                                                                 IobjectsExpensesImplementation.Ihiring.GetAllEmployees());
 
-            if (isBuyed && isWorked && hiredEmployees && IsGrowingSeason())
+            if (isBuyed && isWorked && isHiredEmployees && IsGrowingSeason())
                 return true;
             else
                 return false;
