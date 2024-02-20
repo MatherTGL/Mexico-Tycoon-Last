@@ -9,10 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e493752554940fd55b5a4146daa32969, type: 3}
-  m_Name: DefaultBankConfig 2
+  m_Script: {fileID: 11500000, guid: 8b73c2ca2f3e26c7bacf8881547bc145, type: 3}
+  m_Name: ConfigPoliceRaidEventDefault
   m_EditorClassIdentifier: 
-  _affordableCredit: 150000
-  _loanInterest: 8
-  _interestOnTheDeposit: 0.02
-  _maxDepositSum: 500000000

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Building.Additional;
 using Resources;
 
 namespace Building
@@ -41,7 +42,7 @@ namespace Building
         }
 
         bool IsSetResources(in float quantityResource,
-                          in TypeProductionResources.TypeResource typeResource)
+                            in TypeProductionResources.TypeResource typeResource)
         {
             if (stockCapacity.TryGetValue(typeResource, out uint capacity))
             {

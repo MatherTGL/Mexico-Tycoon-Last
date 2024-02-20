@@ -10,7 +10,8 @@ using UnityEngine;
 
 namespace Building.SeaPort
 {
-    public sealed class BuildingSeaPort : AbstractBuilding, IBuilding, IUsesExpensesManagement, IBuildingJobStatus, ISpending, IBuildingPurchased
+    public sealed class BuildingSeaPort : AbstractBuilding, IBuilding, IUsesExpensesManagement, IBuildingJobStatus, ISpending, IBuildingPurchased,
+        IPackaging
     {
         private readonly INumberOfEmployees _InumberOfEmployees = new NumberOfEmployees();
 

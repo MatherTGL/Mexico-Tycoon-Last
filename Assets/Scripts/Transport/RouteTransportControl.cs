@@ -23,7 +23,7 @@ namespace Transport
         [ShowInInspector, Required]
         private IReRouteTransportation _shiftRoute;
 
-        private TransportationDataStorage _transportationDataStorage = new TransportationDataStorage();
+        private readonly TransportationDataStorage _transportationDataStorage = new();
 
         private TimeDateControl _timeDateControl;
 
@@ -194,6 +194,7 @@ namespace Transport
             }
         }
 
+        //TODO: https://yougile.com/team/bf00efa6ea26/#MEX-48
         [Button("Load|Unload States")]
         private void ChangeLoadUnloadStates(in byte indexReception, in byte indexTypeState, in bool isState)
         {
@@ -222,34 +223,25 @@ namespace Transport
                 _shiftRoute?.SendTransportTransferRequest(_transportationDataStorage);
 
             for (ushort i = 0; i < _transportationDataStorage.l_purchasedTransportData.Count; i++)
-            {
-                _transportationDataStorage.l_purchasedTransportData[i]
-                                .ChangeRoute((ITransportInteractRoute)_shiftRoute);
-            }
+                _transportationDataStorage.l_purchasedTransportData[i].ChangeRoute((ITransportInteractRoute)_shiftRoute);
 
             _transportationDataStorage.RemoveObjectsFromList(indexesForCleanup);
         }
 
         [Button("Set Transfer Status")]
         private void SetNewStatusTransferTransportation(in ushort index, in bool isStatus)
-        {
-            _transportationDataStorage.SetTransferStatus(index, isStatus);
-        }
+            => _transportationDataStorage.SetTransferStatus(index, isStatus);
 
         [Button("Send Transport Repair")]
         private void SendVehicleForRepair()
-        {
-            _transportationDataStorage.l_purchasedTransportData[_indexTransportInList].SendVehicleForRepair();
-        }
+            => _transportationDataStorage.l_purchasedTransportData[_indexTransportInList].SendVehicleForRepair();
 
         [Button("Change Transportation")]
         private void ChangeTransportation()
         {
             if (IsRulesBuyingTransport(_indexTypeTransport))
-            {
                 _transportationDataStorage.ReplaceTransportation(_indexTransportInList,
-                                                             _allTypesTransport[_indexTypeTransport]);
-            }
+                                                                 _allTypesTransport[_indexTypeTransport]);
         }
     }
 }

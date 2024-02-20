@@ -5,6 +5,7 @@ using Config.Bank;
 using System.Collections;
 using TimeControl;
 using System;
+using static Boot.Bootstrap;
 
 namespace Bank
 {
@@ -36,8 +37,8 @@ namespace Bank
 
         void IBoot.InitStart() => StartCoroutine(UpdateData());
 
-        (Bootstrap.TypeLoadObject typeLoad, Bootstrap.TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
-            => (Bootstrap.TypeLoadObject.SimpleImportant, Bootstrap.TypeSingleOrLotsOf.Single);
+        (TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
+            => (TypeLoadObject.SimpleImportant, TypeSingleOrLotsOf.Single);
 
         private IEnumerator UpdateData()
         {
@@ -64,5 +65,17 @@ namespace Bank
             _bankModel.LoanRepayment(_percentageLoan, _configBanks[idBank]);
             _bankView.LoanRepayment();
         }
+
+        [Button("Put On Deposit"), DisableInEditorMode]
+        private void PutOnDeposit(double sum, byte idBank)
+            => _bankModel.PutOnDeposit(sum, _configBanks[idBank]);
+
+        [Button("Get Money From Depo"), DisableInEditorMode]
+        private void WithdrawMoneyFromTheDeposit(double sum, byte idBank)
+            => _bankModel.WithdrawMoneyFromTheDeposit(sum, _configBanks[idBank]);
+
+        [Button("Get Money On Depo"), DisableInEditorMode]
+        private void GetMoneyOnDeposit(byte idBank)
+            => Debug.Log($"Depo in this bank = {_bankModel.GetMoneyOnDeposit(_configBanks[idBank])}");
     }
 }

@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _affordableCredit: 300000
   _loanInterest: 24
+  _interestOnTheDeposit: 0.02
+  _maxDepositSum: 500000000

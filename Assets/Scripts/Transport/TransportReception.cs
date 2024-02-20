@@ -8,6 +8,7 @@ using Resources;
 using static Boot.Bootstrap;
 using static Building.BuildingEnumType;
 using Config.Transport.Reception;
+using static Resources.TypeProductionResources;
 
 namespace Transport.Reception
 {
@@ -63,17 +64,11 @@ namespace Transport.Reception
                 return false;
         }
 
-        float ITransportReception.GetRequestConnectionToLoadRes(in float transportCapacity,
-            in TypeProductionResources.TypeResource typeResource)
-        {
-            return _IbuildingRequest.RequestGetResource(transportCapacity, typeResource);
-        }
+        float ITransportReception.GetRequestConnectionToLoadRes(in float capacity, in TypeResource typeResource)
+            => _IbuildingRequest.RequestGetResource(capacity, typeResource);
 
-        bool ITransportReception.IsRequestConnectionToUnloadRes(in float quantityForUnloading,
-            in TypeProductionResources.TypeResource typeResource)
-        {
-            return _IbuildingRequest.RequestUnloadResource(quantityForUnloading, typeResource);
-        }
+        bool ITransportReception.IsRequestConnectionToUnloadRes(in float quantityForUnloading, in TypeResource typeResource)
+            => _IbuildingRequest.RequestUnloadResource(quantityForUnloading, typeResource);
 
         (TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
             => (TypeLoadObject.MediumImportant, TypeSingleOrLotsOf.LotsOf);

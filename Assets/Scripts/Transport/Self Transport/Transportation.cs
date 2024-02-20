@@ -17,20 +17,23 @@ namespace Transport
         private ITransportInteractRoute _ItransportInteractRoute;
         ITransportInteractRoute ITransportation.ItransportInteractRoute => _ItransportInteractRoute;
 
-        private TransportationFuel _transportationFuel;
+        private readonly TransportationFuel _transportationFuel;
         TransportationFuel ITransportation.transportationFuel => _transportationFuel;
 
-        private TransportationBreakdowns _transportationBreakdowns;
+        private readonly TransportationBreakdowns _transportationBreakdowns;
         TransportationBreakdowns ITransportation.transportationBreakdowns => _transportationBreakdowns;
 
-        private TransportationMovement _transportationMovement;
+        private readonly TransportationMovement _transportationMovement;
 
         private TypeTransport _typeTransport;
         public TypeTransport typeTransport => _typeTransport;
 
         private TypeTransport _futureConfigTypeTransport;
 
-        private readonly Dictionary<byte, bool[]> d_loadAndUnloadStates = new();
+        private readonly Dictionary<byte, bool[]> d_loadAndUnloadStates = new()
+        {
+            {0, new bool[2]}, {1, new bool[2]}
+        };
 
         private TypeProductionResources.TypeResource _typeCurrentTransportResource;
 
@@ -57,13 +60,6 @@ namespace Transport
             _transportationMovement = new(this, objectTransport);
 
             SubscribeToEvents();
-            InitDictionaryStates();
-        }
-
-        private void InitDictionaryStates()
-        {
-            for (byte i = 0; i != 2; i++)
-                d_loadAndUnloadStates.Add(i, new bool[2]);
         }
 
         private void SubscribeToEvents()
@@ -91,7 +87,6 @@ namespace Transport
                 AsyncSendRequestsAndCheckWaitingCar(indexReception: 1, isFirstPosition: false);
         }
 
-        //TODO: https://ru.yougile.com/team/bf00efa6ea26/#chat:b0f6f3738d74
         private async ValueTask AsyncSendRequestsAndCheckWaitingCar(byte indexReception, bool isFirstPosition)
         {
             if (_isWait)
@@ -153,7 +148,8 @@ namespace Transport
                     return false;
                 }
             }
-            else if (d_loadAndUnloadStates[indexReception][d_loadAndUnloadStates.Count - 1] == false) return false;
+            else if (d_loadAndUnloadStates[indexReception][d_loadAndUnloadStates.Count - 1] == false)
+                return false;
 
             return true;
         }

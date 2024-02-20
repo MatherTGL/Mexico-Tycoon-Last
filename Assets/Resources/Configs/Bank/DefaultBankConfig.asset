@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e493752554940fd55b5a4146daa32969, type: 3}
   m_Name: DefaultBankConfig
   m_EditorClassIdentifier: 
-  _averageAffordableCredit: 100000
+  _affordableCredit: 100000
+  _loanInterest: 4
+  _interestOnTheDeposit: 0.02
+  _maxDepositSum: 500000000

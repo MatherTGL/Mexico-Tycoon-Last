@@ -3,16 +3,20 @@ using UnityEngine;
 
 namespace Events.Buildings.Plants
 {
-    public sealed class PlantDiseasesEvent : IBuildingEvent
+    public sealed class PlantDiseasesEvent : MonoBehaviour, IBuildingEvent
     {
+        private IUsesBuildingsEvents _IusesBuildingsEvents;
+
         private ConfigEventPlantDiseases _config;
 
-        private List<IPlantDiseases> l_variousPlantEvents = new();
+        private readonly List<IPlantDiseases> l_variousPlantEvents = new();
 
 
-        public PlantDiseasesEvent(in ConfigEventPlantDiseases config)
+        void IBuildingEvent.Init(in ScriptableObject config)
         {
-            _config = config;
+            _config = config as ConfigEventPlantDiseases;
+            _IusesBuildingsEvents = GetComponent<IUsesBuildingsEvents>();
+
             CreateAllPlantDiseasesEvents();
         }
 
@@ -27,10 +31,10 @@ namespace Events.Buildings.Plants
                 l_variousPlantEvents.Add(plantDiseases);
         }
 
-        void IBuildingEvent.CheckConditionsAreMet(in IUsesBuildingsEvents buildingsEvents)
+        void IBuildingEvent.CheckConditionsAreMet()
         {
             for (byte i = 0; i < l_variousPlantEvents.Count; i++)
-                l_variousPlantEvents[i].Update(buildingsEvents);
+                l_variousPlantEvents[i].Update(_IusesBuildingsEvents);
         }
     }
 }

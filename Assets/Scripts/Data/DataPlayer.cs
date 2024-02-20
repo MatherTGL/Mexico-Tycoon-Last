@@ -6,7 +6,7 @@ namespace Data.Player
 {
     public sealed class DataPlayer : IDataPlayer
     {
-        private static readonly DataPlayer _instance = new DataPlayer();
+        private static readonly DataPlayer _instance = new();
         public static DataPlayer GetInstance => _instance;
 
         public enum SpendAndCheckMoneyState { Check, Spend }

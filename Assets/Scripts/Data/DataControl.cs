@@ -28,8 +28,6 @@ namespace Data
         void IBoot.InitStart() { }
 
         (TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
-        {
-            return (TypeLoadObject.SuperImportant, TypeSingleOrLotsOf.Single);
-        }
+            => (TypeLoadObject.SuperImportant, TypeSingleOrLotsOf.Single);
     }
 }

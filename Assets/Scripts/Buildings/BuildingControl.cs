@@ -75,6 +75,7 @@ namespace Building
             _IcityBusiness = _Ibuilding as IUseBusiness;
             _IbuildingPurchased = _Ibuilding as IBuildingPurchased;
 
+            ConnectProductPackaging();
             ConnectEventEditor();
             ConnectExpensesManagementControl();
             CreateDictionaryTypeDrugs();
@@ -116,6 +117,15 @@ namespace Building
             }
         }
 
+        private void ConnectProductPackaging()
+        {
+            if (_Ibuilding is IPackaging)
+            {
+                this.AddComponent<ProductPackagingService>();
+                GetComponent<IProductPackaging>().Init();
+            }
+        }
+
         private void CreateInstance()
         {
             if (_typeBuilding is TypeBuilding.City)
@@ -131,7 +141,7 @@ namespace Building
             {
                 _Ibuilding = new BuildingStock(_configSO);
                 this.AddComponent<WarehouseCleaning>().Init((ICleaningResources)_Ibuilding);
-            }  
+            }
             else if (_typeBuilding is TypeBuilding.Border)
                 _Ibuilding = new BuildingBorder(_configSO);
             else if (_typeBuilding is TypeBuilding.Aerodrome)

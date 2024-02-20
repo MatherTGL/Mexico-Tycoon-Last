@@ -13,5 +13,14 @@ namespace Config.Bank
         [SerializeField, MinValue(1), MaxValue(40)]
         private float _loanInterest = 4;
         public float loanInterest => _loanInterest;
+
+        [SerializeField, MinValue(0.01f), MaxValue(0.50f)]
+        [InfoBox("Add every time step", InfoMessageType.Warning)]
+        private float _interestOnTheDeposit = 0.02f;
+        public float interestOnTheDeposit => _interestOnTheDeposit;
+
+        [SerializeField, MinValue(10_000), MaxValue(double.MaxValue)]
+        private double _maxDepositSum = 500_000_000;
+        public double maxDepositSum => _maxDepositSum;
     }
 }

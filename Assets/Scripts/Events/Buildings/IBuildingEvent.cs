@@ -1,7 +1,11 @@
+using UnityEngine;
+
 namespace Events.Buildings
 {
     public interface IBuildingEvent
     {
-        void CheckConditionsAreMet(in IUsesBuildingsEvents buildingsEvents);
+        void Init(in ScriptableObject config);
+
+        void CheckConditionsAreMet();
     }
 }

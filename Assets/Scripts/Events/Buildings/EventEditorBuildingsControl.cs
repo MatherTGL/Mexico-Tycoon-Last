@@ -5,6 +5,8 @@ using Sirenix.OdinInspector;
 using System.Collections;
 using TimeControl;
 using Events.Buildings.Plants;
+using Events.Buildings.PoliceRaid;
+using Building.Additional;
 
 namespace Events.Buildings
 {
@@ -14,7 +16,7 @@ namespace Events.Buildings
         private IUsesBuildingsEvents _IusesBuildingsEvents;
 
         [ShowInInspector, ReadOnly]
-        private List<IBuildingEvent> l_allCreatedEvents = new();
+        private readonly List<IBuildingEvent> l_allCreatedEvents = new();
 
         private WaitForSeconds _timeStep;
 
@@ -39,21 +41,24 @@ namespace Events.Buildings
         private void CreateDependence(in BuildingEventTypes buildingEventTypes, in ScriptableObject config)
         {
             if (buildingEventTypes is BuildingEventTypes.PlantDiseases)
-                l_allCreatedEvents.Add(new PlantDiseasesEvent((ConfigEventPlantDiseases)config));
-        }
+                gameObject.AddComponent<PlantDiseasesEvent>();
+            else if (buildingEventTypes is BuildingEventTypes.PoliceRaid)
+                gameObject.AddComponent<PoliceRaidEvent>();
 
-        private void UpdateAllEvents()
-        {
+            l_allCreatedEvents.AddRange(GetComponents<IBuildingEvent>());
+
             for (byte i = 0; i < l_allCreatedEvents.Count; i++)
-                l_allCreatedEvents[i].CheckConditionsAreMet(_IusesBuildingsEvents);
+                l_allCreatedEvents[i].Init(config);
         }
 
         private IEnumerator UpdateEvents()
         {
             while (true)
             {
-                UpdateAllEvents();
                 yield return _timeStep;
+
+                for (byte i = 0; i < l_allCreatedEvents.Count; i++)
+                    l_allCreatedEvents[i].CheckConditionsAreMet();
             }
         }
     }
