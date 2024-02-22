@@ -8,7 +8,7 @@ namespace Events.Transport
 {
     public sealed class EventEditorTransportation : IEventTransportation
     {
-        private readonly ConfigTransportEventsEditor _config;
+        private readonly ConfigActiveTransportEventsEditor _config;
 
         private readonly ITransportInteractRoute _ItransportInteractRoute;
 
@@ -21,7 +21,7 @@ namespace Events.Transport
 
             try
             {
-                _config = UnityEngine.Resources.FindObjectsOfTypeAll<ConfigTransportEventsEditor>().First();
+                _config = UnityEngine.Resources.FindObjectsOfTypeAll<ConfigActiveTransportEventsEditor>()[0];
             }
             catch (System.Exception ex) { throw new System.Exception($"{ex}"); }
 
@@ -39,6 +39,9 @@ namespace Events.Transport
 
         void IEventTransportation.Update()
         {
+            for (byte i = 0; i < l_allTransportationEvents.Count; i++)
+                l_allTransportationEvents[i].CheckConditionsAreMet();
+
             Debug.Log("IEventTransportation.Update()");
         }
     }

@@ -22,7 +22,7 @@ namespace Building.Additional
         {
             try
             {
-                _config = UnityEngine.Resources.LoadAll<ConfigProductPackagingEditor>(pathToConfig).First();
+                _config = UnityEngine.Resources.LoadAll<ConfigProductPackagingEditor>(pathToConfig)[0];
             }
             catch (Exception ex) { throw new Exception($"{ex}"); }
         }

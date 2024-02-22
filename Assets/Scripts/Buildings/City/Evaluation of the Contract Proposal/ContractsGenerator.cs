@@ -1,6 +1,4 @@
 using Config.Building.Deliveries;
-using Mono.Cecil;
-using Resources;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -67,7 +65,7 @@ namespace Building.City.Deliveries
             while (drugType is (int)TypeResource.DirtyMoney);
 
             individualContractData.resource = (TypeResource)drugType;
-            
+
             if (IsContractAlreadyExists(individualContractData))
                 GenerateRandomParameters(ref individualContractData);
 
@@ -112,7 +110,7 @@ namespace Building.City.Deliveries
                     if (_Ideliveries.l_deliveriesType[i] is IIndividualDeliveries)
                         continue;
 
-                    if (_Ideliveries.l_deliveriesType[i] is IIndividualDeliveries contract && 
+                    if (_Ideliveries.l_deliveriesType[i] is IIndividualDeliveries contract &&
                         contract.IsContractIsFinalized() == false)
                     {
                         _Ideliveries.l_deliveriesType[i].UpdateTime();

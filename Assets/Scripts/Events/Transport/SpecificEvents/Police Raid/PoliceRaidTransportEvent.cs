@@ -1,4 +1,3 @@
-using System.Linq;
 using UnityEngine;
 
 namespace Events.Transport
@@ -12,7 +11,7 @@ namespace Events.Transport
         {
             try
             {
-                _config = UnityEngine.Resources.FindObjectsOfTypeAll<ConfigTransportPoliceRaidEventEditor>().First();
+                _config = UnityEngine.Resources.FindObjectsOfTypeAll<ConfigTransportPoliceRaidEventEditor>()[0];
             }
             catch (System.Exception ex) { throw new System.Exception($"{ex}"); }
         }

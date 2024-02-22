@@ -7,7 +7,7 @@ namespace Building.City.Deliveries
 {
     public sealed class IndividualDeliveries : IDeliveriesType, IIndividualDeliveries
     {
-        private TypeDeliveries _typeDeliveries = TypeDeliveries.Individual;
+        private readonly TypeDeliveries _typeDeliveries = TypeDeliveries.Individual;
         TypeDeliveries IDeliveriesType.typeDeliveries => _typeDeliveries;
 
         private readonly ConfigContractsEditor _config;
@@ -46,7 +46,7 @@ namespace Building.City.Deliveries
         void IDeliveriesType.UpdateContract(in DataIndividualDeliveries contractData)
             => _contractData = contractData;
 
-        TypeProductionResources.TypeResource IIndividualDeliveries.GetResourceBeingSent() 
+        TypeProductionResources.TypeResource IIndividualDeliveries.GetResourceBeingSent()
             => _contractData.resource;
 
         double IIndividualDeliveries.GetDailyAllowanceKg() => _contractData.dailyAllowanceKg;

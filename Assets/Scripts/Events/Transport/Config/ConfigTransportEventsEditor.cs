@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Config.Building.Events
 {
     [CreateAssetMenu(fileName = "TransportationEventsConfig", menuName = "Config/Transport/Events/Create New", order = 50)]
-    public sealed class ConfigTransportEventsEditor : ScriptableObject
+    public sealed class ConfigActiveTransportEventsEditor : ScriptableObject
     {
         [SerializeField]
         private List<TransportationEventTypes> l_activeEvents = new();

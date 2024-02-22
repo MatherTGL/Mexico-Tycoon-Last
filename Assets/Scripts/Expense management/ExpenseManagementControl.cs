@@ -10,10 +10,10 @@ namespace Expense
     public sealed class ExpenseManagementControl : MonoBehaviour, IExpensesManagement
     {
         [ShowInInspector, ReadOnly]
-        private List<IUsesExpensesManagement> l_usesExpensesObjects = new();
+        private readonly List<IUsesExpensesManagement> l_usesExpensesObjects = new();
 
         [ShowInInspector, ReadOnly]
-        private List<IObjectsExpensesImplementation> l_objectsExpensesImplementation = new();
+        private readonly List<IObjectsExpensesImplementation> l_objectsExpensesImplementation = new();
 
 
         private ExpenseManagementControl() { }

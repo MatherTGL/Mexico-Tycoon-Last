@@ -24,9 +24,7 @@ namespace Data.Player
         }
 
         void IDataPlayer.AddPlayerResearchPoints(in ushort amountResearchPoints)
-        {
-            _researchPoints += amountResearchPoints;
-        }
+            => _researchPoints += amountResearchPoints;
 
         bool IDataPlayer.CheckAndSpendingPlayerMoney(in double neededSum, in SpendAndCheckMoneyState state)
         {

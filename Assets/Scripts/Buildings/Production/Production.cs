@@ -8,7 +8,7 @@ namespace Building.Additional.Production
     {
         private readonly IProductionBuilding _IproductionBuilding;
 
-        private CalculateEfficiencyAdditionalEmployees _calculateEfficiencyAdditionalEmployees = new();
+        private readonly CalculateEfficiencyAdditionalEmployees _calculateEfficiencyAdditionalEmployees = new();
 
         private TypeResource _resource => _IproductionBuilding.typeProductionResource;
 

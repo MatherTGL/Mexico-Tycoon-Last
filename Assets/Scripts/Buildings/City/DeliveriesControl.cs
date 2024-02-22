@@ -8,7 +8,7 @@ namespace Building.City.Deliveries
 {
     public sealed class DeliveriesControl : MonoBehaviour, IDeliveries, IDeliveriesCurrentCosts, IContract
     {
-        private List<IDeliveriesType> l_deliveriesType = new();
+        private readonly List<IDeliveriesType> l_deliveriesType = new();
         List<IDeliveriesType> IDeliveries.l_deliveriesType => l_deliveriesType;
         List<IDeliveriesType> IContract.l_deliveriesType => l_deliveriesType;
 
@@ -39,7 +39,7 @@ namespace Building.City.Deliveries
 
             IIndividualDeliveries individualDeliveries = l_deliveriesType[indexContract] as IIndividualDeliveries;
 
-            if (individualDeliveries == null || individualDeliveries.IsSignedContract()) 
+            if (individualDeliveries == null || individualDeliveries.IsSignedContract())
                 return;
 
             individualDeliveries.SignedContract();
@@ -57,7 +57,7 @@ namespace Building.City.Deliveries
                     DebugSystem.Log($"Object: {this} Index: {i} Contract Type: {l_deliveriesType[i].typeDeliveries} / Res: {contract.GetResourceBeingSent()} / Cost: {l_deliveriesType[i].GetResourceCost(contract.GetResourceBeingSent())}",
                         DebugSystem.SelectedColor.Green, tag: "Deliveries");
                 }
-            }            
+            }
         }
 #endif
 
@@ -68,9 +68,9 @@ namespace Building.City.Deliveries
         }
 
         double IContract.GetResourceCosts(in TypeProductionResources.TypeResource typeResource)
-            => l_deliveriesType[l_deliveriesType.Count - 1].GetResourceCost(typeResource);
+            => l_deliveriesType[^1].GetResourceCost(typeResource);
 
         void IDeliveries.UpdateContract(in DataIndividualDeliveries dataIndividualDeliveries, in byte index)
-            => l_deliveriesType[index].UpdateContract(dataIndividualDeliveries); 
+            => l_deliveriesType[index].UpdateContract(dataIndividualDeliveries);
     }
 }

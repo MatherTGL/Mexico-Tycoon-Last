@@ -17,7 +17,7 @@ namespace Boot
 
         public enum TypeSingleOrLotsOf { Single, LotsOf }
 
-        private List<IBoot> l_bootObject = new List<IBoot>();
+        private List<IBoot> l_bootObject = new();
 
 
         private void Awake() => LoadToList();

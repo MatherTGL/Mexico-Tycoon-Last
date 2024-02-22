@@ -33,7 +33,7 @@ namespace Building.Hire
         {
             try
             {
-                _config = UnityEngine.Resources.LoadAll<ConfigPossibleEmployeesInShopEditor>(pathConfig).First();
+                _config = UnityEngine.Resources.LoadAll<ConfigPossibleEmployeesInShopEditor>(pathConfig)[0];
             }
             catch (System.Exception ex) { throw new System.Exception($"{ex}"); }
 

@@ -64,7 +64,7 @@ namespace Route.Builder
             }
             catch (Exception ex)
             {
-                DebugSystem.Log(ex, DebugSystem.SelectedColor.Red, "Exception", "Пролизошла ошибка: ");
+                DebugSystem.Log(ex, DebugSystem.SelectedColor.Red, "Exception", "Произошла ошибка: ");
             }
             finally
             {

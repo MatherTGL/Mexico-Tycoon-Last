@@ -1,6 +1,5 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
-using Boot;
 using Resources;
 
 namespace Building.Farm
@@ -11,9 +10,7 @@ namespace Building.Farm
 
 
         public void Init(in ICleaningResources cleaningResources)
-        {
-            _building = cleaningResources;
-        }
+            => _building = cleaningResources;
 
         [Button("Clear")]
         private void Clear(TypeProductionResources.TypeResource typeResource, double amount) => _building.Clear(typeResource, amount);

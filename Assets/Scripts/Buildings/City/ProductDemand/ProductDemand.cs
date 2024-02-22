@@ -6,7 +6,7 @@ namespace Building.City.Market
 {
     public sealed class ProductDemand : IProductDemand
     {
-        private IPotentialConsumers _IpotentialConsumers;
+        private readonly IPotentialConsumers _IpotentialConsumers;
 
         private readonly Dictionary<TypeResource, double> d_productDemandInKG = new();
 

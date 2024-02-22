@@ -14,7 +14,7 @@ namespace Expense
         private IHiring _Ihiring;
         IHiring IObjectsExpensesImplementation.Ihiring { get => _Ihiring; set => _Ihiring = value; }
 
-        private Dictionary<AreaExpenditureType, AbstractAreasExpenditure> d_IareasExpenditure = new();
+        private readonly Dictionary<AreaExpenditureType, AbstractAreasExpenditure> d_IareasExpenditure = new();
 
 
         public ExpensesBuildings(in ConfigExpensesManagementEditor config)
@@ -35,9 +35,7 @@ namespace Expense
 
         void IObjectsExpensesImplementation.ChangeExpenses(in double addNumber, in AreaExpenditureType typeExpenses,
                                                            in bool isAdd)
-        {
-            d_IareasExpenditure[typeExpenses].ChangeExpenses(addNumber, isAdd);
-        }
+            => d_IareasExpenditure[typeExpenses].ChangeExpenses(addNumber, isAdd);
 
         void IObjectsExpensesImplementation.ChangeSeasonExpenses(in double expenses)
             => d_IareasExpenditure[AreaExpenditureType.Production].ChangeSeasonExpenses(expenses);
