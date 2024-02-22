@@ -21,9 +21,7 @@ namespace Transport
         }
 
         private void RemoveObjectsFromList(in ushort index)
-        {
-            RemoveTransportationFromList(index);
-        }
+            => RemoveTransportationFromList(index);
 
         public void AddObject(in GameObject objectSprite, in Transportation objectData)
         {
@@ -46,13 +44,9 @@ namespace Transport
         }
 
         public void SetTransferStatus(in ushort index, in bool isStatus)
-        {
-            l_transportTransferStatus[index] = isStatus;
-        }
+            => l_transportTransferStatus[index] = isStatus;
 
         public void ReplaceTransportation(in ushort index, in TypeTransport typeTransport)
-        {
-            l_purchasedTransportData[index].SendRequestReplaceTypeTransport(typeTransport);
-        }
+            => l_purchasedTransportData[index].SendRequestReplaceTypeTransport(typeTransport);
     }
 }

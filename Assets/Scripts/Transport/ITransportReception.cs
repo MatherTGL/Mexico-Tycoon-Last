@@ -1,6 +1,7 @@
 using Resources;
 using UnityEngine;
 using static Building.BuildingEnumType;
+using static Resources.TypeProductionResources;
 
 namespace Transport.Reception
 {
@@ -19,11 +20,9 @@ namespace Transport.Reception
 
         bool IsConfirmDisconnectRequest(in ITransportReception fromObject);
 
-        float GetRequestConnectionToLoadRes(in float transportCapacity,
-            in TypeProductionResources.TypeResource typeResource);
+        float GetRequestConnectionToLoadRes(in float transportCapacity, in TypeResource typeResource);
 
-        bool IsRequestConnectionToUnloadRes(in float quantityForUnloading,
-            in TypeProductionResources.TypeResource typeResource);
+        bool IsRequestConnectionToUnloadRes(in float quantityForUnloading, in TypeResource typeResource);
 
         Transform GetPosition();
 

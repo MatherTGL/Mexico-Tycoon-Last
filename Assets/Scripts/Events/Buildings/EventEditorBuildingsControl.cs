@@ -5,36 +5,31 @@ using Sirenix.OdinInspector;
 using System.Collections;
 using TimeControl;
 using Events.Buildings.Plants;
-using Events.Buildings.PoliceRaid;
-using Building.Additional;
 
 namespace Events.Buildings
 {
     [RequireComponent(typeof(BuildingControl))]
-    public sealed class EventEditorBuildingsControl : MonoBehaviour, IEventEditorBuildings
+    public sealed class EventBuildingsEditorControl : MonoBehaviour, IEventEditorBuildings
     {
-        private IUsesBuildingsEvents _IusesBuildingsEvents;
-
         [ShowInInspector, ReadOnly]
-        private readonly List<IBuildingEvent> l_allCreatedEvents = new();
+        private readonly List<IUserEvent> l_allCreatedEvents = new();
 
         private WaitForSeconds _timeStep;
 
 
         void IEventEditorBuildings.Init(in IUsesBuildingsEvents IusesBuildingsEvents)
         {
-            _IusesBuildingsEvents = IusesBuildingsEvents;
             _timeStep = new WaitForSeconds(FindObjectOfType<TimeDateControl>().GetCurrentTimeOneDay());
 
-            for (byte i = 0; i < _IusesBuildingsEvents.configBuildingsEvents.activePossibleEvents.Count; i++)
+            for (byte i = 0; i < IusesBuildingsEvents.configBuildingsEvents.activePossibleEvents.Count; i++)
             {
-                var eventType = _IusesBuildingsEvents.configBuildingsEvents.activePossibleEvents[i].typeEvent;
-                var config = _IusesBuildingsEvents.configBuildingsEvents.activePossibleEvents[i].config;
+                var eventType = IusesBuildingsEvents.configBuildingsEvents.activePossibleEvents[i].typeEvent;
+                var config = IusesBuildingsEvents.configBuildingsEvents.activePossibleEvents[i].config;
 
                 CreateDependence(eventType, config);
             }
 
-            if (_IusesBuildingsEvents.configBuildingsEvents.activePossibleEvents.Count != 0)
+            if (IusesBuildingsEvents.configBuildingsEvents.activePossibleEvents.Count != 0)
                 StartCoroutine(UpdateEvents());
         }
 
@@ -42,10 +37,8 @@ namespace Events.Buildings
         {
             if (buildingEventTypes is BuildingEventTypes.PlantDiseases)
                 gameObject.AddComponent<PlantDiseasesEvent>();
-            else if (buildingEventTypes is BuildingEventTypes.PoliceRaid)
-                gameObject.AddComponent<PoliceRaidEvent>();
 
-            l_allCreatedEvents.AddRange(GetComponents<IBuildingEvent>());
+            l_allCreatedEvents.AddRange(GetComponents<IUserEvent>());
 
             for (byte i = 0; i < l_allCreatedEvents.Count; i++)
                 l_allCreatedEvents[i].Init(config);

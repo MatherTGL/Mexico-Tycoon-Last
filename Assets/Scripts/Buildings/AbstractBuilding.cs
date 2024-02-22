@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Expense;
-using Resources;
+using static Resources.TypeProductionResources;
 
 namespace Building
 {
@@ -8,9 +8,9 @@ namespace Building
     {
         protected IObjectsExpensesImplementation IobjectsExpensesImplementation;
 
-        protected Dictionary<TypeProductionResources.TypeResource, double> d_amountResources = new();
+        protected Dictionary<TypeResource, double> d_amountResources = new();
 
-        protected Dictionary<TypeProductionResources.TypeResource, uint> d_stockCapacity = new();
+        protected Dictionary<TypeResource, uint> d_stockCapacity = new();
 
         protected bool isWorked;
 

@@ -1,19 +1,19 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading;
 using System.Threading.Tasks;
+using Events.Transport;
 using Resources;
 using Transport.Breakdowns;
 using Transport.Fuel;
 using UnityEngine;
-using Debug = UnityEngine.Debug;
 
 namespace Transport
 {
     //TODO: refactoring
     public sealed class Transportation : ITransportation, IDisposable
     {
+        private IEventTransportation _IeventTransportation;
+
         private ITransportInteractRoute _ItransportInteractRoute;
         ITransportInteractRoute ITransportation.ItransportInteractRoute => _ItransportInteractRoute;
 
@@ -58,6 +58,7 @@ namespace Transport
             _transportationFuel = new(_typeTransport);
             _transportationBreakdowns = new(_typeTransport);
             _transportationMovement = new(this, objectTransport);
+            _IeventTransportation = new EventEditorTransportation(_ItransportInteractRoute);
 
             SubscribeToEvents();
         }
@@ -77,6 +78,7 @@ namespace Transport
             _transportationFuel.FuelConsumption();
             _transportationMovement.ChangeSpeed();
             _transportationBreakdowns.DamageVehicles();
+            _IeventTransportation.Update();
         }
 
         private void SendRequestFromPosition(bool isStartedPosition)

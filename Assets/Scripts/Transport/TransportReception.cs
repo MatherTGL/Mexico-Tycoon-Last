@@ -4,7 +4,6 @@ using Boot;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using System.Linq;
-using Resources;
 using static Boot.Bootstrap;
 using static Building.BuildingEnumType;
 using Config.Transport.Reception;

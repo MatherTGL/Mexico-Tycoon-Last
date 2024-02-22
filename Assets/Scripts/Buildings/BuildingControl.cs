@@ -6,7 +6,6 @@ using System.Collections;
 using Config.Building;
 using Building.Farm;
 using Transport.Reception;
-using Resources;
 using Building.Additional;
 using Building.Border;
 using Building.Fabric;
@@ -27,6 +26,7 @@ using Country.Climate.Weather;
 using Unity.VisualScripting;
 using Events.Buildings;
 using Building.City.Deliveries;
+using static Resources.TypeProductionResources;
 
 namespace Building
 {
@@ -53,8 +53,6 @@ namespace Building
         [SerializeField, Required, BoxGroup("Parameters"), HideLabel, PropertySpace(0, 5), DisableInPlayMode]
         private ScriptableObject _configSO; //TODO: maybe load from resources
 
-        private TimeDateControl _timeDateControl;
-
         private WaitForSeconds _coroutineTimeStep;
 
         [SerializeField, BoxGroup("Parameters"), EnumToggleButtons, HideLabel]
@@ -65,8 +63,7 @@ namespace Building
 
         void IBoot.InitAwake()
         {
-            _timeDateControl = FindObjectOfType<TimeDateControl>();
-            _coroutineTimeStep = new WaitForSeconds(_timeDateControl.GetCurrentTimeOneDay());
+            _coroutineTimeStep = new WaitForSeconds(FindObjectOfType<TimeDateControl>().GetCurrentTimeOneDay());
 
             if (_configSO != null)
                 CreateInstance();
@@ -112,7 +109,7 @@ namespace Building
         {
             if (_IbuildingPurchased != null)
             {
-                this.AddComponent<EventEditorBuildingsControl>();
+                this.AddComponent<EventBuildingsEditorControl>();
                 GetComponent<IEventEditorBuildings>().Init(_IbuildingPurchased);
             }
         }
@@ -204,17 +201,11 @@ namespace Building
             }
         }
 
-        float IBuildingRequestForTransport.RequestGetResource(in float transportCapacity,
-            in TypeProductionResources.TypeResource typeResource)
-        {
-            return _Ibuilding.GetResources(transportCapacity, typeResource);
-        }
+        float IBuildingRequestForTransport.RequestGetResource(in float capacity, in TypeResource typeResource)
+            => _Ibuilding.GetResources(capacity, typeResource);
 
-        bool IBuildingRequestForTransport.RequestUnloadResource(in float quantityResource,
-            in TypeProductionResources.TypeResource typeResource)
-        {
-            return _Ibuilding.IsSetResources(quantityResource, typeResource);
-        }
+        bool IBuildingRequestForTransport.RequestUnloadResource(in float quantity, in TypeResource typeResource)
+            => _Ibuilding.IsSetResources(quantity, typeResource);
 
         (TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
             => (TypeLoadObject.SuperImportant, TypeSingleOrLotsOf.LotsOf);

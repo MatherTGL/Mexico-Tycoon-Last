@@ -10,6 +10,7 @@ namespace Transport.Reception
 
 
         float RequestGetResource(in float transportCapacity, in TypeProductionResources.TypeResource typeResource);
+
         bool RequestUnloadResource(in float quantityResource, in TypeProductionResources.TypeResource typeResource);
     }
 }

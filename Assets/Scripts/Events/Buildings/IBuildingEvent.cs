@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Events.Buildings
 {
-    public interface IBuildingEvent
+    public interface IUserEvent
     {
         void Init(in ScriptableObject config);
 

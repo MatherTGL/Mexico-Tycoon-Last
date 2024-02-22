@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Events.Buildings.Plants
 {
-    public sealed class PlantDiseasesEvent : MonoBehaviour, IBuildingEvent
+    public sealed class PlantDiseasesEvent : MonoBehaviour, IUserEvent
     {
         private IUsesBuildingsEvents _IusesBuildingsEvents;
 
@@ -12,7 +12,7 @@ namespace Events.Buildings.Plants
         private readonly List<IPlantDiseases> l_variousPlantEvents = new();
 
 
-        void IBuildingEvent.Init(in ScriptableObject config)
+        void IUserEvent.Init(in ScriptableObject config)
         {
             _config = config as ConfigEventPlantDiseases;
             _IusesBuildingsEvents = GetComponent<IUsesBuildingsEvents>();
@@ -31,7 +31,7 @@ namespace Events.Buildings.Plants
                 l_variousPlantEvents.Add(plantDiseases);
         }
 
-        void IBuildingEvent.CheckConditionsAreMet()
+        void IUserEvent.CheckConditionsAreMet()
         {
             for (byte i = 0; i < l_variousPlantEvents.Count; i++)
                 l_variousPlantEvents[i].Update(_IusesBuildingsEvents);

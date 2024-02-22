@@ -2,7 +2,6 @@ using UnityEngine;
 using Transport.Reception;
 using Sirenix.OdinInspector;
 using Transport;
-using static Building.BuildingEnumType;
 
 namespace Route.Builder
 {
