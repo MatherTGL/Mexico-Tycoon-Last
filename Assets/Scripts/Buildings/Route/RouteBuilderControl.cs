@@ -93,8 +93,8 @@ namespace Route.Builder
 
         private bool IsRouteLength(in TypeTransport.Type routeType)
         {
-            _routeLength = Vector2.Distance(_connectionPoints[0].GetPosition().position,
-                                            _connectionPoints[1].GetPosition().position);
+            _routeLength = Vector2.Distance(_connectionPoints[0].GetTransform().position,
+                                            _connectionPoints[1].GetTransform().position);
 
             if (_config.maxLengthRoutes.ContainsKey(routeType) && _routeLength < _config.maxLengthRoutes[routeType])
                 return true;

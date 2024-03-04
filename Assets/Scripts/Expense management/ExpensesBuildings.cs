@@ -11,8 +11,10 @@ namespace Expense
     {
         private readonly ConfigExpensesManagementEditor _configExpensesManagement;
 
-        private IHiring _Ihiring;
-        IHiring IObjectsExpensesImplementation.Ihiring { get => _Ihiring; set => _Ihiring = value; }
+        private IHiringModel _IhiringModel;
+
+        IHiringModel IObjectsExpensesImplementation.IhiringModel
+        { get => _IhiringModel; set => _IhiringModel = value; }
 
         private readonly Dictionary<AreaExpenditureType, AbstractAreasExpenditure> d_IareasExpenditure = new();
 
@@ -30,7 +32,7 @@ namespace Expense
             d_IareasExpenditure.TryAdd(AreaExpenditureType.Security, new ExpensesOnSecurity(_configExpensesManagement));
             d_IareasExpenditure.TryAdd(AreaExpenditureType.Employees, new ExpensesOnEmployees());
 
-            d_IareasExpenditure[AreaExpenditureType.Employees].InitHiring(_Ihiring);
+            d_IareasExpenditure[AreaExpenditureType.Employees].InitHiring(_IhiringModel);
         }
 
         void IObjectsExpensesImplementation.ChangeExpenses(in double addNumber, in AreaExpenditureType typeExpenses,

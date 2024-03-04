@@ -4,7 +4,7 @@ namespace Events.Transport
 {
     public sealed class PoliceRaidTransportEvent : ITransportEvents
     {
-        private ConfigTransportPoliceRaidEventEditor _config;
+        private readonly ConfigTransportPoliceRaidEventEditor _config;
 
 
         public PoliceRaidTransportEvent()
@@ -18,6 +18,7 @@ namespace Events.Transport
 
         void ITransportEvents.CheckConditionsAreMet()
         {
+            //? WHAT
             Debug.Log("ITransportEvents.CheckConditionsAreMet()");
         }
     }

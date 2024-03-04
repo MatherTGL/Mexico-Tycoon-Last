@@ -59,9 +59,9 @@ namespace Route.Builder
             {
                 t = i / (_numberOfPoints - _numbersParameters[0]);
                 Vector3 p0 = (_numbersParameters[1] - t) * (_numbersParameters[2] - t)
-                            * _positionPoints[0].GetPosition().position;
+                            * _positionPoints[0].GetTransform().position;
                 Vector3 p1 = _numbersParameters[3] * t * (_numbersParameters[4] - t) * FindCenterPoint();
-                Vector3 p2 = t * t * _positionPoints[1].GetPosition().position;
+                Vector3 p2 = t * t * _positionPoints[1].GetTransform().position;
                 positionPoint = p0 + p1 + p2;
 
                 _lineRenderer.SetPosition(i, positionPoint);
@@ -70,11 +70,11 @@ namespace Route.Builder
 
         private Vector3 FindCenterPoint()
         {
-            _offsetCenterPoint = Vector3.Distance(_positionPoints[_indexPositionPointsFrom].GetPosition().position,
-                                                  _positionPoints[_indexPositionPointsTo].GetPosition().position) / _biasDividerCurrent;
+            _offsetCenterPoint = Vector3.Distance(_positionPoints[_indexPositionPointsFrom].GetTransform().position,
+                                                  _positionPoints[_indexPositionPointsTo].GetTransform().position) / _biasDividerCurrent;
 
-            Vector3 centerPosition = (_positionPoints[_indexPositionPointsFrom].GetPosition().position
-                + _positionPoints[_indexPositionPointsTo].GetPosition().position) / 2;
+            Vector3 centerPosition = (_positionPoints[_indexPositionPointsFrom].GetTransform().position
+                + _positionPoints[_indexPositionPointsTo].GetTransform().position) / 2;
 
             CalculateDirectionOfCurvature(ref centerPosition);
             return centerPosition;
@@ -82,8 +82,8 @@ namespace Route.Builder
 
         private void CalculateDirectionOfCurvature(ref Vector3 centerPosition)
         {
-            var pointTo = _positionPoints[_indexPositionPointsTo].GetPosition().position.y;
-            var pointFrom = _positionPoints[_indexPositionPointsFrom].GetPosition().position.y;
+            var pointTo = _positionPoints[_indexPositionPointsTo].GetTransform().position.y;
+            var pointFrom = _positionPoints[_indexPositionPointsFrom].GetTransform().position.y;
 
             if (pointTo > pointFrom)
             {
@@ -100,8 +100,8 @@ namespace Route.Builder
         //TODO: refactoring
         private float GetRandomBias()
         {
-            Vector3 distancePointA = _positionPoints[_indexPositionPointsFrom].GetPosition().position;
-            Vector3 distancePointB = _positionPoints[_indexPositionPointsTo].GetPosition().position;
+            Vector3 distancePointA = _positionPoints[_indexPositionPointsFrom].GetTransform().position;
+            Vector3 distancePointB = _positionPoints[_indexPositionPointsTo].GetTransform().position;
 
             if (Vector3.Distance(distancePointA, distancePointB) >= _minLenghtLongRoute)
                 return _biasDividerCurrent = Random.Range(_biasDividerMax * 0.5f, _biasDividerMax); //min\max long
@@ -120,7 +120,7 @@ namespace Route.Builder
         }
 
         Vector3 ICreatorCurveRoad.GetRouteMainPoint()
-            => _positionPoints[_indexPositionPointsFrom].GetPosition().position;
+            => _positionPoints[_indexPositionPointsFrom].GetTransform().position;
 
         ITransportReception[] ICreatorCurveRoad.GetPointsConnectionRoute() => _positionPoints;
 

@@ -10,8 +10,6 @@ namespace Building.Additional
     //! Add in runtime
     public sealed class ProductPackagingService : MonoBehaviour, IProductPackaging
     {
-        private const string pathToConfig = "Configs/Transportation";
-
         private ConfigProductPackagingEditor _config; //TODO: load from resource folder
 
         [SerializeField, ReadOnly]
@@ -22,7 +20,7 @@ namespace Building.Additional
         {
             try
             {
-                _config = UnityEngine.Resources.LoadAll<ConfigProductPackagingEditor>(pathToConfig)[0];
+                _config = UnityEngine.Resources.FindObjectsOfTypeAll<ConfigProductPackagingEditor>()[0];
             }
             catch (Exception ex) { throw new Exception($"{ex}"); }
         }

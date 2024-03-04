@@ -13,10 +13,10 @@ namespace Building.Hire
     {
         private const string pathConfig = "Configs/Employees/";
 
-        private IHiring _Ihiring;
-        public IHiring Ihiring => _Ihiring;
+        private IHiringModel _IhiringModel;
+        public IHiringModel IhiringModel => _IhiringModel;
 
-        private HireEmployeeView _hireEmployeeView;
+        private IHiringView _IhiringView;
 
         private TimeDateControl _timeControl;
 
@@ -40,8 +40,8 @@ namespace Building.Hire
             _timeControl = FindObjectOfType<TimeDateControl>();
             _coroutineTimeStep = new WaitForSeconds(_timeControl.GetCurrentTimeOneDay());
             _coroutineTimeUpdateOffers = new WaitForSeconds(_config.timeUpdateOffers);
-            _Ihiring = new HireEmployeeModel();
-            _hireEmployeeView = new HireEmployeeView(this);
+            _IhiringModel = new HireEmployeeModel();
+            _IhiringView = new HireEmployeeView(this);
 
             StartCoroutine(UpdateInfo());
             StartCoroutine(UpdatePossibleEmployees());
@@ -51,7 +51,7 @@ namespace Building.Hire
         {
             while (true)
             {
-                _Ihiring.ConstantUpdatingInfo();
+                _IhiringModel.ConstantUpdatingInfo();
                 yield return _coroutineTimeStep;
             }
         }
@@ -60,24 +60,24 @@ namespace Building.Hire
         {
             while (true)
             {
-                _Ihiring.UpdateAllEmployees();
+                _IhiringModel.UpdateAllEmployees();
                 yield return _coroutineTimeUpdateOffers;
             }
         }
 
         [Button("Hire Employee"), BoxGroup("Editor Control | Employees"), DisableInEditorMode]
-        private void HireEmployee(in byte indexEmployee) => _hireEmployeeView.HireEmployee(indexEmployee);
+        private void HireEmployee(in byte indexEmployee) => _IhiringView.HireEmployee(indexEmployee);
 
         [Button("Fire Employee"), BoxGroup("Editor Control | Employees"), DisableInEditorMode]
-        private void FireEmployee(in byte indexEmployee) => _hireEmployeeView.FireEmployee(indexEmployee);
+        private void FireEmployee(in byte indexEmployee) => _IhiringView.FireEmployee(indexEmployee);
 
 #if UNITY_EDITOR
         [Button("Get All Employees"), BoxGroup("Editor Control | Employees"), DisableInEditorMode]
         private void GetAllTypeEveryEmployee()
         {
-            for (byte i = 0; i < _Ihiring.a_possibleEmployeesInShop.Length; i++)
+            for (byte i = 0; i < _IhiringModel.a_possibleEmployeesInShop.Length; i++)
             {
-                DebugSystem.Log($"Object {this} | Employee type: {_Ihiring.a_possibleEmployeesInShop[i].typeEmployee} | Index: {i}",
+                DebugSystem.Log($"Object {this} | Employee type: {_IhiringModel.a_possibleEmployeesInShop[i].typeEmployee} | Index: {i}",
                     DebugSystem.SelectedColor.Orange, tag: "Employee");
             }
         }

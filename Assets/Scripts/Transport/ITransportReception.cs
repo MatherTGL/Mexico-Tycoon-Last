@@ -1,4 +1,3 @@
-using Resources;
 using UnityEngine;
 using static Building.BuildingEnumType;
 using static Resources.TypeProductionResources;
@@ -24,7 +23,7 @@ namespace Transport.Reception
 
         bool IsRequestConnectionToUnloadRes(in float quantityForUnloading, in TypeResource typeResource);
 
-        Transform GetPosition();
+        Transform GetTransform();
 
         TypeBuilding GetTypeBuilding();
 

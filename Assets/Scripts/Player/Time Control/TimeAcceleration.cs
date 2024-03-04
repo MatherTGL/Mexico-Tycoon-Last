@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace TimeControl.Acceleration
 {
+    //TODO: https://yougile.com/team/bf00efa6ea26/#chat:cb4fc05f4bea
     public sealed class TimeAcceleration
     {
         private readonly ConfigTimeControlEditor _configTimeControlEditor;

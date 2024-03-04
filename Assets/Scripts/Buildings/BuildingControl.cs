@@ -101,7 +101,7 @@ namespace Building
             if (_Ibuilding is IUsesHiring)
             {
                 gameObject.AddComponent<HireEmployeeControl>().Init();
-                _Ispending.IobjectsExpensesImplementation.Ihiring = GetComponent<HireEmployeeControl>().Ihiring;
+                _Ispending.IobjectsExpensesImplementation.IhiringModel = GetComponent<HireEmployeeControl>().IhiringModel;
             }
         }
 

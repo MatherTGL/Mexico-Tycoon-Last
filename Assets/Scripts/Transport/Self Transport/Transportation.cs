@@ -12,7 +12,7 @@ namespace Transport
     //TODO: refactoring
     public sealed class Transportation : ITransportation, IDisposable
     {
-        private IEventTransportation _IeventTransportation;
+        private readonly IEventTransportation _IeventTransportation;
 
         private ITransportInteractRoute _ItransportInteractRoute;
         ITransportInteractRoute ITransportation.ItransportInteractRoute => _ItransportInteractRoute;
@@ -58,7 +58,7 @@ namespace Transport
             _transportationFuel = new(_typeTransport);
             _transportationBreakdowns = new(_typeTransport);
             _transportationMovement = new(this, objectTransport);
-            _IeventTransportation = new EventEditorTransportation(_ItransportInteractRoute);
+            _IeventTransportation = new EventEditorTransportation();
 
             SubscribeToEvents();
         }

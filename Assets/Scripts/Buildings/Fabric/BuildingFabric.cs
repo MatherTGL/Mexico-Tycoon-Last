@@ -100,7 +100,7 @@ namespace Building.Fabric
         private bool IsConditionsAreMet()
         {
             bool isHiredEmployees = _InumberOfEmployees.IsThereAreEnoughEmployees(_config.requiredEmployees.Dictionary,
-                                                                                  IobjectsExpensesImplementation.Ihiring.GetAllEmployees());
+                                                                                  IobjectsExpensesImplementation.IhiringModel.GetAllEmployees());
 
             if (isBuyed && isWorked && isHiredEmployees)
                 return true;

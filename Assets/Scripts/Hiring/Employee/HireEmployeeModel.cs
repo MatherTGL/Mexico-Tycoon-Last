@@ -8,18 +8,18 @@ using static Data.Player.DataPlayer;
 
 namespace Building.Hire
 {
-    public sealed class HireEmployeeModel : IHiring
+    public sealed class HireEmployeeModel : IHiringModel
     {
         private readonly Lazy<Dictionary<TypeEmployee, List<AbstractEmployee>>> d_employees = new();
 
         private readonly AbstractEmployee[] a_possibleEmployeesInShop = new AbstractEmployee[10];
 
 #if UNITY_EDITOR
-        AbstractEmployee[] IHiring.a_possibleEmployeesInShop => a_possibleEmployeesInShop;
+        AbstractEmployee[] IHiringModel.a_possibleEmployeesInShop => a_possibleEmployeesInShop;
 #endif
 
         private Lazy<Dictionary<TypeEmployee, double>> d_employeeExpenses = new();
-        Lazy<Dictionary<TypeEmployee, double>> IHiring.d_employeeExpenses
+        Lazy<Dictionary<TypeEmployee, double>> IHiringModel.d_employeeExpenses
         { get => d_employeeExpenses; set => d_employeeExpenses = value; }
 
 
@@ -38,9 +38,9 @@ namespace Building.Hire
                                                                     SpendAndCheckMoneyState.Spend);
         }
 
-        void IHiring.ConstantUpdatingInfo() => Expenses();
+        void IHiringModel.ConstantUpdatingInfo() => Expenses();
 
-        void IHiring.Hire(in byte indexEmployee)
+        void IHiringModel.Hire(in byte indexEmployee)
         {
             var typeEmployee = a_possibleEmployeesInShop[indexEmployee].typeEmployee;
             Debug.Log($"Type Employee: {typeEmployee}");
@@ -57,7 +57,7 @@ namespace Building.Hire
             Debug.Log($"CurrentExpenses: {d_employeeExpenses.Value[typeEmployee]}");
         }
 
-        void IHiring.Firing(in byte indexEmployee)
+        void IHiringModel.Firing(in byte indexEmployee)
         {
             var typeEmployee = a_possibleEmployeesInShop[indexEmployee].typeEmployee;
 
@@ -69,9 +69,9 @@ namespace Building.Hire
             }
         }
 
-        Dictionary<TypeEmployee, List<AbstractEmployee>> IHiring.GetAllEmployees() => d_employees.Value;
+        Dictionary<TypeEmployee, List<AbstractEmployee>> IHiringModel.GetAllEmployees() => d_employees.Value;
 
-        void IHiring.UpdateAllEmployees()
+        void IHiringModel.UpdateAllEmployees()
         {
             for (byte i = 0; i < a_possibleEmployeesInShop.Length; i++)
                 a_possibleEmployeesInShop[i].Update();

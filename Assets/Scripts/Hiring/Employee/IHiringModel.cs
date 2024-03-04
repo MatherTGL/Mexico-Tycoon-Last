@@ -5,7 +5,7 @@ using static Config.Employees.ConfigEmployeeEditor;
 
 namespace Building.Hire
 {
-    public interface IHiring
+    public interface IHiringModel
     {
         Lazy<Dictionary<TypeEmployee, double>> d_employeeExpenses { get; set; }
 

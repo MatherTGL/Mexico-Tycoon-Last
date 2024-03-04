@@ -3,6 +3,7 @@ using System.Linq;
 using Config.Employees;
 using UnityEngine;
 using Random = UnityEngine.Random;
+
 namespace Hire.Employee
 {
     public sealed class Employee : AbstractEmployee

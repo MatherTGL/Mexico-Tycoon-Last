@@ -39,7 +39,8 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -89,8 +90,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "d540ed6c19b496ad",
@@ -106,7 +106,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Excalidraw/Drawing 2023-11-29 17.34.14.excalidraw.md",
+                "file": "Диздок/Основные механики/Управление.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -123,7 +123,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Excalidraw/Drawing 2023-11-29 17.34.14.excalidraw.md",
+                "file": "Диздок/Основные механики/Управление.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -146,7 +146,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Excalidraw/Drawing 2023-11-29 17.34.14.excalidraw.md"
+                "file": "Диздок/Основные механики/Управление.md"
               }
             }
           }
@@ -168,8 +168,9 @@
       "obsidian-excalidraw-plugin:Create new drawing": false
     }
   },
-  "active": "843d92fa96f65087",
+  "active": "4bf6cf435fe3f4db",
   "lastOpenFiles": [
+    "Excalidraw/Drawing 2023-11-29 17.34.14.excalidraw.md",
     "Диздок/Основные механики/Управление.md",
     "Диздок/Диздок.md.meta",
     "Диздок/Основные механики.meta",
@@ -182,7 +183,6 @@
     "ss_e688ecbe539df73e02535c3921c4fd3ff72aada0.1920x1080-2633484889.jpg",
     "Диздок/Основные механики",
     "Диздок",
-    "Excalidraw/Drawing 2023-11-29 17.34.14.excalidraw.md",
     "Механика контрактов.md",
     "Excalidraw/ContractsDrawing2024-01-05 14.54.50.excalidraw.md",
     "Excalidraw/ContractsDrawing2024-01-05 14.54.50.excalidraw.md.meta",

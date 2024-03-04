@@ -6,7 +6,7 @@ namespace Expense
 {
     public interface IObjectsExpensesImplementation
     {
-        IHiring Ihiring { get; set; }
+        IHiringModel IhiringModel { get; set; }
 
 
         double GetTotalExpenses();

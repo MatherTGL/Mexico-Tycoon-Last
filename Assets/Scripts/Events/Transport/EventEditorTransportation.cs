@@ -10,15 +10,11 @@ namespace Events.Transport
     {
         private readonly ConfigActiveTransportEventsEditor _config;
 
-        private readonly ITransportInteractRoute _ItransportInteractRoute;
-
         private readonly List<ITransportEvents> l_allTransportationEvents = new();
 
 
-        public EventEditorTransportation(in ITransportInteractRoute ItransportInteractRoute)
+        public EventEditorTransportation()
         {
-            _ItransportInteractRoute = ItransportInteractRoute;
-
             try
             {
                 _config = UnityEngine.Resources.FindObjectsOfTypeAll<ConfigActiveTransportEventsEditor>()[0];
