@@ -224,7 +224,8 @@ MonoBehaviour:
   - m_GUID: bcfe9b5970e848edc85413583d7e99b2
     m_Address: Configs/Buildings/Route/RouteBuilderConfigDefault
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Route
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fb4d3c93151d9cecc8bbabaef8bfed18
     m_Address: Configs/Buildings/Sea Port/BuildingSeaPortConfig

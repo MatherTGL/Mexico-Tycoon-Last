@@ -8,6 +8,7 @@ using static Data.Player.DataPlayer;
 
 namespace Building.Hire
 {
+    //TODO
     public sealed class HireEmployeeModel : IHiringModel
     {
         private readonly Lazy<Dictionary<TypeEmployee, List<AbstractEmployee>>> d_employees = new();

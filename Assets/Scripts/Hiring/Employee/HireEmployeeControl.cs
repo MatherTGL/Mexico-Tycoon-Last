@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Building.Hire
 {
-    //! Adding in runtime on start game
+    //* Adding in runtime on start game
     public sealed class HireEmployeeControl : MonoBehaviour
     {
         private IHiringModel _IhiringModel;
@@ -46,9 +46,7 @@ namespace Building.Hire
 
         private async Task AsyncLoadConfigAndCreateDependencies()
         {
-            var loadHandle = Addressables.LoadAssetsAsync<ConfigPossibleEmployeesInShopEditor>(
-                new List<string> { "PossibleEmployeesInShop" }, config => { }, Addressables.MergeMode.None);
-
+            var loadHandle = Addressables.LoadAssetsAsync<ConfigPossibleEmployeesInShopEditor>("PossibleEmployeesInShop", config => { });
             await loadHandle.Task;
 
             if (loadHandle.IsValid() && loadHandle.IsDone)

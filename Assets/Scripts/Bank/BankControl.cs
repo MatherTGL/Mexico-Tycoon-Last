@@ -10,6 +10,7 @@ using UnityEngine.AddressableAssets;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Bank
 {
@@ -42,12 +43,10 @@ namespace Bank
 
         private async Task AsyncLoadConfigsAndCreateDependencies()
         {
-            var loadHandle = Addressables.LoadAssetsAsync<ConfigBankEditor>(
-                new List<string> { "Bank" }, config => { }, Addressables.MergeMode.None);
-
+            var loadHandle = Addressables.LoadAssetsAsync<ConfigBankEditor>("Bank", config => { });
             await loadHandle.Task;
 
-            if (loadHandle.Status == UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded)
+            if (loadHandle.Status == AsyncOperationStatus.Succeeded)
                 _configBanks = loadHandle.Result.ToArray();
             else
                 throw new Exception("AsyncOperationStatus.Failed and config not loaded");

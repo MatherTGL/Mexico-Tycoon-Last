@@ -10,12 +10,14 @@ using static Data.Player.DataPlayer;
 using Config.Building.Route;
 using static Building.BuildingEnumType;
 using Transport;
+using System.Threading.Tasks;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Route.Builder
 {
     public sealed class RouteBuilderControl : MonoBehaviour, IBoot
     {
-        [SerializeField, Required, BoxGroup("Parameters")]
         private ConfigRouteBuilderEditor _config;
         public ConfigRouteBuilderEditor config => _config;
 
@@ -31,9 +33,10 @@ namespace Route.Builder
 
         private RouteBuilderControl() { }
 
-        void IBoot.InitAwake()
+        async void IBoot.InitAwake()
         {
             _inputControl = FindObjectOfType<InputControl>();
+            await AsyncLoadConfig();
             _connectionPoints = new ITransportReception[_config.maxPointConnection];
         }
 
@@ -41,6 +44,17 @@ namespace Route.Builder
 
         (TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
             => (TypeLoadObject.SuperImportant, TypeSingleOrLotsOf.Single);
+
+        private async Task AsyncLoadConfig()
+        {
+            var loadHandle = Addressables.LoadAssetAsync<ConfigRouteBuilderEditor>("Route");
+            await loadHandle.Task;
+
+            if (loadHandle.Status == AsyncOperationStatus.Succeeded)
+                _config = loadHandle.Result;
+            else
+                throw new Exception("AsyncOperationStatus.Failed and config not loaded");
+        }
 
         private void SendRequestConnect() => SendingRequest(TypeConnect.Connect);
 

@@ -1,5 +1,6 @@
 using Building.Additional;
 using Resources;
+using static Resources.TypeProductionResources;
 
 namespace Transport.Reception
 {
@@ -9,8 +10,8 @@ namespace Transport.Reception
         IBuildingJobStatus IbuildingJobStatus { get; }
 
 
-        float RequestGetResource(in float transportCapacity, in TypeProductionResources.TypeResource typeResource);
+        float RequestGetResource(in float transportCapacity, in TypeResource typeResource);
 
-        bool RequestUnloadResource(in float quantityResource, in TypeProductionResources.TypeResource typeResource);
+        bool RequestUnloadResource(in float quantityResource, in TypeResource typeResource);
     }
 }

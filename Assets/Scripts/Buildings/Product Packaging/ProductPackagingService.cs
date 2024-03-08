@@ -1,9 +1,9 @@
 using System;
-using System.Collections.Generic;
 using Config.Building.Deliveries.Packaging;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Building.Additional
 {
@@ -19,19 +19,16 @@ namespace Building.Additional
 
         async void IProductPackaging.Init()
         {
-            var loadHandle = Addressables.LoadAssetAsync<ConfigProductPackagingEditor>(
-               new List<string> { "ProductPackagingService" });
-
+            var loadHandle = Addressables.LoadAssetAsync<ConfigProductPackagingEditor>("ProductPackagingService");
             await loadHandle.Task;
 
-            if (loadHandle.Status == UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded)
+            if (loadHandle.Status == AsyncOperationStatus.Succeeded)
                 _config = loadHandle.Result;
             else
                 throw new Exception("AsyncOperationStatus.Failed and config not loaded");
         }
 
-        bool IProductPackaging.IsActive()
-            => _isActive;
+        bool IProductPackaging.IsActive() => _isActive;
 
 #if UNITY_EDITOR
         [Button("Change State"), BoxGroup("Editor only")]

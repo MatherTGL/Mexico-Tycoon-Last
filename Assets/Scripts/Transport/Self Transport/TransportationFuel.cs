@@ -29,7 +29,7 @@ namespace Transport.Fuel
         }
 
         public bool IsFuelAvailable()
-            => _currentFuelQuantity > 0 && !_isVehiclesAreRefueling ? true : false;
+            => _currentFuelQuantity > 0 && !_isVehiclesAreRefueling;
 
         private void RefuelTransportation()
         {

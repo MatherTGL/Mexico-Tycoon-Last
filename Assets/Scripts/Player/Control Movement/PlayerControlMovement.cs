@@ -10,13 +10,7 @@ namespace Player.Movement
     [RequireComponent(typeof(Rigidbody), typeof(InputControl), typeof(TimeDateControl))]
     internal sealed class PlayerControlMovement : MonoBehaviour, IBoot
     {
-#if UNITY_EDITOR
-        [ShowInInspector, ToggleLeft, BoxGroup("Parameters")]
-        [Title("Edit Parameters", horizontalLine: false), HideLabel]
-        private readonly bool _isEditParametersEditor;
-#endif
-
-        [SerializeField, Required, BoxGroup("Parameters/Configs"), EnableIf("_isEditParametersEditor")]
+        [SerializeField, Required, BoxGroup("Parameters/Configs")]
         [HideLabel, Title("Player Control Move", HorizontalLine = false)]
         private ConfigPlayerControlMoveEditor _configPlayerControlMove;
 
@@ -46,7 +40,7 @@ namespace Player.Movement
 
         void IBoot.InitStart() => DontDestroyOnLoad(gameObject);
 
-        private void Update() 
+        private void Update()
         {
             CalculateDirection();
             PlayerTransformClamp();

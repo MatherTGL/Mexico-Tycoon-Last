@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEngine;
 using static Resources.TypeProductionResources;
 
 namespace Building.Additional.Production

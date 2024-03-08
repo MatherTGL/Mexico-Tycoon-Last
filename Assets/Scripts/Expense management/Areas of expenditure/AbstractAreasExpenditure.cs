@@ -24,7 +24,7 @@ namespace Expense.Areas
                 _expenses -= expenses;
 
             _baseExpenses = _expenses;
-            _percentageQuality = Mathf.Clamp((int)(_expenses / 4), 10, 95); //!
+            _percentageQuality = Mathf.Clamp((int)(_expenses / 4), 10, 95);
         }
 
         public virtual void ChangeSeasonExpenses(in double expenses)

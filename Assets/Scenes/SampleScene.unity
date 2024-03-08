@@ -2645,6 +2645,10 @@ PrefabInstance:
       propertyPath: '_configBanks.Array.data[3]'
       value: 
       objectReference: {fileID: 11400000, guid: 94ab84e207bfd6344ae0554dbdc5f88a, type: 2}
+    - target: {fileID: 4379861757078235531, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
+      propertyPath: _config
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8688798508615415646, guid: 02065e06e79e4268b9747242f4e12812, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
