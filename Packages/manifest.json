@@ -2,6 +2,7 @@
   "dependencies": {
     "com.ikaroon.scripttemplater": "https://github.com/Ikaroon/ScriptTemplater.git",
     "com.matthewminer.consolation": "https://github.com/mminer/consolation.git",
+    "com.unity.addressables": "1.21.20",
     "com.unity.ai.navigation": "2.0.0",
     "com.unity.collab-proxy": "2.2.0",
     "com.unity.feature.2d": "2.0.0",

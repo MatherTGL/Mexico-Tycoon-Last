@@ -6,6 +6,8 @@ namespace Transport
 {
     public interface ITransportInteractRoute
     {
+        bool isUseTransportationPackaging { get; }
+
         event Action fixedUpdate;
 
         event Action updatedTimeStep;

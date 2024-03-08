@@ -10,11 +10,8 @@ using Events.Buildings;
 
 namespace Building.Aerodrome
 {
-    public sealed class BuildingAerodrome : AbstractBuilding, IBuilding, IBuildingPurchased, IBuildingJobStatus, IEnergyConsumption, ISpending, IUsesExpensesManagement,
-        IPackaging
+    public sealed class BuildingAerodrome : AbstractBuilding, IBuilding, IBuildingPurchased, IBuildingJobStatus, IEnergyConsumption, ISpending, IUsesExpensesManagement
     {
-        private IProductPackaging _IproductPackaging;
-
         private readonly INumberOfEmployees _InumberOfEmployees = new NumberOfEmployees();
 
         private readonly IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();

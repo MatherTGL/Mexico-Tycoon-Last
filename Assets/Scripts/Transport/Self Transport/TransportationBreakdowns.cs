@@ -5,7 +5,7 @@ namespace Transport.Breakdowns
 {
     public sealed class TransportationBreakdowns
     {
-        private TypeTransport _typeTransport;
+        private readonly TypeTransport _typeTransport;
 
         private ushort _currentStrength;
 

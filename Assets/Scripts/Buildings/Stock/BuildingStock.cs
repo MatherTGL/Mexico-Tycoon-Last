@@ -8,6 +8,7 @@ using Country;
 using Config.Building.Events;
 using Events.Buildings;
 using Building.Farm;
+using static Resources.TypeProductionResources;
 
 namespace Building.Stock
 {
@@ -76,7 +77,7 @@ namespace Building.Stock
                 return false;
         }
 
-        void ICleaningResources.Clear(in TypeProductionResources.TypeResource typeResource, in double amount)
+        void ICleaningResources.Clear(in TypeResource typeResource, in double amount)
         {
             if (d_amountResources.ContainsKey(typeResource) && d_amountResources[typeResource] - amount >= 0)
                 d_amountResources[typeResource] -= amount;

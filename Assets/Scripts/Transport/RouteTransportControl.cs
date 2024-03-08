@@ -14,7 +14,7 @@ using static Data.Player.DataPlayer;
 
 namespace Transport
 {
-    [RequireComponent(typeof(CreatorCurveRoadControl))]
+    [RequireComponent(typeof(CreatorCurveRoadControl), typeof(ProductPackagingService))]
     internal sealed class RouteTransportControl : MonoBehaviour, ITransportInteractRoute, IReRouteTransportation
     {
         [ShowInInspector]
@@ -22,6 +22,10 @@ namespace Transport
 
         [ShowInInspector, Required]
         private IReRouteTransportation _shiftRoute;
+
+        [ShowInInspector, ReadOnly]
+        private IProductPackaging _IproductPackaging;
+        bool ITransportInteractRoute.isUseTransportationPackaging => _IproductPackaging.IsActive();
 
         private readonly TransportationDataStorage _transportationDataStorage = new();
 
@@ -65,6 +69,7 @@ namespace Transport
             _IcreatorCurveRoad ??= GetComponent<ICreatorCurveRoad>();
             _timeDateControl ??= FindObjectOfType<TimeDateControl>();
             _coroutineTimeStep ??= new WaitForSeconds(_timeDateControl.GetCurrentTimeOneDay());
+            _IproductPackaging ??= GetComponent<IProductPackaging>();
 
             StartCoroutine(UpdateTimeStepCoroutine());
         }
@@ -114,9 +119,7 @@ namespace Transport
 
         private void OnTriggerEnter2D(Collider2D collisionObject)
         {
-            IObstacle obstacle = collisionObject.GetComponent(typeof(IObstacle)) as IObstacle;
-
-            if (obstacle != null)
+            if (collisionObject.GetComponent(typeof(IObstacle)) is IObstacle obstacle)
                 _impactOfObstaclesOnSpeed += obstacle.config.percentageImpactSpeed;
         }
 

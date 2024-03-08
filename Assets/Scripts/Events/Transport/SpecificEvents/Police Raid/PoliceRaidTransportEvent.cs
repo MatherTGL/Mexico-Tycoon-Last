@@ -1,3 +1,4 @@
+using Transport;
 using UnityEngine;
 
 namespace Events.Transport
@@ -6,9 +7,13 @@ namespace Events.Transport
     {
         private readonly ConfigTransportPoliceRaidEventEditor _config;
 
+        private readonly IEventsInfo _IeventsInfo; //! make general link in parent class
 
-        public PoliceRaidTransportEvent()
+
+        public PoliceRaidTransportEvent(in IEventsInfo IeventsInfo)
         {
+            _IeventsInfo = IeventsInfo;
+
             try
             {
                 _config = UnityEngine.Resources.FindObjectsOfTypeAll<ConfigTransportPoliceRaidEventEditor>()[0];
@@ -18,6 +23,8 @@ namespace Events.Transport
 
         void ITransportEvents.CheckConditionsAreMet()
         {
+            if (_IeventsInfo.isCargoPackaging)
+                Debug.Log("USE BLYAT PACKAGING SUKA NAXOY");
             //? WHAT
             Debug.Log("ITransportEvents.CheckConditionsAreMet()");
         }

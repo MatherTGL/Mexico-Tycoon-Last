@@ -9,6 +9,7 @@ using Config.Building.Events;
 using Events.Buildings;
 using Building.Additional.Production;
 using Config.Employees;
+using static Resources.TypeProductionResources;
 
 namespace Building.Farm
 {
@@ -38,27 +39,27 @@ namespace Building.Farm
 
         ConfigBuildingsEventsEditor IUsesBuildingsEvents.configBuildingsEvents => _config.configBuildingsEvents;
 
-        Dictionary<TypeProductionResources.TypeResource, double> IBuilding.amountResources
+        Dictionary<TypeResource, double> IBuilding.amountResources
         { get => d_amountResources; set => d_amountResources = value; }
 
-        Dictionary<TypeProductionResources.TypeResource, double> IProductionBuilding.amountResources
+        Dictionary<TypeResource, double> IProductionBuilding.amountResources
         { get => d_amountResources; set => d_amountResources = value; }
 
-        Dictionary<TypeProductionResources.TypeResource, double> IUsesBuildingsEvents.amountResources
+        Dictionary<TypeResource, double> IUsesBuildingsEvents.amountResources
         { get => d_amountResources; set => d_amountResources = value; }
 
-        Dictionary<TypeProductionResources.TypeResource, uint> IBuilding.stockCapacity
+        Dictionary<TypeResource, uint> IBuilding.stockCapacity
         { get => d_stockCapacity; set => d_stockCapacity = value; }
 
         Dictionary<ConfigEmployeeEditor.TypeEmployee, byte> IProductionBuilding.requiredEmployees => _config.requiredEmployees.Dictionary;
 
-        private TypeProductionResources.TypeResource _typeProductionResource;
+        private TypeResource _typeProductionResource;
 
-        List<TypeProductionResources.TypeResource> IProductionBuilding.requiredRawMaterials => _config.requiredRawMaterials;
+        List<TypeResource> IProductionBuilding.requiredRawMaterials => _config.requiredRawMaterials;
 
         List<float> IProductionBuilding.quantityRequiredRawMaterials => _config.quantityRequiredRawMaterials;
 
-        TypeProductionResources.TypeResource IProductionBuilding.typeProductionResource => _typeProductionResource;
+        TypeResource IProductionBuilding.typeProductionResource => _typeProductionResource;
 
         uint[] IBuilding.localCapacityProduction => _config.localCapacityProduction;
 

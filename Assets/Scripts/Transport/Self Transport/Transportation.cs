@@ -10,7 +10,7 @@ using UnityEngine;
 namespace Transport
 {
     //TODO: refactoring
-    public sealed class Transportation : ITransportation, IDisposable
+    public sealed class Transportation : ITransportation, IDisposable, IEventsInfo
     {
         private readonly IEventTransportation _IeventTransportation;
 
@@ -47,6 +47,9 @@ namespace Transport
 
         private volatile bool _isWait;
 
+        private bool _isCargoPackaging;
+        bool IEventsInfo.isCargoPackaging => _isCargoPackaging;
+
 
         public Transportation(in TypeTransport typeTransport,
                               in ITransportInteractRoute routeTransportControl,
@@ -58,7 +61,7 @@ namespace Transport
             _transportationFuel = new(_typeTransport);
             _transportationBreakdowns = new(_typeTransport);
             _transportationMovement = new(this, objectTransport);
-            _IeventTransportation = new EventEditorTransportation();
+            _IeventTransportation = new EventEditorTransportation(this);
 
             SubscribeToEvents();
         }
@@ -83,6 +86,9 @@ namespace Transport
 
         private void SendRequestFromPosition(bool isStartedPosition)
         {
+            _isCargoPackaging = _ItransportInteractRoute.isUseTransportationPackaging;
+            Debug.Log($"_isCargoPackaging in transport: {_isCargoPackaging}");
+
             if (isStartedPosition)
                 AsyncSendRequestsAndCheckWaitingCar(indexReception: 0, isFirstPosition: true);
             else

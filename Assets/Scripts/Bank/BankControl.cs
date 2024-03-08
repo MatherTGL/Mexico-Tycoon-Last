@@ -6,13 +6,16 @@ using System.Collections;
 using TimeControl;
 using System;
 using static Boot.Bootstrap;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.AddressableAssets;
+using System.Collections.Generic;
+using UnityEngine.ResourceManagement.ResourceLocations;
 
 namespace Bank
 {
     public sealed class BankControl : MonoBehaviour, IBoot
     {
-        [SerializeField, Required]
-        private ConfigBankEditor[] _configBanks;
+        private ConfigBankEditor[] _configBanks; //TODO: make load
         public ConfigBankEditor[] configBanks => _configBanks;
 
         private BankModel _bankModel;
@@ -31,8 +34,20 @@ namespace Bank
             float timeDateControl = FindObjectOfType<TimeDateControl>().GetCurrentTimeOneDay();
             _waitForSeconds = new WaitForSeconds(timeDateControl);
 
+            StartCoroutine(LoadConfigs());
+
             _bankModel = new BankModel(this);
             _bankView = new BankView(this);
+        }
+
+        private IEnumerator LoadConfigs()
+        {
+            AsyncOperationHandle<IList<IResourceLocation>> handle
+                = Addressables.LoadResourceLocationsAsync(
+                    new string[] { "knight", "villager" },
+                    Addressables.MergeMode.Union);
+
+            yield return handle;
         }
 
         void IBoot.InitStart() => StartCoroutine(UpdateData());

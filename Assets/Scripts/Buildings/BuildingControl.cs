@@ -72,7 +72,7 @@ namespace Building
             _IcityBusiness = _Ibuilding as IUseBusiness;
             _IbuildingPurchased = _Ibuilding as IBuildingPurchased;
 
-            ConnectProductPackaging();
+            //! ConnectProductPackaging();
             ConnectEventEditor();
             ConnectExpensesManagementControl();
             CreateDictionaryTypeDrugs();
@@ -111,15 +111,6 @@ namespace Building
             {
                 this.AddComponent<EventBuildingsEditorControl>();
                 GetComponent<IEventEditorBuildings>().Init(_IbuildingPurchased);
-            }
-        }
-
-        private void ConnectProductPackaging()
-        {
-            if (_Ibuilding is IPackaging)
-            {
-                this.AddComponent<ProductPackagingService>();
-                GetComponent<IProductPackaging>().Init();
             }
         }
 

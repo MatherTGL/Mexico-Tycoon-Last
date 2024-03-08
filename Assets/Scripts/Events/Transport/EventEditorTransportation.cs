@@ -8,27 +8,27 @@ namespace Events.Transport
 {
     public sealed class EventEditorTransportation : IEventTransportation
     {
+        private const byte numberAttemptsLoadConfig = 3;
+
         private readonly ConfigActiveTransportEventsEditor _config;
 
         private readonly List<ITransportEvents> l_allTransportationEvents = new();
 
 
-        public EventEditorTransportation()
+        public EventEditorTransportation(in IEventsInfo IeventsInfo)
         {
-            try
+            for (byte i = 0; i < numberAttemptsLoadConfig; i++)
             {
-                _config = UnityEngine.Resources.FindObjectsOfTypeAll<ConfigActiveTransportEventsEditor>()[0];
+                if (_config == null)
+                    _config = UnityEngine.Resources.FindObjectsOfTypeAll<ConfigActiveTransportEventsEditor>()[0];
             }
-            catch (System.Exception ex) { throw new System.Exception($"{ex}"); }
 
             for (byte indexEvent = 0; indexEvent < _config.activeEvents.Count; indexEvent++)
             {
                 if (_config.activeEvents[indexEvent] is TransportationEventTypes.PoliceRaid)
                 {
-                    if (l_allTransportationEvents.Any(item => item is PoliceRaidTransportEvent))
-                        return;
-
-                    l_allTransportationEvents.Add(new PoliceRaidTransportEvent());
+                    if (l_allTransportationEvents.Any(item => item is not PoliceRaidTransportEvent))
+                        l_allTransportationEvents.Add(new PoliceRaidTransportEvent(IeventsInfo));
                 }
             }
         }
