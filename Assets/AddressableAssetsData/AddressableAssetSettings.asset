@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 7db25c3aef3437cd7b871c0367e12bbf
   m_currentHash:
     serializedVersion: 2
-    Hash: f9c5d6c2c7499e459a7a41c86f0fee52
+    Hash: 00000000000000000000000000000000
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -89,6 +89,8 @@ MonoBehaviour:
     - default
     - Bank
     - PossibleEmployeesInShop
+    - Employee
+    - ProductPackagingService
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 5088a43da54f478b2bb46eb1e3f5d9ae, type: 2}

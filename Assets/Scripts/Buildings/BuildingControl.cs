@@ -72,7 +72,6 @@ namespace Building
             _IcityBusiness = _Ibuilding as IUseBusiness;
             _IbuildingPurchased = _Ibuilding as IBuildingPurchased;
 
-            //! ConnectProductPackaging();
             ConnectEventEditor();
             ConnectExpensesManagementControl();
             CreateDictionaryTypeDrugs();
@@ -100,7 +99,7 @@ namespace Building
         {
             if (_Ibuilding is IUsesHiring)
             {
-                gameObject.AddComponent<HireEmployeeControl>().Init();
+                gameObject.AddComponent<HireEmployeeControl>().Init(); //!
                 _Ispending.IobjectsExpensesImplementation.IhiringModel = GetComponent<HireEmployeeControl>().IhiringModel;
             }
         }
@@ -237,9 +236,7 @@ namespace Building
         [Button("Change Farm Type"), BoxGroup("Editor Control | Farm"), DisableInEditorMode]
         [ShowIf("@_typeBuilding == BuildingEnumType.TypeBuilding.Farm")]
         private void ChangeFarmTypeEditor(in ConfigBuildingFarmEditor.TypeFarm typeFarm)
-        {
-            ChangeFarmType(typeFarm);
-        }
+            => ChangeFarmType(typeFarm);
 
         #endregion
 
@@ -248,16 +245,12 @@ namespace Building
         [Button("Buy"), BoxGroup("Editor Control | City Business"), DisableInEditorMode]
         [ShowIf("@_typeBuilding == BuildingEnumType.TypeBuilding.City")]
         private void BuyBusiness(in CityBusiness.TypeBusiness typeBusiness)
-        {
-            _IcityBusiness.BuyBusiness(typeBusiness);
-        }
+            => _IcityBusiness.BuyBusiness(typeBusiness);
 
         [Button("Sell"), BoxGroup("Editor Control | City Business"), DisableInEditorMode]
         [ShowIf("@_typeBuilding == BuildingEnumType.TypeBuilding.City")]
         private void SellBusiness(in ushort indexBusiness)
-        {
-            _IcityBusiness.SellBusiness(indexBusiness);
-        }
+            => _IcityBusiness.SellBusiness(indexBusiness);
         #endregion
 #endif
     }

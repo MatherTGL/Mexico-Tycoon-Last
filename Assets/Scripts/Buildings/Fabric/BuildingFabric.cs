@@ -99,6 +99,8 @@ namespace Building.Fabric
 
         private bool IsConditionsAreMet()
         {
+            Debug.Log(@$"config in fabric: {_config} // {_InumberOfEmployees}
+                // {_config.requiredEmployees.Dictionary.Count} // {IobjectsExpensesImplementation.IhiringModel}");
             bool isHiredEmployees = _InumberOfEmployees.IsThereAreEnoughEmployees(_config.requiredEmployees.Dictionary,
                                                                                   IobjectsExpensesImplementation.IhiringModel.GetAllEmployees());
 

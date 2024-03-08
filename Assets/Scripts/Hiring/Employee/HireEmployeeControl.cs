@@ -6,7 +6,6 @@ using DebugCustomSystem;
 using Config.Employees;
 using UnityEngine.AddressableAssets;
 using System.Collections.Generic;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using System.Threading.Tasks;
 
 namespace Building.Hire
@@ -32,13 +31,13 @@ namespace Building.Hire
 
         public async void Init()
         {
-            await AsyncLoadConfigAndCreateDependencies();
-            Debug.Log(_config);
-
             _timeControl = FindObjectOfType<TimeDateControl>();
             _coroutineTimeStep = new WaitForSeconds(_timeControl.GetCurrentTimeOneDay());
             _IhiringModel = new HireEmployeeModel();
             _IhiringView = new HireEmployeeView(this);
+
+            await AsyncLoadConfigAndCreateDependencies();
+
             _coroutineTimeUpdateOffers = new WaitForSeconds(_config.timeUpdateOffers);
 
             StartCoroutine(UpdateInfo());

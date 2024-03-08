@@ -74,7 +74,7 @@ namespace Building.Hire
         void IHiringModel.UpdateAllEmployees()
         {
             for (byte i = 0; i < a_possibleEmployeesInShop.Length; i++)
-                a_possibleEmployeesInShop[i].Update();
+                a_possibleEmployeesInShop[i].UpdateOffers();
         }
     }
 }

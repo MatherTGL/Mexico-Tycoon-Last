@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using Config.Building.Deliveries.Packaging;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace Building.Additional
 {
@@ -9,19 +11,23 @@ namespace Building.Additional
     //! Add in runtime
     public sealed class ProductPackagingService : MonoBehaviour, IProductPackaging
     {
-        private ConfigProductPackagingEditor _config; //TODO: load from resource folder
+        private ConfigProductPackagingEditor _config;
 
         [SerializeField, ReadOnly]
         private bool _isActive;
 
 
-        void IProductPackaging.Init()
+        async void IProductPackaging.Init()
         {
-            try
-            {
-                _config = UnityEngine.Resources.FindObjectsOfTypeAll<ConfigProductPackagingEditor>()[0];
-            }
-            catch (Exception ex) { throw new Exception($"{ex}"); }
+            var loadHandle = Addressables.LoadAssetAsync<ConfigProductPackagingEditor>(
+               new List<string> { "ProductPackagingService" });
+
+            await loadHandle.Task;
+
+            if (loadHandle.Status == UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded)
+                _config = loadHandle.Result;
+            else
+                throw new Exception("AsyncOperationStatus.Failed and config not loaded");
         }
 
         bool IProductPackaging.IsActive()

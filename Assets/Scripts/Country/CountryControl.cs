@@ -11,6 +11,7 @@ using System.Linq;
 using Config.Country.Climate;
 using Config.Country.Inflation;
 using Country.Climate.Weather;
+using static Boot.Bootstrap;
 
 namespace Country
 {
@@ -54,8 +55,8 @@ namespace Country
 
         void IBoot.InitStart() => StartCoroutine(UpdateTick());
 
-        (Bootstrap.TypeLoadObject typeLoad, Bootstrap.TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
-            => (Bootstrap.TypeLoadObject.MediumImportant, Bootstrap.TypeSingleOrLotsOf.LotsOf);
+        (TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
+            => (TypeLoadObject.MediumImportant, TypeSingleOrLotsOf.LotsOf);
 
         private IEnumerator UpdateTick()
         {

@@ -7,7 +7,7 @@ namespace Boot
 {
     public sealed class Bootstrap : MonoBehaviour
     {
-        public enum TypeLoadObject
+        public enum TypeLoadObject : byte
         {
             SuperImportant,
             MediumImportant,

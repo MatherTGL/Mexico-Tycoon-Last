@@ -35,7 +35,6 @@ namespace Bank
             _waitForSeconds = new WaitForSeconds(timeDateControl);
 
             await AsyncLoadConfigsAndCreateDependencies();
-            Debug.Log(_configBanks[0]);
 
             _bankModel = new BankModel(this);
             _bankView = new BankView(this);

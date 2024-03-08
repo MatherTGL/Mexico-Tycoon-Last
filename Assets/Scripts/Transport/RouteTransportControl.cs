@@ -70,6 +70,7 @@ namespace Transport
             _timeDateControl ??= FindObjectOfType<TimeDateControl>();
             _coroutineTimeStep ??= new WaitForSeconds(_timeDateControl.GetCurrentTimeOneDay());
             _IproductPackaging ??= GetComponent<IProductPackaging>();
+            _IproductPackaging.Init();
 
             StartCoroutine(UpdateTimeStepCoroutine());
         }

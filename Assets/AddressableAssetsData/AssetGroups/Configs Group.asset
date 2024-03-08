@@ -69,17 +69,20 @@ MonoBehaviour:
   - m_GUID: 2ecacf122e47871d2b0a96bc912b0fef
     m_Address: Configs/Employees/ConfigEmployeeGrover
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Employee
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 64c5670f12e38061a8ab4baf189fd4c4
     m_Address: Configs/Employees/ConfigEmployeeGuard
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Employee
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 44aecf8cf247fba1b822d263be1d20aa
     m_Address: Configs/Employees/ConfigEmployeeScientist
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Employee
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: af5fb7bc128bfba00a849c1e6fb73e75
     m_Address: Configs/Employees/ConfigPossibleEmployeesShop
@@ -135,7 +138,8 @@ MonoBehaviour:
   - m_GUID: 43d16d7b721963caf83904dc595591ba
     m_Address: Configs/Transport/ConfigProductPackagingDefault
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - ProductPackagingService
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e8eccc81ae4b5820187698f12c8f0444
     m_Address: Configs/Transport/ConfigTypeTransportAircraft

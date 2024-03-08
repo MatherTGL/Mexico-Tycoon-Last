@@ -20,6 +20,6 @@ namespace Hire.Employee
 
         public abstract AbstractEmployee Clone();
 
-        public abstract void Update();
+        public abstract void UpdateOffers();
     }
 }

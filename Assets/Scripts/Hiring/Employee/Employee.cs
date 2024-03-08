@@ -1,17 +1,15 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Config.Employees;
-using UnityEngine;
+using UnityEngine.AddressableAssets;
 using Random = UnityEngine.Random;
 
 namespace Hire.Employee
 {
     public sealed class Employee : AbstractEmployee
     {
-        private const string _pathEmployeesConfigs = "Configs/Employees";
-
-
-        public Employee() => LoadRandomConfig();
+        public Employee() => AsyncLoadRandomConfig();
 
         private Employee(in AbstractEmployee employee)
         {
@@ -19,20 +17,19 @@ namespace Hire.Employee
             LoadAndRandomizeData();
         }
 
-        private void LoadRandomConfig()
+        private async void AsyncLoadRandomConfig()
         {
-            // try
-            // {
-            //     config = UnityEngine.Resources.LoadAll<ConfigEmployeeEditor>(_pathEmployeesConfigs)
-            //         .OrderBy(rand => Random.Range(int.MinValue, int.MaxValue))
-            //         .First();
+            var loadHandle = Addressables.LoadAssetsAsync<ConfigEmployeeEditor>(new List<string> { "Employee" },
+                conf => { }, Addressables.MergeMode.None);
 
-            //     LoadAndRandomizeData();
-            // }
-            // catch (Exception exception)
-            // {
-            //     Debug.Log($"employee config error: {exception}");
-            // }
+            await loadHandle.Task;
+
+            if (loadHandle.Status == UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded)
+                config = loadHandle.Result.OrderBy(rand => Random.Range(int.MinValue, int.MaxValue)).First();
+            else
+                throw new Exception("employee config error: {exception}");
+
+            LoadAndRandomizeData();
         }
 
         //TODO: randomize data
@@ -48,6 +45,6 @@ namespace Hire.Employee
 
         public sealed override AbstractEmployee Clone() => new Employee(this);
 
-        public sealed override void Update() => LoadRandomConfig();
+        public sealed override void UpdateOffers() => AsyncLoadRandomConfig();
     }
 }
