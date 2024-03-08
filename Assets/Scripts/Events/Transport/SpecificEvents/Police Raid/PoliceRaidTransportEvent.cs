@@ -1,24 +1,33 @@
+using System;
 using Transport;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Events.Transport
 {
     public sealed class PoliceRaidTransportEvent : ITransportEvents
     {
-        private readonly ConfigTransportPoliceRaidEventEditor _config;
+        private ConfigTransportPoliceRaidEventEditor _config;
 
-        private readonly IEventsInfo _IeventsInfo; //! make general link in parent class
+        private readonly IEventsInfo _IeventsInfo; //? make general link in parent class
 
 
         public PoliceRaidTransportEvent(in IEventsInfo IeventsInfo)
         {
             _IeventsInfo = IeventsInfo;
+            AsyncLoadConfig();
+        }
 
-            try
-            {
-                _config = UnityEngine.Resources.FindObjectsOfTypeAll<ConfigTransportPoliceRaidEventEditor>()[0];
-            }
-            catch (System.Exception ex) { throw new System.Exception($"{ex}"); }
+        private async void AsyncLoadConfig()
+        {
+            var loadHandle = Addressables.LoadAssetAsync<ConfigTransportPoliceRaidEventEditor>("TransportEventPoliceRaid");
+            await loadHandle.Task;
+
+            if (loadHandle.Status == AsyncOperationStatus.Succeeded)
+                _config = loadHandle.Result;
+            else
+                throw new Exception("AsyncOperationStatus.Failed and config not loaded");
         }
 
         void ITransportEvents.CheckConditionsAreMet()

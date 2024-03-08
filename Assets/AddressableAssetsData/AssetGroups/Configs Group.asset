@@ -305,7 +305,8 @@ MonoBehaviour:
   - m_GUID: e1c97521792543135a76675e7f58e5d1
     m_Address: Configs/Transport/Events/Police Raid/TransportPoliceRaidEventConfig
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - TransportEventPoliceRaid
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 654e276b0e24f304d86eab736ff22a01
     m_Address: Configs/Buildings/City/Deliveries/Contracts/ConfigDeliveriesCity

@@ -23,7 +23,6 @@ namespace Events.Buildings
 
             for (byte i = 0; i < IusesBuildingsEvents.configBuildingsEvents.activePossibleEvents.Count; i++)
             {
-                Debug.Log($"{IusesBuildingsEvents.configBuildingsEvents.activePossibleEvents[i].config}");
                 var eventType = IusesBuildingsEvents.configBuildingsEvents.activePossibleEvents[i].typeEvent;
                 var config = IusesBuildingsEvents.configBuildingsEvents.activePossibleEvents[i].config;
 
