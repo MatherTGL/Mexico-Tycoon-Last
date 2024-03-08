@@ -21,18 +21,18 @@ namespace Hire.Employee
 
         private void LoadRandomConfig()
         {
-            try
-            {
-                config = UnityEngine.Resources.LoadAll<ConfigEmployeeEditor>(_pathEmployeesConfigs)
-                    .OrderBy(rand => Random.Range(int.MinValue, int.MaxValue))
-                    .First();
+            // try
+            // {
+            //     config = UnityEngine.Resources.LoadAll<ConfigEmployeeEditor>(_pathEmployeesConfigs)
+            //         .OrderBy(rand => Random.Range(int.MinValue, int.MaxValue))
+            //         .First();
 
-                LoadAndRandomizeData();
-            }
-            catch (Exception exception)
-            {
-                Debug.Log($"employee config error: {exception}");
-            }
+            //     LoadAndRandomizeData();
+            // }
+            // catch (Exception exception)
+            // {
+            //     Debug.Log($"employee config error: {exception}");
+            // }
         }
 
         //TODO: randomize data

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c5636d93095664c50b1e5ae4afe7b395, type: 3}
-  m_Name: CostResourcesConf
+  m_Name: CostResources_movedConf
   m_EditorClassIdentifier: 
   _configForContracts: {fileID: 11400000, guid: 654e276b0e24f304d86eab736ff22a01, type: 2}
   _costSellResources: e8030000c8000000983a000000000000d0070000b0040000

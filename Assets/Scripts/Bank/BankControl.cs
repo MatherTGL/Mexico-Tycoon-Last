@@ -6,16 +6,16 @@ using System.Collections;
 using TimeControl;
 using System;
 using static Boot.Bootstrap;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.AddressableAssets;
 using System.Collections.Generic;
-using UnityEngine.ResourceManagement.ResourceLocations;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Bank
 {
     public sealed class BankControl : MonoBehaviour, IBoot
     {
-        private ConfigBankEditor[] _configBanks; //TODO: make load
+        private ConfigBankEditor[] _configBanks;
         public ConfigBankEditor[] configBanks => _configBanks;
 
         private BankModel _bankModel;
@@ -29,25 +29,29 @@ namespace Bank
 
         private BankControl() { }
 
-        void IBoot.InitAwake()
+        async void IBoot.InitAwake()
         {
             float timeDateControl = FindObjectOfType<TimeDateControl>().GetCurrentTimeOneDay();
             _waitForSeconds = new WaitForSeconds(timeDateControl);
 
-            StartCoroutine(LoadConfigs());
+            await AsyncLoadConfigsAndCreateDependencies();
+            Debug.Log(_configBanks[0]);
 
             _bankModel = new BankModel(this);
             _bankView = new BankView(this);
         }
 
-        private IEnumerator LoadConfigs()
+        private async Task AsyncLoadConfigsAndCreateDependencies()
         {
-            AsyncOperationHandle<IList<IResourceLocation>> handle
-                = Addressables.LoadResourceLocationsAsync(
-                    new string[] { "knight", "villager" },
-                    Addressables.MergeMode.Union);
+            var loadHandle = Addressables.LoadAssetsAsync<ConfigBankEditor>(
+                new List<string> { "Bank" }, config => { }, Addressables.MergeMode.None);
 
-            yield return handle;
+            await loadHandle.Task;
+
+            if (loadHandle.Status == UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded)
+                _configBanks = loadHandle.Result.ToArray();
+            else
+                throw new Exception("AsyncOperationStatus.Failed and config not loaded");
         }
 
         void IBoot.InitStart() => StartCoroutine(UpdateData());

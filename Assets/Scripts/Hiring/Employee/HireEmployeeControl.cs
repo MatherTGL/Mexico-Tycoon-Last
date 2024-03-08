@@ -4,15 +4,16 @@ using System.Collections;
 using Sirenix.OdinInspector;
 using DebugCustomSystem;
 using Config.Employees;
-using System.Linq;
+using UnityEngine.AddressableAssets;
+using System.Collections.Generic;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using System.Threading.Tasks;
 
 namespace Building.Hire
 {
     //! Adding in runtime on start game
     public sealed class HireEmployeeControl : MonoBehaviour
     {
-        private const string pathConfig = "Configs/Employees/";
-
         private IHiringModel _IhiringModel;
         public IHiringModel IhiringModel => _IhiringModel;
 
@@ -29,22 +30,32 @@ namespace Building.Hire
 
         private HireEmployeeControl() { }
 
-        public void Init()
+        public async void Init()
         {
-            try
-            {
-                _config = UnityEngine.Resources.LoadAll<ConfigPossibleEmployeesInShopEditor>(pathConfig)[0];
-            }
-            catch (System.Exception ex) { throw new System.Exception($"{ex}"); }
+            await AsyncLoadConfigAndCreateDependencies();
+            Debug.Log(_config);
 
             _timeControl = FindObjectOfType<TimeDateControl>();
             _coroutineTimeStep = new WaitForSeconds(_timeControl.GetCurrentTimeOneDay());
-            _coroutineTimeUpdateOffers = new WaitForSeconds(_config.timeUpdateOffers);
             _IhiringModel = new HireEmployeeModel();
             _IhiringView = new HireEmployeeView(this);
+            _coroutineTimeUpdateOffers = new WaitForSeconds(_config.timeUpdateOffers);
 
             StartCoroutine(UpdateInfo());
             StartCoroutine(UpdatePossibleEmployees());
+        }
+
+        private async Task AsyncLoadConfigAndCreateDependencies()
+        {
+            var loadHandle = Addressables.LoadAssetsAsync<ConfigPossibleEmployeesInShopEditor>(
+                new List<string> { "PossibleEmployeesInShop" }, config => { }, Addressables.MergeMode.None);
+
+            await loadHandle.Task;
+
+            if (loadHandle.IsValid() && loadHandle.IsDone)
+                _config = loadHandle.Result[0];
+            else
+                throw new System.Exception("AsyncOperationStatus.Failed and config not loaded");
         }
 
         private IEnumerator UpdateInfo()

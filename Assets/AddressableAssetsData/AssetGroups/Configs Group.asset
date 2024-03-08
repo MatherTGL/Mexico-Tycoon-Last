@@ -16,7 +16,297 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 7db25c3aef3437cd7b871c0367e12bbf
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 94ab84e207bfd6344ae0554dbdc5f88a
+    m_Address: Configs/Bank/DefaultBankConfig 3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Bank
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 00fb622114f0a8d9badbd4a21a1f6371
+    m_Address: Sirenix/GlobalSerializationConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d635a0ee2f9f4c34c97f92968fd9899d
+    m_Address: Configs/Bank/DefaultBankConfig 2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Bank
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e2c736e8f8de665429a587f84cdc82ab
+    m_Address: Configs/Bank/DefaultBankConfig 1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Bank
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 00808ccd32a2c9d1399b18d846abca57
+    m_Address: Configs/Bank/DefaultBankConfig
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Bank
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b6f70de29d39e6bc1ad4afd2457cefcc
+    m_Address: Configs/Climate Zones/ClimateZoneConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 39d0ea4a6c2cb87bbb9e999ffc69c213
+    m_Address: Configs/Drugs/DrugParametersRandomCocaine
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 65af072d3c2095dafa1d897315e1e0fd
+    m_Address: Configs/Drugs/DrugParametersRandomCrack
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 898aa2c3b1374a68c800688db6e15326
+    m_Address: Configs/Drugs/DrugParametersRandomMarijuana
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2ecacf122e47871d2b0a96bc912b0fef
+    m_Address: Configs/Employees/ConfigEmployeeGrover
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 64c5670f12e38061a8ab4baf189fd4c4
+    m_Address: Configs/Employees/ConfigEmployeeGuard
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 44aecf8cf247fba1b822d263be1d20aa
+    m_Address: Configs/Employees/ConfigEmployeeScientist
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: af5fb7bc128bfba00a849c1e6fb73e75
+    m_Address: Configs/Employees/ConfigPossibleEmployeesShop
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PossibleEmployeesInShop
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 95161cfacfd060616945b0aea4be2ca4
+    m_Address: Configs/Natural Obstacle/ConfigObstacleMountain
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6c95b0f920b048ffcb9627080e47bd51
+    m_Address: Configs/Reception/ConfigTransportReceptionAerodrome
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6226f670c50d879f49102e75edf0ce0b
+    m_Address: Configs/Reception/ConfigTransportReceptionBorder
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a2513e031caa8435cb7b3ec918d641e8
+    m_Address: Configs/Reception/ConfigTransportReceptionCity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b82c3c79080b8d9719ae8f62a3b3d379
+    m_Address: Configs/Reception/ConfigTransportReceptionFabric
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bcf00f6b1be99e6e297b7f160edbf6cb
+    m_Address: Configs/Reception/ConfigTransportReceptionFarm
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1a0fe540e44a9f83bb12bb8e63fd58d3
+    m_Address: Configs/Reception/ConfigTransportReceptionSeaPort
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eabcb01d75c76ec8886473f112cd3ae3
+    m_Address: Configs/Reception/ConfigTransportReceptionStock
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 76582f60c7c2293cf8e4acdf5a195b4f
+    m_Address: Configs/TIme/TimeControlDefault
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 43d16d7b721963caf83904dc595591ba
+    m_Address: Configs/Transport/ConfigProductPackagingDefault
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e8eccc81ae4b5820187698f12c8f0444
+    m_Address: Configs/Transport/ConfigTypeTransportAircraft
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b8cfca0e64d70fef288ac3903190ab95
+    m_Address: Configs/Transport/ConfigTypeTransportCar 1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5f48212aa88614ba6930224594456bc5
+    m_Address: Configs/Transport/ConfigTypeTransportCar
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 83db3b3915afd1ad7979c394186ca134
+    m_Address: Configs/Transport/ConfigTypeTransportNavalVessel
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6585c107a682dc8cd8e3f136bd0b280e
+    m_Address: Configs/Buildings/Aerodrome/BuildingAerodromeConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: aff7f2a2f2b8d046f80ee41077caaac4
+    m_Address: Configs/Buildings/Aerodrome/BuildingsEventsConfigAerodrome
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3e16a7784fda16798a53ae5e4dc6f913
+    m_Address: Configs/Buildings/Aerodrome/ConfigExpensesManagementAerodrome
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c905cbe9ffd8cc70489f63e65ed6bd9e
+    m_Address: Configs/Buildings/Border/BuildingBorderConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 254879e43cd24a04e9ca0c029b8c7bda
+    m_Address: Configs/Buildings/City/BuildingCityConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fd99a65b323555d4a8d8b01a32b6b58b
+    m_Address: Configs/Buildings/Fabric/BuildingFabricConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a3d6c66ef24acacb8be6f5fc58cee102
+    m_Address: Configs/Buildings/Fabric/BuildingsEventsConfigFabric
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a7a00ff616efb5ed78abe881a666d743
+    m_Address: Configs/Buildings/Fabric/ConfigExpensesManagementFabric
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e465e6e61ae181825b81a7597f72c042
+    m_Address: Configs/Buildings/Farm/BuildingFarmTerrestrialConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b2a3696b0a97bc64fb4900869ffb3ca6
+    m_Address: Configs/Buildings/Farm/BuildingFarmUndergroundConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 917d2d58c8171d17586f1b0a59e57a31
+    m_Address: Configs/Buildings/Farm/BuildingsEventsConfigFarm
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f00e20d73dea5bc64bfd967f4559e728
+    m_Address: Configs/Buildings/Farm/ConfigExpensesManagementFarm
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bcfe9b5970e848edc85413583d7e99b2
+    m_Address: Configs/Buildings/Route/RouteBuilderConfigDefault
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fb4d3c93151d9cecc8bbabaef8bfed18
+    m_Address: Configs/Buildings/Sea Port/BuildingSeaPortConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0011cc3f2a40dbaf3a01c2fde0213974
+    m_Address: Configs/Buildings/Sea Port/BuildingsEventsConfigSeaPort
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: da763643be534994e82d03c799b5bbc5
+    m_Address: Configs/Buildings/Sea Port/ConfigExpensesManagementSeaPort
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 127e66437cd1f3f2ea79f69309664b69
+    m_Address: Configs/Buildings/Stock/BuildingStockConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4cdca8854fb0e7ff68e14b352d91a5f5
+    m_Address: Configs/Buildings/Stock/BuildingsEventsConfigStock
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 79e82ac1c39ae5b29a3b9f1adbf453ed
+    m_Address: Configs/Buildings/Stock/ConfigExpensesManagementStock
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 64443fa2e4f4ce39cbaeb3f04d0f896d
+    m_Address: Configs/Country/Inflation/DefaultInflationConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 09bb910bd7b2de10294fde256b68338f
+    m_Address: CostResourcesConf
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 94bb5b671568c31c8b4ddb696cffc014
+    m_Address: Configs/Data/Player/ConfigDataPlayerDefault
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fc4cf356116db9fdf9ebfdaa58d95679
+    m_Address: Configs/Player/Control Movement/PlayerControlDefaultConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 73e8910e60f55568cb163e61f21a4ba9
+    m_Address: Configs/Transport/Events/TransportationEventsConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7c92144c58788f39db129a3e6dfbcf6c
+    m_Address: Configs/Buildings/Aerodrome/Events/ConfigPoliceRaidEventDefault
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 339b3b99907d29836b64034a34e32dc4
+    m_Address: Configs/Buildings/City/Business/CityBusinessCarWash
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2d8a5211a270c583c8dc42e4e5fa1a7d
+    m_Address: Configs/Buildings/Farm/Events/ConfigPlantDiseasesEpidemicEvent
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1c351fa3726120c75a90983a779350f2
+    m_Address: Configs/Buildings/Farm/Events/ConfigPlantDiseasesEvent
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e1c97521792543135a76675e7f58e5d1
+    m_Address: Configs/Transport/Events/Police Raid/TransportPoliceRaidEventConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 654e276b0e24f304d86eab736ff22a01
+    m_Address: Configs/Buildings/City/Deliveries/Contracts/ConfigDeliveriesCity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: c039f61f2f878f2ef9907a126050ea50, type: 2}
   m_SchemaSet:
