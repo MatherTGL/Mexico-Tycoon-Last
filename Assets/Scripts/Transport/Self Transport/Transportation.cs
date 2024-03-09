@@ -1,11 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Building.Additional;
+using Data;
+using Data.Player;
 using Events.Transport;
-using Resources;
 using Transport.Breakdowns;
 using Transport.Fuel;
 using UnityEngine;
+using static Data.Player.DataPlayer;
+using static Resources.TypeProductionResources;
 
 namespace Transport
 {
@@ -15,6 +19,9 @@ namespace Transport
         private readonly IEventTransportation _IeventTransportation;
 
         private ITransportInteractRoute _ItransportInteractRoute;
+
+        private readonly IProductPackaging _IproductPackaging;
+
         ITransportInteractRoute ITransportation.ItransportInteractRoute => _ItransportInteractRoute;
 
         private readonly TransportationFuel _transportationFuel;
@@ -35,7 +42,7 @@ namespace Transport
             {0, new bool[2]}, {1, new bool[2]}
         };
 
-        private TypeProductionResources.TypeResource _typeCurrentTransportResource;
+        private TypeResource _typeCurrentTransportResource;
 
         private float _productLoad;
 
@@ -51,13 +58,14 @@ namespace Transport
         bool IEventsInfo.isCargoPackaging => _isCargoPackaging;
 
 
+        //TODO REFACTORING
         public Transportation(in TypeTransport typeTransport,
                               in ITransportInteractRoute routeTransportControl,
-                              in GameObject objectTransport)
+                              in GameObject objectTransport, in IProductPackaging IproductPackaging)
         {
             _typeTransport = typeTransport;
             _ItransportInteractRoute = routeTransportControl;
-
+            _IproductPackaging = IproductPackaging;
             _transportationFuel = new(_typeTransport);
             _transportationBreakdowns = new(_typeTransport);
             _transportationMovement = new(this, objectTransport);
@@ -86,8 +94,7 @@ namespace Transport
 
         private void SendRequestFromPosition(bool isStartedPosition)
         {
-            _isCargoPackaging = _ItransportInteractRoute.isUseTransportationPackaging;
-            Debug.Log($"_isCargoPackaging in transport: {_isCargoPackaging}");
+            CalculatePackagingExpenses();
 
             if (isStartedPosition)
                 AsyncSendRequestsAndCheckWaitingCar(indexReception: 0, isFirstPosition: true);
@@ -111,6 +118,19 @@ namespace Transport
 
             if (IsWaitLoadOrUnload(indexReception) == false)
                 _transportationMovement.isFirstPosition = isFirstPosition;
+        }
+
+        //TODO COMPLETE
+        private void CalculatePackagingExpenses()
+        {
+            _isCargoPackaging = _IproductPackaging.IsActive();
+
+            if (_isCargoPackaging == false)
+                return;
+
+            double expenses = _IproductPackaging.config.packagingCost.Dictionary[_IproductPackaging.packagingType];
+            DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(expenses, SpendAndCheckMoneyState.Spend);
+            Debug.Log($"packaging cost for transport: {expenses}");
         }
 
         private async ValueTask AsyncDelayLoadAndUnload(byte indexReception)
@@ -168,7 +188,7 @@ namespace Transport
             GC.SuppressFinalize(this);
         }
 
-        public void SetTypeTransportingResource(in TypeProductionResources.TypeResource typeResource)
+        public void SetTypeTransportingResource(in TypeResource typeResource)
             => _typeCurrentTransportResource = typeResource;
 
         public void ChangeRoute(in ITransportInteractRoute routeTransportControl)

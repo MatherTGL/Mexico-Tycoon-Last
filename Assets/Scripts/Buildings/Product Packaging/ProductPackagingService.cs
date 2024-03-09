@@ -8,10 +8,15 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 namespace Building.Additional
 {
     //* The class is used for the service of packaging drugs in buildings during transportation
-    //! Add in runtime
+    //* Add in runtime
     public sealed class ProductPackagingService : MonoBehaviour, IProductPackaging
     {
         private ConfigProductPackagingEditor _config;
+        ConfigProductPackagingEditor IProductPackaging.config => _config;
+
+        [SerializeField, EnumToggleButtons]
+        private PackagingType _currentPackagingType;
+        PackagingType IProductPackaging.packagingType => _currentPackagingType;
 
         [SerializeField, ReadOnly]
         private bool _isActive;

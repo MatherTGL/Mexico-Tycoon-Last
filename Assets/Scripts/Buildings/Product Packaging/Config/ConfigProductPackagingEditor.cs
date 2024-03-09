@@ -1,4 +1,3 @@
-using System;
 using Building.Additional;
 using SerializableDictionary.Scripts;
 using Sirenix.OdinInspector;
@@ -11,8 +10,10 @@ namespace Config.Building.Deliveries.Packaging
     {
         [SerializeField, BoxGroup("Parameters")]
         private SerializableDictionary<PackagingType, double> d_packagingCost = new();
+        public SerializableDictionary<PackagingType, double> packagingCost => d_packagingCost;
 
         [SerializeField, BoxGroup("Parameters")]
         private SerializableDictionary<PackagingType, float> d_packagingPercentRisk = new();
+        public SerializableDictionary<PackagingType, float> packagingPercentRisk => d_packagingPercentRisk;
     }
 }

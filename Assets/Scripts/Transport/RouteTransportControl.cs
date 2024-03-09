@@ -11,6 +11,7 @@ using System.Collections;
 using Obstacle;
 using Data;
 using static Data.Player.DataPlayer;
+using Config.Building.Deliveries.Packaging;
 
 namespace Transport
 {
@@ -25,7 +26,6 @@ namespace Transport
 
         [ShowInInspector, ReadOnly]
         private IProductPackaging _IproductPackaging;
-        bool ITransportInteractRoute.isUseTransportationPackaging => _IproductPackaging.IsActive();
 
         private readonly TransportationDataStorage _transportationDataStorage = new();
 
@@ -152,7 +152,7 @@ namespace Transport
             );
 
             _newDataTransportation = new(
-                _allTypesTransport[_indexTypeTransport], this, _newSpriteTransportation);
+                _allTypesTransport[_indexTypeTransport], this, _newSpriteTransportation, _IproductPackaging);
         }
 
 

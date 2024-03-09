@@ -1,4 +1,5 @@
 using System;
+using Building.Additional;
 using Transport.Reception;
 using UnityEngine;
 
@@ -6,8 +7,6 @@ namespace Transport
 {
     public interface ITransportInteractRoute
     {
-        bool isUseTransportationPackaging { get; }
-
         event Action fixedUpdate;
 
         event Action updatedTimeStep;
