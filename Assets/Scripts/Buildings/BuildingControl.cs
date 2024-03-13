@@ -99,7 +99,7 @@ namespace Building
         {
             if (_Ibuilding is IUsesHiring)
             {
-                gameObject.AddComponent<HireEmployeeControl>().Init(); //!
+                gameObject.AddComponent<HireEmployeeControl>().Init();
                 _Ispending.IobjectsExpensesImplementation.IhiringModel = GetComponent<HireEmployeeControl>().IhiringModel;
             }
         }

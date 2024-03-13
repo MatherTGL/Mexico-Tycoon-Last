@@ -8,10 +8,10 @@ namespace Building.Hire
         public HireEmployeeView(in HireEmployeeControl hireEmployeeControl)
             => _hireEmployeeControl = hireEmployeeControl;
 
-        void IHiringView.FireEmployee(in byte indexEmployee)
-        => _hireEmployeeControl.IhiringModel?.Firing(indexEmployee);
+        void IHiringView.FireEmployee(in byte indexEmployee, in IPossibleEmployees IpossibleEmployees)
+        => _hireEmployeeControl.IhiringModel?.Firing(indexEmployee, IpossibleEmployees);
 
-        void IHiringView.HireEmployee(in byte indexEmployee)
-            => _hireEmployeeControl.IhiringModel?.Hire(indexEmployee);
+        void IHiringView.HireEmployee(in byte indexEmployee, in IPossibleEmployees IpossibleEmployees)
+            => _hireEmployeeControl.IhiringModel?.AsyncHire(indexEmployee, IpossibleEmployees);
     }
 }

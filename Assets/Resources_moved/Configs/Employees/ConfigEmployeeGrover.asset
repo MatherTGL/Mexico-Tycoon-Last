@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: ConfigEmployeeGrover
   m_EditorClassIdentifier: 
   _typeEmployee: 2
-  _paymentPerDay: 10
-  _rating: 7
+  _minPaymentPerDay: 1000
+  _maxDeviationFromBasePay: 25
+  _minRating: 1
+  _maxRating: 10
   d_productionEfficiency:
     _pairs:
     - _key: 0

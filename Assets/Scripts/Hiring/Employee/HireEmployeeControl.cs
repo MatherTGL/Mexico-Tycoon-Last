@@ -3,9 +3,8 @@ using TimeControl;
 using System.Collections;
 using Sirenix.OdinInspector;
 using DebugCustomSystem;
-using Config.Employees;
 using UnityEngine.AddressableAssets;
-using System.Collections.Generic;
+using Config.Employees;
 using System.Threading.Tasks;
 
 namespace Building.Hire
@@ -13,14 +12,14 @@ namespace Building.Hire
     //* Adding in runtime on start game
     public sealed class HireEmployeeControl : MonoBehaviour
     {
+        private IPossibleEmployees _IpossibleEmployees;
+
         private IHiringModel _IhiringModel;
         public IHiringModel IhiringModel => _IhiringModel;
 
         private IHiringView _IhiringView;
 
         private TimeDateControl _timeControl;
-
-        private ConfigPossibleEmployeesInShopEditor _config;
 
         private WaitForSeconds _coroutineTimeStep;
 
@@ -32,25 +31,24 @@ namespace Building.Hire
         public async void Init()
         {
             _timeControl = FindObjectOfType<TimeDateControl>();
-            _coroutineTimeStep = new WaitForSeconds(_timeControl.GetCurrentTimeOneDay());
             _IhiringModel = new HireEmployeeModel();
             _IhiringView = new HireEmployeeView(this);
 
-            await AsyncLoadConfigAndCreateDependencies();
-
-            _coroutineTimeUpdateOffers = new WaitForSeconds(_config.timeUpdateOffers);
+            await AsyncLoadConfigPossibleEmployees();
+            _coroutineTimeUpdateOffers = new WaitForSeconds(_IpossibleEmployees.config.timeUpdateOffers);
+            _coroutineTimeStep = new WaitForSeconds(_timeControl.GetCurrentTimeOneDay());
 
             StartCoroutine(UpdateInfo());
             StartCoroutine(UpdatePossibleEmployees());
         }
 
-        private async Task AsyncLoadConfigAndCreateDependencies()
+        async Task AsyncLoadConfigPossibleEmployees()
         {
-            var loadHandle = Addressables.LoadAssetsAsync<ConfigPossibleEmployeesInShopEditor>("PossibleEmployeesInShop", config => { });
+            var loadHandle = Addressables.LoadAssetAsync<ConfigPossibleEmployeesInShopEditor>("PossibleEmployeesInShop");
             await loadHandle.Task;
 
             if (loadHandle.IsValid() && loadHandle.IsDone)
-                _config = loadHandle.Result[0];
+                _IpossibleEmployees = new PossibleEmployeesInShop(loadHandle.Result);
             else
                 throw new System.Exception("AsyncOperationStatus.Failed and config not loaded");
         }
@@ -68,24 +66,24 @@ namespace Building.Hire
         {
             while (true)
             {
-                _IhiringModel.UpdateAllEmployees();
+                _IpossibleEmployees.UpdateOffers();
                 yield return _coroutineTimeUpdateOffers;
             }
         }
 
         [Button("Hire Employee"), BoxGroup("Editor Control | Employees"), DisableInEditorMode]
-        private void HireEmployee(in byte indexEmployee) => _IhiringView.HireEmployee(indexEmployee);
+        private void HireEmployee(in byte indexEmployee) => _IhiringView.HireEmployee(indexEmployee, _IpossibleEmployees);
 
         [Button("Fire Employee"), BoxGroup("Editor Control | Employees"), DisableInEditorMode]
-        private void FireEmployee(in byte indexEmployee) => _IhiringView.FireEmployee(indexEmployee);
+        private void FireEmployee(in byte indexEmployee) => _IhiringView.FireEmployee(indexEmployee, _IpossibleEmployees);
 
 #if UNITY_EDITOR
         [Button("Get All Employees"), BoxGroup("Editor Control | Employees"), DisableInEditorMode]
         private void GetAllTypeEveryEmployee()
         {
-            for (byte i = 0; i < _IhiringModel.a_possibleEmployeesInShop.Length; i++)
+            for (byte i = 0; i < _IpossibleEmployees.possibleEmployeesInShop.Length; i++)
             {
-                DebugSystem.Log($"Object {this} | Employee type: {_IhiringModel.a_possibleEmployeesInShop[i].typeEmployee} | Index: {i}",
+                DebugSystem.Log($"Object {this} | Employee type: {_IpossibleEmployees.possibleEmployeesInShop[i].typeEmployee} | Index: {i}",
                     DebugSystem.SelectedColor.Orange, tag: "Employee");
             }
         }

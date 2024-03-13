@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed0c10071d9dfc895bbe7d6ceeb52264, type: 3}
   m_Name: ConfigPossibleEmployeesShop
   m_EditorClassIdentifier: 
-  _timeUpdateOffers: 3
+  _timeUpdateOffers: 20

@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: ConfigEmployeeScientist
   m_EditorClassIdentifier: 
   _typeEmployee: 0
-  _paymentPerDay: 10
-  _rating: 7
+  _minPaymentPerDay: 3000
+  _maxDeviationFromBasePay: 10
+  _minRating: 1
+  _maxRating: 10
   d_productionEfficiency:
     _pairs:
     - _key: 0

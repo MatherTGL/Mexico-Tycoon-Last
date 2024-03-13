@@ -7,7 +7,7 @@ namespace Config.Employees
     public sealed class ConfigPossibleEmployeesInShopEditor : ScriptableObject
     {
         [SerializeField, MinValue(1), MaxValue(20)]
-        private byte _timeUpdateOffers = 3;
+        private byte _timeUpdateOffers = 20;
         public byte timeUpdateOffers => _timeUpdateOffers;
     }
 }

@@ -9,18 +9,13 @@ namespace Building.Hire
     {
         Lazy<Dictionary<TypeEmployee, double>> d_employeeExpenses { get; set; }
 
-#if UNITY_EDITOR
-        AbstractEmployee[] a_possibleEmployeesInShop { get; }
-#endif
 
         void ConstantUpdatingInfo();
 
-        void Hire(in byte indexEmployee);
+        void AsyncHire(byte indexEmployee, IPossibleEmployees IpossibleEmployees);
 
-        void Firing(in byte indexEmployee);
+        void Firing(in byte indexEmployee, in IPossibleEmployees IpossibleEmployees);
 
         Dictionary<TypeEmployee, List<AbstractEmployee>> GetAllEmployees();
-
-        void UpdateAllEmployees();
     }
 }

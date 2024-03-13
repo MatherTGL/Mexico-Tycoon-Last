@@ -13,19 +13,27 @@ namespace Config.Employees
             Scientist, Guard, Grover
         }
 
-        [SerializeField, EnumPaging]
+        [SerializeField, EnumPaging, BoxGroup("Parameters")]
         private TypeEmployee _typeEmployee;
         public TypeEmployee typeEmployee => _typeEmployee;
 
-        [SerializeField]
-        private ushort _paymentPerDay;
-        public ushort paymentPerDay => _paymentPerDay;
+        [SerializeField, BoxGroup("Parameters/Payment")]
+        private ushort _minPaymentPerDay;
+        public ushort minPaymentPerDay => _minPaymentPerDay;
 
-        [SerializeField]
-        private byte _rating;
-        public byte rating => _rating;
+        [SerializeField, BoxGroup("Parameters/Payment"), MinValue(5), MaxValue(50)]
+        private ushort _maxDeviationFromBasePay;
+        public ushort maxDeviationFromBasePay => _maxDeviationFromBasePay;
 
-        [SerializeField]
+        [SerializeField, BoxGroup("Parameters/Rating"), MaxValue("@_maxRating")]
+        private byte _minRating = 1;
+        public byte minRating => _minRating;
+
+        [SerializeField, BoxGroup("Parameters/Rating"), MinValue("@_minRating")]
+        private byte _maxRating = 10;
+        public byte maxRating => _maxRating;
+
+        [SerializeField, BoxGroup("Parameters")]
         private SerializableDictionary<TypeResource, ushort> d_productionEfficiency = new();
         public SerializableDictionary<TypeResource, ushort> productionEfficiencyDictionary => d_productionEfficiency;
     }

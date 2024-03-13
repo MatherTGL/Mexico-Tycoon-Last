@@ -11,15 +11,15 @@ namespace Hire.Employee
 
         public ConfigEmployeeEditor config { get; protected set; }
 
-        public ushort paymentCostPerDay { get; protected set; }
+        public double paymentCostPerDay { get; protected set; }
 
-        public byte rating { get; protected set; }
+        public int rating { get; protected set; }
 
         public Dictionary<TypeResource, ushort> efficiencyDictionary { get; protected set; } = new();
 
 
         public abstract AbstractEmployee Clone();
 
-        public abstract void UpdateOffers();
+        public abstract void UpdateOffer(AbstractEmployee[] possibleEmployeesInShop = null);
     }
 }

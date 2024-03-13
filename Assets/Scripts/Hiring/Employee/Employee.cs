@@ -1,15 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Config.Employees;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using static Config.Employees.ConfigEmployeeEditor;
 using Random = UnityEngine.Random;
 
 namespace Hire.Employee
 {
     public sealed class Employee : AbstractEmployee
     {
-        public Employee() => AsyncLoadRandomConfig();
+        public Employee(in AbstractEmployee[] possibleEmployeesInShop) => AsyncLoadRandomConfig(possibleEmployeesInShop);
 
         private Employee(in AbstractEmployee employee)
         {
@@ -17,34 +21,56 @@ namespace Hire.Employee
             LoadAndRandomizeData();
         }
 
-        private async void AsyncLoadRandomConfig()
+        private async void AsyncLoadRandomConfig(AbstractEmployee[] possibleEmployeesInShop = null)
         {
             var loadHandle = Addressables.LoadAssetsAsync<ConfigEmployeeEditor>(new List<string> { "Employee" },
                 conf => { }, Addressables.MergeMode.None);
 
             await loadHandle.Task;
 
-            if (loadHandle.Status == UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded)
-                config = loadHandle.Result.OrderBy(rand => Random.Range(int.MinValue, int.MaxValue)).First();
+            Debug.Log($"Enter to AsyncLoadRandomConfig method {config}");
+            if (loadHandle.Status == AsyncOperationStatus.Succeeded)
+                config = loadHandle.Result[Random.Range(0, loadHandle.Result.Count)];
             else
                 throw new Exception("employee config error: {exception}");
 
-            LoadAndRandomizeData();
+            LoadAndRandomizeData(possibleEmployeesInShop);
         }
 
-        //TODO: randomize data
-        private void LoadAndRandomizeData()
+        private void LoadAndRandomizeData(AbstractEmployee[] possibleEmployeesInShop = null)
         {
             typeEmployee = config.typeEmployee;
-            paymentCostPerDay = config.paymentPerDay;
-            rating = config.rating;
+            rating = Random.Range(config.minRating, config.maxRating);
+
+            paymentCostPerDay = config.minPaymentPerDay
+                + (config.minPaymentPerDay * Random.Range(0, config.maxDeviationFromBasePay) * rating / 100);
 
             foreach (var employee in config.productionEfficiencyDictionary.Dictionary.Keys)
                 efficiencyDictionary.TryAdd(employee, config.productionEfficiencyDictionary.Dictionary[employee]);
+
+            if (possibleEmployeesInShop != null)
+                Regenerate(possibleEmployeesInShop);
         }
 
-        public sealed override AbstractEmployee Clone() => new Employee(this);
+        private async void Regenerate(AbstractEmployee[] possibleEmployeesInShop)
+        {
+            await Task.Run(() =>
+            {
+                for (byte i = 0; i < possibleEmployeesInShop.Length; i++)
+                {
+                    int identicalTypes = possibleEmployeesInShop.Select(item => possibleEmployeesInShop[i].typeEmployee)
+                                                                .Count();
 
-        public sealed override void UpdateOffers() => AsyncLoadRandomConfig();
+                    do { possibleEmployeesInShop[i].UpdateOffer(possibleEmployeesInShop); }
+                    while (identicalTypes <= possibleEmployeesInShop.Length / Enum.GetNames(typeof(TypeEmployee)).Length);
+                }
+            });
+        }
+
+        public sealed override AbstractEmployee Clone()
+            => new Employee(this);
+
+        public sealed override void UpdateOffer(AbstractEmployee[] possibleEmployeesInShop = null)
+            => AsyncLoadRandomConfig(possibleEmployeesInShop);
     }
 }

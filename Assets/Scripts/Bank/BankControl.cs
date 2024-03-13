@@ -7,7 +7,6 @@ using TimeControl;
 using System;
 using static Boot.Bootstrap;
 using UnityEngine.AddressableAssets;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -37,8 +36,8 @@ namespace Bank
 
             await AsyncLoadConfigsAndCreateDependencies();
 
-            _bankModel = new BankModel(this);
-            _bankView = new BankView(this);
+            _bankModel = new(this);
+            _bankView = new(this);
         }
 
         private async Task AsyncLoadConfigsAndCreateDependencies()

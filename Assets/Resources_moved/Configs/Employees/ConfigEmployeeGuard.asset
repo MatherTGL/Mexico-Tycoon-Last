@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: ConfigEmployeeGuard
   m_EditorClassIdentifier: 
   _typeEmployee: 1
-  _paymentPerDay: 10
-  _rating: 7
+  _minPaymentPerDay: 600
+  _maxDeviationFromBasePay: 5
+  _minRating: 1
+  _maxRating: 10
   d_productionEfficiency:
     _pairs: []
