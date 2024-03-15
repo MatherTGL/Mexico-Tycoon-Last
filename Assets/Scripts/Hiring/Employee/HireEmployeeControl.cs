@@ -6,6 +6,7 @@ using DebugCustomSystem;
 using UnityEngine.AddressableAssets;
 using Config.Employees;
 using System.Threading.Tasks;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Building.Hire
 {
@@ -47,7 +48,7 @@ namespace Building.Hire
             var loadHandle = Addressables.LoadAssetAsync<ConfigPossibleEmployeesInShopEditor>("PossibleEmployeesInShop");
             await loadHandle.Task;
 
-            if (loadHandle.IsValid() && loadHandle.IsDone)
+            if (loadHandle.Status == AsyncOperationStatus.Succeeded)
                 _IpossibleEmployees = new PossibleEmployeesInShop(loadHandle.Result);
             else
                 throw new System.Exception("AsyncOperationStatus.Failed and config not loaded");
@@ -83,7 +84,7 @@ namespace Building.Hire
         {
             for (byte i = 0; i < _IpossibleEmployees.possibleEmployeesInShop.Length; i++)
             {
-                DebugSystem.Log($"Object {this} | Employee type: {_IpossibleEmployees.possibleEmployeesInShop[i].typeEmployee} | Index: {i}",
+                DebugSystem.Log($"Object {this} | Employee type: {_IpossibleEmployees.possibleEmployeesInShop[i].type} | Index: {i}",
                     DebugSystem.SelectedColor.Orange, tag: "Employee");
             }
         }

@@ -20,18 +20,18 @@ namespace Expense
 
         IObjectsExpensesImplementation IExpensesManagement.Registration(
             in IUsesExpensesManagement IusesExpensesManagement, in ExpensesTypeObject typeObject,
-            in ConfigExpensesManagementEditor configExpenses) //TODO: refactoring
+            in ConfigExpensesManagementEditor config) //TODO: refactoring
         {
             l_usesExpensesObjects.Add(IusesExpensesManagement);
-            return CheckTypeAndCreateComponent(typeObject, configExpenses);
+            return CheckTypeAndCreateComponent(typeObject, config);
         }
 
         private IObjectsExpensesImplementation CheckTypeAndCreateComponent(
-            in ExpensesTypeObject typeObject, in ConfigExpensesManagementEditor configExpenses)
+            in ExpensesTypeObject typeObject, in ConfigExpensesManagementEditor config)
         {
             if (typeObject == ExpensesTypeObject.Building)
             {
-                IObjectsExpensesImplementation objectExpenses = new ExpensesBuildings(configExpenses);
+                IObjectsExpensesImplementation objectExpenses = new ExpensesBuildings(config);
                 l_objectsExpensesImplementation.Add(objectExpenses);
                 return objectExpenses;
             }

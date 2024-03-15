@@ -16,6 +16,7 @@ namespace Expense.Areas
         protected int _percentageQuality;
 
 
+        //TODO: refactoring
         public virtual void ChangeExpenses(in double expenses, in bool isAdd)
         {
             if (isAdd == true)

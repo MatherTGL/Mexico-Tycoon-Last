@@ -7,7 +7,7 @@ namespace Hire.Employee
 {
     public abstract class AbstractEmployee
     {
-        public TypeEmployee typeEmployee { get; protected set; }
+        public TypeEmployee type { get; protected set; }
 
         public ConfigEmployeeEditor config { get; protected set; }
 
@@ -21,5 +21,7 @@ namespace Hire.Employee
         public abstract AbstractEmployee Clone();
 
         public abstract void UpdateOffer(AbstractEmployee[] possibleEmployeesInShop = null);
+
+        public abstract void UpdateState();
     }
 }

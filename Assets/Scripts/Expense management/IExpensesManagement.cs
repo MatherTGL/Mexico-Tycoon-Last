@@ -7,6 +7,6 @@ namespace Expense
     {
         IObjectsExpensesImplementation Registration(in IUsesExpensesManagement IusesExpensesManagement,
                                                     in ExpensesTypeObject type,
-                                                    in ConfigExpensesManagementEditor configExpenses);
+                                                    in ConfigExpensesManagementEditor config);
     }
 }

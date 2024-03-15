@@ -1,18 +1,18 @@
-using Config.Employees;
 using Hire.Employee;
+using confPossibleEmployees = Config.Employees.ConfigPossibleEmployeesInShopEditor;
 
 namespace Building.Hire
 {
     public sealed class PossibleEmployeesInShop : IPossibleEmployees
     {
-        private ConfigPossibleEmployeesInShopEditor _config;
-        ConfigPossibleEmployeesInShopEditor IPossibleEmployees.config => _config;
+        private confPossibleEmployees _config;
+        confPossibleEmployees IPossibleEmployees.config => _config;
 
-        private readonly AbstractEmployee[] a_possibleEmployeesInShop = new AbstractEmployee[10];
+        private readonly AbstractEmployee[] a_possibleEmployeesInShop = new AbstractEmployee[confPossibleEmployees.numberEmployeesOffered];
         AbstractEmployee[] IPossibleEmployees.possibleEmployeesInShop => a_possibleEmployeesInShop;
 
 
-        public PossibleEmployeesInShop(in ConfigPossibleEmployeesInShopEditor config)
+        public PossibleEmployeesInShop(in confPossibleEmployees config)
         {
             _config = config;
 

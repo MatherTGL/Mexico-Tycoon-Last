@@ -2,7 +2,7 @@ using Building.City.Deliveries;
 using DebugCustomSystem;
 using Resources;
 using System.Linq;
-using UnityEngine;
+using static Resources.TypeProductionResources;
 
 namespace Building.Additional
 {
@@ -32,25 +32,21 @@ namespace Building.Additional
 
                     _salesProfit += building.amountResources[drug] * _Icontract.GetResourceCosts(drug);
 
-                    if (drug is not TypeProductionResources.TypeResource.DirtyMoney)
-                    {
-                        Debug.Log($"class SellResources: {drug}");
+                    if (drug is not TypeResource.DirtyMoney)
                         building.amountResources[drug] = 0;
-                    }
                 }
             }
 
-            building.amountResources[TypeProductionResources.TypeResource.DirtyMoney] += _salesProfit;
+            building.amountResources[TypeResource.DirtyMoney] += _salesProfit;
             _salesProfit = 0;
 
             DebugSystem.Log($"DirtyMoney in city ({this}): {building.amountResources[TypeProductionResources.TypeResource.DirtyMoney]}",
                 DebugSystem.SelectedColor.Blue, tag: "City");
         }
 
-        private void IndividualSell(in IBuilding building, in int indexDeliveries,
-                                    in TypeProductionResources.TypeResource drug)
+        private void IndividualSell(in IBuilding building, in int indexDeliveries, in TypeResource drug)
         {
-            if (drug == TypeProductionResources.TypeResource.DirtyMoney)
+            if (drug == TypeResource.DirtyMoney)
                 return;
 
             _IindividualDeliveries = _Icontract.l_deliveriesType[indexDeliveries] as IIndividualDeliveries;

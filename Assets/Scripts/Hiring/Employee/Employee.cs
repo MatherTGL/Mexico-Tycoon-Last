@@ -13,7 +13,8 @@ namespace Hire.Employee
 {
     public sealed class Employee : AbstractEmployee
     {
-        public Employee(in AbstractEmployee[] possibleEmployeesInShop) => AsyncLoadRandomConfig(possibleEmployeesInShop);
+        public Employee(in AbstractEmployee[] possibleEmployeesInShop)
+            => AsyncLoadRandomConfig(possibleEmployeesInShop);
 
         private Employee(in AbstractEmployee employee)
         {
@@ -28,7 +29,6 @@ namespace Hire.Employee
 
             await loadHandle.Task;
 
-            Debug.Log($"Enter to AsyncLoadRandomConfig method {config}");
             if (loadHandle.Status == AsyncOperationStatus.Succeeded)
                 config = loadHandle.Result[Random.Range(0, loadHandle.Result.Count)];
             else
@@ -39,7 +39,7 @@ namespace Hire.Employee
 
         private void LoadAndRandomizeData(AbstractEmployee[] possibleEmployeesInShop = null)
         {
-            typeEmployee = config.typeEmployee;
+            type = config.typeEmployee;
             rating = Random.Range(config.minRating, config.maxRating);
 
             paymentCostPerDay = config.minPaymentPerDay
@@ -58,7 +58,7 @@ namespace Hire.Employee
             {
                 for (byte i = 0; i < possibleEmployeesInShop.Length; i++)
                 {
-                    int identicalTypes = possibleEmployeesInShop.Select(item => possibleEmployeesInShop[i].typeEmployee)
+                    int identicalTypes = possibleEmployeesInShop.Select(item => possibleEmployeesInShop[i].type)
                                                                 .Count();
 
                     do { possibleEmployeesInShop[i].UpdateOffer(possibleEmployeesInShop); }
@@ -72,5 +72,10 @@ namespace Hire.Employee
 
         public sealed override void UpdateOffer(AbstractEmployee[] possibleEmployeesInShop = null)
             => AsyncLoadRandomConfig(possibleEmployeesInShop);
+
+        public override void UpdateState()
+        {
+            Debug.Log("State updated");
+        }
     }
 }

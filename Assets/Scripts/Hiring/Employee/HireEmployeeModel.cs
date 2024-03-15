@@ -27,11 +27,27 @@ namespace Building.Hire
                                                                     SpendAndCheckMoneyState.Spend);
         }
 
-        void IHiringModel.ConstantUpdatingInfo() => CalculateExpenses();
+        void IHiringModel.ConstantUpdatingInfo()
+        {
+            CalculateExpenses();
+            UpdateStateEmployees();
+        }
+
+        private void UpdateStateEmployees()
+        {
+            foreach (var employee in d_employees.Value.Keys)
+                for (byte index = 0; index < d_employees.Value[employee].Count; index++)
+                    d_employees.Value[employee][index].UpdateState();
+        }
+
+        private void CheckStatusEmployees()
+        {
+
+        }
 
         async void IHiringModel.AsyncHire(byte indexEmployee, IPossibleEmployees IpossibleEmployees)
         {
-            var typeEmployee = IpossibleEmployees.possibleEmployeesInShop[indexEmployee].typeEmployee;
+            var typeEmployee = IpossibleEmployees.possibleEmployeesInShop[indexEmployee].type;
 
             if (d_employees.Value.ContainsKey(typeEmployee) == false)
             {
@@ -43,27 +59,22 @@ namespace Building.Hire
             d_employees.Value[typeEmployee].Add(hiredEmployee);
             d_employeeExpenses.Value[typeEmployee] += hiredEmployee.paymentCostPerDay;
 
-            TypeEmployee tempType = IpossibleEmployees.possibleEmployeesInShop[indexEmployee].typeEmployee;
-            Debug.Log($"tempType: {tempType}");
-
             await Task.Run(() =>
             {
                 do
                 {
                     IpossibleEmployees.possibleEmployeesInShop[indexEmployee].UpdateOffer(IpossibleEmployees.possibleEmployeesInShop);
-                } while (IpossibleEmployees.possibleEmployeesInShop[indexEmployee].typeEmployee == tempType);
+                } while (IpossibleEmployees.possibleEmployeesInShop[indexEmployee].type == typeEmployee);
             });
-            Debug.Log($"tempType: {tempType} / {IpossibleEmployees.possibleEmployeesInShop[indexEmployee].typeEmployee}");
         }
 
         void IHiringModel.Firing(in byte indexEmployee, in IPossibleEmployees IpossibleEmployees)
         {
-            var typeEmployee = IpossibleEmployees.possibleEmployeesInShop[indexEmployee].typeEmployee;
+            var typeEmployee = IpossibleEmployees.possibleEmployeesInShop[indexEmployee].type;
 
             if (d_employees.Value.ContainsKey(typeEmployee) && d_employees.Value[typeEmployee].IsNotEmpty(indexEmployee))
             {
                 d_employeeExpenses.Value[typeEmployee] -= d_employees.Value[typeEmployee][indexEmployee].paymentCostPerDay;
-                Debug.Log($"CurrentExpenses: {d_employeeExpenses.Value[typeEmployee]}");
                 d_employees.Value[typeEmployee].RemoveAt(indexEmployee);
             }
         }

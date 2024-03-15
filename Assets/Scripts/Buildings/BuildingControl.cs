@@ -27,6 +27,8 @@ using Unity.VisualScripting;
 using Events.Buildings;
 using Building.City.Deliveries;
 using static Resources.TypeProductionResources;
+using static Config.Building.ConfigBuildingFarmEditor;
+using static Building.City.Business.CityBusiness;
 
 namespace Building
 {
@@ -155,7 +157,7 @@ namespace Building
             _IbuildingJobStatus?.ChangeJobStatus(isState);
         }
 
-        private void ChangeFarmType(in ConfigBuildingFarmEditor.TypeFarm typeFarm)
+        private void ChangeFarmType(in TypeFarm typeFarm)
         {
             IChangedFarmType IchangedType = _Ibuilding as IChangedFarmType;
             IchangedType?.ChangeType(typeFarm);
@@ -235,7 +237,7 @@ namespace Building
 
         [Button("Change Farm Type"), BoxGroup("Editor Control | Farm"), DisableInEditorMode]
         [ShowIf("@_typeBuilding == BuildingEnumType.TypeBuilding.Farm")]
-        private void ChangeFarmTypeEditor(in ConfigBuildingFarmEditor.TypeFarm typeFarm)
+        private void ChangeFarmTypeEditor(in TypeFarm typeFarm)
             => ChangeFarmType(typeFarm);
 
         #endregion
@@ -244,7 +246,7 @@ namespace Building
 
         [Button("Buy"), BoxGroup("Editor Control | City Business"), DisableInEditorMode]
         [ShowIf("@_typeBuilding == BuildingEnumType.TypeBuilding.City")]
-        private void BuyBusiness(in CityBusiness.TypeBusiness typeBusiness)
+        private void BuyBusiness(in TypeBusiness typeBusiness)
             => _IcityBusiness.BuyBusiness(typeBusiness);
 
         [Button("Sell"), BoxGroup("Editor Control | City Business"), DisableInEditorMode]
