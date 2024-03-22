@@ -2,6 +2,7 @@ using UnityEngine;
 using Transport.Reception;
 using Sirenix.OdinInspector;
 using Transport;
+using static Transport.TypeTransport;
 
 namespace Route.Builder
 {
@@ -124,7 +125,7 @@ namespace Route.Builder
 
         ITransportReception[] ICreatorCurveRoad.GetPointsConnectionRoute() => _positionPoints;
 
-        public void Generate(in ITransportReception firstPoint, in ITransportReception secondPoint, in TypeTransport.Type typeRoute)
+        public void Generate(in ITransportReception firstPoint, in ITransportReception secondPoint, in Type typeRoute)
         {
             _positionPoints = new ITransportReception[_maxPositionPoints];
             _positionPoints[_indexPositionPointsFrom] = firstPoint;

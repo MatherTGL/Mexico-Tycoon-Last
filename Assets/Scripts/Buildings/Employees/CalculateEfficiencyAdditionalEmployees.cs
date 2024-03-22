@@ -8,10 +8,10 @@ namespace Building.Additional
     public sealed class CalculateEfficiencyAdditionalEmployees
     {
         //TODO: complete and refactoring || maybe change to efficiency percentage
-        public ushort GetEfficiencyAdditionalEmployees(in IObjectsExpensesImplementation objectsExpenses,
+        public int GetEfficiencyAdditionalEmployees(in IObjectsExpensesImplementation objectsExpenses,
             in Dictionary<TypeEmployee, byte> requiredEmployees, in TypeResource typeProductionResource)
         {
-            ushort effenciency = 0;
+            int effenciency = 0;
 
             foreach (var employee in objectsExpenses.IhiringModel.GetAllEmployees().Keys)
             {

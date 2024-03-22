@@ -204,12 +204,14 @@ MonoBehaviour:
   - m_GUID: e465e6e61ae181825b81a7597f72c042
     m_Address: Configs/Buildings/Farm/BuildingFarmTerrestrialConfig
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - TypeFarm
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b2a3696b0a97bc64fb4900869ffb3ca6
     m_Address: Configs/Buildings/Farm/BuildingFarmUndergroundConfig
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - TypeFarm
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 917d2d58c8171d17586f1b0a59e57a31
     m_Address: Configs/Buildings/Farm/BuildingsEventsConfigFarm

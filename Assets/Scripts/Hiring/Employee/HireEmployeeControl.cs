@@ -36,6 +36,7 @@ namespace Building.Hire
             _IhiringView = new HireEmployeeView(this);
 
             await AsyncLoadConfigPossibleEmployees();
+
             _coroutineTimeUpdateOffers = new WaitForSeconds(_IpossibleEmployees.config.timeUpdateOffers);
             _coroutineTimeStep = new WaitForSeconds(_timeControl.GetCurrentTimeOneDay());
 
@@ -43,13 +44,13 @@ namespace Building.Hire
             StartCoroutine(UpdatePossibleEmployees());
         }
 
-        async Task AsyncLoadConfigPossibleEmployees()
+        async ValueTask AsyncLoadConfigPossibleEmployees()
         {
             var loadHandle = Addressables.LoadAssetAsync<ConfigPossibleEmployeesInShopEditor>("PossibleEmployeesInShop");
             await loadHandle.Task;
 
             if (loadHandle.Status == AsyncOperationStatus.Succeeded)
-                _IpossibleEmployees = new PossibleEmployeesInShop(loadHandle.Result);
+                _IpossibleEmployees ??= new PossibleEmployeesInShop(loadHandle.Result);
             else
                 throw new System.Exception("AsyncOperationStatus.Failed and config not loaded");
         }

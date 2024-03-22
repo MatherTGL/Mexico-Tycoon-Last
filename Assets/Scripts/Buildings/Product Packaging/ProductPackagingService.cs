@@ -24,6 +24,9 @@ namespace Building.Additional
 
         async void IProductPackaging.Init()
         {
+            if (_config != null)
+                return;
+
             var loadHandle = Addressables.LoadAssetAsync<ConfigProductPackagingEditor>("ProductPackagingService");
             await loadHandle.Task;
 
@@ -37,8 +40,8 @@ namespace Building.Additional
 
 #if UNITY_EDITOR
         [Button("Change State"), BoxGroup("Editor only")]
-        private void ChangeStateEditor(in bool newState)
-            => _isActive = newState;
+        private void ChangeStateEditor(in bool newBoolState)
+            => _isActive = newBoolState;
 
         [Button("Get Actual State"), BoxGroup("Editor only")]
         private bool IsActive()

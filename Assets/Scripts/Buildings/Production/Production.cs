@@ -11,7 +11,7 @@ namespace Building.Additional.Production
 
         private TypeResource _resource => _IproductionBuilding.typeProductionResource;
 
-        private readonly Dictionary<TypeResource, ushort> d_currentCultivatedProducts = new();
+        private readonly Dictionary<TypeResource, int> d_currentCultivatedProducts = new();
 
         private uint[] localCapacityProduction => _IproductionBuilding.localCapacityProduction;
 
@@ -62,12 +62,12 @@ namespace Building.Additional.Production
             return true;
         }
 
-        private ushort CalculateAndGetProductionPerformance()
+        private int CalculateAndGetProductionPerformance()
         {
             var efficiency = _calculateEfficiencyAdditionalEmployees.GetEfficiencyAdditionalEmployees(
                 _IproductionBuilding.IobjectsExpensesImplementation, _IproductionBuilding.requiredEmployees, _resource);
 
-            return (ushort)(_IproductionBuilding.defaultProductionPerformance + efficiency);
+            return _IproductionBuilding.defaultProductionPerformance + efficiency;
         }
     }
 }

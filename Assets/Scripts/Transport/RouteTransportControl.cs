@@ -11,7 +11,6 @@ using System.Collections;
 using Obstacle;
 using Data;
 using static Data.Player.DataPlayer;
-using Config.Building.Deliveries.Packaging;
 
 namespace Transport
 {
@@ -151,8 +150,8 @@ namespace Transport
                     Quaternion.identity
             );
 
-            _newDataTransportation = new(
-                _allTypesTransport[_indexTypeTransport], this, _newSpriteTransportation, _IproductPackaging);
+            _newDataTransportation = new(_allTypesTransport[_indexTypeTransport], this,
+                 _newSpriteTransportation, _IproductPackaging);
         }
 
 

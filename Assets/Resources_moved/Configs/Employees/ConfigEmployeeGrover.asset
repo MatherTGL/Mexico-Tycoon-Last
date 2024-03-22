@@ -20,14 +20,17 @@ MonoBehaviour:
   d_productionEfficiency:
     _pairs:
     - _key: 0
-      _value: 2
+      _value: 100
     - _key: 1
       _value: 0
     - _key: 2
-      _value: 1
+      _value: 20
     - _key: 3
       _value: 0
     - _key: 4
-      _value: 2
+      _value: 30
     - _key: 5
-      _value: 4
+      _value: 50
+  _minEfficiency: 10
+  _maxEfficiency: 100
+  _rateDeclineEfficiency: 10

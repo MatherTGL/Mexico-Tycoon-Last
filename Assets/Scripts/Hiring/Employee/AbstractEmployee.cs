@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Config.Employees;
 using static Config.Employees.ConfigEmployeeEditor;
@@ -9,13 +10,21 @@ namespace Hire.Employee
     {
         public TypeEmployee type { get; protected set; }
 
+        protected Lazy<IncreaseEmployeeSalary> increaseEmployeeSalary { get; set; } = new();
+
         public ConfigEmployeeEditor config { get; protected set; }
 
-        public double paymentCostPerDay { get; protected set; }
+        public double paymentCostPerDay
+        {
+            get => increaseEmployeeSalary.Value.paymentCostPerDay;
+            protected set => paymentCostPerDay = value;
+        }
 
         public int rating { get; protected set; }
 
-        public Dictionary<TypeResource, ushort> efficiencyDictionary { get; protected set; } = new();
+        public byte currentEfficiency { get; protected set; }
+
+        public Dictionary<TypeResource, int> efficiencyDictionary { get; protected set; } = new();
 
 
         public abstract AbstractEmployee Clone();

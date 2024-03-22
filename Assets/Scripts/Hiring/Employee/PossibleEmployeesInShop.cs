@@ -1,4 +1,5 @@
 using Hire.Employee;
+using UnityEngine;
 using confPossibleEmployees = Config.Employees.ConfigPossibleEmployeesInShopEditor;
 
 namespace Building.Hire

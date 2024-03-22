@@ -4,6 +4,6 @@ namespace Building.Farm
 {
     public interface IChangedFarmType
     {
-        void ChangeType(in ConfigBuildingFarmEditor.TypeFarm typeFarm);
+        void ChangeType(ConfigBuildingFarmEditor.TypeFarm typeFarm);
     }
 }

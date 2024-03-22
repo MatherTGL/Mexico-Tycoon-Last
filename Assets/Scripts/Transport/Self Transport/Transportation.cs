@@ -66,6 +66,7 @@ namespace Transport
             _typeTransport = typeTransport;
             _ItransportInteractRoute = routeTransportControl;
             _IproductPackaging = IproductPackaging;
+
             _transportationFuel = new(_typeTransport);
             _transportationBreakdowns = new(_typeTransport);
             _transportationMovement = new(this, objectTransport);

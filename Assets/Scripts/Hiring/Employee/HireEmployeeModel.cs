@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Data;
 using Hire.Employee;
-using UnityEngine;
 using static Config.Employees.ConfigEmployeeEditor;
 using static Data.Player.DataPlayer;
 
@@ -20,6 +19,12 @@ namespace Building.Hire
 
         public HireEmployeeModel() { }
 
+        void IHiringModel.ConstantUpdatingInfo()
+        {
+            CalculateExpenses();
+            UpdateStateEmployees();
+        }
+
         private void CalculateExpenses()
         {
             foreach (var typeEmployeeExpenses in d_employeeExpenses.Value.Keys)
@@ -27,22 +32,20 @@ namespace Building.Hire
                                                                     SpendAndCheckMoneyState.Spend);
         }
 
-        void IHiringModel.ConstantUpdatingInfo()
-        {
-            CalculateExpenses();
-            UpdateStateEmployees();
-        }
-
         private void UpdateStateEmployees()
         {
-            foreach (var employee in d_employees.Value.Keys)
-                for (byte index = 0; index < d_employees.Value[employee].Count; index++)
-                    d_employees.Value[employee][index].UpdateState();
+            foreach (var type in d_employees.Value.Keys)
+                for (int i = 0; i < d_employees.Value[type].Count; i++)
+                    d_employees.Value[type][i].UpdateState();
         }
 
-        private void CheckStatusEmployees()
+        private void TerminateAnEmployee(in TypeEmployee employee, in byte index)
         {
-
+            if (d_employees.Value.ContainsKey(employee) && d_employees.Value[employee].IsNotEmpty(index))
+            {
+                d_employeeExpenses.Value[employee] -= d_employees.Value[employee][index].paymentCostPerDay;
+                d_employees.Value[employee].RemoveAt(index);
+            }
         }
 
         async void IHiringModel.AsyncHire(byte indexEmployee, IPossibleEmployees IpossibleEmployees)
@@ -71,12 +74,7 @@ namespace Building.Hire
         void IHiringModel.Firing(in byte indexEmployee, in IPossibleEmployees IpossibleEmployees)
         {
             var typeEmployee = IpossibleEmployees.possibleEmployeesInShop[indexEmployee].type;
-
-            if (d_employees.Value.ContainsKey(typeEmployee) && d_employees.Value[typeEmployee].IsNotEmpty(indexEmployee))
-            {
-                d_employeeExpenses.Value[typeEmployee] -= d_employees.Value[typeEmployee][indexEmployee].paymentCostPerDay;
-                d_employees.Value[typeEmployee].RemoveAt(indexEmployee);
-            }
+            TerminateAnEmployee(typeEmployee, indexEmployee);
         }
 
         Dictionary<TypeEmployee, List<AbstractEmployee>> IHiringModel.GetAllEmployees()

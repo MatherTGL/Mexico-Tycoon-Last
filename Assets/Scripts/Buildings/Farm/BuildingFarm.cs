@@ -10,6 +10,10 @@ using Events.Buildings;
 using Building.Additional.Production;
 using Config.Employees;
 using static Resources.TypeProductionResources;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using System;
+using System.Linq;
 
 namespace Building.Farm
 {
@@ -122,11 +126,16 @@ namespace Building.Farm
                 return true;
         }
 
-        void IChangedFarmType.ChangeType(in ConfigBuildingFarmEditor.TypeFarm typeFarm)
+        //TODO протестировать
+        async void IChangedFarmType.ChangeType(ConfigBuildingFarmEditor.TypeFarm typeFarm)
         {
-            foreach (var config in UnityEngine.Resources.FindObjectsOfTypeAll<ConfigBuildingFarmEditor>())
-                if (config.typeFarm == typeFarm)
-                    _config = config;
+            var loadHandle = Addressables.LoadAssetsAsync<ConfigBuildingFarmEditor>("TypeFarm", conf => { });
+            await loadHandle.Task;
+
+            if (loadHandle.Status == AsyncOperationStatus.Succeeded)
+                _config = loadHandle.Result.Where(config => config.typeFarm == typeFarm).First();
+            else
+                throw new Exception("AsyncOperationStatus.Failed and config not loaded");
         }
 
         void IUsesCountryInfo.SetCountry(in ICountryBuildings IcountryBuildings)

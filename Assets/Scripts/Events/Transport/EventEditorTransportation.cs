@@ -15,6 +15,7 @@ namespace Events.Transport
         private readonly List<ITransportEvents> l_allTransportationEvents = new();
 
 
+        //TODO поменять загрузку конфига
         public EventEditorTransportation(in IEventsInfo IeventsInfo)
         {
             for (byte i = 0; i < numberAttemptsLoadConfig; i++)

@@ -2,6 +2,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using static Resources.TypeProductionResources;
 using SerializableDictionary.Scripts;
+using System.Collections.Generic;
 
 namespace Config.Employees
 {
@@ -16,6 +17,14 @@ namespace Config.Employees
         [SerializeField, EnumPaging, BoxGroup("Parameters")]
         private TypeEmployee _typeEmployee;
         public TypeEmployee typeEmployee => _typeEmployee;
+
+        [SerializeField, BoxGroup("Parameters")]
+        private SerializableDictionary<byte, float> d_costForEachLevels = new();
+        public Dictionary<byte, float> costForEachLevels => d_costForEachLevels.Dictionary;
+
+        [SerializeField, BoxGroup("Parameters")]
+        private byte _experienceForLevelUp = 100;
+        public byte experienceForLevelUp => _experienceForLevelUp;
 
         [SerializeField, BoxGroup("Parameters/Payment")]
         private ushort _minPaymentPerDay;
@@ -34,7 +43,19 @@ namespace Config.Employees
         public byte maxRating => _maxRating;
 
         [SerializeField, BoxGroup("Parameters")]
-        private SerializableDictionary<TypeResource, ushort> d_productionEfficiency = new();
-        public SerializableDictionary<TypeResource, ushort> productionEfficiencyDictionary => d_productionEfficiency;
+        private SerializableDictionary<TypeResource, int> d_productionEfficiency = new();
+        public SerializableDictionary<TypeResource, int> productionEfficiencyDictionary => d_productionEfficiency;
+
+        [SerializeField, BoxGroup("Parameters"), MinValue(10), MaxValue("@_maxEfficiency")]
+        private byte _minEfficiency = 10;
+        public byte minEfficiency => _minEfficiency;
+
+        [SerializeField, BoxGroup("Parameters"), MinValue("@_minEfficiency"), MaxValue(100)]
+        private byte _maxEfficiency = 100;
+        public byte maxEfficiency => _maxEfficiency;
+
+        [SerializeField, BoxGroup("Parameters"), MinValue(1), MaxValue(10)]
+        private byte _rateDeclineEfficiency = 4;
+        public byte rateDeclineEfficiency => _rateDeclineEfficiency;
     }
 }
