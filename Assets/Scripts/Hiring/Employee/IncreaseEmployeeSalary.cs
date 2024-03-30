@@ -5,9 +5,6 @@ namespace Hire.Employee
 {
     public sealed class IncreaseEmployeeSalary
     {
-        //? currentLevel
-        //? salaryLevel
-
         private ConfigEmployeeEditor _config;
 
         private double _paymentCostPerDay;

@@ -14,11 +14,7 @@ namespace Hire.Employee
 
         public ConfigEmployeeEditor config { get; protected set; }
 
-        public double paymentCostPerDay
-        {
-            get => increaseEmployeeSalary.Value.paymentCostPerDay;
-            protected set => paymentCostPerDay = value;
-        }
+        public double paymentCostPerDay { get; protected set; }
 
         public int rating { get; protected set; }
 
@@ -29,7 +25,7 @@ namespace Hire.Employee
 
         public abstract AbstractEmployee Clone();
 
-        public abstract void UpdateOffer(AbstractEmployee[] possibleEmployeesInShop = null);
+        public abstract void UpdateOffer();
 
         public abstract void UpdateState();
     }

@@ -44,7 +44,7 @@ namespace Building.Hire
             StartCoroutine(UpdatePossibleEmployees());
         }
 
-        async ValueTask AsyncLoadConfigPossibleEmployees()
+        private async ValueTask AsyncLoadConfigPossibleEmployees()
         {
             var loadHandle = Addressables.LoadAssetAsync<ConfigPossibleEmployeesInShopEditor>("PossibleEmployeesInShop");
             await loadHandle.Task;

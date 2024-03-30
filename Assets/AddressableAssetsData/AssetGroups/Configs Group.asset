@@ -23,11 +23,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - Bank
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 00fb622114f0a8d9badbd4a21a1f6371
-    m_Address: Sirenix/GlobalSerializationConfig
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d635a0ee2f9f4c34c97f92968fd9899d
     m_Address: Configs/Bank/DefaultBankConfig 2
     m_ReadOnly: 0
@@ -66,20 +61,20 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2ecacf122e47871d2b0a96bc912b0fef
-    m_Address: Configs/Employees/ConfigEmployeeGrover
+  - m_GUID: 64c5670f12e38061a8ab4baf189fd4c4
+    m_Address: Assets/Resources_moved/Configs/Employees/ConfigEmployeeGuard.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Employee
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 64c5670f12e38061a8ab4baf189fd4c4
-    m_Address: Configs/Employees/ConfigEmployeeGuard
+  - m_GUID: 2ecacf122e47871d2b0a96bc912b0fef
+    m_Address: Assets/Resources_moved/Configs/Employees/ConfigEmployeeGrover.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Employee
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 44aecf8cf247fba1b822d263be1d20aa
-    m_Address: Configs/Employees/ConfigEmployeeScientist
+    m_Address: Assets/Resources_moved/Configs/Employees/ConfigEmployeeScientist.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Employee

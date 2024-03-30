@@ -164,6 +164,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Aerodrome (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 2184122174264561220, guid: 461141064f45bf8d5b77d7e37cb9cb86, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5681343924117719057, guid: 461141064f45bf8d5b77d7e37cb9cb86, type: 3}
       propertyPath: m_LocalPosition.x
       value: -51.27
@@ -576,6 +580,10 @@ PrefabInstance:
     - target: {fileID: 8097129847925388580, guid: 749fca0d126019890b93c3839441ceb7, type: 3}
       propertyPath: m_Name
       value: Sea Port (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8097129847925388580, guid: 749fca0d126019890b93c3839441ceb7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1400,6 +1408,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Aerodrome (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2184122174264561220, guid: 461141064f45bf8d5b77d7e37cb9cb86, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5681343924117719057, guid: 461141064f45bf8d5b77d7e37cb9cb86, type: 3}
       propertyPath: m_LocalPosition.x
       value: -18.9
@@ -1506,6 +1518,10 @@ PrefabInstance:
     - target: {fileID: 3980844778973059152, guid: 7a2fee6dee64c4f9d82417a9cc955a58, type: 3}
       propertyPath: m_Name
       value: Fabric (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980844778973059152, guid: 7a2fee6dee64c4f9d82417a9cc955a58, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2266,6 +2282,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sea Port
       objectReference: {fileID: 0}
+    - target: {fileID: 8097129847925388580, guid: 749fca0d126019890b93c3839441ceb7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2343,6 +2363,10 @@ PrefabInstance:
     - target: {fileID: 2184122174264561220, guid: 461141064f45bf8d5b77d7e37cb9cb86, type: 3}
       propertyPath: m_Name
       value: Aerodrome
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184122174264561220, guid: 461141064f45bf8d5b77d7e37cb9cb86, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5681343924117719057, guid: 461141064f45bf8d5b77d7e37cb9cb86, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2498,6 +2522,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fabric
       objectReference: {fileID: 0}
+    - target: {fileID: 3980844778973059152, guid: 7a2fee6dee64c4f9d82417a9cc955a58, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2514,6 +2542,10 @@ PrefabInstance:
     - target: {fileID: 1324153967164195965, guid: e313be6743dd0eaa9af5396761aef68e, type: 3}
       propertyPath: m_Name
       value: Stock
+      objectReference: {fileID: 0}
+    - target: {fileID: 1324153967164195965, guid: e313be6743dd0eaa9af5396761aef68e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8250040653912455641, guid: e313be6743dd0eaa9af5396761aef68e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2571,6 +2603,10 @@ PrefabInstance:
     - target: {fileID: 527205609335899112, guid: fa184e37047308ffbbc5b29ad7880b3f, type: 3}
       propertyPath: m_Name
       value: City
+      objectReference: {fileID: 0}
+    - target: {fileID: 527205609335899112, guid: fa184e37047308ffbbc5b29ad7880b3f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8154932820704713453, guid: fa184e37047308ffbbc5b29ad7880b3f, type: 3}
       propertyPath: m_LocalPosition.x
