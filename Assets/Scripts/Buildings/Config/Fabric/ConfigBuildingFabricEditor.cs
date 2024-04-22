@@ -7,6 +7,7 @@ using System.Linq;
 using Config.Building.Events;
 using SerializableDictionary.Scripts;
 using static Config.Employees.ConfigEmployeeEditor;
+using static Resources.TypeProductionResources;
 
 namespace Config.Building
 {
@@ -18,20 +19,16 @@ namespace Config.Building
         public ConfigBuildingsEventsEditor configBuildingsEvents => _configBuildingsEvents;
 
         [SerializeField, BoxGroup("Raw Materials"), ReadOnly, HideLabel]
-        private List<TypeProductionResources.TypeResource> l_requiredRawMaterials = new();
-        public List<TypeProductionResources.TypeResource> requiredRawMaterials => l_requiredRawMaterials;
+        private List<TypeResource> l_requiredRawMaterials = new();
+        public List<TypeResource> requiredRawMaterials => l_requiredRawMaterials;
 
         [SerializeField, BoxGroup("Raw Materials"), ReadOnly, HideLabel]
         private List<float> l_quantityRequiredRawMaterials = new();
         public List<float> quantityRequiredRawMaterials => l_quantityRequiredRawMaterials;
 
         [SerializeField, BoxGroup("Parameters"), EnumToggleButtons]
-        private TypeProductionResources.TypeResource _typeProductionResource;
-        public TypeProductionResources.TypeResource typeProductionResource => _typeProductionResource;
-
-        [SerializeField, BoxGroup("Parameters")]
-        private ushort _productionPerformance = 1;
-        public ushort productionPerformance => _productionPerformance;
+        private SerializableDictionary<TypeResource, ushort> d_typeProductionResource;
+        public Dictionary<TypeResource, ushort> productionResources => d_typeProductionResource.Dictionary;
 
         [SerializeField, BoxGroup("Parameters"), MinValue(10)]
         private uint[] _localCapacityProduction;

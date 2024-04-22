@@ -28,7 +28,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.2d.aseprite": {
-      "version": "1.1.1",
+      "version": "1.1.2",
       "depth": 1,
       "source": "registry",
       "dependencies": {
@@ -131,7 +131,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.burst": {
-      "version": "1.8.12",
+      "version": "1.8.13",
       "depth": 3,
       "source": "registry",
       "dependencies": {
@@ -184,7 +184,7 @@
         "com.unity.2d.spriteshape": "10.0.3",
         "com.unity.2d.tilemap": "1.0.0",
         "com.unity.2d.tilemap.extras": "4.0.2",
-        "com.unity.2d.aseprite": "1.1.1"
+        "com.unity.2d.aseprite": "1.1.2"
       }
     },
     "com.unity.ide.rider": {
@@ -243,7 +243,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.render-pipelines.core": {
-      "version": "16.0.5",
+      "version": "16.0.6",
       "depth": 1,
       "source": "builtin",
       "dependencies": {
@@ -280,11 +280,11 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.shadergraph": {
-      "version": "16.0.5",
+      "version": "16.0.6",
       "depth": 0,
       "source": "builtin",
       "dependencies": {
-        "com.unity.render-pipelines.core": "16.0.5",
+        "com.unity.render-pipelines.core": "16.0.6",
         "com.unity.searcher": "4.9.2"
       }
     },

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Building.Additional;
 using Building.Additional.Production;
 using Config.Building;
@@ -7,8 +8,8 @@ using Config.Employees;
 using Country;
 using Events.Buildings;
 using Expense;
-using Resources;
 using UnityEngine;
+using static Resources.TypeProductionResources;
 
 namespace Building.Fabric
 {
@@ -37,27 +38,27 @@ namespace Building.Fabric
 
         ConfigBuildingsEventsEditor IUsesBuildingsEvents.configBuildingsEvents => _config.configBuildingsEvents;
 
-        Dictionary<TypeProductionResources.TypeResource, double> IBuilding.amountResources
+        Dictionary<TypeResource, double> IBuilding.amountResources
         { get => d_amountResources; set => d_amountResources = value; }
 
-        Dictionary<TypeProductionResources.TypeResource, double> IProductionBuilding.amountResources
+        Dictionary<TypeResource, double> IProductionBuilding.amountResources
         { get => d_amountResources; set => d_amountResources = value; }
 
-        Dictionary<TypeProductionResources.TypeResource, double> IUsesBuildingsEvents.amountResources
+        Dictionary<TypeResource, double> IUsesBuildingsEvents.amountResources
         { get => d_amountResources; set => d_amountResources = value; }
 
-        Dictionary<TypeProductionResources.TypeResource, uint> IBuilding.stockCapacity
+        Dictionary<TypeResource, uint> IBuilding.stockCapacity
         { get => d_stockCapacity; set => d_stockCapacity = value; }
 
         Dictionary<ConfigEmployeeEditor.TypeEmployee, byte> IProductionBuilding.requiredEmployees => _config.requiredEmployees.Dictionary;
 
-        List<TypeProductionResources.TypeResource> IProductionBuilding.requiredRawMaterials => _config.requiredRawMaterials;
+        List<TypeResource> IProductionBuilding.requiredRawMaterials => _config.requiredRawMaterials;
 
         List<float> IProductionBuilding.quantityRequiredRawMaterials => _config.quantityRequiredRawMaterials;
 
-        private TypeProductionResources.TypeResource _typeProductionResource;
+        private TypeResource _typeProductionResource;
 
-        TypeProductionResources.TypeResource IProductionBuilding.typeProductionResource => _typeProductionResource;
+        TypeResource IProductionBuilding.typeProductionResource => _typeProductionResource;
 
         uint[] IBuilding.localCapacityProduction => _config.localCapacityProduction;
 
@@ -66,7 +67,7 @@ namespace Building.Fabric
         private double _costPurchase;
         double IBuildingPurchased.costPurchase { get => _costPurchase; set => _costPurchase = value; }
 
-        ushort IProductionBuilding.defaultProductionPerformance => _config.productionPerformance;
+        ushort IProductionBuilding.defaultProductionPerformance => _config.productionResources[_typeProductionResource];
 
         float IProductionBuilding.harvestRipeningTime => _config.harvestRipeningTime;
 
@@ -87,7 +88,7 @@ namespace Building.Fabric
         //TODO: change typeProductionResource https://ru.yougile.com/team/bf00efa6ea26/#MEX-87
         private void LoadConfigData(in ConfigBuildingFabricEditor config)
         {
-            _typeProductionResource = config.typeProductionResource;
+            _typeProductionResource = config.productionResources.Keys.First();
             _costPurchase = _config.costPurchase;
         }
 

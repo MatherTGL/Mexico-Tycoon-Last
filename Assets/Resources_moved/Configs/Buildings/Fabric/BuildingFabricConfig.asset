@@ -16,9 +16,12 @@ MonoBehaviour:
   l_requiredRawMaterials: 00
   l_quantityRequiredRawMaterials:
   - 5
-  _typeProductionResource: 2
-  _productionPerformance: 1
+  d_typeProductionResource:
+    _pairs:
+    - _key: 2
+      _value: 1
   _localCapacityProduction: 0a0000000a0000000a0000000a0000000a000000
+  _harvestRipeningTime: 3
   _costPurchase: 150000
   d_requiredEmployees:
     _pairs:

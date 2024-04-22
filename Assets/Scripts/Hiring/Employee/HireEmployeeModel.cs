@@ -66,7 +66,7 @@ namespace Building.Hire
             {
                 do
                 {
-                    IpossibleEmployees.possibleEmployeesInShop[indexEmployee].UpdateOffer(IpossibleEmployees.possibleEmployeesInShop);
+                    IpossibleEmployees.possibleEmployeesInShop[indexEmployee].UpdateOffer();
                 } while (IpossibleEmployees.possibleEmployeesInShop[indexEmployee].type == typeEmployee);
             });
         }

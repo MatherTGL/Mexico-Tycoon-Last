@@ -51,7 +51,7 @@ namespace Building.Additional.Production
 
         private bool IsQuantityRequiredRawMaterials()
         {
-            foreach (var typeDrug in _IproductionBuilding.requiredRawMaterials)
+            foreach (TypeResource typeDrug in _IproductionBuilding.requiredRawMaterials)
             {
                 for (ushort i = 0; i < _IproductionBuilding.quantityRequiredRawMaterials.Count; i++)
                     if (_IproductionBuilding.amountResources[typeDrug] < _IproductionBuilding.quantityRequiredRawMaterials[i])
