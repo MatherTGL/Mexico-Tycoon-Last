@@ -1,11 +1,13 @@
 using Config.Time;
 using UnityEngine;
+using static Config.Time.ConfigTimeControlEditor;
 
 namespace TimeControl.Acceleration
 {
     //TODO: https://yougile.com/team/bf00efa6ea26/#chat:cb4fc05f4bea
     public sealed class TimeAcceleration
     {
+        //FIXME not used
         private readonly ConfigTimeControlEditor _configTimeControlEditor;
 
         private readonly InputControl _inputControl;
@@ -19,7 +21,7 @@ namespace TimeControl.Acceleration
         }
 
         private void ChangeState(ref bool pauseState, ref float currentAcceleration,
-            in ConfigTimeControlEditor.AccelerationTime typeAcceleration, in bool isUseInvertState = false)
+            in AccelerationTime typeAcceleration, in bool isUseInvertState = false)
         {
             if (isUseInvertState)
                 pauseState = !pauseState;
@@ -32,16 +34,16 @@ namespace TimeControl.Acceleration
         public void AccelerationCheck(ref float currentAcceleration, ref bool pauseState)
         {
             if (Input.GetKeyDown(_inputControl.keycodeTimePause))
-                ChangeState(ref pauseState, ref currentAcceleration, ConfigTimeControlEditor.AccelerationTime.X1, true);
+                ChangeState(ref pauseState, ref currentAcceleration, AccelerationTime.X1, true);
 
             if (Input.GetKeyDown(_inputControl.keycodeAccelerationTimeDefault))
-                ChangeState(ref pauseState, ref currentAcceleration, ConfigTimeControlEditor.AccelerationTime.X1);
+                ChangeState(ref pauseState, ref currentAcceleration, AccelerationTime.X1);
 
             if (Input.GetKeyDown(_inputControl.keycodeAccelerationTimeTwo))
-                ChangeState(ref pauseState, ref currentAcceleration, ConfigTimeControlEditor.AccelerationTime.X2);
+                ChangeState(ref pauseState, ref currentAcceleration, AccelerationTime.X2);
 
             if (Input.GetKeyDown(_inputControl.keycodeAccelerationTimeThree))
-                ChangeState(ref pauseState, ref currentAcceleration, ConfigTimeControlEditor.AccelerationTime.X4);
+                ChangeState(ref pauseState, ref currentAcceleration, AccelerationTime.X4);
         }
     }
 }

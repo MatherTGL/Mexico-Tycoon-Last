@@ -1,9 +1,10 @@
-using Config.Building;
+using System.Threading.Tasks;
+using static Config.Building.ConfigBuildingFarmEditor;
 
 namespace Building.Farm
 {
     public interface IChangedFarmType
     {
-        void ChangeType(ConfigBuildingFarmEditor.TypeFarm typeFarm);
+        ValueTask ChangeType(TypeFarm typeFarm);
     }
 }

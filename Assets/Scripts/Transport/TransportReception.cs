@@ -77,7 +77,7 @@ namespace Transport.Reception
 
         public void ConnectionRequest(in ITransportReception fromObject, in TypeTransport.Type typeRoute)
         {
-            if (d_infoRouteConnect.Count <= _configReception.defaultConnectionCount)
+            if (d_infoRouteConnect.Count <= _freeConnectionCount)
                 if (_configReception.typeConnectBuildings.Contains(fromObject.GetTypeBuilding()))
                     if (fromObject.IsConfirmRequest(this) && IsConfirmRequest(fromObject))
                         BuildRoute(fromObject, typeRoute);

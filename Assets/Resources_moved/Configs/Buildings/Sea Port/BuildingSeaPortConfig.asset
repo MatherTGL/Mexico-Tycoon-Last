@@ -13,7 +13,22 @@ MonoBehaviour:
   m_Name: BuildingSeaPortConfig
   m_EditorClassIdentifier: 
   _configEvents: {fileID: 11400000, guid: 0011cc3f2a40dbaf3a01c2fde0213974, type: 2}
-  _localCapacityProduction: 0a0000000a0000000a0000000a0000000a000000
+  d_localCapacityProduction:
+    _pairs:
+    - _key: 0
+      _value: 0
+    - _key: 1
+      _value: 0
+    - _key: 2
+      _value: 0
+    - _key: 3
+      _value: 0
+    - _key: 4
+      _value: 0
+    - _key: 5
+      _value: 0
+    - _key: 6
+      _value: 0
   d_requiredEmployees:
     _pairs:
     - _key: 0

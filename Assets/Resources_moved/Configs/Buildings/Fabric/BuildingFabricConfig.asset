@@ -13,19 +13,32 @@ MonoBehaviour:
   m_Name: BuildingFabricConfig
   m_EditorClassIdentifier: 
   _configBuildingsEvents: {fileID: 11400000, guid: a3d6c66ef24acacb8be6f5fc58cee102, type: 2}
-  l_requiredRawMaterials: 00
-  l_quantityRequiredRawMaterials:
-  - 5
+  d_requiredRawMaterials:
+    _pairs:
+    - _key: 2
+      _value:
+        _pairs:
+        - _key: 0
+          _value: 3
+        - _key: 1
+          _value: 5
   d_typeProductionResource:
     _pairs:
     - _key: 2
       _value: 1
-  _localCapacityProduction: 0a0000000a0000000a0000000a0000000a000000
-  _harvestRipeningTime: 3
-  _costPurchase: 150000
+  d_localCapacityProduction:
+    _pairs:
+    - _key: 0
+      _value: 10
+    - _key: 1
+      _value: 10
+    - _key: 2
+      _value: 10
   d_requiredEmployees:
     _pairs:
     - _key: 0
-      _value: 4
+      _value: 1
     - _key: 1
-      _value: 2
+      _value: 1
+  _harvestRipeningTime: 3
+  _costPurchase: 150000

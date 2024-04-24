@@ -28,6 +28,7 @@ using Building.City.Deliveries;
 using static Resources.TypeProductionResources;
 using static Config.Building.ConfigBuildingFarmEditor;
 using static Building.City.Business.CityBusiness;
+using Building.Additional.Production;
 
 namespace Building
 {
@@ -37,6 +38,8 @@ namespace Building
         private IBuilding _Ibuilding;
 
         private ISpending _Ispending;
+
+        private IProductionBuilding _IproductionBuilding;
 
         private IEnergyConsumption _IenergyConsumption;
 
@@ -177,6 +180,15 @@ namespace Building
                 _IenergyConsumption.MonitorEnergy(_IenergyConsumption);
         }
 
+        private void ChangeProductionResource(in TypeResource typeResource)
+        {
+            if (_Ibuilding is IProductionBuilding)
+            {
+                _IproductionBuilding ??= _Ibuilding as IProductionBuilding;
+                _IproductionBuilding.SetNewProductionResource(typeResource);
+            }
+        }
+
         private void CalculateBuildingCostPurchased()
             => _IbuildingPurchased?.UpdateCostPurchased();
 
@@ -231,6 +243,11 @@ namespace Building
         [Button("Deactivate"), BoxGroup("Editor Control"), HorizontalGroup("Editor Control/Hor2")]
         [DisableInEditorMode]
         private void SetDeactivateBuilding() => ChangeJobStatusBuilding(false);
+
+        #region production
+        [Button("Change Production Resource"), BoxGroup("Editor Control"), DisableInEditorMode]
+        private void SetNewProductionResource(TypeResource typeResource) => ChangeProductionResource(typeResource);
+        #endregion
 
         #region Farm
 

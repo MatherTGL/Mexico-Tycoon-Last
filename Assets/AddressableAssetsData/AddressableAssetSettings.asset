@@ -94,6 +94,7 @@ MonoBehaviour:
     - Route
     - TransportEventPoliceRaid
     - TypeFarm
+    - TransportEvents
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 5088a43da54f478b2bb46eb1e3f5d9ae, type: 2}

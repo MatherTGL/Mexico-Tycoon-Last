@@ -26,7 +26,7 @@ namespace Building.Border
             get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException();
         }
 
-        uint[] IBuilding.localCapacityProduction => throw new System.NotImplementedException();
+        Dictionary<TypeProductionResources.TypeResource, uint> IBuilding.localCapacityProduction => throw new System.NotImplementedException();
 
         #endregion
 

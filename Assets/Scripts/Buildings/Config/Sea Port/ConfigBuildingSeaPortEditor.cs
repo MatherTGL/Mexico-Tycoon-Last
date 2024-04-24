@@ -6,6 +6,8 @@ using System.Linq;
 using SerializableDictionary.Scripts;
 using static Config.Employees.ConfigEmployeeEditor;
 using Config.Building.Events;
+using static Resources.TypeProductionResources;
+using System.Collections.Generic;
 
 namespace Config.Building
 {
@@ -16,9 +18,9 @@ namespace Config.Building
         private ConfigBuildingsEventsEditor _configEvents;
         public ConfigBuildingsEventsEditor configEvents => _configEvents;
 
-        [SerializeField, BoxGroup("Parameters"), MinValue(10)]
-        private uint[] _localCapacityProduction;
-        public uint[] localCapacityProduction => _localCapacityProduction;
+        [SerializeField, BoxGroup("Parameters/Storage")]
+        private SerializableDictionary<TypeResource, uint> d_localCapacityProduction = new();
+        public Dictionary<TypeResource, uint> localCapacityProduction => d_localCapacityProduction.Dictionary;
 
         [SerializeField, BoxGroup("Parameters/Employees")]
         [Tooltip("Required employees for the operation of the building, as well as their number")]
@@ -28,15 +30,5 @@ namespace Config.Building
         [SerializeField, MinValue(10), BoxGroup("Parameters")]
         private double _costPurchase = 100_000;
         public double costPurchase => _costPurchase;
-
-#if UNITY_EDITOR
-        [Button("Update Info Capacity")]
-        private void UpdateInfoCapacity()
-        {
-            int count = Enum.GetNames(typeof(TypeProductionResources.TypeResource)).ToArray().Length;
-            if (_localCapacityProduction.Length < count)
-                _localCapacityProduction = new uint[count];
-        }
-#endif
     }
 }

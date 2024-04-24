@@ -8,89 +8,52 @@ using Config.Country.Climate;
 using Config.Building.Events;
 using static Config.Employees.ConfigEmployeeEditor;
 using SerializableDictionary.Scripts;
+using static Resources.TypeProductionResources;
+using static Config.Country.Climate.ConfigClimateZoneEditor;
 
 namespace Config.Building
 {
     [CreateAssetMenu(fileName = "BuildingFarmConfig", menuName = "Config/Buildings/Farm/Create New", order = 50)]
     public sealed class ConfigBuildingFarmEditor : ScriptableObject
     {
-        [SerializeField, Required, BoxGroup("Configs")]
+        private const int _defaultCapacityProductionValue = 10;
+
+        [SerializeField, Required, BoxGroup("Parameters/Configs")]
         private ConfigBuildingsEventsEditor _configBuildingsEvents;
         public ConfigBuildingsEventsEditor configBuildingsEvents => _configBuildingsEvents;
 
-        [SerializeField, BoxGroup("Raw Materials"), ReadOnly, HideLabel]
-        private List<TypeProductionResources.TypeResource> l_requiredRawMaterials = new();
-        public List<TypeProductionResources.TypeResource> requiredRawMaterials => l_requiredRawMaterials;
+        [SerializeField, BoxGroup("Parameters/Production"), HideLabel]
+        private SerializableDictionary<TypeResource, SerializableDictionary<TypeResource, int>> d_requiredRawMaterials = new();
+        public Dictionary<TypeResource, SerializableDictionary<TypeResource, int>> requiredRawMaterials => d_requiredRawMaterials.Dictionary;
 
-        [SerializeField, BoxGroup("Raw Materials"), ReadOnly, HideLabel]
-        private List<float> l_quantityRequiredRawMaterials = new();
-        public List<float> quantityRequiredRawMaterials => l_quantityRequiredRawMaterials;
-
-        [SerializeField, BoxGroup("Parameters"), EnumToggleButtons]
-        private TypeProductionResources.TypeResource _typeProductionResource;
-        public TypeProductionResources.TypeResource typeProductionResource => _typeProductionResource;
+        [SerializeField, BoxGroup("Parameters/Production"), EnumToggleButtons]
+        private SerializableDictionary<TypeResource, ushort> d_typeProductionResource = new();
+        public Dictionary<TypeResource, ushort> productionResources => d_typeProductionResource.Dictionary;
 
         public enum TypeFarm { Terrestrial, Underground }
 
         [SerializeField, BoxGroup("Parameters"), EnumPaging]
         public TypeFarm typeFarm;
 
-        [SerializeField, BoxGroup("Parameters"), HideLabel]
-        private List<ConfigClimateZoneEditor.TypeSeasons> l_growingSeasons = new();
-        public List<ConfigClimateZoneEditor.TypeSeasons> growingSeasons => l_growingSeasons;
+        [SerializeField, BoxGroup("Parameters/Seasons"), HideLabel]
+        private List<TypeSeasons> l_growingSeasons = new();
+        public List<TypeSeasons> growingSeasons => l_growingSeasons;
 
-        [SerializeField, BoxGroup("Parameters"), MinValue(1)]
-        private ushort _productionPerformanceStart = 1;
-        public ushort productionStartPerformance => _productionPerformanceStart;
-
-        [SerializeField, BoxGroup("Parameters"), MinValue(10)]
-        private uint[] _localCapacityProduction;
-        public uint[] localCapacityProduction => _localCapacityProduction;
-
-        [SerializeField, BoxGroup("Parameters"), MinValue(1)]
-        private float _harvestRipeningTime;
-        public float harvestRipeningTime => _harvestRipeningTime;
-
-        [SerializeField, BoxGroup("Parameters"), MinValue(0)]
-        private double _costPurchase = 50_000;
-        public double costPurchase => _costPurchase;
+        [SerializeField, BoxGroup("Parameters/Storage")]
+        private SerializableDictionary<TypeResource, uint> d_localCapacityProduction = new();
+        public Dictionary<TypeResource, uint> localCapacityProduction => d_localCapacityProduction.Dictionary;
 
         [SerializeField, BoxGroup("Parameters/Employees")]
         [Tooltip("Required employees for the operation of the building, as well as their number")]
         private SerializableDictionary<TypeEmployee, byte> d_requiredEmployees = new();
-        public SerializableDictionary<TypeEmployee, byte> requiredEmployees => d_requiredEmployees;
+        public Dictionary<TypeEmployee, byte> requiredEmployees => d_requiredEmployees.Dictionary;
 
+        [SerializeField, BoxGroup("Parameters/Production"), MinValue(1)]
+        private float _harvestRipeningTime;
+        public float harvestRipeningTime => _harvestRipeningTime;
 
-#if UNITY_EDITOR
-        [Button("Add New"), BoxGroup("Raw Materials"), HorizontalGroup("Raw Materials/Hor")]
-        private void AddNewRawMaterial(in TypeProductionResources.TypeResource typeResource,
-                                       in float quantityRawMaterial = 1)
-        {
-            if (l_requiredRawMaterials.Contains(typeResource) == false && quantityRawMaterial > 0)
-            {
-                l_requiredRawMaterials.Add(typeResource);
-                l_quantityRequiredRawMaterials.Add(quantityRawMaterial);
-            }
-        }
-
-        [Button("Remove"), BoxGroup("Raw Materials"), HorizontalGroup("Raw Materials/Hor")]
-        private void RemoveRawMaterial(in TypeProductionResources.TypeResource typeResource)
-        {
-            if (l_requiredRawMaterials.Contains(typeResource) == true)
-            {
-                int index = l_requiredRawMaterials.IndexOf(typeResource);
-                l_requiredRawMaterials.RemoveAt(index);
-                l_quantityRequiredRawMaterials.RemoveAt(index);
-            }
-        }
-
-        [Button("Update Info Capacity")]
-        private void UpdateInfoCapacity()
-        {
-            int count = Enum.GetNames(typeof(TypeProductionResources.TypeResource)).ToArray().Length;
-            if (_localCapacityProduction.Length < count)
-                _localCapacityProduction = new uint[count];
-        }
-#endif
+        [SerializeField, BoxGroup("Parameters/Other"), MinValue(0)]
+        private double _costPurchase = 50_000;
+        public double costPurchase => _costPurchase;
     }
 }

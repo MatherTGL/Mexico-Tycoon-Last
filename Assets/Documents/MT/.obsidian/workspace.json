@@ -33,9 +33,11 @@
             "id": "99a62cf9bdefea68",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "Смена ресурса Drawing 2024-04-22 18.10.26.excalidraw.md"
+                "file": "Диздок/Краткая информация.md",
+                "mode": "source",
+                "source": false
               }
             }
           },
@@ -126,7 +128,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Смена ресурса Drawing 2024-04-22 18.10.26.excalidraw.md",
+                "file": "Диздок/Краткая информация.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -143,7 +145,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Смена ресурса Drawing 2024-04-22 18.10.26.excalidraw.md",
+                "file": "Диздок/Краткая информация.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -166,7 +168,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Смена ресурса Drawing 2024-04-22 18.10.26.excalidraw.md"
+                "file": "Диздок/Краткая информация.md"
               }
             }
           }
@@ -190,26 +192,25 @@
   },
   "active": "99a62cf9bdefea68",
   "lastOpenFiles": [
+    "Диздок/Диздок.md",
+    "Диздок/Краткая информация.md",
+    "Диздок/Основные механики/Управление.md",
+    "Смена ресурса Drawing 2024-04-22 18.10.26.excalidraw.md",
     "Смена производимого ресурса.md.meta",
     "Смена ресурса Drawing 2024-04-22 18.10.26.excalidraw.md.meta",
     "Смена производимого ресурса.md",
-    "Смена ресурса Drawing 2024-04-22 18.10.26.excalidraw.md",
     "Excalidraw/Drawing 2023-11-29 17.34.14.excalidraw.md",
     "Excalidraw/ContractsDrawing2024-01-05 14.54.50.excalidraw.md",
     "Сотрудники.md",
     "Сотрудники.md.meta",
-    "Диздок/Основные механики/Управление.md",
     "Диздок/Диздок.md.meta",
     "Диздок/Основные механики.meta",
     "Диздок/Краткая информация.md.meta",
     "ss_e688ecbe539df73e02535c3921c4fd3ff72aada0.1920x1080-2633484889.jpg.meta",
     "Диздок/Основные механики/Управление.md.meta",
     "Диздок.meta",
-    "Диздок/Краткая информация.md",
-    "Диздок/Диздок.md",
     "ss_e688ecbe539df73e02535c3921c4fd3ff72aada0.1920x1080-2633484889.jpg",
     "Диздок/Основные механики",
-    "Диздок",
     "Механика контрактов.md",
     "Просто заметки.md"
   ]

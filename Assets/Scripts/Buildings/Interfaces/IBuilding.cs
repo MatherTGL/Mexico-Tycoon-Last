@@ -1,36 +1,32 @@
 using System;
 using System.Collections.Generic;
-using Building.Additional;
-using Resources;
+using UnityEngine;
+using static Resources.TypeProductionResources;
 
 namespace Building
 {
     public interface IBuilding
     {
-        Dictionary<TypeProductionResources.TypeResource, double> amountResources { get; set; }
+        Dictionary<TypeResource, double> amountResources { get; set; }
 
-        Dictionary<TypeProductionResources.TypeResource, uint> stockCapacity { get; set; }
+        Dictionary<TypeResource, uint> stockCapacity { get; set; }
 
-        uint[] localCapacityProduction { get; }
+        Dictionary<TypeResource, uint> localCapacityProduction { get; }
 
 
         void InitDictionaries()
         {
-            foreach (TypeProductionResources.TypeResource typeDrug
-                        in Enum.GetValues(typeof(TypeProductionResources.TypeResource)))
-            {
+            foreach (TypeResource typeDrug in Enum.GetValues(typeof(TypeResource)))
                 if (amountResources.ContainsKey(typeDrug) == false)
                     amountResources.Add(typeDrug, 0);
-            }
 
-            foreach (var resource in amountResources.Keys)
-                stockCapacity.Add(resource, localCapacityProduction[(int)amountResources[resource]]);
+            foreach (var resource in localCapacityProduction.Keys)
+                stockCapacity.Add(resource, localCapacityProduction[resource]);
         }
 
         void ConstantUpdatingInfo();
 
-        float GetResources(in float transportCapacity,
-                           in TypeProductionResources.TypeResource typeResource)
+        float GetResources(in float transportCapacity, in TypeResource typeResource)
         {
             if (amountResources[typeResource] >= transportCapacity)
             {
@@ -41,8 +37,7 @@ namespace Building
                 return 0;
         }
 
-        bool IsSetResources(in float quantityResource,
-                            in TypeProductionResources.TypeResource typeResource)
+        bool IsSetResources(in float quantityResource, in TypeResource typeResource)
         {
             if (stockCapacity.TryGetValue(typeResource, out uint capacity))
             {
@@ -52,7 +47,7 @@ namespace Building
                     return true;
                 }
             }
-
+            Debug.Log("Здание не принимает данный ресурс");
             return false;
         }
     }

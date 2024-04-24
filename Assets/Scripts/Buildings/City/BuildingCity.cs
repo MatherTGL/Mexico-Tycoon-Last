@@ -24,6 +24,8 @@ namespace Building.City
         Dictionary<TypeProductionResources.TypeResource, uint> IBuilding.stockCapacity
         { get => d_stockCapacity; set => d_stockCapacity = value; }
 
+        Dictionary<TypeProductionResources.TypeResource, uint> IBuilding.localCapacityProduction => _config.localCapacityProduction;
+
         private event Action _updatedTimeStep;
 
         event Action IUseBusiness.updatedTimeStep
@@ -31,8 +33,6 @@ namespace Building.City
             add => _updatedTimeStep += value;
             remove => _updatedTimeStep -= value;
         }
-
-        uint[] IBuilding.localCapacityProduction => _config.localCapacityProduction;
 
         private uint _population;
 

@@ -58,7 +58,6 @@ namespace Transport
         bool IEventsInfo.isCargoPackaging => _isCargoPackaging;
 
 
-        //TODO REFACTORING
         public Transportation(in TypeTransport typeTransport,
                               in ITransportInteractRoute routeTransportControl,
                               in GameObject objectTransport, in IProductPackaging IproductPackaging)

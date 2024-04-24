@@ -1,29 +1,41 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Config.Building.Events;
 using Transport;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Events.Transport
 {
     public sealed class EventEditorTransportation : IEventTransportation
     {
-        private const byte numberAttemptsLoadConfig = 3;
-
-        private readonly ConfigActiveTransportEventsEditor _config;
+        private ConfigActiveTransportEventsEditor _config;
 
         private readonly List<ITransportEvents> l_allTransportationEvents = new();
 
 
         //TODO поменять загрузку конфига
         public EventEditorTransportation(in IEventsInfo IeventsInfo)
-        {
-            for (byte i = 0; i < numberAttemptsLoadConfig; i++)
-            {
-                if (_config == null)
-                    _config = UnityEngine.Resources.FindObjectsOfTypeAll<ConfigActiveTransportEventsEditor>()[0];
-            }
+            => AsyncLoadConfig(IeventsInfo);
 
+        private async void AsyncLoadConfig(IEventsInfo IeventsInfo)
+        {
+            var loadHandle = Addressables.LoadAssetAsync<ConfigActiveTransportEventsEditor>("TransportEvents");
+            await loadHandle.Task;
+
+            if (loadHandle.Status == AsyncOperationStatus.Succeeded)
+                _config = loadHandle.Result;
+            else
+                throw new Exception("AsyncOperationStatus.Failed and config not loaded");
+
+            InitEvents(IeventsInfo);
+        }
+
+        private void InitEvents(in IEventsInfo IeventsInfo)
+        {
             for (byte indexEvent = 0; indexEvent < _config.activeEvents.Count; indexEvent++)
             {
                 if (_config.activeEvents[indexEvent] is TransportationEventTypes.PoliceRaid)

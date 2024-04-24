@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: CostResources_movedConf
   m_EditorClassIdentifier: 
   _configForContracts: {fileID: 11400000, guid: 654e276b0e24f304d86eab736ff22a01, type: 2}
-  _costSellResources: e8030000c8000000983a000000000000d0070000b0040000
-  _costBuyResources: 13050000030100002b4c000000000000270a000017060000
+  _costSellResources: e8030000c8000000983a000000000000d0070000b0040000ae080000
+  _costBuyResources: 13050000030100002b4c000000000000270a000017060000480b0000
   _costDifference: 1.3

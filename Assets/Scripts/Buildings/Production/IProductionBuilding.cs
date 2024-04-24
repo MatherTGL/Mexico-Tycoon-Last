@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Expense;
+using SerializableDictionary.Scripts;
 using static Config.Employees.ConfigEmployeeEditor;
 using static Resources.TypeProductionResources;
 
@@ -15,14 +16,15 @@ namespace Building.Additional.Production
 
         Dictionary<TypeEmployee, byte> requiredEmployees { get; }
 
-        List<TypeResource> requiredRawMaterials { get; }
+        Dictionary<TypeResource, SerializableDictionary<TypeResource, int>> requiredRawMaterials { get; }
 
-        List<float> quantityRequiredRawMaterials { get; }
-
-        uint[] localCapacityProduction { get; }
-
-        ushort defaultProductionPerformance { get; }
+        Dictionary<TypeResource, uint> localCapacityProduction { get; }
 
         float harvestRipeningTime { get; }
+
+
+        int GetBaseProductionPerformance(in TypeResource typeResource);
+
+        void SetNewProductionResource(in TypeResource typeResource);
     }
 }

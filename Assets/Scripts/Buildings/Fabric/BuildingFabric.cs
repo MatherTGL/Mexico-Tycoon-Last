@@ -8,6 +8,7 @@ using Config.Employees;
 using Country;
 using Events.Buildings;
 using Expense;
+using SerializableDictionary.Scripts;
 using UnityEngine;
 using static Resources.TypeProductionResources;
 
@@ -50,24 +51,21 @@ namespace Building.Fabric
         Dictionary<TypeResource, uint> IBuilding.stockCapacity
         { get => d_stockCapacity; set => d_stockCapacity = value; }
 
-        Dictionary<ConfigEmployeeEditor.TypeEmployee, byte> IProductionBuilding.requiredEmployees => _config.requiredEmployees.Dictionary;
+        Dictionary<ConfigEmployeeEditor.TypeEmployee, byte> IProductionBuilding.requiredEmployees => _config.requiredEmployees;
 
-        List<TypeResource> IProductionBuilding.requiredRawMaterials => _config.requiredRawMaterials;
-
-        List<float> IProductionBuilding.quantityRequiredRawMaterials => _config.quantityRequiredRawMaterials;
+        Dictionary<TypeResource, SerializableDictionary<TypeResource, int>> IProductionBuilding.requiredRawMaterials
+            => _config.requiredRawMaterials;
 
         private TypeResource _typeProductionResource;
 
         TypeResource IProductionBuilding.typeProductionResource => _typeProductionResource;
 
-        uint[] IBuilding.localCapacityProduction => _config.localCapacityProduction;
+        Dictionary<TypeResource, uint> IBuilding.localCapacityProduction => _config.localCapacityProduction;
 
-        uint[] IProductionBuilding.localCapacityProduction => _config.localCapacityProduction;
+        Dictionary<TypeResource, uint> IProductionBuilding.localCapacityProduction => _config.localCapacityProduction;
 
         private double _costPurchase;
         double IBuildingPurchased.costPurchase { get => _costPurchase; set => _costPurchase = value; }
-
-        ushort IProductionBuilding.defaultProductionPerformance => _config.productionResources[_typeProductionResource];
 
         float IProductionBuilding.harvestRipeningTime => _config.harvestRipeningTime;
 
@@ -92,21 +90,30 @@ namespace Building.Fabric
             _costPurchase = _config.costPurchase;
         }
 
-        void IBuilding.ConstantUpdatingInfo()
-        {
-            if (IsConditionsAreMet())
-                _Iproduction.Production();
-        }
-
         private bool IsConditionsAreMet()
         {
-            bool isHiredEmployees = _InumberOfEmployees.IsThereAreEnoughEmployees(_config.requiredEmployees.Dictionary,
+            bool isHiredEmployees = _InumberOfEmployees.IsThereAreEnoughEmployees(_config.requiredEmployees,
                                                                                   IobjectsExpensesImplementation.IhiringModel.GetAllEmployees());
 
             if (isBuyed && isWorked && isHiredEmployees)
                 return true;
             else
                 return false;
+        }
+
+        void IBuilding.ConstantUpdatingInfo()
+        {
+            if (IsConditionsAreMet())
+                _Iproduction.Production();
+        }
+
+        int IProductionBuilding.GetBaseProductionPerformance(in TypeResource typeResource)
+            => _config.productionResources[typeResource];
+
+        void IProductionBuilding.SetNewProductionResource(in TypeResource typeResource)
+        {
+            if (_config.productionResources.ContainsKey(typeResource))
+                _typeProductionResource = typeResource;
         }
     }
 }

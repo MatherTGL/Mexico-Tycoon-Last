@@ -43,3 +43,7 @@ MonoBehaviour:
       _value:
       - 1.6
       - 1.8
+    - _key: 6
+      _value:
+      - 1.2
+      - 1.4

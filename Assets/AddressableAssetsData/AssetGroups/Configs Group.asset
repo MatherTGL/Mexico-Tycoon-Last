@@ -277,7 +277,8 @@ MonoBehaviour:
   - m_GUID: 73e8910e60f55568cb163e61f21a4ba9
     m_Address: Configs/Transport/Events/TransportationEventsConfig
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - TransportEvents
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7c92144c58788f39db129a3e6dfbcf6c
     m_Address: Configs/Buildings/Aerodrome/Events/ConfigPoliceRaidEventDefault

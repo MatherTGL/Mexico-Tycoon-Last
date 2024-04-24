@@ -13,17 +13,42 @@ MonoBehaviour:
   m_Name: BuildingFarmUndergroundConfig
   m_EditorClassIdentifier: 
   _configBuildingsEvents: {fileID: 11400000, guid: 917d2d58c8171d17586f1b0a59e57a31, type: 2}
-  l_requiredRawMaterials: 0105
-  l_quantityRequiredRawMaterials:
-  - 2
-  - 4
-  _typeProductionResource: 0
+  d_requiredRawMaterials:
+    _pairs:
+    - _key: 0
+      _value:
+        _pairs:
+        - _key: 1
+          _value: 3
+        - _key: 6
+          _value: 5
+    - _key: 4
+      _value:
+        _pairs:
+        - _key: 5
+          _value: 3
+        - _key: 1
+          _value: 5
+  d_typeProductionResource:
+    _pairs:
+    - _key: 0
+      _value: 1
+    - _key: 4
+      _value: 1
   typeFarm: 1
-  l_growingSeasons: 
-  _productionPerformanceStart: 3
-  _localCapacityProduction: 0a0000000a0000000a0000000a0000000a000000
-  _harvestRipeningTime: 4
-  _costPurchase: 50000
+  l_growingSeasons: 00010203
+  d_localCapacityProduction:
+    _pairs:
+    - _key: 0
+      _value: 10
+    - _key: 1
+      _value: 10
+    - _key: 6
+      _value: 10
+    - _key: 5
+      _value: 10
+    - _key: 4
+      _value: 10
   d_requiredEmployees:
     _pairs:
     - _key: 0
@@ -32,3 +57,5 @@ MonoBehaviour:
       _value: 2
     - _key: 2
       _value: 2
+  _harvestRipeningTime: 4
+  _costPurchase: 50000

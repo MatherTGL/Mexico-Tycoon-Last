@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 using static Resources.TypeProductionResources;
 
 namespace Building.Additional.Production
@@ -13,7 +14,7 @@ namespace Building.Additional.Production
 
         private readonly Dictionary<TypeResource, int> d_currentCultivatedProducts = new();
 
-        private uint[] localCapacityProduction => _IproductionBuilding.localCapacityProduction;
+        private Dictionary<TypeResource, uint> d_localCapacityProduction => _IproductionBuilding.localCapacityProduction;
 
         private float _currentPercentageOfMaturity;
 
@@ -28,13 +29,17 @@ namespace Building.Additional.Production
 
         void IProduction.Production()
         {
-            if (_IproductionBuilding.amountResources[_resource] < localCapacityProduction[(int)_resource])
+            if (d_localCapacityProduction.ContainsKey(_resource) == false)
+                throw new System.Exception("d_localCapacityProduction.ContainsKey(_resource) not find");
+
+            if (_IproductionBuilding.amountResources[_resource] < d_localCapacityProduction[_resource])
             {
                 if (_isCurrentlyInProduction == false && IsQuantityRequiredRawMaterials() == false)
                     return;
+                Debug.Log("production is get true & continue");
 
                 _isCurrentlyInProduction = true;
-                d_currentCultivatedProducts[_resource] = CalculateAndGetProductionPerformance();
+                d_currentCultivatedProducts[_resource] = GetProductionPerformance();
 
                 if (_currentPercentageOfMaturity < _IproductionBuilding.harvestRipeningTime)
                     _currentPercentageOfMaturity++;
@@ -51,23 +56,29 @@ namespace Building.Additional.Production
 
         private bool IsQuantityRequiredRawMaterials()
         {
-            foreach (TypeResource typeDrug in _IproductionBuilding.requiredRawMaterials)
+            foreach (TypeResource typeDrug in _IproductionBuilding.requiredRawMaterials.Keys)
             {
-                for (ushort i = 0; i < _IproductionBuilding.quantityRequiredRawMaterials.Count; i++)
-                    if (_IproductionBuilding.amountResources[typeDrug] < _IproductionBuilding.quantityRequiredRawMaterials[i])
+                foreach (TypeResource resource in _IproductionBuilding.requiredRawMaterials[typeDrug].Dictionary.Keys)
+                {
+                    Debug.Log(@$"typeDrug: {typeDrug} typeRes: {resource} curr: {_IproductionBuilding.amountResources[typeDrug]} 
+                        req: {_IproductionBuilding.requiredRawMaterials[typeDrug].Dictionary[resource]}");
+
+                    if (_IproductionBuilding.amountResources[typeDrug] < _IproductionBuilding.requiredRawMaterials[typeDrug].Dictionary[resource])
                         return false;
 
-                _IproductionBuilding.amountResources[typeDrug] -= _IproductionBuilding.quantityRequiredRawMaterials[0];
+                    _IproductionBuilding.amountResources[typeDrug] -= _IproductionBuilding.requiredRawMaterials[typeDrug].Dictionary[resource];
+                    Debug.Log($"current amount res: {_IproductionBuilding.amountResources[typeDrug]}");
+                }
             }
             return true;
         }
 
-        private int CalculateAndGetProductionPerformance()
+        private int GetProductionPerformance()
         {
             var efficiency = _calculateEfficiencyAdditionalEmployees.GetEfficiencyAdditionalEmployees(
                 _IproductionBuilding.IobjectsExpensesImplementation, _IproductionBuilding.requiredEmployees, _resource);
 
-            return _IproductionBuilding.defaultProductionPerformance + efficiency;
+            return _IproductionBuilding.GetBaseProductionPerformance(_resource) + efficiency;
         }
     }
 }

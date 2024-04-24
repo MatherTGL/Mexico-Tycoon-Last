@@ -1,4 +1,3 @@
-using Resources;
 using System.Collections.Generic;
 using Config.Building;
 using Building.Additional;
@@ -33,16 +32,16 @@ namespace Building.Stock
 
         ConfigBuildingsEventsEditor IUsesBuildingsEvents.configBuildingsEvents => _config.configBuildingsEvents;
 
-        Dictionary<TypeProductionResources.TypeResource, double> IBuilding.amountResources
+        Dictionary<TypeResource, double> IBuilding.amountResources
         { get => d_amountResources; set => d_amountResources = value; }
 
-        Dictionary<TypeProductionResources.TypeResource, double> IUsesBuildingsEvents.amountResources
+        Dictionary<TypeResource, double> IUsesBuildingsEvents.amountResources
         { get => d_amountResources; set => d_amountResources = value; }
 
-        Dictionary<TypeProductionResources.TypeResource, uint> IBuilding.stockCapacity
+        Dictionary<TypeResource, uint> IBuilding.stockCapacity
         { get => d_stockCapacity; set => d_stockCapacity = value; }
 
-        uint[] IBuilding.localCapacityProduction => _config.localCapacityProduction;
+        Dictionary<TypeResource, uint> IBuilding.localCapacityProduction => _config.localCapacityProduction;
 
         private double _costPurchase;
         double IBuildingPurchased.costPurchase { get => _costPurchase; set => _costPurchase = value; }
