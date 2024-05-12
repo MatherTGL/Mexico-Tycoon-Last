@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2024-05-12T17:06:16.902Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:124.0) Gecko/20100101 Firefox/124.0" etag="wT5vG5GQKH8zSZjLd0gT" version="24.4.0" type="github">
+<mxfile host="app.diagrams.net" modified="2024-05-12T17:08:01.354Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:124.0) Gecko/20100101 Firefox/124.0" etag="6kfS9gGc3K5XS5jF-3r_" version="24.4.0" type="github">
   <diagram name="Page-1" id="VlJw1gE--JK97zTb_64V">
     <mxGraphModel dx="1185" dy="453" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -116,6 +116,15 @@
         <mxCell id="ZDcguRyU6FPMmPOwlQu3-10" value="&lt;div&gt;Если нет&lt;/div&gt;&lt;div&gt;Места&lt;br&gt;&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="ZDcguRyU6FPMmPOwlQu3-9">
           <mxGeometry x="0.0551" y="-1" relative="1" as="geometry">
             <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZDcguRyU6FPMmPOwlQu3-12" value="&lt;div&gt;Оповещаем&lt;/div&gt;&lt;div&gt;Игрока&lt;br&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="270" y="461" width="78" height="39" as="geometry" />
+        </mxCell>
+        <mxCell id="ZDcguRyU6FPMmPOwlQu3-13" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="EDjuri-aCU-LO0Z1WpwC-9" target="ZDcguRyU6FPMmPOwlQu3-12">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="273" y="455" as="sourcePoint" />
+            <mxPoint x="323" y="405" as="targetPoint" />
           </mxGeometry>
         </mxCell>
       </root>
