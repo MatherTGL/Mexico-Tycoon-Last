@@ -65,6 +65,7 @@ namespace Building
 
         private BuildingControl() { }
 
+        [Obsolete]
         void IBoot.InitAwake()
         {
             _coroutineTimeStep = new WaitForSeconds(FindObjectOfType<TimeDateControl>().GetCurrentTimeOneDay());
@@ -83,6 +84,7 @@ namespace Building
 
         void IBoot.InitStart() => StartCoroutine(ConstantUpdating());
 
+        [Obsolete]
         private void ConnectExpensesManagementControl()
         {
             if (_Ibuilding is IUsesExpensesManagement expensesManagement)

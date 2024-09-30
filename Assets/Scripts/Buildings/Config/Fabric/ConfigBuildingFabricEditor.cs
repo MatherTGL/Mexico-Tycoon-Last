@@ -1,9 +1,6 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
-using Resources;
 using System.Collections.Generic;
-using System;
-using System.Linq;
 using Config.Building.Events;
 using SerializableDictionary.Scripts;
 using static Config.Employees.ConfigEmployeeEditor;
@@ -22,7 +19,7 @@ namespace Config.Building
         private SerializableDictionary<TypeResource, SerializableDictionary<TypeResource, int>> d_requiredRawMaterials = new();
         public Dictionary<TypeResource, SerializableDictionary<TypeResource, int>> requiredRawMaterials => d_requiredRawMaterials.Dictionary;
 
-        [SerializeField, BoxGroup("Parameters"), EnumToggleButtons]
+        [SerializeField, BoxGroup("Parameters/Production"), EnumToggleButtons]
         private SerializableDictionary<TypeResource, ushort> d_typeProductionResource;
         public Dictionary<TypeResource, ushort> productionResources => d_typeProductionResource.Dictionary;
 
@@ -35,9 +32,9 @@ namespace Config.Building
         private SerializableDictionary<TypeEmployee, byte> d_requiredEmployees = new();
         public Dictionary<TypeEmployee, byte> requiredEmployees => d_requiredEmployees.Dictionary;
 
-        [SerializeField, BoxGroup("Parameters"), MinValue(1)]
-        private float _harvestRipeningTime = 3;
-        public float harvestRipeningTime => _harvestRipeningTime;
+        [SerializeField, BoxGroup("Parameters/Production")]
+        private SerializableDictionary<TypeResource, float> d_harvestRipeningTime = new();
+        public Dictionary<TypeResource, float> harvestRipeningTime => d_harvestRipeningTime.Dictionary;
 
         [SerializeField, BoxGroup("Parameters"), MinValue(0)]
         private double _costPurchase = 50_000;

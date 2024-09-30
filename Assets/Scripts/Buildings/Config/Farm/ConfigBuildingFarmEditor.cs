@@ -1,10 +1,6 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
-using Resources;
 using System.Collections.Generic;
-using System;
-using System.Linq;
-using Config.Country.Climate;
 using Config.Building.Events;
 using static Config.Employees.ConfigEmployeeEditor;
 using SerializableDictionary.Scripts;
@@ -30,7 +26,7 @@ namespace Config.Building
         private SerializableDictionary<TypeResource, ushort> d_typeProductionResource = new();
         public Dictionary<TypeResource, ushort> productionResources => d_typeProductionResource.Dictionary;
 
-        public enum TypeFarm { Terrestrial, Underground }
+        public enum TypeFarm : byte { Terrestrial, Underground }
 
         [SerializeField, BoxGroup("Parameters"), EnumPaging]
         public TypeFarm typeFarm;
@@ -48,9 +44,18 @@ namespace Config.Building
         private SerializableDictionary<TypeEmployee, byte> d_requiredEmployees = new();
         public Dictionary<TypeEmployee, byte> requiredEmployees => d_requiredEmployees.Dictionary;
 
-        [SerializeField, BoxGroup("Parameters/Production"), MinValue(1)]
-        private float _harvestRipeningTime;
-        public float harvestRipeningTime => _harvestRipeningTime;
+        [SerializeField, BoxGroup("Parameters/Farm Type")]
+        [Tooltip("Determines how long it takes to convert to a particular type")]
+        private ushort _timeChangeFarmType = 10;
+        public ushort timeChangeFarmType => _timeChangeFarmType;
+
+        [SerializeField, BoxGroup("Parameters/Farm Type")]
+        private double _typeChangeCost = 10_000;
+        public double typeChangeCost => _typeChangeCost;
+
+        [SerializeField, BoxGroup("Parameters/Production")]
+        private SerializableDictionary<TypeResource, float> d_harvestRipeningTime = new();
+        public Dictionary<TypeResource, float> harvestRipeningTime => d_harvestRipeningTime.Dictionary;
 
         [SerializeField, BoxGroup("Parameters/Other"), MinValue(0)]
         private double _costPurchase = 50_000;

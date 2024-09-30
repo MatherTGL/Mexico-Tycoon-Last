@@ -16,6 +16,8 @@ using SerializableDictionary.Scripts;
 using static Config.Employees.ConfigEmployeeEditor;
 using System.Threading.Tasks;
 using static Config.Building.ConfigBuildingFarmEditor;
+using System.Collections;
+using GameSystem;
 
 namespace Building.Farm
 {
@@ -26,6 +28,8 @@ namespace Building.Farm
 
         private readonly IBuildingMonitorEnergy _IbuildingMonitorEnergy = new BuildingMonitorEnergy();
         IBuildingMonitorEnergy IEnergyConsumption.IbuildingMonitorEnergy => _IbuildingMonitorEnergy;
+
+        private readonly ChangeFarmType _changeFarmType = new();
 
         private ICountryBuildings _IcountryBuildings;
         ICountryBuildings IUsesCountryInfo.IcountryBuildings { get => _IcountryBuildings; set => _IcountryBuildings = value; }
@@ -65,15 +69,15 @@ namespace Building.Farm
 
         Dictionary<TypeResource, uint> IProductionBuilding.localCapacityProduction => _config.localCapacityProduction;
 
+        Dictionary<TypeResource, float> IProductionBuilding.harvestRipeningTime
+            => _config.harvestRipeningTime;
+
         private TypeResource _typeProductionResource;
 
         TypeResource IProductionBuilding.typeProductionResource => _typeProductionResource;
 
         private double _costPurchase;
         double IBuildingPurchased.costPurchase { get => _costPurchase; set => _costPurchase = value; }
-
-        //TODO
-        float IProductionBuilding.harvestRipeningTime => _config.harvestRipeningTime;
 
         bool IBuildingJobStatus.isWorked { get => isWorked; set => isWorked = value; }
 
@@ -84,7 +88,6 @@ namespace Building.Farm
         {
             _config = config as ConfigBuildingFarmEditor;
             _Iproduction = new Production(this);
-
             LoadConfigData(_config);
         }
 
@@ -103,10 +106,7 @@ namespace Building.Farm
         void IBuilding.ConstantUpdatingInfo()
         {
             if (IsConditionsAreMet())
-            {
-                Debug.Log("Farm is work now");
                 _Iproduction.Production();
-            }
         }
 
         private bool IsConditionsAreMet()
@@ -114,31 +114,18 @@ namespace Building.Farm
             bool isHiredEmployees = _InumberOfEmployees.IsThereAreEnoughEmployees(_config.requiredEmployees,
                                                                                   IobjectsExpensesImplementation.IhiringModel.GetAllEmployees());
 
-            if (isBuyed && isWorked && isHiredEmployees && IsGrowingSeason())
-                return true;
-            else
-                return false;
+            return isBuyed && isWorked && isHiredEmployees && IsGrowingSeason() ? true : false;
         }
 
         private bool IsGrowingSeason()
         {
-            if (_config.typeFarm is TypeFarm.Terrestrial)
-                return _config.growingSeasons.Contains(_IcountryBuildings.IclimateZone.GetCurrentSeason());
-            else
-                return true;
+            return _config.typeFarm is TypeFarm.Terrestrial
+            ? _config.growingSeasons.Contains(_IcountryBuildings.IclimateZone.GetCurrentSeason())
+            : true;
         }
 
-        //TODO протестировать
         async ValueTask IChangedFarmType.ChangeType(TypeFarm typeFarm)
-        {
-            var loadHandle = Addressables.LoadAssetsAsync<ConfigBuildingFarmEditor>("TypeFarm", null);
-            await loadHandle.Task;
-
-            if (loadHandle.Status == AsyncOperationStatus.Succeeded)
-                _config = loadHandle.Result.Where(config => config.typeFarm == typeFarm).First();
-            else
-                throw new Exception("AsyncOperationStatus.Failed and config not loaded");
-        }
+            => _config = await _changeFarmType.AsyncGetNewType(typeFarm);
 
         void IUsesCountryInfo.SetCountry(in ICountryBuildings IcountryBuildings)
         {
@@ -151,7 +138,6 @@ namespace Building.Farm
         int IProductionBuilding.GetBaseProductionPerformance(in TypeResource typeResource)
             => _config.productionResources[typeResource];
 
-        //TODO refactoring
         void IProductionBuilding.SetNewProductionResource(in TypeResource typeResource)
         {
             if (_config.productionResources.ContainsKey(typeResource))

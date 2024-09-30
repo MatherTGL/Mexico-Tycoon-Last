@@ -57,5 +57,12 @@ MonoBehaviour:
       _value: 1
     - _key: 2
       _value: 2
-  _harvestRipeningTime: 4
+  _timeChangeFarmType: 10
+  _typeChangeCost: 10000
+  d_harvestRipeningTime:
+    _pairs:
+    - _key: 0
+      _value: 10
+    - _key: 4
+      _value: 10
   _costPurchase: 50000

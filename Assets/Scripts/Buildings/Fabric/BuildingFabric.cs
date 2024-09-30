@@ -67,7 +67,7 @@ namespace Building.Fabric
         private double _costPurchase;
         double IBuildingPurchased.costPurchase { get => _costPurchase; set => _costPurchase = value; }
 
-        float IProductionBuilding.harvestRipeningTime => _config.harvestRipeningTime;
+        Dictionary<TypeResource, float> IProductionBuilding.harvestRipeningTime => _config.harvestRipeningTime;
 
         bool IBuildingJobStatus.isWorked { get => isWorked; set => isWorked = value; }
 

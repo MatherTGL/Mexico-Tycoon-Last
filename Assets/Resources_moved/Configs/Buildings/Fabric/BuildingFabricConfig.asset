@@ -40,5 +40,8 @@ MonoBehaviour:
       _value: 1
     - _key: 1
       _value: 1
-  _harvestRipeningTime: 3
+  d_harvestRipeningTime:
+    _pairs:
+    - _key: 2
+      _value: 120
   _costPurchase: 150000

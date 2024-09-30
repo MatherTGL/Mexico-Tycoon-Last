@@ -34,14 +34,16 @@ namespace Building.Additional.Production
 
             if (_IproductionBuilding.amountResources[_resource] < d_localCapacityProduction[_resource])
             {
-                if (_isCurrentlyInProduction == false && IsQuantityRequiredRawMaterials() == false)
+                if (_isCurrentlyInProduction == false && AreRequiredRawMaterialsAvailable() == false)
                     return;
-                Debug.Log("production is get true & continue");
 
                 _isCurrentlyInProduction = true;
                 d_currentCultivatedProducts[_resource] = GetProductionPerformance();
 
-                if (_currentPercentageOfMaturity < _IproductionBuilding.harvestRipeningTime)
+                if (_IproductionBuilding.harvestRipeningTime.ContainsKey(_resource) == false)
+                    throw new System.Exception("harvestRipeningTime not containsKey (resource)");
+
+                if (_currentPercentageOfMaturity < _IproductionBuilding.harvestRipeningTime[_resource])
                     _currentPercentageOfMaturity++;
                 else
                 {
@@ -52,25 +54,43 @@ namespace Building.Additional.Production
                     _isCurrentlyInProduction = false;
                 }
             }
+            else
+                Debug.Log("Склад здания полный!");
         }
 
-        private bool IsQuantityRequiredRawMaterials()
+        private bool AreRequiredRawMaterialsAvailable()
         {
-            foreach (TypeResource typeDrug in _IproductionBuilding.requiredRawMaterials.Keys)
+            foreach (TypeResource drugType in _IproductionBuilding.requiredRawMaterials.Keys)
             {
-                foreach (TypeResource resource in _IproductionBuilding.requiredRawMaterials[typeDrug].Dictionary.Keys)
-                {
-                    Debug.Log(@$"typeDrug: {typeDrug} typeRes: {resource} curr: {_IproductionBuilding.amountResources[typeDrug]} 
-                        req: {_IproductionBuilding.requiredRawMaterials[typeDrug].Dictionary[resource]}");
-
-                    if (_IproductionBuilding.amountResources[typeDrug] < _IproductionBuilding.requiredRawMaterials[typeDrug].Dictionary[resource])
-                        return false;
-
-                    _IproductionBuilding.amountResources[typeDrug] -= _IproductionBuilding.requiredRawMaterials[typeDrug].Dictionary[resource];
-                    Debug.Log($"current amount res: {_IproductionBuilding.amountResources[typeDrug]}");
-                }
+                if (!IsResourceAvailableForDrug(drugType))
+                    return false;
             }
             return true;
+        }
+
+        private bool IsResourceAvailableForDrug(TypeResource drugType)
+        {
+            foreach (TypeResource rawMaterial in _IproductionBuilding.requiredRawMaterials[drugType].Dictionary.Keys)
+            {
+                if (!HasEnoughResource(drugType, rawMaterial))
+                    return false;
+
+                DeductResource(drugType, rawMaterial);
+            }
+            return true;
+        }
+
+        private bool HasEnoughResource(TypeResource drugType, TypeResource rawMaterial)
+        {
+            var currentAmount = _IproductionBuilding.amountResources[drugType];
+            var requiredAmount = _IproductionBuilding.requiredRawMaterials[drugType].Dictionary[rawMaterial];
+
+            return currentAmount >= requiredAmount;
+        }
+
+        private void DeductResource(TypeResource drugType, TypeResource rawMaterial)
+        {
+            _IproductionBuilding.amountResources[drugType] -= _IproductionBuilding.requiredRawMaterials[drugType].Dictionary[rawMaterial];
         }
 
         private int GetProductionPerformance()

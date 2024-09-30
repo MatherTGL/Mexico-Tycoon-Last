@@ -20,7 +20,7 @@ namespace Building.Additional.Production
 
         Dictionary<TypeResource, uint> localCapacityProduction { get; }
 
-        float harvestRipeningTime { get; }
+        Dictionary<TypeResource, float> harvestRipeningTime { get; }
 
 
         int GetBaseProductionPerformance(in TypeResource typeResource);
