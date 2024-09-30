@@ -33,6 +33,7 @@ namespace Route.Builder
 
         private RouteBuilderControl() { }
 
+        [Obsolete]
         async void IBoot.InitAwake()
         {
             _inputControl = FindObjectOfType<InputControl>();

@@ -30,6 +30,7 @@ namespace Transport.Reception
 
         private TransportReception() { }
 
+        [System.Obsolete]
         void IBoot.InitAwake()
         {
             _routeBuilderControl = FindObjectOfType<RouteBuilderControl>();

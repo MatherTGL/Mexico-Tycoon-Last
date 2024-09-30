@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Hire.Employee
 {
+    //TODO 
     public sealed class IncreaseEmployeeSalary
     {
         private ConfigEmployeeEditor _config;

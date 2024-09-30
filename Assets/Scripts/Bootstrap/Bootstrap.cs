@@ -28,6 +28,7 @@ namespace Boot
                 l_bootObject[i].InitStart();
         }
 
+        [Obsolete]
         private void LoadToList()
         {
             IBoot[] bootObjects = FindObjectsOfType<MonoBehaviour>()

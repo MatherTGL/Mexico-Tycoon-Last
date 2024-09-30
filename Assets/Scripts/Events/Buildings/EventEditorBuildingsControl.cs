@@ -16,7 +16,7 @@ namespace Events.Buildings
 
         private WaitForSeconds _timeStep;
 
-
+        [System.Obsolete]
         void IEventEditorBuildings.Init(in IUsesBuildingsEvents IusesBuildingsEvents)
         {
             _timeStep = new WaitForSeconds(FindObjectOfType<TimeDateControl>().GetCurrentTimeOneDay());

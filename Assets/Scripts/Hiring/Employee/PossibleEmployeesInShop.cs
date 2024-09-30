@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Config.Employees;
 using Hire.Employee;
-using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using confPossibleEmployees = Config.Employees.ConfigPossibleEmployeesInShopEditor;
@@ -41,6 +40,8 @@ namespace Building.Hire
             }
             else
                 throw new Exception("employee config error: {exception}"); ;
+
+            Addressables.Release(loadHandle);
         }
 
         private void CreateEmployees()

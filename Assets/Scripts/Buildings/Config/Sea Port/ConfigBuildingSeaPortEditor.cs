@@ -1,8 +1,5 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
-using System;
-using Resources;
-using System.Linq;
 using SerializableDictionary.Scripts;
 using static Config.Employees.ConfigEmployeeEditor;
 using Config.Building.Events;

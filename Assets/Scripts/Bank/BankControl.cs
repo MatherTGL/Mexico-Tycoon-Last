@@ -29,6 +29,7 @@ namespace Bank
 
         private BankControl() { }
 
+        [Obsolete]
         async void IBoot.InitAwake()
         {
             float timeDateControl = FindObjectOfType<TimeDateControl>().GetCurrentTimeOneDay();

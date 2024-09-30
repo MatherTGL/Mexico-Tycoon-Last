@@ -40,6 +40,7 @@ namespace Country
 
         private CountryControl() { }
 
+        [Obsolete]
         void IBoot.InitAwake()
         {
             _IclimateZone = GetComponent<ClimateZoneControl>();

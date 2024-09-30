@@ -1,5 +1,4 @@
 using Building.Additional;
-using Resources;
 using static Resources.TypeProductionResources;
 
 namespace Transport.Reception

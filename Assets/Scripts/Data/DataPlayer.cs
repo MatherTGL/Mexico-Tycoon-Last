@@ -1,6 +1,5 @@
 using Config.Data.Player;
 using DebugCustomSystem;
-using UnityEngine;
 
 namespace Data.Player
 {

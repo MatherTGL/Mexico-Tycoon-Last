@@ -8,16 +8,11 @@ using Config.Building.Events;
 using Events.Buildings;
 using Building.Additional.Production;
 using static Resources.TypeProductionResources;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
-using System;
 using System.Linq;
 using SerializableDictionary.Scripts;
 using static Config.Employees.ConfigEmployeeEditor;
 using System.Threading.Tasks;
 using static Config.Building.ConfigBuildingFarmEditor;
-using System.Collections;
-using GameSystem;
 
 namespace Building.Farm
 {

@@ -63,6 +63,7 @@ namespace Transport
 
         private RouteTransportControl() { }
 
+        [Obsolete]
         private void OnEnable()
         {
             _IcreatorCurveRoad ??= GetComponent<ICreatorCurveRoad>();

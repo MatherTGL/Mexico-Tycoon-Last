@@ -31,6 +31,7 @@ namespace Building.City.Deliveries
 
         private LocalMarketControl() { }
 
+        [System.Obsolete]
         void ILocalMarket.Init(in CostResourcesConfig costResourcesConfig, in IBuilding building)
         {
             this.AddComponent<DeliveriesControl>();

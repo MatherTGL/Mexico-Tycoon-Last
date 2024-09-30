@@ -29,6 +29,7 @@ namespace Building.Hire
 
         private HireEmployeeControl() { }
 
+        [System.Obsolete]
         public async void Init()
         {
             _timeControl = FindObjectOfType<TimeDateControl>();
@@ -53,6 +54,8 @@ namespace Building.Hire
                 _IpossibleEmployees ??= new PossibleEmployeesInShop(loadHandle.Result);
             else
                 throw new System.Exception("AsyncOperationStatus.Failed and config not loaded");
+
+            Addressables.Release(loadHandle);
         }
 
         private IEnumerator UpdateInfo()
