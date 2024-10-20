@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Building.Additional.Crop;
 using Expense;
 using SerializableDictionary.Scripts;
 using static Config.Employees.ConfigEmployeeEditor;
@@ -8,6 +9,8 @@ namespace Building.Additional.Production
 {
     public interface IProductionBuilding
     {
+        ConfigCropSpoilage configCropSpoilage { get; }
+
         IObjectsExpensesImplementation IobjectsExpensesImplementation { get; }
 
         TypeResource typeProductionResource { get; }

@@ -1,12 +1,15 @@
 using System.Collections.Generic;
+using Building.Additional.Crop;
 using UnityEngine;
 using static Resources.TypeProductionResources;
 
 namespace Building.Additional.Production
 {
-    public sealed class Production : IProduction
+    public sealed class Production : IProduction, IGetAllResourcesForCropSpoilage
     {
         private readonly IProductionBuilding _IproductionBuilding;
+
+        private readonly ICrop cropSpoilage;
 
         private readonly CalculateEfficiencyAdditionalEmployees _calculateEfficiencyAdditionalEmployees = new();
 
@@ -15,6 +18,12 @@ namespace Building.Additional.Production
         private readonly Dictionary<TypeResource, int> d_currentCultivatedProducts = new();
 
         private Dictionary<TypeResource, uint> d_localCapacityProduction => _IproductionBuilding.localCapacityProduction;
+
+        Dictionary<TypeResource, double> IGetAllResourcesForCropSpoilage.amountResources
+        {
+            get => _IproductionBuilding.amountResources;
+            set => _IproductionBuilding.amountResources = value;
+        }
 
         private float _currentPercentageOfMaturity;
 
@@ -25,6 +34,7 @@ namespace Building.Additional.Production
         {
             _IproductionBuilding = iproductionBuilding;
             d_currentCultivatedProducts.Add(_resource, 0);
+            cropSpoilage = new CropSpoilage(iproductionBuilding.configCropSpoilage);
         }
 
         void IProduction.Production()
@@ -56,6 +66,8 @@ namespace Building.Additional.Production
             }
             else
                 Debug.Log("Склад здания полный!");
+
+            CropSpoilage();
         }
 
         private bool AreRequiredRawMaterialsAvailable()
@@ -92,6 +104,10 @@ namespace Building.Additional.Production
         {
             _IproductionBuilding.amountResources[drugType] -= _IproductionBuilding.requiredRawMaterials[drugType].Dictionary[rawMaterial];
         }
+
+        //TODO нужно добавить качество продукта
+        private void CropSpoilage()
+            => cropSpoilage.Spoilage(this);
 
         private int GetProductionPerformance()
         {

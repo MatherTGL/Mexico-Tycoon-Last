@@ -22,7 +22,7 @@ namespace Building.Farm
             var result = loadHandle.Result.Where(config => config.typeFarm == typeFarm).First();
             Addressables.Release(loadHandle);
 
-            CoroutineManager.Instance.StartCoroutine(
+            CoroutineManager.Instance.StartManagedCoroutine(
                 DelayChangeType(result.timeChangeFarmType, result.typeChangeCost));
 
             return loadHandle.Status == AsyncOperationStatus.Succeeded

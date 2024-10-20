@@ -13,11 +13,12 @@ using SerializableDictionary.Scripts;
 using static Config.Employees.ConfigEmployeeEditor;
 using System.Threading.Tasks;
 using static Config.Building.ConfigBuildingFarmEditor;
+using Building.Additional.Crop;
 
 namespace Building.Farm
 {
-    public sealed class BuildingFarm : AbstractBuilding, IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption, IChangedFarmType, IUsesExpensesManagement,
-        IProductionBuilding
+    public sealed class BuildingFarm : AbstractBuilding, IBuilding, IBuildingPurchased, IBuildingJobStatus,
+    ISpending, IEnergyConsumption, IChangedFarmType, IUsesExpensesManagement, IProductionBuilding
     {
         private readonly INumberOfEmployees _InumberOfEmployees = new NumberOfEmployees();
 
@@ -30,6 +31,8 @@ namespace Building.Farm
         ICountryBuildings IUsesCountryInfo.IcountryBuildings { get => _IcountryBuildings; set => _IcountryBuildings = value; }
 
         private readonly IProduction _Iproduction;
+
+        ConfigCropSpoilage IProductionBuilding.configCropSpoilage => _config.configCropSpoilage;
 
         IObjectsExpensesImplementation ISpending.IobjectsExpensesImplementation => IobjectsExpensesImplementation;
 
@@ -56,13 +59,17 @@ namespace Building.Farm
         Dictionary<TypeResource, uint> IBuilding.stockCapacity
         { get => d_stockCapacity; set => d_stockCapacity = value; }
 
-        Dictionary<TypeEmployee, byte> IProductionBuilding.requiredEmployees => _config.requiredEmployees;
+        Dictionary<TypeEmployee, byte> IProductionBuilding.requiredEmployees
+            => _config.requiredEmployees;
 
-        public Dictionary<TypeResource, SerializableDictionary<TypeResource, int>> requiredRawMaterials => _config.requiredRawMaterials;
+        public Dictionary<TypeResource, SerializableDictionary<TypeResource, int>> requiredRawMaterials
+            => _config.requiredRawMaterials;
 
-        Dictionary<TypeResource, uint> IBuilding.localCapacityProduction => _config.localCapacityProduction;
+        Dictionary<TypeResource, uint> IBuilding.localCapacityProduction
+            => _config.localCapacityProduction;
 
-        Dictionary<TypeResource, uint> IProductionBuilding.localCapacityProduction => _config.localCapacityProduction;
+        Dictionary<TypeResource, uint> IProductionBuilding.localCapacityProduction
+            => _config.localCapacityProduction;
 
         Dictionary<TypeResource, float> IProductionBuilding.harvestRipeningTime
             => _config.harvestRipeningTime;

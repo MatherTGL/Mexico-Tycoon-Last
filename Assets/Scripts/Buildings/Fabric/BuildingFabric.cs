@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Building.Additional;
+using Building.Additional.Crop;
 using Building.Additional.Production;
 using Config.Building;
 using Config.Building.Events;
@@ -14,8 +15,8 @@ using static Resources.TypeProductionResources;
 
 namespace Building.Fabric
 {
-    public sealed class BuildingFabric : AbstractBuilding, IBuilding, IBuildingPurchased, IBuildingJobStatus, ISpending, IEnergyConsumption, IUsesExpensesManagement,
-        IProductionBuilding
+    public sealed class BuildingFabric : AbstractBuilding, IBuilding, IBuildingPurchased, IBuildingJobStatus,
+    ISpending, IEnergyConsumption, IUsesExpensesManagement, IProductionBuilding
     {
         private readonly INumberOfEmployees _InumberOfEmployees = new NumberOfEmployees();
 
@@ -26,6 +27,8 @@ namespace Building.Fabric
         ICountryBuildings IUsesCountryInfo.IcountryBuildings { get => _IcountryBuildings; set => _IcountryBuildings = value; }
 
         private readonly IProduction _Iproduction;
+
+        ConfigCropSpoilage IProductionBuilding.configCropSpoilage => _config.configCropSpoilage;
 
         IObjectsExpensesImplementation ISpending.IobjectsExpensesImplementation => IobjectsExpensesImplementation;
         IObjectsExpensesImplementation IUsesExpensesManagement.IobjectsExpensesImplementation

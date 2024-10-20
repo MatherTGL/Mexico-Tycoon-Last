@@ -70,10 +70,7 @@ namespace Building.Aerodrome
             bool isHiredEmployees = _InumberOfEmployees.IsThereAreEnoughEmployees(_config.requiredEmployees.Dictionary,
                                                                                   IobjectsExpensesImplementation.IhiringModel.GetAllEmployees());
 
-            if (isBuyed && isWorked && isHiredEmployees)
-                return true;
-            else
-                return false;
+            return isBuyed && isWorked && isHiredEmployees ? true : false;
         }
     }
 }

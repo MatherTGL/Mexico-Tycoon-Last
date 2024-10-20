@@ -5,6 +5,7 @@ using Config.Building.Events;
 using SerializableDictionary.Scripts;
 using static Config.Employees.ConfigEmployeeEditor;
 using static Resources.TypeProductionResources;
+using Building.Additional.Crop;
 
 namespace Config.Building
 {
@@ -14,6 +15,10 @@ namespace Config.Building
         [SerializeField, Required, BoxGroup("Configs")]
         private ConfigBuildingsEventsEditor _configBuildingsEvents;
         public ConfigBuildingsEventsEditor configBuildingsEvents => _configBuildingsEvents;
+
+        [SerializeField, Required, BoxGroup("Configs")]
+        private ConfigCropSpoilage _configCropSpoilage;
+        public ConfigCropSpoilage configCropSpoilage => _configCropSpoilage;
 
         [SerializeField, BoxGroup("Raw Materials"), HideLabel]
         private SerializableDictionary<TypeResource, SerializableDictionary<TypeResource, int>> d_requiredRawMaterials = new();
