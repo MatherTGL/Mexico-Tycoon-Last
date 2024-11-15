@@ -14,7 +14,9 @@
               "type": "excalidraw",
               "state": {
                 "file": "Excalidraw/Drawing 2023-11-29 17.34.14.excalidraw.md"
-              }
+              },
+              "icon": "excalidraw-icon",
+              "title": "Drawing 2023-11-29 17.34.14.excalidraw"
             }
           },
           {
@@ -26,7 +28,9 @@
                 "file": "Смена производимого ресурса.md",
                 "mode": "source",
                 "source": false
-              }
+              },
+              "icon": "lucide-file",
+              "title": "Смена производимого ресурса"
             }
           },
           {
@@ -36,7 +40,9 @@
               "type": "excalidraw",
               "state": {
                 "file": "Excalidraw/ContractsDrawing2024-01-05 14.54.50.excalidraw.md"
-              }
+              },
+              "icon": "excalidraw-icon",
+              "title": "ContractsDrawing2024-01-05 14.54.50.excalidraw"
             }
           },
           {
@@ -46,7 +52,9 @@
               "type": "excalidraw",
               "state": {
                 "file": "Excalidraw/Drawing 2023-11-29 17.34.14.excalidraw.md"
-              }
+              },
+              "icon": "excalidraw-icon",
+              "title": "Drawing 2023-11-29 17.34.14.excalidraw"
             }
           },
           {
@@ -56,7 +64,9 @@
               "type": "excalidraw",
               "state": {
                 "file": "Excalidraw/ContractsDrawing2024-01-05 14.54.50.excalidraw.md"
-              }
+              },
+              "icon": "excalidraw-icon",
+              "title": "ContractsDrawing2024-01-05 14.54.50.excalidraw"
             }
           }
         ],
@@ -80,7 +90,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Файловый менеджер"
             }
           },
           {
@@ -95,7 +107,9 @@
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-search",
+              "title": "Поиск"
             }
           },
           {
@@ -103,7 +117,9 @@
             "type": "leaf",
             "state": {
               "type": "bookmarks",
-              "state": {}
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Закладки"
             }
           }
         ]
@@ -134,7 +150,9 @@
                 "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-coming-in",
+              "title": "Обратные ссылки для ContractsDrawing2024-01-05 14.54.50.excalidraw"
             }
           },
           {
@@ -146,7 +164,9 @@
                 "file": "Excalidraw/ContractsDrawing2024-01-05 14.54.50.excalidraw.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-going-out",
+              "title": "Исходящие ссылки из ContractsDrawing2024-01-05 14.54.50.excalidraw"
             }
           },
           {
@@ -157,7 +177,9 @@
               "state": {
                 "sortOrder": "frequency",
                 "useHierarchy": true
-              }
+              },
+              "icon": "lucide-tags",
+              "title": "Теги"
             }
           },
           {
@@ -167,7 +189,9 @@
               "type": "outline",
               "state": {
                 "file": "Excalidraw/ContractsDrawing2024-01-05 14.54.50.excalidraw.md"
-              }
+              },
+              "icon": "lucide-list",
+              "title": "Структура ContractsDrawing2024-01-05 14.54.50.excalidraw"
             }
           }
         ]
