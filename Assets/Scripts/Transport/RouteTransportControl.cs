@@ -167,7 +167,7 @@ namespace Transport
         private void BuyTransport()
         {
             if (DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(
-                _allTypesTransport[_indexTypeTransport].costPurchase, SpendAndCheckMoneyState.Spend))
+                _allTypesTransport[_indexTypeTransport].costPurchase, SpendAndCheckMoneyState.Spend, Data.Player.MoneyTypes.Clean))
             {
                 if (IsRulesBuyingTransport(_indexTypeTransport) == false)
                     return;
@@ -189,7 +189,7 @@ namespace Transport
             {
                 DataControl.IdataPlayer.AddPlayerMoney(
                     _transportationDataStorage.l_purchasedTransportData[_indexTransportInList]
-                    .typeTransport.costPurchase);
+                    .typeTransport.costPurchase, Data.Player.MoneyTypes.Clean);
                 Destroy(_transportationDataStorage.DestroyTransport(_indexTransportInList));
             }
             catch (Exception exception)

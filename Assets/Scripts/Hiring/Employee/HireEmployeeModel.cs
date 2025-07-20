@@ -29,7 +29,8 @@ namespace Building.Hire
         {
             foreach (var typeEmployeeExpenses in d_employeeExpenses.Value.Keys)
                 DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(d_employeeExpenses.Value[typeEmployeeExpenses],
-                                                                    SpendAndCheckMoneyState.Spend);
+                                                                    SpendAndCheckMoneyState.Spend,
+                                                                    Data.Player.MoneyTypes.Clean);
         }
 
         private void UpdateStateEmployees()

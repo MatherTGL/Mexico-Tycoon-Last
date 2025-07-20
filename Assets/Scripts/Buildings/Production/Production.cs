@@ -63,11 +63,12 @@ namespace Building.Additional.Production
                     _currentPercentageOfMaturity = 0;
                     _isCurrentlyInProduction = false;
                 }
+                Debug.Log($"Current resources in building: {_IproductionBuilding.amountResources[_resource]}");
             }
             else
                 Debug.Log("Склад здания полный!");
 
-            CropSpoilage();
+            //TODO CropSpoilage();
         }
 
         private bool AreRequiredRawMaterialsAvailable()

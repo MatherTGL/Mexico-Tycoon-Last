@@ -25,7 +25,7 @@ namespace Events.Buildings.Plants
             Debug.Log("IPlantDiseases.Update");
             if (!_isEpidemic)
             {
-                Debug.Log("IPlantDiseases.Update _isEpidemic == true");
+                Debug.Log("IPlantDiseases.Update _isEpidemic == false");
                 float randomValueChance = Random.Range(0f, 1f);
 
                 if (randomValueChance > _config.spawnChance)
@@ -36,7 +36,7 @@ namespace Events.Buildings.Plants
             else
             {
                 //! Doing Something
-                Debug.Log("IPlantDiseases.Update _isEpidemic == false");
+                Debug.Log("IPlantDiseases.Update _isEpidemic == true");
             }
         }
     }

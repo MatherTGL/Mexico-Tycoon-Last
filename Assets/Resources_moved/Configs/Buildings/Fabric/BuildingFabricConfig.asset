@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: BuildingFabricConfig
   m_EditorClassIdentifier: 
   _configBuildingsEvents: {fileID: 11400000, guid: a3d6c66ef24acacb8be6f5fc58cee102, type: 2}
+  _configCropSpoilage: {fileID: 11400000, guid: 5928667d341c8e241be44492911bc138, type: 2}
   d_requiredRawMaterials:
     _pairs:
     - _key: 2

@@ -46,7 +46,7 @@ namespace Transport.Fuel
         private bool IsBuyFuel()
         {
             double totalCost = Mathf.RoundToInt(_typeTransport.fuelCostPerLiter * _typeTransport.maxFuelLoad);
-            return DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(totalCost, SpendAndCheckMoneyState.Spend);
+            return DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(totalCost, SpendAndCheckMoneyState.Spend, Data.Player.MoneyTypes.Clean);
         }
     }
 }

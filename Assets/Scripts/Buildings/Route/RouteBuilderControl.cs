@@ -103,7 +103,7 @@ namespace Route.Builder
         private bool IsBuyRoute()
         {
             double totalCostRoute = _config.costRoute * Mathf.Abs(_routeLength);
-            return DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(totalCostRoute, SpendAndCheckMoneyState.Spend);
+            return DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(totalCostRoute, SpendAndCheckMoneyState.Spend, Data.Player.MoneyTypes.Clean);
         }
 
         private bool IsRouteLength(in TypeTransport.Type routeType)

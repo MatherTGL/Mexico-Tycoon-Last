@@ -40,7 +40,8 @@ namespace Building.Border
 
             if (_isSale[_indexTypeDrug])
             {
-                DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(productPurchaseCost, SpendAndCheckMoneyState.Spend);
+                DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(
+                    productPurchaseCost, SpendAndCheckMoneyState.Spend, Data.Player.MoneyTypes.Clean);
                 return true;
             }
             else { return false; }
@@ -50,7 +51,7 @@ namespace Building.Border
                                                  in float amount)
         {
             double salesProfit = amount * _costSellPerKg[(int)typeResource];
-            DataControl.IdataPlayer.AddPlayerMoney(salesProfit);
+            DataControl.IdataPlayer.AddPlayerMoney(salesProfit, Data.Player.MoneyTypes.Clean);
         }
     }
 }

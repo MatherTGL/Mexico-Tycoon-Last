@@ -14,7 +14,8 @@ namespace Building.Additional
 
         void Buy()
         {
-            if (!isBuyed && DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(costPurchase, SpendAndCheckMoneyState.Spend))
+            if (!isBuyed && DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(
+                costPurchase, SpendAndCheckMoneyState.Spend, Data.Player.MoneyTypes.Clean))
                 isBuyed = true;
         }
 

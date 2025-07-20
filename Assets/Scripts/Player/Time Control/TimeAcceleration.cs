@@ -4,21 +4,13 @@ using static Config.Time.ConfigTimeControlEditor;
 
 namespace TimeControl.Acceleration
 {
-    //TODO: https://yougile.com/team/bf00efa6ea26/#chat:cb4fc05f4bea
     public sealed class TimeAcceleration
     {
-        //FIXME not used
-        private readonly ConfigTimeControlEditor _configTimeControlEditor;
-
         private readonly InputControl _inputControl;
 
 
-        public TimeAcceleration(in ConfigTimeControlEditor configTimeControl,
-                                in InputControl inputControl)
-        {
-            _configTimeControlEditor = configTimeControl;
-            _inputControl = inputControl;
-        }
+        public TimeAcceleration(in InputControl inputControl)
+            => _inputControl = inputControl;
 
         private void ChangeState(ref bool pauseState, ref float currentAcceleration,
             in AccelerationTime typeAcceleration, in bool isUseInvertState = false)

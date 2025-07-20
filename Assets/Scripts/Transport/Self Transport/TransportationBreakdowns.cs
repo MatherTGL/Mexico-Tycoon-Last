@@ -37,7 +37,8 @@ namespace Transport.Breakdowns
 
                 if (_currentStrength >= _typeTransport.maxStrength)
                 {
-                    DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(_typeTransport.repairCost, SpendAndCheckMoneyState.Spend);
+                    DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(
+                        _typeTransport.repairCost, SpendAndCheckMoneyState.Spend, Data.Player.MoneyTypes.Clean);
 
                     _currentStrength = _typeTransport.maxStrength;
                     _isRepairs = false;

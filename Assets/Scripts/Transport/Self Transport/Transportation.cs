@@ -128,7 +128,7 @@ namespace Transport
                 return;
 
             double expenses = _IproductPackaging.config.packagingCost.Dictionary[_IproductPackaging.packagingType];
-            DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(expenses, SpendAndCheckMoneyState.Spend);
+            DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(expenses, SpendAndCheckMoneyState.Spend, Data.Player.MoneyTypes.Clean);
             Debug.Log($"packaging cost for transport: {expenses}");
         }
 

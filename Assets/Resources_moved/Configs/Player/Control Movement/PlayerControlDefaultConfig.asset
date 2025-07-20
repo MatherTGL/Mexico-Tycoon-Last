@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 132b60e1881a04d3c858c586c6994495, type: 3}
   m_Name: PlayerControlDefaultConfig
   m_EditorClassIdentifier: 
-  _speedMove: 700
-  _speedMoveMouse: 700
-  _speedMoveFast: 900
+  _speedMove: 300
+  _speedMoveMouse: 550
+  _speedMoveFast: 500
   _speedZoom: 500
   _minZoomCameraDistance: 10
   _maxZoomCameraDistance: 300

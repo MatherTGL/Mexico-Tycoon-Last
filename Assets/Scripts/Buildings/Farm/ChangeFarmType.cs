@@ -32,7 +32,8 @@ namespace Building.Farm
 
         private IEnumerator DelayChangeType(ushort seconds, double cost)
         {
-            DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(cost, SpendAndCheckMoneyState.Spend);
+            DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(
+                cost, SpendAndCheckMoneyState.Spend, Data.Player.MoneyTypes.Clean);
             yield return new WaitForSeconds(seconds);
         }
     }

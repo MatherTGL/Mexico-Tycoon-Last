@@ -40,20 +40,20 @@ namespace Bank
                 d_affordableCredit[bank] -= loan;
                 d_currentDebt[bank] += loan;
                 //!Debug.Log($"Current Debt: {d_currentDebt[bank]} / Affordable Credit: {d_affordableCredit[bank]}");
-                DataControl.IdataPlayer.AddPlayerMoney(loan);
+                DataControl.IdataPlayer.AddPlayerMoney(loan, Data.Player.MoneyTypes.Clean);
             }
         }
 
         public void LoanRepayment(in float percentage, in ConfigBankEditor bank)
         {
-            if (DataControl.IdataPlayer.GetPlayerMoney() >= (d_currentDebt[bank] * percentage / 100))
+            if (DataControl.IdataPlayer.GetPlayerMoney(Data.Player.MoneyTypes.Clean) >= (d_currentDebt[bank] * percentage / 100))
             {
                 double repayment = d_currentDebt[bank] * percentage / 100;
                 //!Debug.Log(repayment);
                 d_currentDebt[bank] -= repayment;
                 d_affordableCredit[bank] += repayment;
                 //!Debug.Log($"AF: {d_affordableCredit[bank]} / CD: {d_currentDebt[bank]}");
-                DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(repayment, SpendAndCheckMoneyState.Spend);
+                DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(repayment, SpendAndCheckMoneyState.Spend, Data.Player.MoneyTypes.Clean);
             }
         }
 
@@ -62,7 +62,7 @@ namespace Bank
             if ((d_deposits[bank] + sum) <= bank.maxDepositSum)
             {
                 d_deposits[bank] += sum;
-                DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(sum, SpendAndCheckMoneyState.Spend);
+                DataControl.IdataPlayer.CheckAndSpendingPlayerMoney(sum, SpendAndCheckMoneyState.Spend, Data.Player.MoneyTypes.Clean);
                 Debug.Log($"Current depo in this bank: {d_deposits[bank]}");
             }
             else
@@ -77,7 +77,7 @@ namespace Bank
                 return;
 
             d_deposits[bank] -= sum;
-            DataControl.IdataPlayer.AddPlayerMoney(sum);
+            DataControl.IdataPlayer.AddPlayerMoney(sum, Data.Player.MoneyTypes.Clean);
             Debug.Log($"Current depo in this bank: {d_deposits[bank]}");
         }
 

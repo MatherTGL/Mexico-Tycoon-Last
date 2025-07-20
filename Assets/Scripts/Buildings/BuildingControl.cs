@@ -52,10 +52,10 @@ namespace Building
         private IUseBusiness _IcityBusiness;
 
         [SerializeField, Required, BoxGroup("Parameters"), HideLabel]
-        private ConfigExpensesManagementEditor _configExpenses; //TODO: load from resources https://ru.yougile.com/team/bf00efa6ea26/#MEX-91
+        private ConfigExpensesManagementEditor _configExpenses;
 
         [SerializeField, Required, BoxGroup("Parameters"), HideLabel, PropertySpace(0, 5), DisableInPlayMode]
-        private ScriptableObject _configSO; //TODO: maybe load from resources
+        private ScriptableObject _configSO;
 
         private WaitForSeconds _coroutineTimeStep;
 
@@ -84,7 +84,6 @@ namespace Building
 
         void IBoot.InitStart() => StartCoroutine(ConstantUpdating());
 
-        [Obsolete]
         private void ConnectExpensesManagementControl()
         {
             if (_Ibuilding is IUsesExpensesManagement expensesManagement)

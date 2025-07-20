@@ -21,7 +21,7 @@ namespace Data
 
         void IBoot.InitAwake()
         {
-            _IDataPlayer = DataPlayer.GetInstance;
+            _IDataPlayer = new DataPlayer();
             _IDataPlayer.SetDataConfig(_configDataPlayer);
         }
 
