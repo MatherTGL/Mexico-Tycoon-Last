@@ -35,6 +35,7 @@ namespace Data.Player.View
             _textCleanMoney.text = $"C-${Math.Round(DataControl.IdataPlayer.GetPlayerMoney(Data.Player.MoneyTypes.Clean))}";
             _textDirtMoney.text = $"D-${Math.Round(DataControl.IdataPlayer.GetPlayerMoney(Data.Player.MoneyTypes.Dirt))}";
             _textRP.text = $"RP {DataControl.IdataPlayer.GetPlayerResearchPoints()}";
+            _textReputation.text = $"Rep {DataControl.IdataPlayer.GetGlobalReputation()}";
             Debug.Log("Пора обновлять UI Data Player");
         }
     }

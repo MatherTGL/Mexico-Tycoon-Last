@@ -1,11 +1,7 @@
 using UnityEngine;
-using Sirenix.OdinInspector;
-using System.Collections;
 using Country.Climate;
-using Config.Country.Climate;
 using System;
 using Country.Climate.Weather;
-using DebugCustomSystem;
 
 namespace Climate
 {
@@ -14,14 +10,9 @@ namespace Climate
     {
         private ICountryClimate _IcountryClimate;
 
-        [SerializeField, ReadOnly]
-        private ConfigClimateZoneEditor.TypeSeasons _currentSeason;
+        private static ISeasonControl _IseasonControl;
 
-        private WaitForSeconds _seasonLength;
-
-        public event Action<float> updatedSeason;
-
-        private float _percentageImpactCostMaintenance;
+        ISeasonControl IClimateZone.seasonControl => _IseasonControl;
 
 
         private ClimateZoneControl() { }
@@ -29,40 +20,12 @@ namespace Climate
         void IClimateZone.Init(in ICountryClimate IcountryClimate)
         {
             _IcountryClimate = IcountryClimate;
-            _seasonLength = new WaitForSeconds(IcountryClimate.configClimate.seasonLength);
 
-            CalculateImpact();
-            StartCoroutine(SeasonChanger());
+            _IseasonControl = new SeasonControl(_IcountryClimate);
+            _IseasonControl.Init();
 
             var weatherClimate = GetComponent<IWeatherControl>();
             weatherClimate.Init(_IcountryClimate);
-            DebugSystem.Log($"Season in country: {_currentSeason}", DebugSystem.SelectedColor.Orange, tag: "Country");
         }
-
-        private void ChangeSeason()
-        {
-            if (++_currentSeason > ConfigClimateZoneEditor.TypeSeasons.Spring)
-                _currentSeason = 0;
-
-            CalculateImpact();
-            updatedSeason.Invoke(0);
-            DebugSystem.Log($"Season in country: {_currentSeason}", DebugSystem.SelectedColor.Orange, tag: "Country");
-        }
-
-        private void CalculateImpact()
-            => _percentageImpactCostMaintenance = _IcountryClimate.configClimate.seasonsImpactExpenses.Get(_currentSeason);
-
-        private IEnumerator SeasonChanger()
-        {
-            while (true)
-            {
-                yield return _seasonLength;
-                ChangeSeason();
-            }
-        }
-
-        ConfigClimateZoneEditor.TypeSeasons IClimateZone.GetCurrentSeason() => _currentSeason;
-
-        float IClimateZone.GetCurrentSeasonImpact() => _percentageImpactCostMaintenance;
     }
 }

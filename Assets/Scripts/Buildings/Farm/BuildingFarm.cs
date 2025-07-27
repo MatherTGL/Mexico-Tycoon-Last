@@ -122,7 +122,7 @@ namespace Building.Farm
         private bool IsGrowingSeason()
         {
             return _config.typeFarm is TypeFarm.Terrestrial
-            ? _config.growingSeasons.Contains(_IcountryBuildings.IclimateZone.GetCurrentSeason())
+            ? _config.growingSeasons.Contains(_IcountryBuildings.IclimateZone.seasonControl._currentSeason)
             : true;
         }
 
@@ -132,9 +132,9 @@ namespace Building.Farm
         void IUsesCountryInfo.SetCountry(in ICountryBuildings IcountryBuildings)
         {
             _IcountryBuildings = IcountryBuildings;
-            CalculateTemporaryImpact(_IcountryBuildings.IclimateZone.GetCurrentSeasonImpact());
+            CalculateTemporaryImpact(_IcountryBuildings.IclimateZone.seasonControl.GetCurrentSeasonImpact());
 
-            _IcountryBuildings.IclimateZone.updatedSeason += CalculateTemporaryImpact;
+            _IcountryBuildings.IclimateZone.seasonControl.updatedSeason += CalculateTemporaryImpact;
         }
 
         int IProductionBuilding.GetBaseProductionPerformance(in TypeResource typeResource)

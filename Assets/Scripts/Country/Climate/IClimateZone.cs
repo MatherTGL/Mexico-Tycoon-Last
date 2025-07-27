@@ -6,13 +6,9 @@ namespace Climate
 {
     public interface IClimateZone
     {
-        event Action<float> updatedSeason;
+        ISeasonControl seasonControl { get; }
 
 
         void Init(in ICountryClimate IcountryClimate);
-
-        ConfigClimateZoneEditor.TypeSeasons GetCurrentSeason();
-
-        float GetCurrentSeasonImpact();
     }
 }

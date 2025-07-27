@@ -1,7 +1,6 @@
 using System;
 using Config.Data.Player;
 using DebugCustomSystem;
-using UnityEngine;
 
 namespace Data.Player
 {
@@ -19,6 +18,14 @@ namespace Data.Player
 
         private static ushort _researchPoints;
 
+        private static float _globalReputation;
+
+
+        void IDataPlayer.SetDataConfig(in ConfigDataPlayer configDataPlayer)
+        {
+            _cleanMoney = configDataPlayer.startPlayerMoney;
+            _researchPoints = configDataPlayer.startPlayerResearchPoints;
+        }
 
         void IDataPlayer.AddPlayerMoney(in double amountMoney, MoneyTypes moneyType)
         {
@@ -29,12 +36,6 @@ namespace Data.Player
 
             dataChanged?.Invoke();
             DebugSystem.Log($"Haved amount money: {_cleanMoney}", DebugSystem.SelectedColor.Yellow, tag: "Player");
-        }
-
-        void IDataPlayer.AddPlayerResearchPoints(in ushort amountResearchPoints)
-        {
-            _researchPoints += amountResearchPoints;
-            dataChanged?.Invoke();
         }
 
         bool IDataPlayer.CheckAndSpendingPlayerMoney(in double neededSum, in SpendAndCheckMoneyState state, MoneyTypes moneyType)
@@ -58,11 +59,6 @@ namespace Data.Player
             }
         }
 
-        bool IDataPlayer.CheckAndSpendingPlayerResearchPoints(in ushort amount, in SpendAndCheckMoneyState state)
-        {
-            throw new System.NotImplementedException();
-        }
-
         double IDataPlayer.GetPlayerMoney(MoneyTypes moneyType)
         {
             if (moneyType == MoneyTypes.Clean)
@@ -71,12 +67,32 @@ namespace Data.Player
                 return _dirtMoney;
         }
 
+        void IDataPlayer.AddPlayerResearchPoints(in ushort amountResearchPoints)
+        {
+            _researchPoints += amountResearchPoints;
+            dataChanged?.Invoke();
+        }
+
+        bool IDataPlayer.CheckAndSpendingPlayerResearchPoints(in ushort amount, in SpendAndCheckMoneyState state)
+        {
+            throw new System.NotImplementedException();
+        }
+
         ushort IDataPlayer.GetPlayerResearchPoints() => _researchPoints;
 
-        void IDataPlayer.SetDataConfig(in ConfigDataPlayer configDataPlayer)
+        void IDataPlayer.AddGlobalReputation(float amount)
         {
-            _cleanMoney = configDataPlayer.startPlayerMoney;
-            _researchPoints = configDataPlayer.startPlayerResearchPoints;
+            _globalReputation += amount;
+            dataChanged?.Invoke();
         }
+
+        void IDataPlayer.ReduceReputation(float amount)
+        {
+            if ((_globalReputation - amount) > 0f)
+                _globalReputation -= amount;
+            dataChanged?.Invoke();
+        }
+
+        float IDataPlayer.GetGlobalReputation() => _globalReputation;
     }
 }

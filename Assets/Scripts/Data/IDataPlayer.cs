@@ -10,16 +10,22 @@ namespace Data.Player
 
         void SetDataConfig(in ConfigDataPlayer configDataPlayer);
 
-        bool CheckAndSpendingPlayerMoney(in double amount, in DataPlayer.SpendAndCheckMoneyState state, MoneyTypes moneyType);
-
         void AddPlayerMoney(in double amountMoney, MoneyTypes moneyType);
+
+        bool CheckAndSpendingPlayerMoney(in double amount, in DataPlayer.SpendAndCheckMoneyState state, MoneyTypes moneyType);
 
         double GetPlayerMoney(MoneyTypes moneyType);
 
-        bool CheckAndSpendingPlayerResearchPoints(in ushort amount, in DataPlayer.SpendAndCheckMoneyState state);
-
         void AddPlayerResearchPoints(in ushort amount);
 
+        bool CheckAndSpendingPlayerResearchPoints(in ushort amount, in DataPlayer.SpendAndCheckMoneyState state);
+
         ushort GetPlayerResearchPoints();
+
+        void AddGlobalReputation(float amount);
+
+        void ReduceReputation(float amount);
+
+        float GetGlobalReputation();
     }
 }
