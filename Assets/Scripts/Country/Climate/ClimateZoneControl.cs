@@ -10,9 +10,9 @@ namespace Climate
     {
         private ICountryClimate _IcountryClimate;
 
-        private static ISeasonControl _IseasonControl;
+        public static ISeasonControl IseasonControl { get; private set; }
 
-        ISeasonControl IClimateZone.seasonControl => _IseasonControl;
+        ISeasonControl IClimateZone.seasonControl => IseasonControl;
 
 
         private ClimateZoneControl() { }
@@ -21,8 +21,8 @@ namespace Climate
         {
             _IcountryClimate = IcountryClimate;
 
-            _IseasonControl = new SeasonControl(_IcountryClimate);
-            _IseasonControl.Init();
+            IseasonControl = new SeasonControl(_IcountryClimate);
+            IseasonControl.Init();
 
             var weatherClimate = GetComponent<IWeatherControl>();
             weatherClimate.Init(_IcountryClimate);

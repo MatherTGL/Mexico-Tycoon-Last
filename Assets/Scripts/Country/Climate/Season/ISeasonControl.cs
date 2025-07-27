@@ -1,12 +1,11 @@
 using System;
 using Config.Country.Climate;
-using UnityEngine;
 
 namespace Climate
 {
     public interface ISeasonControl
     {
-        ConfigClimateZoneEditor.TypeSeasons _currentSeason { get; }
+        ConfigClimateZoneEditor.TypeSeasons currentSeason { get; }
 
         event Action<float> updatedSeason;
 

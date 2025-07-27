@@ -54,7 +54,10 @@ namespace Country
             FindObjectsInArea();
         }
 
-        void IBoot.InitStart() => StartCoroutine(UpdateTick());
+        void IBoot.InitStart()
+        {
+            StartCoroutine(UpdateTick());
+        }
 
         (TypeLoadObject typeLoad, TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
             => (TypeLoadObject.MediumImportant, TypeSingleOrLotsOf.LotsOf);

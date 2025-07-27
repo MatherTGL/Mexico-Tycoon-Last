@@ -122,7 +122,7 @@ namespace Building.Farm
         private bool IsGrowingSeason()
         {
             return _config.typeFarm is TypeFarm.Terrestrial
-            ? _config.growingSeasons.Contains(_IcountryBuildings.IclimateZone.seasonControl._currentSeason)
+            ? _config.growingSeasons.Contains(_IcountryBuildings.IclimateZone.seasonControl.currentSeason)
             : true;
         }
 

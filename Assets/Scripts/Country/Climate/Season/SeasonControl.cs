@@ -12,7 +12,7 @@ namespace Climate
     {
         private static ConfigClimateZoneEditor.TypeSeasons _currentSeason;
 
-        ConfigClimateZoneEditor.TypeSeasons ISeasonControl._currentSeason => _currentSeason;
+        ConfigClimateZoneEditor.TypeSeasons ISeasonControl.currentSeason => _currentSeason;
 
         private WaitForSeconds _seasonLength;
 
@@ -28,19 +28,17 @@ namespace Climate
 
         void ISeasonControl.Init()
         {
-            CoroutineManager.Instance.StartManagedCoroutine(SeasonChanger());
             CalculateImpact();
-            _seasonLength = new WaitForSeconds(_IcountryClimate.configClimate.seasonLength);
-
-            DebugSystem.Log($"Season in country: {_currentSeason}", DebugSystem.SelectedColor.Orange, tag: "Country");
+            CoroutineManager.Instance.StartManagedCoroutine(SeasonChanger());
         }
 
         private IEnumerator SeasonChanger()
         {
+            _seasonLength = new WaitForSeconds(_IcountryClimate.configClimate.seasonLength);
+
             //TODO добавить isPaused
             while (true)
             {
-                Debug.Log("SeasonChanger coroutine is run");
                 yield return _seasonLength;
                 ChangeSeason();
             }
@@ -52,8 +50,7 @@ namespace Climate
                 _currentSeason = 0;
 
             CalculateImpact();
-            updatedSeason.Invoke(0);
-            DebugSystem.Log($"Season in country: {_currentSeason}", DebugSystem.SelectedColor.Orange, tag: "Country");
+            updatedSeason.Invoke((float)_currentSeason);
         }
 
         private void CalculateImpact()

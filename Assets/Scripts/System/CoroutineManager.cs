@@ -1,18 +1,24 @@
 using System.Collections;
+using Boot;
 using UnityEngine;
 
 namespace GameSystem
 {
-    public sealed class CoroutineManager : MonoBehaviour
+    public sealed class CoroutineManager : MonoBehaviour, IBoot
     {
         public static CoroutineManager Instance { get; private set; }
 
 
-        private void Awake()
+        void IBoot.InitAwake()
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
+
+        void IBoot.InitStart() { }
+
+        (Bootstrap.TypeLoadObject typeLoad, Bootstrap.TypeSingleOrLotsOf singleOrLotsOf) IBoot.GetTypeLoad()
+            => (Bootstrap.TypeLoadObject.SuperImportant, Bootstrap.TypeSingleOrLotsOf.Single);
 
         public Coroutine StartManagedCoroutine(IEnumerator coroutine)
             => StartCoroutine(coroutine);

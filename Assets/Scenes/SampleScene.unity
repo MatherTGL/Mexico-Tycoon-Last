@@ -1645,7 +1645,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03ddefc50f49d9bf1a3d259c7de74bab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentSeason: 0
 --- !u!54 &1141501235
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1939,7 +1938,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 658.3321, y: -45.000015}
+  m_AnchoredPosition: {x: 658.3321, y: -45}
   m_SizeDelta: {x: -1318.68, y: -96.03}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1340686522
@@ -2917,6 +2916,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59800079fce4f634fb60ff3006672ff7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _textCurrentSeason: {fileID: 717712089}
 --- !u!1001 &1782357806579937333
 PrefabInstance:
   m_ObjectHideFlags: 0
