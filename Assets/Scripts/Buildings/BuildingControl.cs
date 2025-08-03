@@ -33,7 +33,7 @@ using Building.Additional.Production;
 namespace Building
 {
     [RequireComponent(typeof(TransportReception), typeof(BoxCollider))]
-    public sealed class BuildingControl : MonoBehaviour, IBoot, IBuildingRequestForTransport, ICountryAreaFindSceneObjects
+    public sealed class BuildingControl : MonoBehaviour, IBoot, IBuildingRequestForTransport, ICountryAreaFindSceneObjects, IGetBuildingViewFunctions
     {
         private IBuilding _Ibuilding;
 
@@ -225,6 +225,32 @@ namespace Building
 
         void ICountryAreaFindSceneObjects.DeactiveWeatherEvent(in IWeatherZone IweatherZone)
             => _IbuildingPurchased?.DeactiveWeatherEvent(IweatherZone);
+
+        IBuilding IGetBuildingViewFunctions.GetBuilding() => _Ibuilding;
+
+        void IGetBuildingViewFunctions.BuyBuilding()
+            => ChangeOwnerState(true);
+
+        void IGetBuildingViewFunctions.SellBuilding()
+            => ChangeOwnerState(false);
+
+        void IGetBuildingViewFunctions.SetActivateBuilding()
+            => ChangeJobStatusBuilding(true);
+
+        void IGetBuildingViewFunctions.SetDeactivateBuilding()
+            => ChangeJobStatusBuilding(false);
+
+        void IGetBuildingViewFunctions.SetNewProductionResource(TypeResource typeResource)
+            => ChangeProductionResource(typeResource);
+
+        void IGetBuildingViewFunctions.ChangeFarmType(in TypeFarm typeFarm)
+            => ChangeFarmType(typeFarm);
+
+        void IGetBuildingViewFunctions.BuyBusiness(in TypeBusiness typeBusiness)
+            => _IcityBusiness.BuyBusiness(typeBusiness);
+
+        void IGetBuildingViewFunctions.SellBusiness(in ushort indexBusiness)
+            => _IcityBusiness.SellBusiness(indexBusiness);
 
         //TODO: move all to view class and make mvc
 

@@ -47,6 +47,8 @@ namespace Building.SeaPort
         bool IBuildingJobStatus.isWorked { get => isWorked; set => isWorked = value; }
         bool IBuildingPurchased.isBuyed { get => isBuyed; set => isBuyed = value; }
 
+        bool IBuildingJobStatus.isBuyed => isBuyed;
+
 
         public BuildingSeaPort(in ScriptableObject config)
         {

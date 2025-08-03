@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Building.Additional;
@@ -76,6 +77,8 @@ namespace Building.Fabric
 
         bool IBuildingPurchased.isBuyed { get => isBuyed; set => isBuyed = value; }
 
+        bool IBuildingJobStatus.isBuyed => isBuyed;
+
 
         public BuildingFabric(in ScriptableObject config)
         {
@@ -117,6 +120,14 @@ namespace Building.Fabric
         {
             if (_config.productionResources.ContainsKey(typeResource))
                 _typeProductionResource = typeResource;
+        }
+
+        Dictionary<TypeResource, ushort> IProductionBuilding.GetProducedResources()
+        {
+            if (_config == null)
+                throw new NullReferenceException();
+
+            return _config.productionResources;
         }
     }
 }

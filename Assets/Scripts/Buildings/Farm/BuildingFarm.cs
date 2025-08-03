@@ -14,6 +14,7 @@ using static Config.Employees.ConfigEmployeeEditor;
 using System.Threading.Tasks;
 using static Config.Building.ConfigBuildingFarmEditor;
 using Building.Additional.Crop;
+using System;
 
 namespace Building.Farm
 {
@@ -85,6 +86,9 @@ namespace Building.Farm
 
         bool IBuildingPurchased.isBuyed { get => isBuyed; set => isBuyed = value; }
 
+        bool IBuildingJobStatus.isBuyed => isBuyed;
+
+        Dictionary<TypeResource, SerializableDictionary<TypeResource, int>> IProductionBuilding.requiredRawMaterials => throw new System.NotImplementedException();
 
         public BuildingFarm(in ScriptableObject config)
         {
@@ -144,6 +148,14 @@ namespace Building.Farm
         {
             if (_config.productionResources.ContainsKey(typeResource))
                 _typeProductionResource = typeResource;
+        }
+
+        Dictionary<TypeResource, ushort> IProductionBuilding.GetProducedResources()
+        {
+            if (_config == null)
+                throw new NullReferenceException();
+
+            return _config.productionResources;
         }
     }
 }

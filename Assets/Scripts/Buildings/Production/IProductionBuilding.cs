@@ -29,5 +29,7 @@ namespace Building.Additional.Production
         int GetBaseProductionPerformance(in TypeResource typeResource);
 
         void SetNewProductionResource(in TypeResource typeResource);
+
+        Dictionary<TypeResource, ushort> GetProducedResources();
     }
 }

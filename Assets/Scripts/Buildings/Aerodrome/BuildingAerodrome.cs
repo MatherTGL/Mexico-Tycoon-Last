@@ -50,6 +50,8 @@ namespace Building.Aerodrome
 
         bool IBuildingJobStatus.isWorked { get => isWorked; set => isWorked = value; }
 
+        bool IBuildingJobStatus.isBuyed => isBuyed;
+
 
         public BuildingAerodrome(in ScriptableObject config)
         {

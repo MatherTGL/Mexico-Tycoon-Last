@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8686068495864028081}
   - component: {fileID: 733097914352946188}
   - component: {fileID: 6795591148511223084}
+  - component: {fileID: 5611849844004078969}
   - component: {fileID: 5340949952551566468}
   m_Layer: 0
   m_Name: Border post
@@ -52,6 +53,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -115,6 +119,19 @@ MonoBehaviour:
   _configExpenses: {fileID: 0}
   _configSO: {fileID: 11400000, guid: c905cbe9ffd8cc70489f63e65ed6bd9e, type: 2}
   _typeBuilding: 6
+--- !u!114 &5611849844004078969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5726612401650142149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d520a0385423b947a30b60fc74e500f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _buildingView: {fileID: 0}
 --- !u!65 &5340949952551566468
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -50,6 +50,8 @@ namespace Building.Stock
 
         bool IBuildingPurchased.isBuyed { get => isBuyed; set => isBuyed = value; }
 
+        bool IBuildingJobStatus.isBuyed => isBuyed;
+
 
         public BuildingStock(in ScriptableObject config)
         {
